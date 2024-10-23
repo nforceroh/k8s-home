@@ -3,7 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
   name: l2-ip
-  namespace: metallb
+  namespace: {{ .Release.Namespace }}
 spec:
   ipAddressPools:
     - apps

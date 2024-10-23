@@ -3,7 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: apps
-  namespace: metallb
+  namespace: {{ .Release.Namespace }}
 spec:
   addresses:
     - 10.0.1.100-10.0.1.200
@@ -12,7 +12,7 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: infra
-  namespace: metallb
+  namespace: {{ .Release.Namespace }}
 spec:
   autoAssign: true
   addresses:

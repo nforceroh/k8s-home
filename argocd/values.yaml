@@ -1,6 +1,10 @@
 # https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 # domain names are overridden due to derivation from Values.global.domain
-argo-cd: 
+crds:
+  install: true
+argo-cd:
+  crds:
+    install: true
   configs:
     params:
       # traefik terminates TLS at edge
@@ -9,7 +13,7 @@ argo-cd:
       url: 'https://argo.test.nf.lab'
       admin.enabled: true
       secret:
-        argocdServerAdminPassword: "$2y$10$s5WuWNPk9Os5yIWCOFo1ze.BXvhUkprkT1unf.Cejy7he8KncCiHS"
+        argocdServerAdminPassword: "$2a$10$WvfhO90xGFPNrxiyo7foy.yNp0e6osfV7UKuLoJZP8b2fdu29oTLK"
 
   server:
     certificate:

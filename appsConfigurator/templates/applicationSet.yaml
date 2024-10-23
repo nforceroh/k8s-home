@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: "argo-{{ . }}"
+  name: "{{ . }}"
   namespace: argocd
 spec:
   generators:
@@ -32,6 +32,6 @@ spec:
             - ../../globalValues.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: "argo-{{ . }}"
+        namespace: "{{ . }}"
 ---
 {{- end}}
