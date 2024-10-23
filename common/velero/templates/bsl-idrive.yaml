@@ -1,0 +1,16 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: idrive
+  namespace: velero
+spec:
+  accessMode: ReadWrite
+  config:
+    region: Virginia
+    s3Url: https://v7k8.va.idrivee2-60.com
+  credential:
+    key: bsl
+    name: idrive-credentials
+  objectStorage:
+    bucket: velero
+  provider: aws

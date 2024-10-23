@@ -1,0 +1,21 @@
+# https://artifacthub.io/packages/helm/cert-manager/cert-manager
+cert-manager:
+  installCRDs: true
+  podDnsPolicy: "None"
+  podDnsConfig:
+    nameservers:
+      - "10.0.0.1"
+
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: false
+    prometheusInstance: default
+    targetPort: 9402
+    path: /metrics
+    interval: 60s
+    scrapeTimeout: 30s
+    labels: {}
+    annotations: {}
+    honorLabels: false
+    endpointAdditionalProperties: {}

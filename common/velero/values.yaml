@@ -1,0 +1,56 @@
+# https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
+velero:
+  # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
+  resources:
+    requests:
+      cpu: 500m
+      memory: 128Mi
+    limits:
+      cpu: 6000m
+      memory: 3072Mi
+  initContainers:
+    - name: velero-plugin-for-aws
+      image: velero/velero-plugin-for-aws:latest
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - mountPath: /target
+          name: plugins
+  configuration:
+    defaultVolumesToFsBackup: true
+    backupStorageLocation:
+    - name: default
+      provider: aws
+      bucket: velero
+      config:
+        region: minio
+        insecureSkipTLSVerify: true
+        s3ForcePathStyle: true
+        s3Url: https://minio.nf.lab
+
+  credentials:
+    existingSecret: velero-minio-s3-key
+
+  snapshotsEnabled: false
+  
+  deployNodeAgent: true
+    
+#  schedules:
+#    daily:
+      # Tell ArgoCD not to automatically prune/delete backups
+#      annotations:
+#        argocd.argoproj.io/compare-options: IgnoreExtraneous
+#        argocd.argoproj.io/sync-options: Delete=false,Prune=false
+      # UTC. Backup every day at 1400
+#      schedule: "0 14 * * *"
+#      template:
+        # expire backups after 1 week
+#        ttl: "168h"
+#        excludedNamespaces:
+          # skip namespaces managed by TrueNAS SCALE
+#          - default
+#          - kube-system
+#          - kube-public
+#          - kube-node-lease
+#          - openebs
+#          - ix-minio
+#          - ix-minio-snsd

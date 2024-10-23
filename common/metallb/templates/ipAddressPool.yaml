@@ -1,0 +1,19 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: apps
+  namespace: metallb
+spec:
+  addresses:
+    - 10.0.1.100-10.0.1.200
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: infra
+  namespace: metallb
+spec:
+  autoAssign: true
+  addresses:
+  - 10.0.0.2-10.0.0.10
