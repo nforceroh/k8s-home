@@ -11,13 +11,5 @@ global:
 #  - home
 #  - monitoring
     
-  storage:
-    defaultClass: 
-      name: openebs-localpv-default
-      basePath: /var/mnt/openebs/default
-    additionalClasses:
-      openebs-localpv-nvme: /var/mnt/openebs/nvme
-      openebs-localpv-hdd: /var/mnt/openebs/hdd
-
   traefik:
     LoadbalancerIP: 10.0.1.200

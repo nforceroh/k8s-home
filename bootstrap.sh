@@ -19,6 +19,7 @@ fi
 
 # Install ArgoCD using helm
 helm dependency update argocd
+#kubectl apply -k "https://github.com/argoproj/argo-cd/manifests/crds?ref=v2.12.0"
 helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values globalValues.yaml
 
 # Set the ArgoCD admin password

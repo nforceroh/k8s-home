@@ -6,11 +6,14 @@ argo-cd:
       # traefik terminates TLS at edge
       server.insecure: true
     cm:
-      url: 'https://argocd.test.nf.lab'
+      url: 'https://argo.test.nf.lab'
+      admin.enabled: true
+      secret:
+        argocdServerAdminPassword: "$2y$10$s5WuWNPk9Os5yIWCOFo1ze.BXvhUkprkT1unf.Cejy7he8KncCiHS"
 
   server:
     certificate:
-      domain: argocd.test.nf.lab
+      domain: argo.test.nf.lab
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -23,11 +26,11 @@ argo-cd:
         kubernetes.io/ingress.class: traefik
         external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
       tls: true
-      hostname: argocd.test.nf.lab
+      hostname: argo.test.nf.lab
 
   notifications:
-    argocdUrl: 'https://argocd.test.nf.lab'
+    argocdUrl: 'https://argo.test.nf.lab'
   
   applicationSet:
     certificate:
-      domain: argocd.test.nf.lab
+      domain: argo.test.nf.lab
