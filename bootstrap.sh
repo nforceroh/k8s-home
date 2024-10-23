@@ -17,9 +17,9 @@ then
     helm repo add argo https://argoproj.github.io/argo-helm
 fi
 
-# Stupid workaround to get CRD up and running
-helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --values k8s-home/globalValues.yaml --set crds.install=true
-helm uninstall argocd -n argocd
+# Stupid workaround to get CRD up and running for the first time
+# helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --values k8s-home/globalValues.yaml --set crds.install=true
+# helm uninstall argocd -n argocd
 # Install ArgoCD using helm
 helm dependency update argocd
 #kubectl apply -k https://github.com/argoproj/argo-cd/manifests/crds\?ref\=stable
