@@ -17,13 +17,21 @@ storageClasses:
     fsType: ext4
     detachedVolumesFromSnapshots: "false"
 
-#volumeSnapshotClasses:
-#- name: iscsi
-#  parameters:
-#    detachedSnapshots: "true"
+volumeSnapshotClasses:
+- name: iscsi
+  parameters:
+    detachedSnapshots: "true"
+
 node:
+  hostPID: true
   driver:
+    extraEnv:
+      - name: ISCSIADM_HOST_STRATEGY
+        value: nsenter
+      - name: ISCSIADM_HOST_PATH
+        value: /usr/local/sbin/iscsiadm
     iscsiDirHostPath: /usr/local/etc/iscsi
+    iscsiDirHostPathType: ""
     
 driver:
   config:
@@ -44,6 +52,7 @@ driver:
       targetPortal: "10.0.0.100:3260"
       nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
       namePrefix: csi-
+      nameSuffix: "-talos"
       targetGroups:
         # get the correct ID from the "portal" section in the UI
         # https://github.com/democratic-csi/democratic-csi/issues/302

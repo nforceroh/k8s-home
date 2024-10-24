@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: test-claim-iscsi
-  namespace: torrent
+  namespace: csi
 spec:
   storageClassName: truenas-iscsi
   accessModes:
