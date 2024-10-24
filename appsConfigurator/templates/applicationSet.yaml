@@ -27,6 +27,7 @@ spec:
         targetRevision: "{{ $.Values.global.branch }}"
         path: "{{`{{ path }}`}}"
         helm:
+          releaseName: "{{appName}}"
           valueFiles:
             - values.yaml
             - ../../globalValues.yaml
