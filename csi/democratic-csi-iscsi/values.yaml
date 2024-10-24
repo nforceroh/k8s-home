@@ -21,7 +21,10 @@ storageClasses:
 #- name: iscsi
 #  parameters:
 #    detachedSnapshots: "true"
-
+node:
+  driver:
+    iscsiDirHostPath: /usr/local/etc/iscsi
+    
 driver:
   config:
     driver: freenas-api-iscsi
