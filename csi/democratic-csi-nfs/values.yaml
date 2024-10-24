@@ -20,10 +20,10 @@ storageClasses:
       - noatime
       - nfsvers=4
 
-volumeSnapshotClasses:
-- name: nfs
-  parameters:
-    detachedSnapshots: "true"
+#volumeSnapshotClasses:
+#- name: nfs
+#  parameters:
+#    detachedSnapshots: "true"
 
 driver:
   config:

@@ -17,10 +17,10 @@ storageClasses:
     fsType: ext4
     detachedVolumesFromSnapshots: "false"
 
-volumeSnapshotClasses:
-- name: iscsi
-  parameters:
-    detachedSnapshots: "true"
+#volumeSnapshotClasses:
+#- name: iscsi
+#  parameters:
+#    detachedSnapshots: "true"
 
 driver:
   config:

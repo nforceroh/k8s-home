@@ -7,7 +7,6 @@ global:
 
   applicationSets:
   - common
-  - csi
 #  - media
 #  - home
 #  - monitoring
