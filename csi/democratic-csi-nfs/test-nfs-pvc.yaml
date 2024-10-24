@@ -1,0 +1,14 @@
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: test-claim-nfs
+  namespace: torrent
+spec:
+  storageClassName: truenas-nfs
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi

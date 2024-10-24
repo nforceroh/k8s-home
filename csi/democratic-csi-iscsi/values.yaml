@@ -1,0 +1,62 @@
+csiDriver:
+  name: "org.democratic-csi.iscsi"
+
+controller:
+  externalHealthMonitorController:
+    enabled: true
+
+# add note here about volume expansion requirements
+storageClasses:
+- name: truenas-iscsi
+  defaultClass: true
+  reclaimPolicy: Delete
+  volumeBindingMode: Immediate
+  allowVolumeExpansion: true
+  parameters:
+    fsType: ext4
+    detachedVolumesFromSnapshots: "false"
+
+volumeSnapshotClasses:
+- name: iscsi
+  parameters:
+    detachedSnapshots: "true"
+
+driver:
+  config:
+    driver: freenas-api-iscsi
+    httpConnection:
+      protocol: https
+      host: 192.168.101.100
+      port: 443
+      apiKey: 1-xnSkgVNabjpcYRk4Fj4VEuPKOOGLnSYNPsQd7Qmw5PUGi7VieCzUkov5lntX3Xcb
+      allowInsecure: true
+      apiVersion: 2
+    zfs:
+      datasetParentName: ssd01/k8s/i/v
+      detachedSnapshotsDatasetParentName: ssd01/k8s/i/s
+      zvolEnableReservation: false
+      zvolBlocksize: 4K
+    iscsi:
+      targetPortal: "10.0.0.100:3260"
+      nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+      namePrefix: csi-
+      targetGroups:
+        # get the correct ID from the "portal" section in the UI
+        # https://github.com/democratic-csi/democratic-csi/issues/302
+        # NOTE: the ID in the UI does NOT always match the ID in the DB, you must use the DB value
+        - targetGroupPortalGroup: 4
+          # get the correct ID from the "initiators" section in the UI
+          targetGroupInitiatorGroup: 9
+          # None, CHAP, or CHAP Mutual
+          targetGroupAuthType: None
+          # get the correct ID from the "Authorized Access" section of the UI
+          # only required if using Chap
+          targetGroupAuthGroup:
+
+      extentCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+      extentInsecureTpc: true
+      extentXenCompat: false
+      extentDisablePhysicalBlocksize: true
+      extentBlocksize: 512
+      extentRpm: "SSD"
+      extentAvailThreshold: 0

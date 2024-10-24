@@ -1,4 +1,7 @@
 # https://artifacthub.io/packages/helm/cert-manager/cert-manager
+clusterIssuer:
+  mail: sylvain@nforcer.com
+
 cert-manager:
   installCRDs: true
   podDnsPolicy: "None"

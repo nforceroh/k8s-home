@@ -1,0 +1,40 @@
+# https://github.com/smallstep/helm-charts/blob/master/step-certificates/values.yaml
+
+bootstrap:
+  secrets: true
+  enabled: true
+  configmaps: true
+
+inject:
+  enabled: false
+
+existingSecrets: 
+  enabled: false
+  ca: true
+  issuer: true
+  certsAsSecret: true
+  configAsSecret: true
+
+ca:
+  name: Step Certificates
+  dns: localhost,ca.nf.lab
+  url: https://ca.test.nf.lab
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 9000
+#  externalIPs: [10.0.1.130]
+
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+  hosts: ca.test.nf.lab
+    tls:
+    - hosts:
+      - ca.test.nf.lab
+      secretName: step-ca-cert-tls
