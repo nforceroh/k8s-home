@@ -1,51 +1,52 @@
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 
-logs:
-  access:
-    enabled: true
-
-service:
-  enabled: true
-  annotations:
-    metallb.universe.tf/ip-allocated-from-pool: infra
-    external-dns.alpha.kubernetes.io/hostname: traefik.test.nf.lab
-    external-dns.alpha.kubernetes.io/access: public
-metrics:
-  prometheus:
-    entryPoint: metrics
-
-# Stops ArgoCD from thinking that ingresses never complete successfully
-# https://github.com/argoproj/argo-cd/issues/968#issuecomment-451082913
-providers:
-  kubernetesIngress:
-    publishedService:
+traefik:
+  logs:
+    access:
       enabled: true
-  kubernetesCRD:
+
+  service:
     enabled: true
-    allowCrossNamespace: true
+    annotations:
+      metallb.universe.tf/ip-allocated-from-pool: infra
+      external-dns.alpha.kubernetes.io/hostname: traefik.test.nf.lab
+      external-dns.alpha.kubernetes.io/access: public
+  metrics:
+    prometheus:
+      entryPoint: metrics
 
-ports:
-  web:
-    redirectTo:
-      port: websecure
-      priority: 10
+  # Stops ArgoCD from thinking that ingresses never complete successfully
+  # https://github.com/argoproj/argo-cd/issues/968#issuecomment-451082913
+  providers:
+    kubernetesIngress:
+      publishedService:
+        enabled: true
+    kubernetesCRD:
+      enabled: true
+      allowCrossNamespace: true
 
-ingressClass:
-  enabled: true
-  fallbackApiVersion: v1
-  isDefaultClass: true
+  ports:
+    web:
+      redirectTo:
+        port: websecure
+        priority: 10
 
-# https://doc.traefik.io/traefik/https/tls/#tls-options
-tlsOptions:
-  default:
-    minVersion: VersionTLS12
-    cipherSuites:
-      - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-      - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-      - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
-      - TLS_AES_128_GCM_SHA256
-      - TLS_AES_256_GCM_SHA384
-      - TLS_CHACHA20_POLY1305_SHA256
-    curvePreferences:
-      - CurveP521
-      - CurveP384
+  ingressClass:
+    enabled: true
+    fallbackApiVersion: v1
+    isDefaultClass: true
+
+  # https://doc.traefik.io/traefik/https/tls/#tls-options
+  tlsOptions:
+    default:
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+        - TLS_AES_128_GCM_SHA256
+        - TLS_AES_256_GCM_SHA384
+        - TLS_CHACHA20_POLY1305_SHA256
+      curvePreferences:
+        - CurveP521
+        - CurveP384
