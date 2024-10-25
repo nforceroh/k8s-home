@@ -6,8 +6,9 @@
 # pxe setup
 # boot
 # config node
+factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1
 ```
-export TALOS_CLUSTER_NAME=test
+export TALOS_CLUSTER_NAME=talos-test
 export NODEIP="10.0.0.226"
 talosctl gen config $TALOS_CLUSTER_NAME https://${NODEIP}:6443 -o $HOME/.talos/
 
