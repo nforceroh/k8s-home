@@ -1,8 +1,7 @@
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+
 traefik:
   logs:
-    general:
-      level: INFO
     access:
       enabled: true
 
@@ -10,7 +9,7 @@ traefik:
     enabled: true
     annotations:
       metallb.universe.tf/ip-allocated-from-pool: infra
-      external-dns.alpha.kubernetes.io/hostname: traefik.{{ .Values.global.domain }}
+      external-dns.alpha.kubernetes.io/hostname: traefik.test.nf.lab
       external-dns.alpha.kubernetes.io/access: public
   metrics:
     prometheus:
