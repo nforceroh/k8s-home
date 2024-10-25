@@ -5,6 +5,7 @@ metadata:
   name: apps
   namespace: {{ .Release.Namespace }}
 spec:
+  autoAssign: true
   addresses:
     - {{ .Values.global.metallb.apps }}
 ---
@@ -14,5 +15,6 @@ metadata:
   name: infra
   namespace: {{ .Release.Namespace }}
 spec:
+  autoAssign: true
   addresses:
   - {{ .Values.global.metallb.infra }}
