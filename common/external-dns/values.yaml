@@ -1,6 +1,5 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
 
-nameOverride: external-dns-pdns
 ## Watch these resources for new DNS records
 sources:
   - ingress
@@ -19,7 +18,7 @@ domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
 registry: "txt"
 txtOwnerId: "k8s"
 txtPrefix: ""
-logLevel: info
+logLevel: debug
 policy: upsert-only
 #policy: sync
 
