@@ -31,11 +31,6 @@ traefik:
         port: websecure
         priority: 10
 
-  ingressClass:
-    enabled: true
-    fallbackApiVersion: v1
-    isDefaultClass: true
-
   # https://doc.traefik.io/traefik/https/tls/#tls-options
   tlsOptions:
     default:
