@@ -7,10 +7,9 @@ logs:
 
 service:
   enabled: true
-  type: LoadBalancer
-  spec:
-    loadBalancerIP: "{{ .Values.global.traefik.LoadbalancerIP }}"
-
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: infra
+    external-dns.alpha.kubernetes.io/hostname: traefik.{{ .Values.global.domain }}
 metrics:
   prometheus:
     entryPoint: metrics
