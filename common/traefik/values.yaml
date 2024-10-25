@@ -12,8 +12,8 @@ traefik:
       external-dns.alpha.kubernetes.io/hostname: traefik.test.nf.lab
 #      external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
-  spec:
-    loadBalancerIP: 10.0.1.50
+    spec:
+      loadBalancerIP: 10.0.1.50
 
   metrics:
     prometheus:
