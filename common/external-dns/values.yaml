@@ -20,7 +20,7 @@ external-dns:
   # These help tell which records are owned by external-dns.
   registry: "txt"
   txtOwnerId: "k8s"
-  txtPrefix: ""
+  txtPrefix: "txt-"
   logLevel: debug
   policy: upsert-only
   #policy: sync
