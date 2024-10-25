@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   addresses:
-    - 10.0.1.201-10.0.1.240
+    - {{ .Values.global.metallb.apps }}
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -16,4 +16,4 @@ metadata:
 spec:
   autoAssign: true
   addresses:
-  - 10.0.0.80-10.0.0.90
+  - {{ .Values.global.metallb.infra }}

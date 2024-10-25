@@ -13,3 +13,6 @@ global:
     
   traefik:
     LoadbalancerIP: 10.0.1.200
+  metallb:
+    apps: 10.0.1.201-10.0.1.240
+    infra: 10.0.0.80-10.0.0.90
