@@ -5,23 +5,9 @@ helm repo update
 helm search repo democratic-csi/
 ```
 
-# install iscsi
-```
-helm upgrade \
---install \
---values truenas-iscsi.yaml \
---namespace democratic-csi \
---create-namespace \
-zfs-iscsi democratic-csi/democratic-csi
-```
-
 # install nfs
 ```
-helm upgrade \
---install \
---values truenas-nfs.yaml \
---namespace democratic-csi \
-zfs-nfs democratic-csi/democratic-csi
+helm upgrade --install --values values.yaml  -n csi --create-namespace zfs-nfs democratic-csi/democratic-csi
 ```
 # Install snapshotter
 ```

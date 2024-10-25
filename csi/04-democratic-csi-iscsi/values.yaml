@@ -2,10 +2,6 @@ nameOverride: "truenas-iscsi"
 csiDriver:
   name: "org.democratic-csi.iscsi"
 
-controller:
-  externalHealthMonitorController:
-    enabled: true
-
 # add note here about volume expansion requirements
 storageClasses:
 - name: truenas-iscsi

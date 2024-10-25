@@ -3,10 +3,6 @@ csiDriver:
   name: "org.democratic-csi.nfs"
   fsGroupPolicy: File
 
-controller:
-  externalHealthMonitorController:
-    enabled: true
-
 # add note here about volume expansion requirements
 storageClasses:
   - name: truenas-nfs

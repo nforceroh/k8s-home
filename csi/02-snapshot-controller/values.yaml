@@ -1,0 +1,11 @@
+controller:
+  enabled: true
+  rbac:
+    enabled: true
+  replicaCount: 1
+
+validatingWebhook:
+  enabled: false
+  rbac:
+    enabled: true
+  replicaCount: 1

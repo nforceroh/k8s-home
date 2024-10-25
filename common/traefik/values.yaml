@@ -10,7 +10,7 @@ traefik:
     enabled: true
     type: LoadBalancer
     spec:
-      loadBalancerIP: "{{ .Values.global.traefik.LoadbalancerIP }}"
+      loadBalancerIP: {{ .Values.global.traefik.LoadbalancerIP }}
 
   metrics:
     prometheus:

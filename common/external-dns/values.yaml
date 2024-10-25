@@ -12,7 +12,7 @@ provider: pdns
 pdns:
   apiUrl: http://ns1.nf.lab
   apiPort: 8081
-  secretName: pdns-api
+  secretName: pdns
 ## List of domains that can be managed. 
 domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
 # These help tell which records are owned by external-dns.
