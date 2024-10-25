@@ -1,40 +1,41 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
 
-## Watch these resources for new DNS records
-sources:
-  - ingress
-  - service
-  
-## use google as the dns provider
-provider: pdns
+external-dns:
+  ## Watch these resources for new DNS records
+  sources:
+    - ingress
+    - service
+    
+  ## use google as the dns provider
+  provider: pdns
 
-pdns:
-  apiUrl: http://ns1.nf.lab
-  apiPort: 8081
-  apiKey: 4845460c-5012-46fe-8ece-56d95a8c3713
-  #secretName: pdns
-## List of domains that can be managed. 
-domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
-# These help tell which records are owned by external-dns.
-registry: "txt"
-txtOwnerId: "k8s"
-txtPrefix: ""
-logLevel: debug
-policy: upsert-only
-#policy: sync
+  pdns:
+    apiUrl: http://ns1.nf.lab
+    apiPort: 8081
+    apiKey: 4845460c-5012-46fe-8ece-56d95a8c3713
+    #secretName: pdns
+  ## List of domains that can be managed. 
+  domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
+  # These help tell which records are owned by external-dns.
+  registry: "txt"
+  txtOwnerId: "k8s"
+  txtPrefix: ""
+  logLevel: debug
+  policy: upsert-only
+  #policy: sync
 
-## Limit external-dns resources
-resources:
-  limits:
-    memory: 1Gi
-  requests:
-    memory: 50Mi
-    cpu: 10m
-## ensure RBAC is enabled
-rbac:
-  create: true
-  apiVersion: v1
+  ## Limit external-dns resources
+  resources:
+    limits:
+      memory: 1Gi
+    requests:
+      memory: 50Mi
+      cpu: 10m
+  ## ensure RBAC is enabled
+  rbac:
+    create: true
+    apiVersion: v1
 
-serviceMonitor:
-  enabled: true
-  namespace: monitoring
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring
