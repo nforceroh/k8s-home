@@ -14,6 +14,5 @@ metadata:
   name: infra
   namespace: {{ .Release.Namespace }}
 spec:
-  autoAssign: true
   addresses:
   - {{ .Values.global.metallb.infra }}
