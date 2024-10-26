@@ -25,7 +25,7 @@ spec:
       source:
         repoURL: "{{ $.Values.global.repo }}"
         targetRevision: "{{ $.Values.global.branch }}"
-        path: "{{ path }}"
+        path: "{{`{{ path }}`}}"
         helm:
           releaseName: "{{ . }}"
           valueFiles:
