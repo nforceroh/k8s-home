@@ -4,10 +4,10 @@ persist: true
 # Provides machine specific configuration options.
 machine:
     type: worker # Defines the role of the machine within the cluster.
-    token: 5zhva3.brnmqmbly86fhrbc # The `token` is used by a machine to join the PKI of the cluster.
+    token: gj7ebl.69yzli21lqynh71n # The `token` is used by a machine to join the PKI of the cluster.
     # The root certificate authority of the PKI.
     ca:
-        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQakNCOGFBREFnRUNBaEFGeTY1MkVLNnpSY21naXNLbVhPMFhNQVVHQXl0bGNEQVFNUTR3REFZRFZRUUsKRXdWMFlXeHZjekFlRncweU5ERXdNalV4T1RJMk5UUmFGdzB6TkRFd01qTXhPVEkyTlRSYU1CQXhEakFNQmdOVgpCQW9UQlhSaGJHOXpNQ293QlFZREsyVndBeUVBVmlNbXpud2k4RXB2cUo0NTVsZXFVaW1OY1ltWmlBWHFyakM0ClBKb0RiakNqWVRCZk1BNEdBMVVkRHdFQi93UUVBd0lDaERBZEJnTlZIU1VFRmpBVUJnZ3JCZ0VGQlFjREFRWUkKS3dZQkJRVUhBd0l3RHdZRFZSMFRBUUgvQkFVd0F3RUIvekFkQmdOVkhRNEVGZ1FVUnM3VnV4MzZmUUh3ZHhUQwptTnVzT3NNazdwTXdCUVlESzJWd0EwRUE5ZEFCUHNIMnQwWnlvOUlXaG9EdS9rUXNsOEhCNnZnNmM0WGtjaGJtCmoxOEtteXBycXJJaUIvZlNtTlkxY1ZVRTRIZDdtd0VVNnpyQjFBeHQxVUpSQkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQekNCOHFBREFnRUNBaEVBMEhqWkNFNURUa29Dem9MUVFOTzFvVEFGQmdNclpYQXdFREVPTUF3R0ExVUUKQ2hNRmRHRnNiM013SGhjTk1qUXhNREkyTURFMU1UVTVXaGNOTXpReE1ESTBNREUxTVRVNVdqQVFNUTR3REFZRApWUVFLRXdWMFlXeHZjekFxTUFVR0F5dGxjQU1oQURDdU5TQkVQN21XbEkrZWd5M2RJb1B4TTFaYWJwU3ljZFVxCjdBSVArcHpTbzJFd1h6QU9CZ05WSFE4QkFmOEVCQU1DQW9Rd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUcKQ0NzR0FRVUZCd01DTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRk5KZnBaeHVpbFZLUVZSeApKYXR3aktwdk9RVWdNQVVHQXl0bGNBTkJBQkhCd1d0ZXN1L0N4UUxGRXk2SHdmd1AvMmlDSWxIM24xYkdybzl1Cndrb1hmQ1J6dkV4MmFadWQvM2FNNzZYTmV5dnd2Y2pEa1owc3Bjd3ZSZk5UQ0FVPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
         key: ""
     # Extra certificate subject alternative names for the machine's certificate.
     certSANs: []
@@ -180,7 +180,7 @@ machine:
     # Used to provide instructions for installations.
     install:
         disk: /dev/sda # The disk used for installations.
-        image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1 # Allows for supplying the image used to perform the installation.
+        image: ghcr.io/siderolabs/installer:v1.8.1 # Allows for supplying the image used to perform the installation.
         wipe: false # Indicates if the installation disk should be wiped at installation time.
         
         # # Look up disk using disk attributes like model, size, serial and others.
@@ -406,17 +406,14 @@ machine:
     #     exampleTaint: exampleTaintValue:NoSchedule
 # Provides cluster specific configuration options.
 cluster:
-    id: lcsZpI5oCVP74Kr-IAUlpctKhAl95yD7F__wT6RaiSI= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
-    secret: XowG5ptg9EnbzlcPAIbkR8L4lJZkYoxymFmyKTCL804= # Shared secret of cluster (base64 encoded random 32 bytes).
+    id: Mvvur2B0l5f4YPnJ659IVqR1fPmWuQHDTNf_rFBbl4w= # Globally unique identifier for this cluster (base64 encoded random 32 bytes).
+    secret: TYkh9I215IEGfZ4NE5ANcAWjaBFP+cIpSwa0ZCoDU3Y= # Shared secret of cluster (base64 encoded random 32 bytes).
     # Provides control plane specific configuration options.
     controlPlane:
         endpoint: https://10.0.0.226:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
-    clusterName: talos-test # Configures the cluster's name.
+    clusterName: talos # Configures the cluster's name.
     # Provides cluster specific network configuration options.
     network:
-        # The CNI used.
-        cni:
-            name: none # Name of CNI to use.
         dnsDomain: cluster.local # The domain used by Kubernetes DNS.
         # The pod subnet CIDR.
         podSubnets:
@@ -424,17 +421,18 @@ cluster:
         # The service subnet CIDR.
         serviceSubnets:
             - 10.96.0.0/12
-    token: j9tvft.cszev6lanxvu2f6c # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
+        
+        # # The CNI used.
+        # cni:
+        #     name: custom # Name of CNI to use.
+        #     # URLs containing manifests to apply for the CNI.
+        #     urls:
+        #         - https://docs.projectcalico.org/archive/v3.20/manifests/canal.yaml
+    token: v9fika.g9kyj9ty1e0ipaol # The [bootstrap token](https://kubernetes.io/docs/reference/access-authn-authz/bootstrap-tokens/) used to join the cluster.
     # The base64 encoded root certificate authority used by Kubernetes.
     ca:
-        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpakNDQVRDZ0F3SUJBZ0lSQUk4R1VmVXZSRVhFdHBidVV3U2RWRGN3Q2dZSUtvWkl6ajBFQXdJd0ZURVQKTUJFR0ExVUVDaE1LYTNWaVpYSnVaWFJsY3pBZUZ3MHlOREV3TWpVeE9USTJOVFJhRncwek5ERXdNak14T1RJMgpOVFJhTUJVeEV6QVJCZ05WQkFvVENtdDFZbVZ5Ym1WMFpYTXdXVEFUQmdjcWhrak9QUUlCQmdncWhrak9QUU1CCkJ3TkNBQVQraXM0Qmd0TUx6RVg3ZmVKTmJHSjB5YnMwQm5jSXJvRy9nTDJJcEpKd0ozQnNjN09pK09ZWmxXcnQKQThDN2xmd0hXMm9RSDNxRWZydHUvcGxmbnQ1d28yRXdYekFPQmdOVkhROEJBZjhFQkFNQ0FvUXdIUVlEVlIwbApCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQ01BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPCkJCWUVGQXZWanlnS2hRWXNqVFF5YnNNdnBBTG1PWGdYTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSVFEYzM5ZU4KZFgzQm5rWW5LOUFNcGgyMkwyVUNvQ0lIZldNN2xGaUhaaDhmK1FJZ1hYd3JjcGpubEZ0enI2aVB0WW1qUHhVTwozTm5UV3QxMHNSeVlhNHE4SnpvPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJpakNDQVRDZ0F3SUJBZ0lSQUl3c1NZaHROREUxRTMrdjZhaTNXeHd3Q2dZSUtvWkl6ajBFQXdJd0ZURVQKTUJFR0ExVUVDaE1LYTNWaVpYSnVaWFJsY3pBZUZ3MHlOREV3TWpZd01UVXhOVGxhRncwek5ERXdNalF3TVRVeApOVGxhTUJVeEV6QVJCZ05WQkFvVENtdDFZbVZ5Ym1WMFpYTXdXVEFUQmdjcWhrak9QUUlCQmdncWhrak9QUU1CCkJ3TkNBQVErQSszTkQxcEt2WHJOZ1dIazU0dXN3TnJjMjhvTXBiUk96c2V1OXBIZDFZbkVoNHVRTjlkUG5vTTkKV0xwcjZLRU45aXhFc0hxb1R1OER3UGdzZVBpQ28yRXdYekFPQmdOVkhROEJBZjhFQkFNQ0FvUXdIUVlEVlIwbApCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQ01BOEdBMVVkRXdFQi93UUZNQU1CQWY4d0hRWURWUjBPCkJCWUVGQVFlUjZPT1BaRlR5T2oxTGFiUEZ3ejliV21LTUFvR0NDcUdTTTQ5QkFNQ0EwZ0FNRVVDSURLWUxWSEQKMXdNd2VqVjEwMkI0ZWtLMmorUWFUU0lrYm4yK0VNV2hjZzBnQWlFQTRDU2Z3S1VBM2V5c2c5MmQzVURpczJpeAozd0JDV0RDalo0eWwxdDV3WUZJPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
         key: ""
-    # Kube-proxy server-specific configuration options
-    proxy:
-        disabled: true # Disable kube-proxy deployment on cluster bootstrap.
-        
-        # # The container image used in the kube-proxy manifest.
-        # image: registry.k8s.io/kube-proxy:v1.31.1
     # Configures cluster member discovery.
     discovery:
         enabled: true # Enable the cluster membership discovery feature.
@@ -514,6 +512,15 @@ cluster:
     #     # Extra arguments to supply to the controller manager.
     #     extraArgs:
     #         feature-gates: ServerSideApply=true
+
+    # # Kube-proxy server-specific configuration options
+    # proxy:
+    #     disabled: false # Disable kube-proxy deployment on cluster bootstrap.
+    #     image: registry.k8s.io/kube-proxy:v1.31.1 # The container image used in the kube-proxy manifest.
+    #     mode: ipvs # proxy mode of kube-proxy.
+    #     # Extra arguments to supply to kube-proxy.
+    #     extraArgs:
+    #         proxy-mode: iptables
 
     # # Scheduler server specific configuration options.
     # scheduler:

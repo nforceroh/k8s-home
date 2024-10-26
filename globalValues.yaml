@@ -6,7 +6,8 @@ global:
   TZ: America/New_York
 
   applicationSets:
-  - common
+  - metallb
+#  - common
 #  - media
 #  - home
 #  - monitoring
