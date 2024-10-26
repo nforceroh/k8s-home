@@ -22,7 +22,7 @@ velero:
       provider: aws
       bucket: velero
       config:
-        region: minio
+        region: None
         insecureSkipTLSVerify: true
         s3ForcePathStyle: true
         s3Url: https://minio.nf.lab
