@@ -18,7 +18,7 @@ argo-cd:
   server:
     certificate:
       enabled: true 
-      domain: test.nf.lab
+      domain: argo.test.nf.lab
       secretName: argocd-server-tls
       issuer:
         group: "cert-manager.io"
