@@ -13,7 +13,7 @@ spec:
       - path: "{{ . }}/*"
   template:
     metadata:
-      name: "{{ path.basename }}"
+      name: "{{`{{ path.basename }}`}}"
     spec:
       project: argocd-talos
       syncPolicy:
@@ -25,7 +25,7 @@ spec:
       source:
         repoURL: "{{ $.Values.global.repo }}"
         targetRevision: "{{ $.Values.global.branch }}"
-        path: "{{ path }}"
+        path: "{{`{{ path }}`}}"
         helm:
           releaseName: "{{ . }}"
           valueFiles:

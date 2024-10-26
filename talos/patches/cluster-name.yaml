@@ -1,0 +1,4 @@
+# patches/cluster-name.yaml
+cluster:
+  clusterName: talos
+

@@ -19,6 +19,9 @@ machine:
     # Used to provide additional options to the kubelet.
     kubelet:
         image: ghcr.io/siderolabs/kubelet:v1.31.1 # The `image` field is an optional reference to an alternative kubelet image.
+        # The `extraArgs` field is used to provide additional flags to the kubelet.
+        extraArgs:
+            rotate-server-certificates: "true"
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
         
@@ -26,10 +29,6 @@ machine:
         # clusterDNS:
         #     - 10.96.0.10
         #     - 169.254.2.53
-
-        # # The `extraArgs` field is used to provide additional flags to the kubelet.
-        # extraArgs:
-        #     key: value
 
         # # The `extraMounts` field is used to add additional mounts to the kubelet container.
         # extraMounts:
@@ -69,118 +68,119 @@ machine:
         #         - '!10.0.0.3/32'
         #         - fdc7::/16
     # Provides machine specific network configuration options.
-    network: {}
-    # # `interfaces` is used to define the network interface configuration.
-    # interfaces:
-    #     - interface: enp0s1 # The interface name.
-    #       # Assigns static IP addresses to the interface.
-    #       addresses:
-    #         - 192.168.2.0/24
-    #       # A list of routes associated with the interface.
-    #       routes:
-    #         - network: 0.0.0.0/0 # The route's network (destination).
-    #           gateway: 192.168.2.1 # The route's gateway (if empty, creates link scope route).
-    #           metric: 1024 # The optional metric for the route.
-    #       mtu: 1500 # The interface's MTU.
-    #       
-    #       # # Picks a network device using the selector.
+    network:
+        hostname: talos # Used to statically set the hostname for the machine.
+        # `interfaces` is used to define the network interface configuration.
+        interfaces:
+            - interface: eth0 # The interface name.
+              dhcp: true # Indicates if DHCP should be used to configure the interface.
+              
+              # # Picks a network device using the selector.
 
-    #       # # select a device with bus prefix 00:*.
-    #       # deviceSelector:
-    #       #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-    #       # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-    #       # deviceSelector:
-    #       #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-    #       #     driver: virtio # Kernel driver, supports matching by wildcard.
-    #       # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-    #       # deviceSelector:
-    #       #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-    #       #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-    #       #       driver: virtio # Kernel driver, supports matching by wildcard.
+              # # select a device with bus prefix 00:*.
+              # deviceSelector:
+              #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
+              # deviceSelector:
+              #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #     driver: virtio # Kernel driver, supports matching by wildcard.
+              # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
+              # deviceSelector:
+              #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #       driver: virtio # Kernel driver, supports matching by wildcard.
 
-    #       # # Bond specific options.
-    #       # bond:
-    #       #     # The interfaces that make up the bond.
-    #       #     interfaces:
-    #       #         - enp2s0
-    #       #         - enp2s1
-    #       #     # Picks a network device using the selector.
-    #       #     deviceSelectors:
-    #       #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-    #       #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-    #       #           driver: virtio # Kernel driver, supports matching by wildcard.
-    #       #     mode: 802.3ad # A bond option.
-    #       #     lacpRate: fast # A bond option.
+              # # Assigns static IP addresses to the interface.
+              # addresses:
+              #     - 10.5.0.0/16
+              #     - 192.168.3.7
 
-    #       # # Bridge specific options.
-    #       # bridge:
-    #       #     # The interfaces that make up the bridge.
-    #       #     interfaces:
-    #       #         - enxda4042ca9a51
-    #       #         - enxae2a6774c259
-    #       #     # A bridge option.
-    #       #     stp:
-    #       #         enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
+              # # A list of routes associated with the interface.
+              # routes:
+              #     - network: 0.0.0.0/0 # The route's network (destination).
+              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
+              #     - network: 10.2.0.0/16 # The route's network (destination).
+              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
 
-    #       # # Indicates if DHCP should be used to configure the interface.
-    #       # dhcp: true
+              # # Bond specific options.
+              # bond:
+              #     # The interfaces that make up the bond.
+              #     interfaces:
+              #         - enp2s0
+              #         - enp2s1
+              #     # Picks a network device using the selector.
+              #     deviceSelectors:
+              #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #           driver: virtio # Kernel driver, supports matching by wildcard.
+              #     mode: 802.3ad # A bond option.
+              #     lacpRate: fast # A bond option.
 
-    #       # # DHCP specific options.
-    #       # dhcpOptions:
-    #       #     routeMetric: 1024 # The priority of all routes received via DHCP.
+              # # Bridge specific options.
+              # bridge:
+              #     # The interfaces that make up the bridge.
+              #     interfaces:
+              #         - enxda4042ca9a51
+              #         - enxae2a6774c259
+              #     # A bridge option.
+              #     stp:
+              #         enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
 
-    #       # # Wireguard specific configuration.
+              # # DHCP specific options.
+              # dhcpOptions:
+              #     routeMetric: 1024 # The priority of all routes received via DHCP.
 
-    #       # # wireguard server example
-    #       # wireguard:
-    #       #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-    #       #     listenPort: 51111 # Specifies a device's listening port.
-    #       #     # Specifies a list of peer configurations to apply to a device.
-    #       #     peers:
-    #       #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-    #       #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
-    #       #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-    #       #           allowedIPs:
-    #       #             - 192.168.1.0/24
-    #       # # wireguard peer example
-    #       # wireguard:
-    #       #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-    #       #     # Specifies a list of peer configurations to apply to a device.
-    #       #     peers:
-    #       #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-    #       #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
-    #       #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
-    #       #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-    #       #           allowedIPs:
-    #       #             - 192.168.1.0/24
+              # # Wireguard specific configuration.
 
-    #       # # Virtual (shared) IP address configuration.
+              # # wireguard server example
+              # wireguard:
+              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
+              #     listenPort: 51111 # Specifies a device's listening port.
+              #     # Specifies a list of peer configurations to apply to a device.
+              #     peers:
+              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
+              #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
+              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
+              #           allowedIPs:
+              #             - 192.168.1.0/24
+              # # wireguard peer example
+              # wireguard:
+              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
+              #     # Specifies a list of peer configurations to apply to a device.
+              #     peers:
+              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
+              #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
+              #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
+              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
+              #           allowedIPs:
+              #             - 192.168.1.0/24
 
-    #       # # layer2 vip example
-    #       # vip:
-    #       #     ip: 172.16.199.55 # Specifies the IP address to be used.
+              # # Virtual (shared) IP address configuration.
 
-    # # Used to statically set the nameservers for the machine.
-    # nameservers:
-    #     - 8.8.8.8
-    #     - 1.1.1.1
+              # # layer2 vip example
+              # vip:
+              #     ip: 172.16.199.55 # Specifies the IP address to be used.
+        
+        # # Used to statically set the nameservers for the machine.
+        # nameservers:
+        #     - 8.8.8.8
+        #     - 1.1.1.1
 
-    # # Allows for extra entries to be added to the `/etc/hosts` file
-    # extraHostEntries:
-    #     - ip: 192.168.1.100 # The IP of the host.
-    #       # The host alias.
-    #       aliases:
-    #         - example
-    #         - example.domain.tld
+        # # Allows for extra entries to be added to the `/etc/hosts` file
+        # extraHostEntries:
+        #     - ip: 192.168.1.100 # The IP of the host.
+        #       # The host alias.
+        #       aliases:
+        #         - example
+        #         - example.domain.tld
 
-    # # Configures KubeSpan feature.
-    # kubespan:
-    #     enabled: true # Enable the KubeSpan feature.
-
+        # # Configures KubeSpan feature.
+        # kubespan:
+        #     enabled: true # Enable the KubeSpan feature.
     # Used to provide instructions for installations.
     install:
         disk: /dev/sda # The disk used for installations.
-        image: ghcr.io/siderolabs/installer:v1.8.1 # Allows for supplying the image used to perform the installation.
+        image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1 # Allows for supplying the image used to perform the installation.
         wipe: false # Indicates if the installation disk should be wiped at installation time.
         
         # # Look up disk using disk attributes like model, size, serial and others.
@@ -197,6 +197,12 @@ machine:
         # # Allows for supplying additional system extension images to install on top of base Talos image.
         # extensions:
         #     - image: ghcr.io/siderolabs/gvisor:20220117.0-v1.0.0 # System extension image.
+    # Allows the addition of user specified files.
+    files:
+        - content: "[metrics]\n  address = \"0.0.0.0:11234\"        \n" # The contents of the file.
+          permissions: 0o0 # The file's permissions in octal.
+          path: /etc/cri/conf.d/20-customization.part # The path of the file.
+          op: create # The operation to use
     # Used to configure the machine's container image registry mirrors.
     registries: {}
     # # Specifies mirror configuration for each registry host namespace.
@@ -291,15 +297,6 @@ machine:
     #           # size: 100 MB
     #           # # Precise value in bytes.
     #           # size: 1073741824
-
-    # # Allows the addition of user specified files.
-
-    # # MachineFiles usage example.
-    # files:
-    #     - content: '...' # The contents of the file.
-    #       permissions: 0o666 # The file's permissions in octal.
-    #       path: /tmp/file.txt # The path of the file.
-    #       op: append # The operation to use
 
     # # The `env` field allows for the addition of environment variables.
 
@@ -475,10 +472,6 @@ cluster:
         image: registry.k8s.io/kube-controller-manager:v1.31.1 # The container image used in the controller manager manifest.
     # Kube-proxy server-specific configuration options
     proxy:
-<<<<<<< HEAD
-        disabled: false # Disable kube-proxy deployment on cluster bootstrap.
-=======
->>>>>>> refs/remotes/origin/main
         image: registry.k8s.io/kube-proxy:v1.31.1 # The container image used in the kube-proxy manifest.
         
         # # Disable kube-proxy deployment on cluster bootstrap.
@@ -512,10 +505,12 @@ cluster:
         # advertisedSubnets:
         #     - 10.0.0.0/8
     # A list of urls that point to additional manifests.
-    extraManifests: []
-    #   - https://www.example.com/manifest1.yaml
-    #   - https://www.example.com/manifest2.yaml
-
+    extraManifests:
+        - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml
+        - https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+        - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
+        - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
+        - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
     # A list of inline Kubernetes manifests.
     inlineManifests: []
     #   - name: namespace-ci # Name of the manifest.
@@ -525,6 +520,7 @@ cluster:
     #       metadata:
     #       	name: ci
 
+    allowSchedulingOnControlPlanes: true # Allows running workload on control-plane nodes.
     
     # # A key used for the [encryption of secret data at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/).
 
@@ -551,6 +547,3 @@ cluster:
     # # Settings for admin kubeconfig generation.
     # adminKubeconfig:
     #     certLifetime: 1h0m0s # Admin kubeconfig certificate lifetime (default is 1 year).
-
-    # # Allows running workload on control-plane nodes.
-    # allowSchedulingOnControlPlanes: true
