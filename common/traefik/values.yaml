@@ -10,7 +10,7 @@ traefik:
     annotations:
       metallb.universe.tf/ip-allocated-from-pool: infra
       external-dns.alpha.kubernetes.io/hostname: traefik.test.nf.lab
-#      external-dns.alpha.kubernetes.io/access: public
+      external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
 
   metrics:
