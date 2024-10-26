@@ -28,7 +28,7 @@ velero:
         s3Url: https://minio.nf.lab
 
   credentials:
-    existingSecret: velero-minio-s3-key
+    existingSecret: velero-minio-credentials
 
   snapshotsEnabled: false
   
