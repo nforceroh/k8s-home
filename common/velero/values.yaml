@@ -16,6 +16,7 @@ velero:
         - mountPath: /target
           name: plugins
   configuration:
+    logLevel: debug
     defaultVolumesToFsBackup: true
     backupStorageLocation:
     - name: default
