@@ -475,6 +475,10 @@ cluster:
         image: registry.k8s.io/kube-controller-manager:v1.31.1 # The container image used in the controller manager manifest.
     # Kube-proxy server-specific configuration options
     proxy:
+<<<<<<< HEAD
+        disabled: false # Disable kube-proxy deployment on cluster bootstrap.
+=======
+>>>>>>> refs/remotes/origin/main
         image: registry.k8s.io/kube-proxy:v1.31.1 # The container image used in the kube-proxy manifest.
         
         # # Disable kube-proxy deployment on cluster bootstrap.
