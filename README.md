@@ -41,9 +41,12 @@ talosctl apply-config --insecure -n ${NODEIP} --file  $HOME/.talos/controlplane.
 
 
 talosctl bootstrap -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
-talosctl config merge $HOME/.talos/talosconfig  --talosconfig ./talosconfig 
+talosctl --talosconfig=./talosconfig config endpoint 10.0.0.226
+talosctl --talosconfig=./talosconfig config node 10.0.0.226
+talosctl config merge $HOME/.talos/config  --talosconfig ./talosconfig 
 
 talosctl get members -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
+
 
 talosctl kubeconfig ~/.kube/talos -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
 export KUBECONFIG=~/.kube/talos
