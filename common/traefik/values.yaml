@@ -13,6 +13,10 @@ traefik:
       external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
 
+  ingressRoute:
+    dashboard:
+      enabled: true
+
   metrics:
     prometheus:
       entryPoint: metrics
