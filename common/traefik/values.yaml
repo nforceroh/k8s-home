@@ -32,10 +32,20 @@ traefik:
       allowCrossNamespace: true
 
   ports:
+    traefik:
+      port: 9000
+      expose:
+        default: true
     web:
       redirectTo:
         port: websecure
         priority: 10
+    emby:
+      port: 8096
+      expose: 
+        default: true
+      exposedPort: 8096
+      protocol: TCP
 
   # https://doc.traefik.io/traefik/https/tls/#tls-options
   tlsOptions:
