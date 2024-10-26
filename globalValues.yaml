@@ -7,7 +7,7 @@ global:
 
   applicationSets:
   - metallb
-#  - common
+  - common
 #  - media
 #  - home
 #  - monitoring
