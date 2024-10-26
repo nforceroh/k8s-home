@@ -13,7 +13,7 @@ argo-cd:
       url: 'https://argo.test.nf.lab'
       admin.enabled: true
       secret:
-        argocdServerAdminPassword: "$2a$10$WvfhO90xGFPNrxiyo7foy.yNp0e6osfV7UKuLoJZP8b2fdu29oTLK"
+        argocdServerAdminPassword: "$2y$10$rKGfnbdOuBySO1H2exqnaefO6wyAK3xwU8cwfIfvhXUC43lsbZW9W"
 
   server:
     certificate:
