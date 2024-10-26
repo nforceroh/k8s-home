@@ -5,6 +5,11 @@ traefik:
     access:
       enabled: true
 
+  ingressClass:  # @schema additionalProperties: false
+    enabled: true
+    isDefaultClass: true
+    name: traefik
+
   service:
     enabled: true
     annotations:
