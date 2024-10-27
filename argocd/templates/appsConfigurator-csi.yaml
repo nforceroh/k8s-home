@@ -16,4 +16,4 @@ spec:
     path: csi
   destination:
     server: https://kubernetes.default.svc
-    namespace: csi
+    namespace: csi  

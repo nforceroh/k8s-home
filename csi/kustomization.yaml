@@ -7,18 +7,18 @@ helmCharts:
   releaseName: snapshot-controller
   version: 0.2.4
   repo: https://democratic-csi.github.io/charts/
-  namespace: democratic-csi
+  namespace: csi
   valuesFile: ./resources/snapshot-controller.yaml
 - name: democratic-csi
   releaseName: zfs-nfs
   version: 0.14.6
   repo: https://democratic-csi.github.io/charts/
-  namespace: democratic-csi
+  namespace: csi
   valuesFile: ./resources/values-nfs.yaml
 - name: democratic-csi
   releaseName: zfs-iscsi
   version: 0.14.6
   repo: https://democratic-csi.github.io/charts/
-  namespace: democratic-csi
+  namespace: csi
   valuesFile: ./resources/values-iscsi.yaml
 
