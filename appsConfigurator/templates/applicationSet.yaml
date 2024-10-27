@@ -13,7 +13,7 @@ spec:
       - path: "{{ . }}/*"
   template:
     metadata:
-      name:  "{{path.basename}}"
+      name: "{{`{{ path.basename }}`}}"
     spec:
       project: argocd-talos
       syncPolicy:
@@ -33,6 +33,6 @@ spec:
             - ../../globalValues.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{path.basename}}"
+        namespace: "{{ path.basename }}"
 ---
 {{- end}}
