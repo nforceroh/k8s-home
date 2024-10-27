@@ -61,3 +61,11 @@ talos   Ready    control-plane   4m53s   v1.31.1
 
 # bootstrap argocd...
 
+# kubeseal
+```
+wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.1/kubeseal-0.27.1-linux-amd64.tar.gzta
+sudo install -m 755 kubeseal /usr/local/bin/kubeseal
+```
+kubeseal  --controller-name sealed-secrets --controller-namespace common
+
+kubectl create -f cert-manager.yaml -o yaml --dry-run=client|kubeseal --controller-name sealed-secrets --controller-namespace common > cert-manager-sealed.yaml
