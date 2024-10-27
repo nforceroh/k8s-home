@@ -10,7 +10,7 @@ spec:
       repoURL: "{{ $.Values.global.repo }}"
       revision: "{{ $.Values.global.branch }}"
       directories:
-      - path: "{{ . }}/apps/*"
+      - path: "/apps/{{ . }}/*"
   template:
     metadata:
       name: "{{`{{ path.basename }}`}}"
