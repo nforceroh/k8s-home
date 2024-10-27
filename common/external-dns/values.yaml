@@ -12,8 +12,7 @@ external-dns:
   pdns:
     apiUrl: http://10.0.0.2
     apiPort: 8081
-    apiKey: 4845460c-5012-46fe-8ece-56d95a8c3713
-    #secretName: pdns
+    secretName: pdns
   ## List of domains that can be managed. 
   #domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
   domainFilters: ["test.nf.lab"]

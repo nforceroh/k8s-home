@@ -63,6 +63,24 @@ talos   Ready    control-plane   4m53s   v1.31.1
 
 # kubeseal
 ```
+# https://github.com/bitnami-labs/sealed-secrets/blob/main/docs/bring-your-own-certificates.md
+# generate own cert
+export PRIVATEKEY="mytls.key"
+export PUBLICKEY="mytls.crt"
+export NAMESPACE="common"
+export SECRETNAME="mycustomkeys"
+openssl req -x509 -days 3650 -nodes -newkey rsa:4096 -keyout "$PRIVATEKEY" -out "$PUBLICKEY" -subj "/CN=sealed-secret/O=sealed-secret"
+
+# Create a tls k8s secret, using your recently created RSA key pair
+kubectl -n "$NAMESPACE" create secret tls "$SECRETNAME" --cert="$PUBLICKEY" --key="$PRIVATEKEY"
+kubectl -n "$NAMESPACE" label secret "$SECRETNAME" sealedsecrets.bitnami.com/sealed-secrets-key=active
+
+# Deleting the controller Pod is needed to pick the new keys
+kubectl -n  "$NAMESPACE" delete pod -l app.kubernetes.io/name=sealed-secrets
+
+# See the new certificates (private keys) in the controller logs
+kubectl -n "$NAMESPACE" logs -l app.kubernetes.io/name=sealed-secrets
+
 wget https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.27.1/kubeseal-0.27.1-linux-amd64.tar.gzta
 sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 ```
