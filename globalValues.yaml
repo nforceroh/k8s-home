@@ -4,14 +4,13 @@ global:
   domain: test.nf.lab
   extDomain: nforcer.com
   TZ: America/New_York
-
-  applicationSets:
-  - metallb
-  - common
-#  - media
-#  - home
-#  - monitoring
-    
   metallb:
     apps: 10.0.1.201-10.0.1.240
     infra: 10.0.0.80-10.0.0.90
+  applicationSets:
+  - metallb
+  - common
+  - csi
+#  - media
+#  - home
+#  - monitoring
