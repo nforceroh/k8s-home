@@ -13,7 +13,7 @@ spec:
       - path: "{{ . }}/*"
   template:
     metadata:
-      name: "{{`{{ path.basename }}`}}"
+      name: ""
     spec:
       project: argocd-talos
       syncPolicy:
