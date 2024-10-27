@@ -10,7 +10,7 @@ spec:
       repoURL: "{{ $.Values.global.repo }}"
       revision: "{{ $.Values.global.branch }}"
       directories:
-      - path: "/apps/{{ . }}/*"
+      - path: "{{ . }}/*"
   template:
     metadata:
       name: "{{`{{ path.basename }}`}}"
@@ -25,12 +25,12 @@ spec:
       source:
         repoURL: "{{ $.Values.global.repo }}"
         targetRevision: "{{ $.Values.global.branch }}"
-        path: "{{`{{ path.basename }}`}}"
+        path: "{{`{{ path }}`}}"
         helm:
           releaseName: "{{ . }}"
           valueFiles:
             - values.yaml
-            - ../../../globalValues.yaml
+            - ../../globalValues.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{ . }}"
