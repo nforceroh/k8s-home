@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: {{ $.Values.global.repo }}
     targetRevision: {{ $.Values.global.branch }}
-    path: csi/democratic-csi
+    path: csi
     helm:
       valueFiles:
         - values.yaml
