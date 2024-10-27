@@ -1,0 +1,16 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: external-dns-pdns
+  namespace: default
+spec:
+  encryptedData:
+    pdns_api_key: AgARSbdZweEFxVjZ33znBPSj3clHz/32CX6l5+lW6ZaLnV3ikEHKvqBZgt9xfkHIlJLiuk/VLZT0mMW47qxSgXv9D56bHoqwp2t9+Eu12QSl+FhoGAbkGJlVJk5O9WnlPxF/xcQuFz+1sYg8zdof8j3WNM1OouFCET3/q8BaL+GPGgYp61gT8CNkpR4lRszkC5V09KTC9ufgzTf8XkkgvNEZeRmp4sjO7hnnXgFfYNR0je8okBVVF3ZSUlYLUjIZrb3b9PMFRW4PBAXzjLSLnE6Y+u+ec0LMb2d7aUcZtlEPHZhmoVuhvIE8MoNKy5Jrifkx8s+6I+E/qIgC+3KccODXIRORhxfqPDiuNj6HZCbJqD4zTTanBYSEICWdOlp6tQ2RRTKWU1ZBLE0B40H3PmGtlzTuYTHd8agu78dyK8FSAq8REJhTSmMgRCLs7F3Hxi1O43M37i7hiLO3LPpDPuXA2tfxTLqbZbSw9iZHdV9sywvmBZSkzIWbfrByeZp8IQA1yw2f+e/2tc/VaWqCkgMvLew1e3Z9W2BNfbdocjKD5On+1gS7SCpa7dspZlvWu0avIxADAmV0UNPJCfr/2GjiDMuNThWM2r0qNGC/TqZ9no6yHT4t9GwZTiZrnHDC09rVDD7COXGWGpmEGkVE/54UFsOrTqRTlvaAg7wgtVZ1A4OZ6AoXgeOkSpYugwXjNcJtBsPD1TfYFYc6lsROtuksUTZt+wTTl+NcUMV17X2y/8GG/c0=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: external-dns-pdns
+      namespace: default
+    type: Opaque
