@@ -10,7 +10,6 @@ global:
   applicationSets:
   - metallb
   - common
-  - csi
 #  - media
 #  - home
 #  - monitoring
