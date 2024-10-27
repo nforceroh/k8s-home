@@ -1,0 +1,4 @@
+#!ipxe
+
+set talos_type controlplane
+chain talos-unattended.ipxe

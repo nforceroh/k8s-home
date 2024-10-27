@@ -1,0 +1,4 @@
+#!ipxe
+
+set harvester_type create
+chain harvester-create.ipxe

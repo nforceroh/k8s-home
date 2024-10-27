@@ -1,0 +1,33 @@
+#!ipxe
+
+goto talos
+
+:talos
+set os Talos
+set os_arch x86_64
+iseq ${os_arch} x86_64 && set os_arch amd64 ||
+iseq ${os_arch} arm64 && set os_arch arm64 ||
+isset ${talos_mirror} || set talos_mirror https://pxe.factory.talos.dev/image/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7/v1.8.1
+isset ${talos_type} || set talos_type worker
+
+echo Mirror URL: ${talos_mirror}
+echo Mirror Type: ${talos_type}
+
+#prompt Press any key to continue
+
+goto talos_boot
+
+:talos_boot
+isset ${talos_base_url} || set talos_base_url ${talos_mirror}
+isset ${talos_config_url} && set talos_config talos.config=${talos_config_url}.yaml ||
+set boot_params printk.devkmsg=on slab_nomerge pti=on console=ttyS0 console=tty0 init_on_alloc=1 init_on_free=1 consoleblank=0 nvme_core.io_timeout=4294967295 ima_template=ima-ng ima_appraise=fix ima_hash=sha512 talos.platform=metal ${talos_config} initrd=initrd.magic ${cmdline}
+imgfree
+kernel ${talos_base_url}/kernel-${os_arch} ${boot_params}
+initrd ${talos_base_url}/initramfs-${os_arch}.xz
+echo
+echo Booting with the following kernel args:
+echo ${boot_params}
+echo
+echo MD5sums:
+md5sum kernel-${os_arch} initramfs-${os_arch}.xz
+boot

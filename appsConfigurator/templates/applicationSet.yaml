@@ -10,7 +10,7 @@ spec:
       repoURL: "{{ $.Values.global.repo }}"
       revision: "{{ $.Values.global.branch }}"
       directories:
-      - path: "{{ . }}/*"
+      - path: "{{ . }}/apps/*"
   template:
     metadata:
       name: "{{`{{ path.basename }}`}}"
@@ -30,7 +30,7 @@ spec:
           releaseName: "{{ . }}"
           valueFiles:
             - values.yaml
-            - ../../globalValues.yaml
+            - ../../../globalValues.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{ . }}"
