@@ -14,10 +14,6 @@ spec:
     repoURL: {{ $.Values.global.repo }}
     targetRevision: {{ $.Values.global.branch }}
     path: csi
-    helm:
-      valueFiles:
-        - values.yaml
-        - ../globalValues.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: csi
