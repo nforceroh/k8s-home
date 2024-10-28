@@ -30,6 +30,8 @@ talosctl gen config \
   --config-patch @patches/cluster-name.yaml                 \
   --config-patch @patches/extramanifests.yaml   \
   --config-patch @patches/allow-controlplane-workloads.yaml \
+  --config-patch @patches/cache_registry.yaml \
+  --config-patch @patches/trust_nf.lab.yaml \
   --config-patch @patches/metrics.yaml \
   --config-patch @nodes/node01.yaml                             \
   $CLUSTER_NAME $API_ENDPOINT --force
