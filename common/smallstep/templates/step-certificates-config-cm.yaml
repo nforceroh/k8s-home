@@ -78,7 +78,7 @@ data:
 kind: ConfigMap
 metadata:
   creationTimestamp: null
-  name: step-certificates-config
+  name: smallstep-step-certificates-config
   namespace: {{ .Release.Namespace }}
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
