@@ -1,0 +1,90 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: org.democratic-csi.iscsi
+    volume.kubernetes.io/provisioner-deletion-secret-name: provisioner-secret-truenas-iscsi-zfs-iscsi-democratic-csi
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: democratic-csi
+  creationTimestamp: "2024-10-17T04:19:13Z"
+  finalizers:
+  - kubernetes.io/pv-protection
+  name: pvc-d948856a-220d-409b-84fe-65086481041a
+  resourceVersion: "68933157"
+  uid: fcfdcbb0-acb8-42be-a6fd-0e6d94ea31f3
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 500Mi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: phpmyadmin-pvc
+    namespace: tools
+    resourceVersion: "68933092"
+    uid: d948856a-220d-409b-84fe-65086481041a
+  csi:
+    controllerExpandSecretRef:
+      name: controller-expand-secret-truenas-iscsi-zfs-iscsi-democratic-csi
+      namespace: democratic-csi
+    controllerPublishSecretRef:
+      name: controller-publish-secret-truenas-iscsi-zfs-iscsi-democratic-cs
+      namespace: democratic-csi
+    driver: org.democratic-csi.iscsi
+    fsType: ext4
+    nodePublishSecretRef:
+      name: node-publish-secret-truenas-iscsi-zfs-iscsi-democratic-csi
+      namespace: democratic-csi
+    nodeStageSecretRef:
+      name: node-stage-secret-truenas-iscsi-zfs-iscsi-democratic-csi
+      namespace: democratic-csi
+    volumeAttributes:
+      interface: ""
+      iqn: iqn.2011-08.org.truenas.ctl:csi-tools-phpmyadmin-pvc
+      lun: "0"
+      node_attach_driver: iscsi
+      portal: 10.0.0.100:3260
+      portals: ""
+      provisioner_driver: freenas-api-iscsi
+      storage.kubernetes.io/csiProvisionerIdentity: 1729135311960-9934-org.democratic-csi.iscsi
+    volumeHandle: pvc-d948856a-220d-409b-84fe-65086481041a
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: truenas-iscsi
+  volumeMode: Filesystem
+status:
+  phase: Bound
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+    pv.kubernetes.io/bind-completed: "yes"
+    pv.kubernetes.io/bound-by-controller: "yes"
+    volume.beta.kubernetes.io/storage-provisioner: org.democratic-csi.iscsi
+    volume.kubernetes.io/storage-provisioner: org.democratic-csi.iscsi
+  creationTimestamp: "2024-10-17T04:19:07Z"
+  finalizers:
+  - kubernetes.io/pvc-protection
+  labels:
+    velero.io/backup-name: mig-phpmyadmin
+    velero.io/restore-name: mig-phpmyadmin-20241017001905
+  name: phpmyadmin-pvc
+  namespace: tools
+  resourceVersion: "68933159"
+  uid: d948856a-220d-409b-84fe-65086481041a
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+  storageClassName: truenas-iscsi
+  volumeMode: Filesystem
+  volumeName: pvc-d948856a-220d-409b-84fe-65086481041a
+status:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 500Mi
+  phase: Bound

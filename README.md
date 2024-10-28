@@ -87,3 +87,10 @@ sudo install -m 755 kubeseal /usr/local/bin/kubeseal
 kubeseal  --controller-name sealed-secrets --controller-namespace common
 
 kubectl create -f cert-manager.yaml -o yaml --dry-run=client|kubeseal --controller-name sealed-secrets --controller-namespace common > cert-manager-sealed.yaml
+
+Fix UNBOUND PV
+
+for p in `oc get pv|grep pvc|awk '{print $1}'`; do oc patch pv $p -p '{"spec":{"claimRef":{"uid":null}}}';done
+Fix Lost PVC
+
+oc get pvc -A|grep -v NAMES|grep Lost|awk '{print "oc annotate pvc "$2" -n "$1" pv.kubernetes.io/bind-completed-"}'

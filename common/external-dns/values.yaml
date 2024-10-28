@@ -1,6 +1,9 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
 
 external-dns:
+  image:
+    registry: harbor.nf.lab/proxy.docker.io
+    repository: bitnami/external-dns
   ## Watch these resources for new DNS records
   sources:
     - ingress

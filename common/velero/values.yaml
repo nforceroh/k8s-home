@@ -1,5 +1,7 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
 velero:
+  image:
+    repository: harbor.nf.lab/proxy.docker.io/velero/velero
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
   resources:
     requests:
