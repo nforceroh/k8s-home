@@ -1,18 +1,18 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/multus-cni/values.yaml
 
 multus-cni:
-  initContainers:
-    - command:
-        - /install-cni.sh
-      image: ghcr.io/siderolabs/install-cni:v1.5.0
-      imagePullPolicy: IfNotPresent
-      name: install-cni
-      resources: {}
-      terminationMessagePath: /dev/termination-log
-      terminationMessagePolicy: File
-      volumeMounts:
-        - mountPath: /host/opt/cni/bin/
-          name: cni-plugin
+#  initContainers:
+#    - command:
+#        - /install-cni.sh
+#      image: ghcr.io/siderolabs/install-cni:v1.5.0
+#      imagePullPolicy: IfNotPresent
+#      name: install-cni
+#      resources: {}
+#      terminationMessagePath: /dev/termination-log
+#      terminationMessagePolicy: File
+#      volumeMounts:
+#       - mountPath: /host/opt/cni/bin/
+#          name: cni-plugin
 
   extraVolumes:
     - name: cni-plugin

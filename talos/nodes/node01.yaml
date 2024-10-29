@@ -2,18 +2,10 @@ machine:
   kubelet:
     extraArgs:
       rotate-server-certificates: true
-    nodeIP:
-      validSubnets:
-        - 10.0.0.0/16
   install:
     image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1
   network:
     hostname: talos
-    interfaces:
-    - interface: eth0
-      dhcp: true
-    - interface: eno33559296
-      dhcp: true
-    - interface: eno50338560
-      dhcp: true
+
+
 
