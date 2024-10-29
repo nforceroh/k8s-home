@@ -20,10 +20,10 @@ argo-cd:
       enabled: true 
       domain: argo.test.nf.lab
       secretName: argocd-server-tls
-      issuer:
-        group: "cert-manager.io"
-        kind: ClusterIssuer
-        name: nf-lab
+#      issuer:
+#        group: "cert-manager.io"
+#        kind: ClusterIssuer
+#        name: nf-lab
     ingress:
       enabled: true
       ingressClassName: traefik
