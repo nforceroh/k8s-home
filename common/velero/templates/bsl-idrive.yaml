@@ -8,6 +8,7 @@ spec:
   config:
     region: Virginia
     s3Url: https://v7k8.va.idrivee2-60.com
+    checksumAlgorithm: ""
   credential:
     key: bsl
     name: velero-idrive-credentials

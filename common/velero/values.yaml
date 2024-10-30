@@ -29,6 +29,7 @@ velero:
         insecureSkipTLSVerify: true
         s3ForcePathStyle: true
         s3Url: https://minio.nf.lab
+        checksumAlgorithm: ""
 
   credentials:
     existingSecret: velero-minio-credentials
