@@ -6,6 +6,7 @@ machine:
     image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1
   network:
     hostname: talos
-
-
+  nodeLabels:
+      node.kubernetes.io/exclude-from-external-load-balancers:
+      $patch: delete
 

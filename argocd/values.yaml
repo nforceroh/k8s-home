@@ -14,17 +14,18 @@ argo-cd:
       url: 'https://argo.test.nf.lab'
       admin.enabled: true
       secret:
-        argocdServerAdminPassword: "$2y$10$rKGfnbdOuBySO1H2exqnaefO6wyAK3xwU8cwfIfvhXUC43lsbZW9W"
+        argocdServerAdminPassword: "$2a$10$s2Ibc1ThAoM4pRBsGG6TMu.i5ptXZw.nIMNyFY2//awGak23UggGi"
+        argocdServerAdminPasswordMtime: "2020-09-01T10:11:12Z"
 
   server:
-    certificate:
-      enabled: true 
-      domain: argo.test.nf.lab
-      secretName: argocd-server-tls
-      issuer:
-        group: "cert-manager.io"
-        kind: ClusterIssuer
-        name: nf-lab
+#    certificate:
+#      enabled: true 
+#      domain: argo.test.nf.lab
+#      secretName: argocd-server-tls
+#      issuer:
+#        group: "cert-manager.io"
+#        kind: ClusterIssuer
+#        name: nf-lab
     ingress:
       enabled: true
       ingressClassName: traefik

@@ -267,9 +267,6 @@ machine:
         #     # The list of Kubernetes namespaces Talos API access is available from.
         #     allowedKubernetesNamespaces:
         #         - kube-system
-    # Configures the node labels for the machine.
-    nodeLabels:
-        node.kubernetes.io/exclude-from-external-load-balancers: ""
     
     # # Provides machine specific control plane configuration options.
 
@@ -399,6 +396,12 @@ machine:
     #       # The `value` field is used to provide the seccomp profile.
     #       value:
     #         defaultAction: SCMP_ACT_LOG
+
+    # # Configures the node labels for the machine.
+
+    # # node labels example.
+    # nodeLabels:
+    #     exampleLabel: exampleLabelValue
 
     # # Configures the node annotations for the machine.
 
