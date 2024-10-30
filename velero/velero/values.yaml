@@ -12,12 +12,8 @@ velero:
       memory: 3072Mi
   initContainers:
     - name: velero-plugin-for-aws
-      image: velero/velero-plugin-for-aws:latest
-      imagePullPolicy: IfNotPresent
-      volumeMounts:
-        - mountPath: /target
-          name: plugins
   configuration:
+    features: EnableCSI
     logLevel: debug
     defaultVolumesToFsBackup: true
     backupStorageLocation:
