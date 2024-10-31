@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: {{ $.Values.global.repo }}
     targetRevision: {{ $.Values.global.branch }}
-    path: csi
+    path: apps/csi
   destination:
     server: https://kubernetes.default.svc
     namespace: csi  

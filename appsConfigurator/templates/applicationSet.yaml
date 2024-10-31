@@ -18,19 +18,19 @@ spec:
       project: argocd-talos
       syncPolicy:
         automated:
-          prune: true
-          selfHeal: true
+          prune: false
+          selfHeal: false
         syncOptions:
           - CreateNamespace=true
       source:
         repoURL: "{{ $.Values.global.repo }}"
         targetRevision: "{{ $.Values.global.branch }}"
         path: "{{`{{ path }}`}}"
-        helm:
-          releaseName: "{{`{{ path.basename }}`}}"
-          valueFiles:
-            - values.yaml
-            - ../../../globalValues.yaml
+#        helm:
+#          releaseName: "{{`{{ path.basename }}`}}"
+#          valueFiles:
+#            - values.yaml
+#            - ../../../globalValues.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: "{{ . }}"

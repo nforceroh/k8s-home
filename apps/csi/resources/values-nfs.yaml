@@ -6,6 +6,8 @@ csiDriver:
 # add note here about volume expansion requirements
 storageClasses:
   - name: truenas-nfs
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false
     defaultClass: false
     reclaimPolicy: Delete
     volumeBindingMode: Immediate
@@ -16,10 +18,10 @@ storageClasses:
       - noatime
       - nfsvers=4
 
-#volumeSnapshotClasses:
-#- name: nfs
-#  parameters:
-#    detachedSnapshots: "true"
+volumeSnapshotClasses:
+- name: nfs
+  parameters:
+    detachedSnapshots: "true"
 
 driver:
   config:

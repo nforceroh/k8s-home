@@ -5,6 +5,8 @@ csiDriver:
 # add note here about volume expansion requirements
 storageClasses:
 - name: truenas-iscsi
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
   defaultClass: true
   reclaimPolicy: Delete
   volumeBindingMode: Immediate
