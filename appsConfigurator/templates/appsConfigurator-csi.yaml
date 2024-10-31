@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: appsconfigurator
+  name: democratic-csi
   namespace: argocd
 spec:
   project: argocd-talos
@@ -13,10 +13,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: appsConfigurator
-    helm:
-      valueFiles:
-        - values.yaml
+    path: /apps/csi
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: csi  
