@@ -10,6 +10,8 @@ spec:
     automated:
       prune: false
       selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
