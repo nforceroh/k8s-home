@@ -1,7 +1,8 @@
 # Bootstrap the appsConfigurator, which will in turn deploy enabled applicationSets (ArgoCD "app of apps" model)
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-metadata: velero
+metadata: 
+  name: velero
   namespace: argocd
 spec:
   project: argocd-talos
@@ -12,7 +13,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: /apps/velero
+    path: apps/velero
   destination:
     server: https://kubernetes.default.svc
     namespace: velero  

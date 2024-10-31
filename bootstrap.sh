@@ -24,7 +24,8 @@ sleep 10
 # Install ArgoCD using helm
 helm dependency update argocd
 #kubectl apply -k https://github.com/argoproj/argo-cd/manifests/crds\?ref\=stable
-helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values globalValues.yaml
+#helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values globalValues.yaml
+helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s
 
 # Set the ArgoCD admin password
 #kubectl patch secret -n argocd argocd-secret -p '{"stringData": { "admin.password": "'$(htpasswd -bnBC 10 "" ${adminpassword} | tr -d ':\n')'"}}'
