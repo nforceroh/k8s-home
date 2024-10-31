@@ -10,7 +10,9 @@ spec:
     automated:
       prune: false
       selfHeal: true
-  source:
+    syncOptions:
+    - CreateNamespace=true
+      source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
     path: appsConfigurator

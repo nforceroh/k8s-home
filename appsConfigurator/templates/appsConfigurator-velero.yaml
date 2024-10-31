@@ -12,7 +12,7 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-      source:
+  source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
     path: apps/velero
