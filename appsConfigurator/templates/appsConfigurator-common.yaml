@@ -1,21 +1,31 @@
 # Bootstrap the appsConfigurator, which will in turn deploy enabled applicationSets (ArgoCD "app of apps" model)
 apiVersion: argoproj.io/v1alpha1
-kind: application
+kind: applicationSets
 metadata: 
   name: common
   namespace: argocd
 spec:
-  project: argocd-talos
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-  source:
-    repoURL: https://github.com/nforceroh/k8s-home.git
-    targetRevision: main
-    path: apps/common
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: common  
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+  - git:
+      repoURL: https://github.com/nforceroh/k8s-home.git
+      revision: main
+      directories:
+      - path: apps/common/*
+  template:
+    metadata:
+      name: '{{.path.basename}}'
+    spec:
+      project: "my-project"
+      source:
+        repoURL: https://github.com/nforceroh/k8s-home.git
+        targetRevision: HEAD
+        path: '{{.path.path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{.path.basename}}'
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+
