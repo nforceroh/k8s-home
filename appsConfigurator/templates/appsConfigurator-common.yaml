@@ -4,26 +4,27 @@ kind: ApplicationSet
 metadata: 
   name: common
   namespace: argocd
-spec:
+  spec:
   generators:
-  - git:
-      repoURL: https://github.com/nforceroh/k8s-home.git
-      revision: main
-      directories:
-      - path: apps/common/*
+    - git:
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        revision: HEAD
+        directories:
+          - path: apps/common/*
   template:
     metadata:
-      name: '{{ .path.basename }}'
+      name: '{{path.basename}}'
     spec:
-      project: "argocd-talos"
+      project: default
       source:
-        repoURL: https://github.com/nforceroh/k8s-home.git
-        targetRevision: main
-        path: '{{ .path.path }}'
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        targetRevision: HEAD
+        path: 'apps/common/{{path.basename}}'
       destination:
-        server: https://kubernetes.default.svc
-        namespace: common
+        server: 'https://kubernetes.default.svc'
+        namespace: '{{path.basename}}'
       syncPolicy:
-        syncOptions:
-        - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
 
