@@ -69,7 +69,7 @@ talos   Ready    control-plane   4m53s   v1.31.1
 # generate own cert
 export PRIVATEKEY="mytls.key"
 export PUBLICKEY="mytls.crt"
-export NAMESPACE="common"
+export NAMESPACE="sealed-secrets"
 export SECRETNAME="mycustomkeys"
 openssl req -x509 -days 3650 -nodes -newkey rsa:4096 -keyout "$PRIVATEKEY" -out "$PUBLICKEY" -subj "/CN=sealed-secret/O=sealed-secret"
 
