@@ -7,7 +7,7 @@ metadata:
 spec:
   autoAssign: true
   addresses:
-    - {{ .Values.global.metallb.apps }}
+    - 10.0.1.201-10.0.1.240
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -17,4 +17,4 @@ metadata:
 spec:
   autoAssign: true
   addresses:
-  - {{ .Values.global.metallb.infra }}
+  - 10.0.0.80-10.0.0.90
