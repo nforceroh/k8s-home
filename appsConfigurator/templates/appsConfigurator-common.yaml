@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata: 
   name: common
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   generators:
   - git:
