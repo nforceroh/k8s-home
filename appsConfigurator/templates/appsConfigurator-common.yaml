@@ -4,8 +4,6 @@ metadata:
   name: common
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
@@ -14,13 +12,13 @@ spec:
         - path: apps/common/*
   template:
     metadata:
-      name:  "{{'{{.path.basename}}'}}"
+      name:  "{{`{{ path.basename }}`}}"
     spec:
       project: argocd-talos
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: HEAD
-        path:  "{{'{{.path.path}}'}}"
+        path:  "{{`{{ path }}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
         namespace:  common
