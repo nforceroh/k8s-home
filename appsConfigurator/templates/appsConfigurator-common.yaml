@@ -13,16 +13,16 @@ metadata:
           - path: apps/common/*
   template:
     metadata:
-      name: '{{path.basename}}'
+      name:  "{{`{{ path.basename }}`}}"
     spec:
       project: default
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: HEAD
-        path: 'apps/common/{{path.basename}}'
+        path:  "{{`{{ path.path }}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{path.basename}}'
+        namespace:  "{{`{{ path.basename }}`}}"
       syncPolicy:
         automated:
           prune: true
