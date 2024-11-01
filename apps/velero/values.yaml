@@ -10,8 +10,6 @@ velero:
     limits:
       cpu: 6000m
       memory: 3072Mi
-  initContainers:
-    - name: velero-plugin-for-aws
   configuration:
     features: EnableCSI
     logLevel: debug
