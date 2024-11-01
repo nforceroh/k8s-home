@@ -17,14 +17,14 @@ spec:
     metadata:
       name: '{{.path.basename}}'
     spec:
-      project: argocd-talos
+      project: "argocd-talos"
       source:
         repoURL: https://github.com/nforceroh/k8s-home.git
-        targetRevision: HEAD
+        targetRevision: main
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{.path.basename}}'
+        namespace: common
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
