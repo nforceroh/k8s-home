@@ -5,7 +5,7 @@ metadata:
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
-  spec:
+spec:
   project: argocd-talos
   syncPolicy:
     automated:
