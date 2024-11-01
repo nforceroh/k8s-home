@@ -4,12 +4,14 @@ metadata:
   name: common
   namespace: argocd
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-    - git:
-        repoURL: 'https://github.com/nforceroh/k8s-home.git'
-        revision: HEAD
-        directories:
-          - path: apps/common/*
+  - git:
+      repoURL: 'https://github.com/nforceroh/k8s-home.git'
+      revision: HEAD
+      directories:
+        - path: apps/common/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
@@ -23,6 +25,8 @@ spec:
         server: 'https://kubernetes.default.svc'
         namespace:  common
       syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
         automated:
           prune: true
           selfHeal: true
