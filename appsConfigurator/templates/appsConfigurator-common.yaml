@@ -15,7 +15,7 @@ metadata:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
     spec:
-      project: default
+      project: argocd-talos
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: HEAD
