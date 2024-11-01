@@ -13,7 +13,7 @@ spec:
       - path: apps/common/*
   template:
     metadata:
-      name: '{{ .path.basenam e}}'
+      name: '{{ .path.basename }}'
     spec:
       project: "argocd-talos"
       source:
