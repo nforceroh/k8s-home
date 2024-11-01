@@ -5,8 +5,6 @@ metadata:
   name: common
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
   generators:
   - git:
       repoURL: https://github.com/nforceroh/k8s-home.git
