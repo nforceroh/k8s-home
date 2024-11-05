@@ -10,6 +10,13 @@ velero:
     limits:
       cpu: 6000m
       memory: 3072Mi
+  initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws:v1.10.0
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins
   configuration:
     features: EnableCSI
     logLevel: debug
