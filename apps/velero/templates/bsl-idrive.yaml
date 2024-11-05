@@ -10,7 +10,7 @@ spec:
     checksumAlgorithm: ""
   credential:
     key: bsl
-    name: velero-idrive-credentials
+    name: idrive-credentials
   objectStorage:
     bucket: velero
   provider: aws
