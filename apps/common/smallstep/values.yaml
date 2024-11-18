@@ -21,15 +21,15 @@ step-certificates:
     dns: localhost,ca.nf.lab
     url: https://ca.nf.lab
 
-#  service:
-#    annotations:
-#        metallb.universe.tf/address-pool: infra
-#        external-dns.alpha.kubernetes.io/hostname: ca.nf.lab
-#        external-dns.alpha.kubernetes.io/access: public
-#    type: LoadBalancer
-#    port: 443
-#    targetPort: 9000
-#    externalIPs: [10.0.1.160]
+  service:
+    annotations:
+        metallb.universe.tf/address-pool: infra
+        external-dns.alpha.kubernetes.io/hostname: ca.nf.lab
+        external-dns.alpha.kubernetes.io/access: public
+    type: LoadBalancer
+    port: 443
+    targetPort: 9000
+    externalIPs: [10.0.1.160]
 
   ingress:
     enabled: true
