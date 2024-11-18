@@ -32,7 +32,7 @@ step-certificates:
 #    externalIPs: [10.0.1.160]
 
   ingress:
-    enabled: false
+    enabled: true
     annotations:
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
