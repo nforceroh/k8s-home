@@ -34,8 +34,8 @@ driver:
       allowInsecure: true
       apiVersion: 2
     zfs:
-      datasetParentName: ssd01/k8s/n/v
-      detachedSnapshotsDatasetParentName: ssd01/k8s/n/s
+      datasetParentName: spins/k8s/n/v
+      detachedSnapshotsDatasetParentName: spins/k8s/n/s
       datasetEnableQuotas: true
       datasetEnableReservation: false
       datasetPermissionsMode: "0777"

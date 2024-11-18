@@ -43,8 +43,8 @@ driver:
       allowInsecure: true
       apiVersion: 2
     zfs:
-      datasetParentName: ssd01/k8s/i/v
-      detachedSnapshotsDatasetParentName: ssd01/k8s/i/s
+      datasetParentName: spins/k8s/i/v
+      detachedSnapshotsDatasetParentName: spins/k8s/i/s
       zvolEnableReservation: false
       zvolBlocksize: 4K
     iscsi:
