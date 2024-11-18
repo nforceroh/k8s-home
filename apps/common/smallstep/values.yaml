@@ -29,10 +29,9 @@ step-certificates:
     type: LoadBalancer
     port: 443
     targetPort: 9000
-    externalIPs: [10.0.1.160]
 
   ingress:
-    enabled: true
+    enabled: false
     annotations:
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
