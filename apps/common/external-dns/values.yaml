@@ -17,8 +17,8 @@ external-dns:
     apiPort: 8081
     secretName: external-dns-pdns
   ## List of domains that can be managed. 
-  #domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
-  domainFilters: ["test.nf.lab"]
+  domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
+  #domainFilters: ["test.nf.lab"]
   # These help tell which records are owned by external-dns.
   registry: "txt"
   txtOwnerId: "k8s"
