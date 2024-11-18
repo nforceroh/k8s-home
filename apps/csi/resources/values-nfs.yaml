@@ -28,9 +28,9 @@ driver:
     driver: freenas-api-nfs
     httpConnection:
       protocol: https
-      host: 192.168.101.100
+      host: 192.168.101.38
       port: 443
-      apiKey: 1-xnSkgVNabjpcYRk4Fj4VEuPKOOGLnSYNPsQd7Qmw5PUGi7VieCzUkov5lntX3Xcb
+      apiKey: 1-LdgCsKDCTGT5dzAzM4hWLsqMaAtkVPVsVK3ozkFMkZsyjB49WHOah2olBYnV5WfU
       allowInsecure: true
       apiVersion: 2
     zfs:
@@ -44,7 +44,7 @@ driver:
 
     nfs:
       shareCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
-      shareHost: 10.0.0.100
+      shareHost: 10.0.0.99
       shareAlldirs: false
       shareMaprootUser: root
       shareMaprootGroup: root

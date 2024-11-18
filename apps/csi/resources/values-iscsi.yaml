@@ -36,9 +36,9 @@ driver:
     driver: freenas-api-iscsi
     httpConnection:
       protocol: https
-      host: 192.168.101.100
+      host: 192.168.101.38
       port: 443
-      apiKey: 1-xnSkgVNabjpcYRk4Fj4VEuPKOOGLnSYNPsQd7Qmw5PUGi7VieCzUkov5lntX3Xcb
+      apiKey: 1-LdgCsKDCTGT5dzAzM4hWLsqMaAtkVPVsVK3ozkFMkZsyjB49WHOah2olBYnV5WfU
       allowInsecure: true
       apiVersion: 2
     zfs:
@@ -47,7 +47,7 @@ driver:
       zvolEnableReservation: false
       zvolBlocksize: 4K
     iscsi:
-      targetPortal: "10.0.0.100:3260"
+      targetPortal: "10.0.0.99:3260"
       nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
       namePrefix: csi-
       nameSuffix: "-talos"
@@ -55,9 +55,9 @@ driver:
         # get the correct ID from the "portal" section in the UI
         # https://github.com/democratic-csi/democratic-csi/issues/302
         # NOTE: the ID in the UI does NOT always match the ID in the DB, you must use the DB value
-        - targetGroupPortalGroup: 4
+        - targetGroupPortalGroup: 1
           # get the correct ID from the "initiators" section in the UI
-          targetGroupInitiatorGroup: 9
+          targetGroupInitiatorGroup: 1
           # None, CHAP, or CHAP Mutual
           targetGroupAuthType: None
           # get the correct ID from the "Authorized Access" section of the UI

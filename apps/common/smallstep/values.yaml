@@ -24,7 +24,7 @@ step-certificates:
   service:
     annotations:
         metallb.universe.tf/address-pool: infra
-        external-dns.alpha.kubernetes.io/hostname: ca.test.nf.lab
+        external-dns.alpha.kubernetes.io/hostname: ca.nf.lab
         external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
     port: 443
@@ -38,7 +38,7 @@ step-certificates:
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       kubernetes.io/ingress.class: traefik
-      external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
     hosts: 
       - ca.nf.lab
     tls:
