@@ -20,16 +20,17 @@ volumeSnapshotClasses:
   parameters:
     detachedSnapshots: "true"
 
-node:
-  hostPID: true
-  driver:
-    extraEnv:
-      - name: ISCSIADM_HOST_STRATEGY
-        value: nsenter
-      - name: ISCSIADM_HOST_PATH
-        value: /usr/local/sbin/iscsiadm
-    iscsiDirHostPath: /usr/local/etc/iscsi
-    iscsiDirHostPathType: ""
+# for talos
+#node:
+#  hostPID: true
+#  driver:
+#    extraEnv:
+#      - name: ISCSIADM_HOST_STRATEGY
+#        value: nsenter
+#      - name: ISCSIADM_HOST_PATH
+#        value: /usr/local/sbin/iscsiadm
+#    iscsiDirHostPath: /usr/local/etc/iscsi
+#    iscsiDirHostPathType: ""
     
 driver:
   config:
