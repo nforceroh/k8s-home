@@ -1,0 +1,19 @@
+links:
+  - name: vlan.1400
+    logical: true
+    up: true
+    kind: vlan
+    type: ether
+    parentName: eno33559296
+    vlan:
+      vlanID: 1400
+      vlanProtocol: 802.1ad
+  - name: vlan.1990
+    logical: true
+    up: true
+    kind: vlan
+    type: ether
+    parentName: eno33559296
+    vlan:
+      vlanID: 1990
+      vlanProtocol: 802.1ad
