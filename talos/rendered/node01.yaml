@@ -23,6 +23,11 @@ machine:
         extraArgs:
             rotate-server-certificates: "true"
         defaultRuntimeSeccompProfileEnabled: true # Enable container runtime default Seccomp profile.
+        # The `nodeIP` field is used to configure `--node-ip` flag for the kubelet.
+        nodeIP:
+            # The `validSubnets` field configures the networks to pick kubelet node IP from.
+            validSubnets:
+                - 10.0.0.0/16
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
         
         # # The `ClusterDNS` field is an optional reference to an alternative kubelet clusterDNS ip list.
@@ -59,197 +64,71 @@ machine:
         #             - '*.dkr.ecr.us-iso-east-1.c2s.ic.gov'
         #             - '*.dkr.ecr.us-isob-east-1.sc2s.sgov.gov'
         #           name: ecr-credential-provider
-
-        # # The `nodeIP` field is used to configure `--node-ip` flag for the kubelet.
-        # nodeIP:
-        #     # The `validSubnets` field configures the networks to pick kubelet node IP from.
-        #     validSubnets:
-        #         - 10.0.0.0/8
-        #         - '!10.0.0.3/32'
-        #         - fdc7::/16
     # Provides machine specific network configuration options.
     network:
         hostname: talos # Used to statically set the hostname for the machine.
         # `interfaces` is used to define the network interface configuration.
         interfaces:
             - interface: eno33559296 # The interface name.
+              # VLAN specific options.
+              vlans:
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 101 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1001 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1400 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1990 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
               dhcp: false # Indicates if DHCP should be used to configure the interface.
-              
-              # # Picks a network device using the selector.
-
-              # # select a device with bus prefix 00:*.
-              # deviceSelector:
-              #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #     driver: virtio # Kernel driver, supports matching by wildcard.
-              # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #       driver: virtio # Kernel driver, supports matching by wildcard.
-
-              # # Assigns static IP addresses to the interface.
-              # addresses:
-              #     - 10.5.0.0/16
-              #     - 192.168.3.7
-
-              # # A list of routes associated with the interface.
-              # routes:
-              #     - network: 0.0.0.0/0 # The route's network (destination).
-              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
-              #     - network: 10.2.0.0/16 # The route's network (destination).
-              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
-
-              # # Bond specific options.
-              # bond:
-              #     # The interfaces that make up the bond.
-              #     interfaces:
-              #         - enp2s0
-              #         - enp2s1
-              #     # Picks a network device using the selector.
-              #     deviceSelectors:
-              #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #           driver: virtio # Kernel driver, supports matching by wildcard.
-              #     mode: 802.3ad # A bond option.
-              #     lacpRate: fast # A bond option.
-
-              # # Bridge specific options.
-              # bridge:
-              #     # The interfaces that make up the bridge.
-              #     interfaces:
-              #         - enxda4042ca9a51
-              #         - enxae2a6774c259
-              #     # A bridge option.
-              #     stp:
-              #         enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
-
-              # # DHCP specific options.
-              # dhcpOptions:
-              #     routeMetric: 1024 # The priority of all routes received via DHCP.
-
-              # # Wireguard specific configuration.
-
-              # # wireguard server example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     listenPort: 51111 # Specifies a device's listening port.
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-              # # wireguard peer example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
-              #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-
-              # # Virtual (shared) IP address configuration.
-
-              # # layer2 vip example
-              # vip:
-              #     ip: 172.16.199.55 # Specifies the IP address to be used.
-            - interface: vlan.1400 # The interface name.
-              dhcp: true # Indicates if DHCP should be used to configure the interface.
-              
-              # # Picks a network device using the selector.
-
-              # # select a device with bus prefix 00:*.
-              # deviceSelector:
-              #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #     driver: virtio # Kernel driver, supports matching by wildcard.
-              # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #       driver: virtio # Kernel driver, supports matching by wildcard.
-
-              # # Assigns static IP addresses to the interface.
-              # addresses:
-              #     - 10.5.0.0/16
-              #     - 192.168.3.7
-
-              # # A list of routes associated with the interface.
-              # routes:
-              #     - network: 0.0.0.0/0 # The route's network (destination).
-              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
-              #     - network: 10.2.0.0/16 # The route's network (destination).
-              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
-
-              # # Bond specific options.
-              # bond:
-              #     # The interfaces that make up the bond.
-              #     interfaces:
-              #         - enp2s0
-              #         - enp2s1
-              #     # Picks a network device using the selector.
-              #     deviceSelectors:
-              #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #           driver: virtio # Kernel driver, supports matching by wildcard.
-              #     mode: 802.3ad # A bond option.
-              #     lacpRate: fast # A bond option.
-
-              # # Bridge specific options.
-              # bridge:
-              #     # The interfaces that make up the bridge.
-              #     interfaces:
-              #         - enxda4042ca9a51
-              #         - enxae2a6774c259
-              #     # A bridge option.
-              #     stp:
-              #         enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
-
-              # # DHCP specific options.
-              # dhcpOptions:
-              #     routeMetric: 1024 # The priority of all routes received via DHCP.
-
-              # # Wireguard specific configuration.
-
-              # # wireguard server example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     listenPort: 51111 # Specifies a device's listening port.
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-              # # wireguard peer example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
-              #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-
-              # # Virtual (shared) IP address configuration.
-
-              # # layer2 vip example
-              # vip:
-              #     ip: 172.16.199.55 # Specifies the IP address to be used.
-            - interface: vlan.1990 # The interface name.
-              dhcp: true # Indicates if DHCP should be used to configure the interface.
               
               # # Picks a network device using the selector.
 

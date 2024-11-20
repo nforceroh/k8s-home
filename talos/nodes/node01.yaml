@@ -2,6 +2,9 @@ machine:
   kubelet:
     extraArgs:
       rotate-server-certificates: true
+    nodeIP:
+      validSubnets:
+        - 10.0.0.0/16
   install:
     image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1
   network:
@@ -9,11 +12,23 @@ machine:
     interfaces:
     - interface: eno33559296
       dhcp: false
-    - interface: vlan.1400
-      dhcp: true
-    - interface: vlan.1990
-      dhcp: true
-
+      vlans:
+        - vlanId: 101
+          dhcp: false
+#          routes:
+#            - network: 192.168.101.0/16
+        - vlanId: 1001
+          dhcp: false
+#          routes:
+#            - network: 10.1.0.0/24
+        - vlanId: 1400
+          dhcp: false
+#          routes:
+#            - network: 10.40.0.0/24          
+        - vlanId: 1990
+          dhcp: false
+#          routes:
+#            - network: 10.99.0.0/24          
   nodeLabels:
       node.kubernetes.io/exclude-from-external-load-balancers:
       $patch: delete
