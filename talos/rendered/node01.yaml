@@ -28,7 +28,6 @@ machine:
             # The `validSubnets` field configures the networks to pick kubelet node IP from.
             validSubnets:
                 - 192.168.101.0/24
-                - 10.0.0.0/16
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
         
         # # The `ClusterDNS` field is an optional reference to an alternative kubelet clusterDNS ip list.
@@ -90,6 +89,163 @@ machine:
               #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
               #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
               #       driver: virtio # Kernel driver, supports matching by wildcard.
+
+              # # A list of routes associated with the interface.
+              # routes:
+              #     - network: 0.0.0.0/0 # The route's network (destination).
+              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
+              #     - network: 10.2.0.0/16 # The route's network (destination).
+              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
+
+              # # Bond specific options.
+              # bond:
+              #     # The interfaces that make up the bond.
+              #     interfaces:
+              #         - enp2s0
+              #         - enp2s1
+              #     # Picks a network device using the selector.
+              #     deviceSelectors:
+              #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #           driver: virtio # Kernel driver, supports matching by wildcard.
+              #     mode: 802.3ad # A bond option.
+              #     lacpRate: fast # A bond option.
+
+              # # Bridge specific options.
+              # bridge:
+              #     # The interfaces that make up the bridge.
+              #     interfaces:
+              #         - enxda4042ca9a51
+              #         - enxae2a6774c259
+              #     # A bridge option.
+              #     stp:
+              #         enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
+
+              # # DHCP specific options.
+              # dhcpOptions:
+              #     routeMetric: 1024 # The priority of all routes received via DHCP.
+
+              # # Wireguard specific configuration.
+
+              # # wireguard server example
+              # wireguard:
+              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
+              #     listenPort: 51111 # Specifies a device's listening port.
+              #     # Specifies a list of peer configurations to apply to a device.
+              #     peers:
+              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
+              #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
+              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
+              #           allowedIPs:
+              #             - 192.168.1.0/24
+              # # wireguard peer example
+              # wireguard:
+              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
+              #     # Specifies a list of peer configurations to apply to a device.
+              #     peers:
+              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
+              #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
+              #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
+              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
+              #           allowedIPs:
+              #             - 192.168.1.0/24
+
+              # # Virtual (shared) IP address configuration.
+
+              # # layer2 vip example
+              # vip:
+              #     ip: 172.16.199.55 # Specifies the IP address to be used.
+            - interface: eno1 # The interface name.
+              # VLAN specific options.
+              vlans:
+                - # A list of routes associated with the VLAN.
+                  routes:
+                    - network: 192.168.101.0/24 # The route's network (destination).
+                      gateway: "" # The route's gateway (if empty, creates link scope route).
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 101 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # The addresses in CIDR notation or as plain IPs to use.
+                  addresses:
+                    - 10.0.0.100/16
+                  # A list of routes associated with the VLAN.
+                  routes:
+                    - network: 10.0.0.0/16 # The route's network (destination).
+                      gateway: "" # The route's gateway (if empty, creates link scope route).
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1000 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes:
+                    - network: 10.40.0.0/24 # The route's network (destination).
+                      gateway: "" # The route's gateway (if empty, creates link scope route).
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1400 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes:
+                    - network: 10.99.0.0/24 # The route's network (destination).
+                      gateway: "" # The route's gateway (if empty, creates link scope route).
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1990 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+              dhcp: false # Indicates if DHCP should be used to configure the interface.
+              
+              # # Picks a network device using the selector.
+
+              # # select a device with bus prefix 00:*.
+              # deviceSelector:
+              #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
+              # deviceSelector:
+              #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #     driver: virtio # Kernel driver, supports matching by wildcard.
+              # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
+              # deviceSelector:
+              #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
+              #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
+              #       driver: virtio # Kernel driver, supports matching by wildcard.
+
+              # # Assigns static IP addresses to the interface.
+              # addresses:
+              #     - 10.5.0.0/16
+              #     - 192.168.3.7
 
               # # A list of routes associated with the interface.
               # routes:
@@ -510,13 +666,12 @@ cluster:
         ca:
             crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJmakNDQVNPZ0F3SUJBZ0lRQWNiR1Mva3hqMXVoVGhUay9DTjF0akFLQmdncWhrak9QUVFEQWpBUE1RMHcKQ3dZRFZRUUtFd1JsZEdOa01CNFhEVEkwTVRBeU5qQXhOVEUxT1ZvWERUTTBNVEF5TkRBeE5URTFPVm93RHpFTgpNQXNHQTFVRUNoTUVaWFJqWkRCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkljdTdEK0dTY3kyCkphVUdQYWdyUDg2aUdZKzNWVU9lcUQyWFpUQ0QzMkNUQXNnWXowYVBVV2hlOUVMMmFDZkxGd3R5d0JBQ2RLZGIKYjcvbVlYNDhlaHlqWVRCZk1BNEdBMVVkRHdFQi93UUVBd0lDaERBZEJnTlZIU1VFRmpBVUJnZ3JCZ0VGQlFjRApBUVlJS3dZQkJRVUhBd0l3RHdZRFZSMFRBUUgvQkFVd0F3RUIvekFkQmdOVkhRNEVGZ1FVdk14dENTSXdYRFd4CkxCWEZGYkFOSmZ3YjJyd3dDZ1lJS29aSXpqMEVBd0lEU1FBd1JnSWhBT0kzdDFuTW92NDVEVFJDVURKSzBjMjgKUit3SllvZXdHUDg2aFdWeXJaenNBaUVBcE9IZ1U4aEtZdXBieU1oa1ExdEVieVhqY2pZNUZPY1ZEbkJvRXpSYwpTbjg9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
             key: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUZpbTlhalFwV0pHT3RKM1g3bU1xUzFhQjVvSnVRbG4rWFk1UzZaemllSklvQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFaHk3c1A0Wkp6TFlscFFZOXFDcy96cUlaajdkVlE1Nm9QWmRsTUlQZllKTUN5QmpQUm85UgphRjcwUXZab0o4c1hDM0xBRUFKMHAxdHZ2K1poZmp4NkhBPT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
+        # The `advertisedSubnets` field configures the networks to pick etcd advertised IP from.
+        advertisedSubnets:
+            - 192.168.101.0/24
         
         # # The container image used to create the etcd service.
         # image: gcr.io/etcd-development/etcd:v3.5.16
-
-        # # The `advertisedSubnets` field configures the networks to pick etcd advertised IP from.
-        # advertisedSubnets:
-        #     - 10.0.0.0/8
     # A list of urls that point to additional manifests.
     extraManifests:
         - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml
@@ -524,7 +679,6 @@ cluster:
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
-        - https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
     # A list of inline Kubernetes manifests.
     inlineManifests: []
     #   - name: namespace-ci # Name of the manifest.

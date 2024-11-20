@@ -1,5 +1,9 @@
 # patches/cluster-name.yaml
 cluster:
+  etcd:
+    advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
+      - 192.168.101.0/24
+      
   allowSchedulingOnControlPlanes: true
   clusterName: talos
   apiServer:
@@ -12,4 +16,4 @@ cluster:
     - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
     - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
     - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
-    - https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
+#    - https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml

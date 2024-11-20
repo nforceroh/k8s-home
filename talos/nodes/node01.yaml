@@ -9,38 +9,38 @@ machine:
     nodeIP:
       validSubnets:
         - 192.168.101.0/24
-        - 10.0.0.0/16
+
   network:
     hostname: talos
     nameservers:
       - 192.168.101.1
       - 10.0.0.1
     interfaces:
-    - interface: eno3
-      dhcp: false
-      addresses:
-        - 192.168.101.100/24
-#    - interface: eno1
-#      dhcp: false
-#      vlans:
-#        - vlanId: 101
-#          dhcp: false
-#          routes:
-#            - network: 192.168.101.0/24
-#        - vlanId: 1000
-#          dhcp: false
-#          addresses:
-#            - 10.0.0.100/16
-#          routes:
-#            - network: 10.0.0.0/16
-#        - vlanId: 1400
-#          dhcp: false
-#          routes:
-#            - network: 10.40.0.0/24          
-#        - vlanId: 1990
-#          dhcp: false
-#          routes:
-#            - network: 10.99.0.0/24          
+      - interface: eno3
+        dhcp: false
+        addresses:
+          - 192.168.101.100/24
+      - interface: eno1
+        dhcp: false
+        vlans:
+          - vlanId: 101
+            dhcp: false
+            routes:
+              - network: 192.168.101.0/24
+          - vlanId: 1000
+            dhcp: false
+            addresses:
+              - 10.0.0.100/16
+            routes:
+              - network: 10.0.0.0/16
+          - vlanId: 1400
+            dhcp: false
+            routes:
+              - network: 10.40.0.0/24          
+          - vlanId: 1990
+            dhcp: false
+            routes:
+              - network: 10.99.0.0/24          
   nodeLabels:
       node.kubernetes.io/exclude-from-external-load-balancers:
       $patch: delete
