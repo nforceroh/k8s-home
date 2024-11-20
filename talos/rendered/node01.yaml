@@ -27,6 +27,7 @@ machine:
         nodeIP:
             # The `validSubnets` field configures the networks to pick kubelet node IP from.
             validSubnets:
+                - 192.168.101.0/24
                 - 10.0.0.0/16
         disableManifestsDirectory: true # The `disableManifestsDirectory` field configures the kubelet to get static pod manifests from the /etc/kubernetes/manifests directory.
         
@@ -69,65 +70,10 @@ machine:
         hostname: talos # Used to statically set the hostname for the machine.
         # `interfaces` is used to define the network interface configuration.
         interfaces:
-            - interface: eno33559296 # The interface name.
-              # VLAN specific options.
-              vlans:
-                - # A list of routes associated with the VLAN.
-                  routes: []
-                  dhcp: false # Indicates if DHCP should be used.
-                  vlanId: 101 # The VLAN's ID.
-                  
-                  # # The VLAN's virtual IP address configuration.
-
-                  # # layer2 vip example
-                  # vip:
-                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
-
-                  # # DHCP specific options.
-                  # dhcpOptions:
-                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
-                - # A list of routes associated with the VLAN.
-                  routes: []
-                  dhcp: false # Indicates if DHCP should be used.
-                  vlanId: 1001 # The VLAN's ID.
-                  
-                  # # The VLAN's virtual IP address configuration.
-
-                  # # layer2 vip example
-                  # vip:
-                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
-
-                  # # DHCP specific options.
-                  # dhcpOptions:
-                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
-                - # A list of routes associated with the VLAN.
-                  routes: []
-                  dhcp: false # Indicates if DHCP should be used.
-                  vlanId: 1400 # The VLAN's ID.
-                  
-                  # # The VLAN's virtual IP address configuration.
-
-                  # # layer2 vip example
-                  # vip:
-                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
-
-                  # # DHCP specific options.
-                  # dhcpOptions:
-                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
-                - # A list of routes associated with the VLAN.
-                  routes: []
-                  dhcp: false # Indicates if DHCP should be used.
-                  vlanId: 1990 # The VLAN's ID.
-                  
-                  # # The VLAN's virtual IP address configuration.
-
-                  # # layer2 vip example
-                  # vip:
-                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
-
-                  # # DHCP specific options.
-                  # dhcpOptions:
-                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+            - interface: eno3 # The interface name.
+              # Assigns static IP addresses to the interface.
+              addresses:
+                - 192.168.101.100/24
               dhcp: false # Indicates if DHCP should be used to configure the interface.
               
               # # Picks a network device using the selector.
@@ -144,11 +90,6 @@ machine:
               #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
               #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
               #       driver: virtio # Kernel driver, supports matching by wildcard.
-
-              # # Assigns static IP addresses to the interface.
-              # addresses:
-              #     - 10.5.0.0/16
-              #     - 192.168.3.7
 
               # # A list of routes associated with the interface.
               # routes:
@@ -215,12 +156,11 @@ machine:
               # # layer2 vip example
               # vip:
               #     ip: 172.16.199.55 # Specifies the IP address to be used.
+        # Used to statically set the nameservers for the machine.
+        nameservers:
+            - 192.168.101.1
+            - 10.0.0.1
         
-        # # Used to statically set the nameservers for the machine.
-        # nameservers:
-        #     - 8.8.8.8
-        #     - 1.1.1.1
-
         # # Allows for extra entries to be added to the `/etc/hosts` file
         # extraHostEntries:
         #     - ip: 192.168.1.100 # The IP of the host.
@@ -235,8 +175,8 @@ machine:
     # Used to provide instructions for installations.
     install:
         disk: /dev/sda # The disk used for installations.
-        image: factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1 # Allows for supplying the image used to perform the installation.
-        wipe: false # Indicates if the installation disk should be wiped at installation time.
+        image: ghcr.io/siderolabs/installer:v1.8.1 # Allows for supplying the image used to perform the installation.
+        wipe: true # Indicates if the installation disk should be wiped at installation time.
         
         # # Look up disk using disk attributes like model, size, serial and others.
         # diskSelector:
@@ -475,7 +415,7 @@ cluster:
     secret: TYkh9I215IEGfZ4NE5ANcAWjaBFP+cIpSwa0ZCoDU3Y= # Shared secret of cluster (base64 encoded random 32 bytes).
     # Provides control plane specific configuration options.
     controlPlane:
-        endpoint: https://10.0.0.226:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+        endpoint: https://192.168.101.100:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
     clusterName: talos # Configures the cluster's name.
     # Provides cluster specific network configuration options.
     network:
@@ -511,7 +451,9 @@ cluster:
         image: registry.k8s.io/kube-apiserver:v1.31.1 # The container image used in the API server manifest.
         # Extra certificate subject alternative names for the API server's certificate.
         certSANs:
-            - 10.0.0.226
+            - 192.168.101.100
+            - 192.168.101.100
+            - 10.0.0.100
         disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
         # Configure the API server admission plugins.
         admissionControl:
@@ -582,6 +524,7 @@ cluster:
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
         - https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/refs/heads/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+        - https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset-thick.yml
     # A list of inline Kubernetes manifests.
     inlineManifests: []
     #   - name: namespace-ci # Name of the manifest.
