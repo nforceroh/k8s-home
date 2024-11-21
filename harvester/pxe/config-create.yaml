@@ -46,3 +46,5 @@ install:
       enabled: true
     nvidia-driver-toolkit:
       enabled: true
+    harvester-seeder:
+      enabled: true
