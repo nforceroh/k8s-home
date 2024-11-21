@@ -1,7 +1,7 @@
 scheme_version: 1
 token: token             # Replace with a desired token
 os:
-  hostname: node1        # Set a hostname. This can be omitted if DHCP server offers hostnames.
+  hostname: harvester        # Set a hostname. This can be omitted if DHCP server offers hostnames.
   ssh_authorized_keys:
   - sssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9E5CuOAS/gLE0QO7b34g2JJ1JchwZXycSkxRcUzOqC Sylvain@DESKTOP-GBRM2C1
   - github:nforceoh
@@ -11,7 +11,6 @@ os:
   ntp_servers:
   - 0.suse.pool.ntp.org
   - 1.suse.pool.ntp.org
-  hostname: harvester
   modules:
     - kvm
 install:
