@@ -28,7 +28,6 @@ install:
     - name: eno1
     method: dhcp
     vlan_id: 101
-    method: dhcp
   persistent_partition_size: 250Gi
   device: /dev/sda       # The target disk to install
   debug: true
