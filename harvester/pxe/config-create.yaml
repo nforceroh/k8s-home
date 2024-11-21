@@ -26,6 +26,6 @@ install:
   debug: true
   iso_url: https://releases.rancher.com/harvester/master/harvester-master-amd64.iso
 #  tty: ttyS1,115200n8   # For machines without a VGA console
-vip: 192.168.101.100
+#vip: 192.168.101.100
 vip_mode: dhcp                   # Or static
 vip_hw_addr: 24:6e:96:4a:a1:4c   # Leave empty when vip_mode is static
