@@ -4,16 +4,14 @@ https://factory.talos.dev/?arch=amd64&board=undefined&cmdline-set=true&extension
 
 ```
 export CLUSTER_NAME=talos
-export NODEIP=192.168.101.100
+export NODEIP=10.0.0.230
 export API_ENDPOINT=https://${NODEIP}:6443
 
-# For new cluster
+# For new cluster, need to create secrets
 talosctl gen secrets --output-file secrets.yaml --force
-talosctl gen config $CLUSTER_NAME $API_ENDPOINT --with-secrets ./secrets.yaml
 
-
-# continue
-talosctl gen config $CLUSTER_NAME $API_ENDPOINT -n ${NODEIP} -e  ${NODEIP} -o ./ --force
+# For consistent cluster config, reuse an existing secret so we don't need to change all our .kube/config
+talosctl gen config $CLUSTER_NAME $API_ENDPOINT --with-secrets ./secrets.yaml  --force
 talosctl config endpoint ${NODEIP} --talosconfig ./talosconfig 
 talosctl config node ${NODEIP} --talosconfig ./talosconfig 
 
@@ -30,11 +28,16 @@ talosctl gen config \
 
 talosctl apply-config -n ${NODEIP} -e ${NODEIP} --file rendered/node01.yaml --insecure
 
+# needed if first member
+export NODEIP=10.0.0.100
 talosctl bootstrap -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
+
 talosctl config merge $HOME/.talos/config  --talosconfig ./talosconfig 
 
 talosctl get members -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
 
+mkdir ~/.talos
+cp ./talosconfig  ~/.talos/config
 
 talosctl kubeconfig ~/.kube/talos -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
 export KUBECONFIG=~/.kube/talos
@@ -43,4 +46,14 @@ sylvain@MasterSim:~/gitdev/k8s-home$ kubectl get nodes
 NAME    STATUS   ROLES           AGE     VERSION
 talos   Ready    control-plane   4m53s   v1.31.1
 
+```
+
+# Install kubevirt
+```
+export RELEASE=$(curl https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirt/stable.txt)
+kubectl create ns kubevirt
+kubectl -n kubevirt create -f https://github.com/kubevirt/kubevirt/releases/download/$RELEASE/kubevirt-operator.yaml
+kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/$RELEASE/kubevirt-cr.yaml
+kubectl -n kubevirt wait kv kubevirt --for condition=Available
+kubectl get po -n kubevirt
 ```

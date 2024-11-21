@@ -2,13 +2,12 @@
 cluster:
   etcd:
     advertisedSubnets: # listenSubnets defaults to advertisedSubnets if not set explicitly
-      - 192.168.101.0/24
+      - 10.0.0.0/16
       
   allowSchedulingOnControlPlanes: true
   clusterName: talos
   apiServer:
     certSANs:
-      - 192.168.101.100
       - 10.0.0.100
   extraManifests:
     - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml
