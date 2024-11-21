@@ -18,11 +18,11 @@ install:
   mode: create
   management_interface:
     interfaces:
-    - name: eno3
-    default_route: true
+    - name: eno1
+    method: dhcp
+    vlan_id: 101
     method: dhcp
   device: /dev/sda       # The target disk to install
-  force_efi: true
   debug: true
   iso_url: https://releases.rancher.com/harvester/master/harvester-master-amd64.iso
 #  tty: ttyS1,115200n8   # For machines without a VGA console
