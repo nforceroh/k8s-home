@@ -20,7 +20,7 @@ install:
     longhorn:
       default_settings:
         guaranteedEngineManagerCPU: 6
-        guaranteedReplicaManagerCPU: 6docker
+        guaranteedReplicaManagerCPU: 6
     storage_class:
       replica_count: 1
   management_interface:
@@ -28,6 +28,7 @@ install:
     - name: eno1
     method: dhcp
     vlan_id: 101
+    default_route: true
   persistent_partition_size: 250Gi
   device: /dev/sda       # The target disk to install
   debug: true
