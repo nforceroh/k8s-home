@@ -17,7 +17,7 @@ install:
   mode: create
   management_interface:
     interfaces:
-    - name: eth0
+    - name: eno3
     default_route: true
     method: dhcp
   device: /dev/sda       # The target disk to install
