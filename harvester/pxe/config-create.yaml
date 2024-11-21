@@ -17,7 +17,7 @@ install:
   mode: create
   management_interface:
     interfaces:
-    - name: ens5
+    - name: eth0
     default_route: true
     method: dhcp
   device: /dev/sda       # The target disk to install
