@@ -8,7 +8,7 @@ os:
   dns_nameservers:
     - 192.168.101.1
     - 10.0.0.1
-  password: rancher
+  password: "$6$uaNZ1mpJQrPa5kgX$kIQ4eVwMO9ovgQoraW1AinrpypGEO4ZJhl5vHTQYJxxWgA1jvD4SOnZ1wcjLxTqZ9mzS9.4AUQdzv4liFbhpn1"
   ntp_servers:
   - 0.suse.pool.ntp.org
   - 1.suse.pool.ntp.org
@@ -16,16 +16,33 @@ os:
     - kvm
 install:
   mode: create
+  harvester:
+    longhorn:
+      default_settings:
+        guaranteedEngineManagerCPU: 6
+        guaranteedReplicaManagerCPU: 6docker
+    storage_class:
+      replica_count: 1
   management_interface:
     interfaces:
     - name: eno1
     method: dhcp
     vlan_id: 101
     method: dhcp
+  persistent_partition_size: 250Gi
   device: /dev/sda       # The target disk to install
   debug: true
-  iso_url: https://releases.rancher.com/harvester/master/harvester-master-amd64.iso
+  iso_url: https://releases.rancher.com/harvester/v1.3.2/harvester-v1.3.2-amd64.iso
 #  tty: ttyS1,115200n8   # For machines without a VGA console
-#vip: 192.168.101.100
-vip_mode: dhcp                   # Or static
-vip_hw_addr: 24:6e:96:4a:a1:4c   # Leave empty when vip_mode is static
+  vip: 192.168.0.100
+  vip_mode: static                 # Or static
+  vip_hw_addr: 24:6e:96:4a:a1:4c   # Leave empty when vip_mode is static
+  addons:
+    rancher_monitoring:
+      enabled: true
+    rancher_logging:
+      enabled: false
+    pcidevices-controller:
+      enabled: true
+    nvidia-driver-toolkit:
+      enabled: true
