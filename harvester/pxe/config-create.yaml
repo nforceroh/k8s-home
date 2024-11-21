@@ -1,0 +1,31 @@
+scheme_version: 1
+token: token             # Replace with a desired token
+os:
+  hostname: node1        # Set a hostname. This can be omitted if DHCP server offers hostnames.
+  ssh_authorized_keys:
+  - sssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9E5CuOAS/gLE0QO7b34g2JJ1JchwZXycSkxRcUzOqC Sylvain@DESKTOP-GBRM2C1
+  - github:nforceoh
+  dns_nameservers:
+    - 192.168.101.1
+    - 10.0.0.1
+  ntp_servers:
+  - 0.suse.pool.ntp.org
+  - 1.suse.pool.ntp.org
+  hostname: harvester
+  modules:
+    - kvm
+install:
+  mode: create
+  management_interface:
+    interfaces:
+    - name: ens5
+    default_route: true
+    method: dhcp
+  device: /dev/sda       # The target disk to install
+  force_efi: true
+  iso_url: https://releases.rancher.com/harvester/master/harvester-master-amd64.iso
+#  tty: ttyS1,115200n8   # For machines without a VGA console
+
+#  vip: 10.10.0.19
+#  vip_mode: dhcp                   # Or static
+#  vip_hw_addr: 52:54:00:ec:0e:0b   # Leave empty when vip_mode is static
