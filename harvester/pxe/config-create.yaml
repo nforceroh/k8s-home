@@ -16,7 +16,7 @@ os:
     - kvm
 install:
   mode: create
-  harvester-mgmt:
+  management_interface:
     interfaces:
     - name: eno3
     default_route: true
