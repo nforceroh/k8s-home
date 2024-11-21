@@ -8,6 +8,7 @@ os:
   dns_nameservers:
     - 192.168.101.1
     - 10.0.0.1
+  password: rancher
   ntp_servers:
   - 0.suse.pool.ntp.org
   - 1.suse.pool.ntp.org
