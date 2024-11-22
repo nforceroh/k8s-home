@@ -10,12 +10,9 @@ machine:
         crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJQekNCOHFBREFnRUNBaEVBMEhqWkNFNURUa29Dem9MUVFOTzFvVEFGQmdNclpYQXdFREVPTUF3R0ExVUUKQ2hNRmRHRnNiM013SGhjTk1qUXhNREkyTURFMU1UVTVXaGNOTXpReE1ESTBNREUxTVRVNVdqQVFNUTR3REFZRApWUVFLRXdWMFlXeHZjekFxTUFVR0F5dGxjQU1oQURDdU5TQkVQN21XbEkrZWd5M2RJb1B4TTFaYWJwU3ljZFVxCjdBSVArcHpTbzJFd1h6QU9CZ05WSFE4QkFmOEVCQU1DQW9Rd0hRWURWUjBsQkJZd0ZBWUlLd1lCQlFVSEF3RUcKQ0NzR0FRVUZCd01DTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRk5KZnBaeHVpbFZLUVZSeApKYXR3aktwdk9RVWdNQVVHQXl0bGNBTkJBQkhCd1d0ZXN1L0N4UUxGRXk2SHdmd1AvMmlDSWxIM24xYkdybzl1Cndrb1hmQ1J6dkV4MmFadWQvM2FNNzZYTmV5dnd2Y2pEa1owc3Bjd3ZSZk5UQ0FVPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
         key: LS0tLS1CRUdJTiBFRDI1NTE5IFBSSVZBVEUgS0VZLS0tLS0KTUM0Q0FRQXdCUVlESzJWd0JDSUVJRlFnVjlUUG1KakxjVGIrQ3VlMlNYNkJoU055YXJnc29GbkxLY3FnYjRlNgotLS0tLUVORCBFRDI1NTE5IFBSSVZBVEUgS0VZLS0tLS0K
     # Extra certificate subject alternative names for the machine's certificate.
-    certSANs: []
-    #   # Uncomment this to enable SANs.
-    #   - 10.0.0.10
-    #   - 172.16.0.10
-    #   - 192.168.0.10
-
+    certSANs:
+        - talos.nf.lab
+        - 10.0.0.100
     # Used to provide additional options to the kubelet.
     kubelet:
         image: ghcr.io/siderolabs/kubelet:v1.31.1 # The `image` field is an optional reference to an alternative kubelet image.
@@ -73,7 +70,60 @@ machine:
         # `interfaces` is used to define the network interface configuration.
         interfaces:
             - interface: eno1 # The interface name.
-              dhcp: true # Indicates if DHCP should be used to configure the interface.
+              # Assigns static IP addresses to the interface.
+              addresses:
+                - 10.0.0.100/16
+              # A list of routes associated with the interface.
+              routes:
+                - network: 0.0.0.0/0 # The route's network (destination).
+                  gateway: 10.0.0.1 # The route's gateway (if empty, creates link scope route).
+                  metric: 1024 # The optional metric for the route.
+              # VLAN specific options.
+              vlans:
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1000 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1400 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+                - # A list of routes associated with the VLAN.
+                  routes: []
+                  dhcp: false # Indicates if DHCP should be used.
+                  vlanId: 1990 # The VLAN's ID.
+                  
+                  # # The VLAN's virtual IP address configuration.
+
+                  # # layer2 vip example
+                  # vip:
+                  #     ip: 172.16.199.55 # Specifies the IP address to be used.
+
+                  # # DHCP specific options.
+                  # dhcpOptions:
+                  #     routeMetric: 1024 # The priority of all routes received via DHCP.
+              mtu: 1500 # The interface's MTU.
+              dhcp: false # Indicates if DHCP should be used to configure the interface.
               
               # # Picks a network device using the selector.
 
@@ -89,18 +139,6 @@ machine:
               #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
               #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
               #       driver: virtio # Kernel driver, supports matching by wildcard.
-
-              # # Assigns static IP addresses to the interface.
-              # addresses:
-              #     - 10.5.0.0/16
-              #     - 192.168.3.7
-
-              # # A list of routes associated with the interface.
-              # routes:
-              #     - network: 0.0.0.0/0 # The route's network (destination).
-              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
-              #     - network: 10.2.0.0/16 # The route's network (destination).
-              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
 
               # # Bond specific options.
               # bond:
@@ -160,98 +198,10 @@ machine:
               # # layer2 vip example
               # vip:
               #     ip: 172.16.199.55 # Specifies the IP address to be used.
-            - interface: br0 # The interface name.
-              # Bridge specific options.
-              bridge:
-                # The interfaces that make up the bridge.
-                interfaces:
-                    - eno1
-                # A bridge option.
-                stp:
-                    enabled: true # Whether Spanning Tree Protocol (STP) is enabled.
-              dhcp: false # Indicates if DHCP should be used to configure the interface.
-              
-              # # Picks a network device using the selector.
-
-              # # select a device with bus prefix 00:*.
-              # deviceSelector:
-              #     busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              # # select a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #     driver: virtio # Kernel driver, supports matching by wildcard.
-              # # select a device with bus prefix 00:*, a device with mac address matching `*:f0:ab` and `virtio` kernel driver.
-              # deviceSelector:
-              #     - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #     - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #       driver: virtio # Kernel driver, supports matching by wildcard.
-
-              # # Assigns static IP addresses to the interface.
-              # addresses:
-              #     - 10.5.0.0/16
-              #     - 192.168.3.7
-
-              # # A list of routes associated with the interface.
-              # routes:
-              #     - network: 0.0.0.0/0 # The route's network (destination).
-              #       gateway: 10.5.0.1 # The route's gateway (if empty, creates link scope route).
-              #     - network: 10.2.0.0/16 # The route's network (destination).
-              #       gateway: 10.2.0.1 # The route's gateway (if empty, creates link scope route).
-
-              # # Bond specific options.
-              # bond:
-              #     # The interfaces that make up the bond.
-              #     interfaces:
-              #         - enp2s0
-              #         - enp2s1
-              #     # Picks a network device using the selector.
-              #     deviceSelectors:
-              #         - busPath: 00:* # PCI, USB bus prefix, supports matching by wildcard.
-              #         - hardwareAddr: '*:f0:ab' # Device hardware address, supports matching by wildcard.
-              #           driver: virtio # Kernel driver, supports matching by wildcard.
-              #     mode: 802.3ad # A bond option.
-              #     lacpRate: fast # A bond option.
-
-              # # DHCP specific options.
-              # dhcpOptions:
-              #     routeMetric: 1024 # The priority of all routes received via DHCP.
-
-              # # Wireguard specific configuration.
-
-              # # wireguard server example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     listenPort: 51111 # Specifies a device's listening port.
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.3 # Specifies the endpoint of this peer entry.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-              # # wireguard peer example
-              # wireguard:
-              #     privateKey: ABCDEF... # Specifies a private key configuration (base64 encoded).
-              #     # Specifies a list of peer configurations to apply to a device.
-              #     peers:
-              #         - publicKey: ABCDEF... # Specifies the public key of this peer.
-              #           endpoint: 192.168.1.2:51822 # Specifies the endpoint of this peer entry.
-              #           persistentKeepaliveInterval: 10s # Specifies the persistent keepalive interval for this peer.
-              #           # AllowedIPs specifies a list of allowed IP addresses in CIDR notation for this peer.
-              #           allowedIPs:
-              #             - 192.168.1.0/24
-
-              # # Virtual (shared) IP address configuration.
-
-              # # layer2 vip example
-              # vip:
-              #     ip: 172.16.199.55 # Specifies the IP address to be used.
+        # Used to statically set the nameservers for the machine.
+        nameservers:
+            - 10.0.0.1
         
-        # # Used to statically set the nameservers for the machine.
-        # nameservers:
-        #     - 8.8.8.8
-        #     - 1.1.1.1
-
         # # Allows for extra entries to be added to the `/etc/hosts` file
         # extraHostEntries:
         #     - ip: 192.168.1.100 # The IP of the host.
@@ -267,7 +217,7 @@ machine:
     install:
         disk: /dev/sdb # The disk used for installations.
         image: ghcr.io/siderolabs/installer:v1.8.1 # Allows for supplying the image used to perform the installation.
-        wipe: false # Indicates if the installation disk should be wiped at installation time.
+        wipe: true # Indicates if the installation disk should be wiped at installation time.
         
         # # Look up disk using disk attributes like model, size, serial and others.
         # diskSelector:
@@ -506,7 +456,7 @@ cluster:
     secret: TYkh9I215IEGfZ4NE5ANcAWjaBFP+cIpSwa0ZCoDU3Y= # Shared secret of cluster (base64 encoded random 32 bytes).
     # Provides control plane specific configuration options.
     controlPlane:
-        endpoint: https://10.0.0.230:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+        endpoint: https://10.0.0.100:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
     clusterName: talos # Configures the cluster's name.
     # Provides cluster specific network configuration options.
     network:
@@ -542,8 +492,9 @@ cluster:
         image: registry.k8s.io/kube-apiserver:v1.31.1 # The container image used in the API server manifest.
         # Extra certificate subject alternative names for the API server's certificate.
         certSANs:
-            - 10.0.0.230
             - 10.0.0.100
+            - 10.0.0.100
+            - talos.nf.lab
         disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
         # Configure the API server admission plugins.
         admissionControl:

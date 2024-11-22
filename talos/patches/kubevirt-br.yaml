@@ -1,0 +1,11 @@
+machine:
+  network:
+    interfaces:
+      - interface: br0.101
+        dhcp: false
+        bridge:
+          stp:
+            enabled: true
+          interfaces:
+            - eno1.101
+        mtu: 1500
