@@ -77,7 +77,6 @@ machine:
               routes:
                 - network: 0.0.0.0/0 # The route's network (destination).
                   gateway: 10.0.0.1 # The route's gateway (if empty, creates link scope route).
-                  metric: 1024 # The optional metric for the route.
               # VLAN specific options.
               vlans:
                 - # A list of routes associated with the VLAN.
@@ -215,7 +214,7 @@ machine:
         #     enabled: true # Enable the KubeSpan feature.
     # Used to provide instructions for installations.
     install:
-        disk: /dev/sdb # The disk used for installations.
+        disk: /dev/sda # The disk used for installations.
         image: ghcr.io/siderolabs/installer:v1.8.1 # Allows for supplying the image used to perform the installation.
         wipe: true # Indicates if the installation disk should be wiped at installation time.
         

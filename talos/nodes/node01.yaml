@@ -1,6 +1,6 @@
 machine:
   install:
-    disk: /dev/sdb # The disk used for installations.
+    disk: /dev/sda # The disk used for installations.
     wipe: true # Indicates if the installation disk should be wiped at installation time.
   certSANs:
     - talos.nf.lab
@@ -20,7 +20,6 @@ machine:
         routes:
           - network: 0.0.0.0/0 # The route's network (destination).
             gateway: 10.0.0.1 # The route's gateway (if empty, creates link scope route).
-            metric: 1024
         mtu: 1500
         vlans:
           - vlanId: 1000

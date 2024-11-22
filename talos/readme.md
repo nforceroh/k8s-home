@@ -8,10 +8,18 @@ export NODEIP=10.0.0.100
 export API_ENDPOINT=https://${NODEIP}:6443
 
 # For new cluster, need to create secrets
+talosctl gen config $CLUSTER_NAME $API_ENDPOINT  --force
 talosctl gen secrets --output-file secrets.yaml --force
 
 # For consistent cluster config, reuse an existing secret so we don't need to change all our .kube/config
-talosctl gen config $CLUSTER_NAME $API_ENDPOINT --with-secrets ./secrets.yaml  --force
+talosctl gen config \
+  --with-secrets ./secrets.yaml \
+  --output-types talosconfig    \
+  --output talosconfig          \
+  $CLUSTER_NAME $API_ENDPOINT   --force
+
+talosctl config merge ./talosconfig 
+
 talosctl config endpoint ${NODEIP} --talosconfig ./talosconfig 
 talosctl config node ${NODEIP} --talosconfig ./talosconfig 
 
@@ -26,10 +34,21 @@ talosctl gen config \
   --config-patch @nodes/node01.yaml           \
   $CLUSTER_NAME $API_ENDPOINT --force
 
-talosctl apply-config -n ${NODEIP} -e ${NODEIP} --file rendered/node01.yaml --insecure
+
+talosctl gen config \
+  --output rendered/node01.yaml               \
+  --output-types controlplane                 \
+  --config-patch @patches/cluster-config.yaml \
+  --config-patch @patches/cache_registry.yaml \
+  --config-patch @patches/trust_nf.lab.yaml   \
+  --config-patch @patches/metrics.yaml        \
+  --config-patch @nodes/node01.yaml           \
+  $CLUSTER_NAME $API_ENDPOINT --force
+
+
+talosctl apply-config -n ${NODEIP} --file rendered/node01.yaml --insecure
 
 # needed if first member
-export NODEIP=10.0.0.228
 talosctl bootstrap -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
 
 talosctl config merge $HOME/.talos/config  --talosconfig ./talosconfig 
