@@ -59,6 +59,8 @@ curl https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane 
 
 ```
 ~/butane 100-worker-vfiopci.bu -o 100-worker-vfiopci.yaml
+or
+~/butane 100-master-vfiopci.bu -o 100-master-vfiopci.yaml
 ```
 # apply config (SNO)
 ```

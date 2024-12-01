@@ -13,10 +13,16 @@ spec:
       files:
         - contents:
             compression: ""
-            source: data:,options%20vfio-pci%20ids%3D1000%3A0097%0A
+            source: data:,options%20vfio-pci%20ids%3D1000%3A0097%0Ablacklist%20mpt3sas%0A
           mode: 420
           overwrite: true
-          path: /etc/modprobe.d/vfio.conf
+          path: /etc/modprobe.d/mpt3sas-vfio.conf
+        - contents:
+            compression: ""
+            source: data:,softdep%20mpt3sas%20pre%3A%20vfio-pci%0A
+          mode: 420
+          overwrite: true
+          path: /etc/modprobe.d/vfio-before-mpt3sas.conf
         - contents:
             compression: ""
             source: data:,vfio-pci
