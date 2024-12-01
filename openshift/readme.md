@@ -40,3 +40,32 @@ oc patch storageclass lvms-vg1 -p '{"metadata": {"annotations": {"storageclass.k
 - openshift virtualization
 - install nmstate operator
 
+# PCi passthrough
+# https://docs.openshift.com/container-platform/4.16/virt/virtual_machines/advanced_vm_management/virt-configuring-pci-passthrough.html#virt-preparing-host-devices-for-pci-passthrough
+```
+[root@virt01 ~]# lspci -nnv |grep SAS
+03:00.0 Serial Attached SCSI controller [0107]: Broadcom / LSI SAS3008 PCI-Express Fusion-MPT SAS-3 [1000:0097] (rev 02)
+83:00.0 RAID bus controller [0104]: Broadcom / LSI MegaRAID SAS-3 3008 [Fury] [1000:005f] (rev 02)
+```
+
+# change the line to have the dev id in the butane file
+```
+ options vfio-pci ids=1000:0097
+```
+# Install butane if needed
+```
+curl https://mirror.openshift.com/pub/openshift-v4/clients/butane/latest/butane --output butane
+```
+
+```
+~/butane 100-worker-vfiopci.bu -o 100-worker-vfiopci.yaml
+```
+# apply config (SNO)
+```
+oc apply -f 100-master-vfiopci.yaml -f 100-master-iommu.yaml 
+```
+
+# apply config (non SNO)
+```
+oc apply -f 100-worker-vfiopci.yaml -f 100-worker-iommu.yaml 
+```

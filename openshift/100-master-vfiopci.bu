@@ -1,0 +1,19 @@
+variant: openshift
+version: 4.17.0
+metadata:
+  name: 100-master-vfiopci
+  labels:
+    machineconfiguration.openshift.io/role: master 
+storage:
+  files:
+  - path: /etc/modprobe.d/vfio.conf
+    mode: 0644
+    overwrite: true
+    contents:
+      inline: |
+        options vfio-pci ids=1000:0097
+  - path: /etc/modules-load.d/vfio-pci.conf 
+    mode: 0644
+    overwrite: true
+    contents:
+      inline: vfio-pci
