@@ -8,7 +8,7 @@ cluster:
   clusterName: talos
   apiServer:
     certSANs:
-      - 10.0.0.100
+      - 10.0.0.244
       - talos.nf.lab
   extraManifests:
     - https://raw.githubusercontent.com/alex1989hu/kubelet-serving-cert-approver/main/deploy/standalone-install.yaml

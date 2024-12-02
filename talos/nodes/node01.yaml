@@ -4,7 +4,7 @@ machine:
     wipe: true # Indicates if the installation disk should be wiped at installation time.
   certSANs:
     - talos.nf.lab
-    - 10.0.0.100
+    - 10.0.0.244
   kubelet:
     extraArgs:
       rotate-server-certificates: true
@@ -12,22 +12,6 @@ machine:
     nameservers:
       - 10.0.0.1
     hostname: talos01
-    interfaces:
-      - interface: eno1
-        dhcp: false
-        addresses:
-          - 10.0.0.100/16
-        routes:
-          - network: 0.0.0.0/0 # The route's network (destination).
-            gateway: 10.0.0.1 # The route's gateway (if empty, creates link scope route).
-        mtu: 1500
-        vlans:
-          - vlanId: 1000
-            dhcp: false
-          - vlanId: 1400
-            dhcp: false
-          - vlanId: 1990
-            dhcp: false
   nodeLabels:
       node.kubernetes.io/exclude-from-external-load-balancers:
       $patch: delete

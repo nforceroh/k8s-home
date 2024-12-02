@@ -4,7 +4,7 @@ https://factory.talos.dev/?arch=amd64&board=undefined&cmdline-set=true&extension
 
 ```
 export CLUSTER_NAME=talos
-export NODEIP=10.0.0.100
+export NODEIP=10.0.0.244
 export API_ENDPOINT=https://${NODEIP}:6443
 
 # For new cluster, need to create secrets
