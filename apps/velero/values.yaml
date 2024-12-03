@@ -1,7 +1,7 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
 velero:
   image:
-    repository: harbor.nf.lab/proxy.docker.io/velero/velero
+    repository: velero/velero
     tag: v1.15.0
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
   resources:
@@ -40,7 +40,7 @@ velero:
   deployNodeAgent: true
   kubectl:
     image:
-      repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl
+      repository: bitnami/kubectl
 #  schedules:
 #    daily:
       # Tell ArgoCD not to automatically prune/delete backups
