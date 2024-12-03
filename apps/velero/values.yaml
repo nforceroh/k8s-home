@@ -1,7 +1,7 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
 velero:
   image:
-    repository: velero/velero
+    repository: harbor.nf.lab/proxy.docker.io/velero/velero
     tag: v1.15.0
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
   resources:
@@ -13,7 +13,7 @@ velero:
       memory: 3072Mi
   initContainers:
   - name: velero-plugin-for-aws
-    image: velero/velero-plugin-for-aws:v1.10.0
+    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.10.0
     imagePullPolicy: IfNotPresent
     volumeMounts:
       - mountPath: /target
@@ -40,7 +40,7 @@ velero:
   deployNodeAgent: true
   kubectl:
     image:
-      repository: bitnami/kubectl
+      repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl
 #  schedules:
 #    daily:
       # Tell ArgoCD not to automatically prune/delete backups
