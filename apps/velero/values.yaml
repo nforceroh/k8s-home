@@ -2,6 +2,7 @@
 velero:
   image:
     repository: harbor.nf.lab/proxy.docker.io/velero/velero
+    tag: v1.15.0
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
   resources:
     requests:
@@ -37,7 +38,9 @@ velero:
   snapshotsEnabled: false
   
   deployNodeAgent: true
-    
+  kubectl:
+    image:
+      repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl
 #  schedules:
 #    daily:
       # Tell ArgoCD not to automatically prune/delete backups
