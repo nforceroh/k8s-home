@@ -15,10 +15,10 @@ grafana:
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       traefik.ingress.kubernetes.io/router.priority: "10"
       kubernetes.io/ingress.class: traefik
-      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+      external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
     hosts:
       - grafana.k3s.nf.lab
     tls:
       - hosts:
-          - grafana.k3s.nf.lab
+          - grafana.test.nf.lab
         secretName: grafana-server-tls

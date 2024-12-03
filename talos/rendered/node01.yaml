@@ -415,7 +415,7 @@ cluster:
     secret: TYkh9I215IEGfZ4NE5ANcAWjaBFP+cIpSwa0ZCoDU3Y= # Shared secret of cluster (base64 encoded random 32 bytes).
     # Provides control plane specific configuration options.
     controlPlane:
-        endpoint: https://10.0.0.244:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
+        endpoint: https://talos.nf.lab:6443 # Endpoint is the canonical controlplane endpoint, which can be an IP address or a DNS hostname.
     clusterName: talos # Configures the cluster's name.
     # Provides cluster specific network configuration options.
     network:
@@ -451,9 +451,10 @@ cluster:
         image: registry.k8s.io/kube-apiserver:v1.31.1 # The container image used in the API server manifest.
         # Extra certificate subject alternative names for the API server's certificate.
         certSANs:
-            - 10.0.0.244
+            - talos.nf.lab
             - 10.0.0.244
             - talos.nf.lab
+            - talos01.v1000.nf.lab
         disablePodSecurityPolicy: true # Disable PodSecurityPolicy in the API server and default manifests.
         # Configure the API server admission plugins.
         admissionControl:

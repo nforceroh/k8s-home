@@ -4,7 +4,7 @@ https://factory.talos.dev/?arch=amd64&board=undefined&cmdline-set=true&extension
 
 ```
 export CLUSTER_NAME=talos
-export NODEIP=10.0.0.244
+export NODEIP=talos.nf.lab
 export API_ENDPOINT=https://${NODEIP}:6443
 
 # For new cluster, need to create secrets
@@ -46,10 +46,10 @@ talosctl gen config \
   $CLUSTER_NAME $API_ENDPOINT --force
 
 
-talosctl apply-config -n ${NODEIP} --file rendered/node01.yaml --insecure
+talosctl apply-config -n ${NODEIP} -e ${NODEIP} --file rendered/node01.yaml --insecure
 
 # needed if first member
-talosctl bootstrap -n ${NODEIP} -e  ${NODEIP} --talosconfig ./talosconfig 
+talosctl bootstrap -n ${NODEIP} -e ${NODEIP} --talosconfig ./talosconfig 
 
 talosctl config merge $HOME/.talos/config  --talosconfig ./talosconfig 
 

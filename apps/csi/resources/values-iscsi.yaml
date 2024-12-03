@@ -21,34 +21,37 @@ volumeSnapshotClasses:
     detachedSnapshots: "true"
 
 # for talos
-#node:
-#  hostPID: true
-#  driver:
-#    extraEnv:
-#      - name: ISCSIADM_HOST_STRATEGY
-#        value: nsenter
-#      - name: ISCSIADM_HOST_PATH
-#        value: /usr/local/sbin/iscsiadm
-#    iscsiDirHostPath: /usr/local/etc/iscsi
-#    iscsiDirHostPathType: ""
+node:
+  hostPID: true
+  driver:
+    extraEnv:
+      - name: ISCSIADM_HOST_STRATEGY
+        value: nsenter
+      - name: ISCSIADM_HOST_PATH
+        value: /usr/local/sbin/iscsiadm
+    iscsiDirHostPath: /usr/local/etc/iscsi
+    iscsiDirHostPathType: ""
     
 driver:
   config:
     driver: freenas-api-iscsi
     httpConnection:
       protocol: https
-      host: 192.168.101.38
+      host: 10.0.0.100
       port: 443
-      apiKey: 1-LdgCsKDCTGT5dzAzM4hWLsqMaAtkVPVsVK3ozkFMkZsyjB49WHOah2olBYnV5WfU
+# nas02
+#      apiKey: 1-LdgCsKDCTGT5dzAzM4hWLsqMaAtkVPVsVK3ozkFMkZsyjB49WHOah2olBYnV5WfU
+# nas01
+      apiKey: 1-ttfyQbZqoAPEGGs17D1ilBIVoV99wQjfKJoV5xUNJaLo8yZrIV4iLIAYKJaBG8gR
       allowInsecure: true
       apiVersion: 2
     zfs:
-      datasetParentName: spins/k8s/i/v
-      detachedSnapshotsDatasetParentName: spins/k8s/i/s
+      datasetParentName: ssd01/k8s/i/v
+      detachedSnapshotsDatasetParentName: ssd01/k8s/i/s
       zvolEnableReservation: false
       zvolBlocksize: 4K
     iscsi:
-      targetPortal: "10.0.0.99:3260"
+      targetPortal: "10.0.0.100:3260"
       nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
       namePrefix: csi-
       nameSuffix: "-talos"
