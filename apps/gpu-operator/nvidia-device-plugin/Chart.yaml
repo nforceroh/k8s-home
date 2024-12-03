@@ -1,0 +1,7 @@
+name: nvidia-device-plugin
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: gnvidia-device-plugin
+  repository: hhttps://nvidia.github.io/k8s-device-plugin
+  version: 0.17.0

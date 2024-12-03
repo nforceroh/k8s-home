@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata: 
+  name: gpu-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  generators:
+  - git:
+      repoURL: 'https://github.com/nforceroh/k8s-home.git'
+      revision: HEAD
+      directories:
+        - path: apps/gpu-operator/*
+  template:
+    metadata:
+      name:  "{{`{{ path.basename }}`}}"
+    spec:
+      project: argocd-talos
+      source:
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        targetRevision: HEAD
+        path:  "{{`{{ path }}`}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace:  gpu-operator
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+

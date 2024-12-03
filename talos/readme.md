@@ -1,6 +1,16 @@
-factory.talos.dev/installer/a28d86375cf9debe952efbcbe8e2886cf0a174b1f4dd733512600a40334977d7:v1.8.1
+customization:
+    systemExtensions:
+        officialExtensions:
+            - siderolabs/binfmt-misc
+            - siderolabs/crun
+            - siderolabs/iscsi-tools
+            - siderolabs/nonfree-kmod-nvidia-production
+            - siderolabs/nvidia-container-toolkit-production
+            - siderolabs/util-linux-tools
+            - siderolabs/vmtoolsd-guest-agent
+factory.talos.dev/installer/a8651af064e616002d2bf1853faede32d2fd7cc9b05598e490b9d74f0318a08c:v1.8.3
 
-https://factory.talos.dev/?arch=amd64&board=undefined&cmdline-set=true&extensions=-&extensions=siderolabs%2Fcrun&extensions=siderolabs%2Fintel-ucode&extensions=siderolabs%2Fiscsi-tools&extensions=siderolabs%2Fnvidia-container-toolkit-production&extensions=siderolabs%2Fnvidia-open-gpu-kernel-modules-production&extensions=siderolabs%2Futil-linux-tools&platform=metal&target=metal&version=1.8.3
+https://factory.talos.dev/?arch=amd64&board=undefined&cmdline-set=true&extensions=-&extensions=siderolabs%2Fbinfmt-misc&extensions=siderolabs%2Fcrun&extensions=siderolabs%2Fiscsi-tools&extensions=siderolabs%2Fnvidia-container-toolkit-production&extensions=siderolabs%2Futil-linux-tools&extensions=siderolabs%2Fvmtoolsd-guest-agent&extensions=siderolabs%2Fnonfree-kmod-nvidia-production&platform=metal&secureboot=undefined&target=metal&version=1.8.3
 
 ```
 export CLUSTER_NAME=talos
