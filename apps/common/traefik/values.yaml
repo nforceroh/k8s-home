@@ -1,6 +1,9 @@
 # https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
 
 traefik:
+  image:  # @schema additionalProperties: false
+    # -- Traefik image host registry
+    registry: harbor.nf.lab/proxy.docker.io
   logs:
     access:
       enabled: true
