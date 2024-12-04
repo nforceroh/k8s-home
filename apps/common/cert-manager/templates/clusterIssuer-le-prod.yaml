@@ -4,7 +4,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    email: {{ .Values.clusterIssuer.mail }}
+    email: sylvain@nforcer.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: leprod-issuer-account-key
