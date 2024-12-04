@@ -16,7 +16,7 @@ storageClasses:
     detachedVolumesFromSnapshots: "false"
 
 volumeSnapshotClasses:
-- name: iscsi
+- name: truenas-iscsi
   parameters:
     detachedSnapshots: "true"
 

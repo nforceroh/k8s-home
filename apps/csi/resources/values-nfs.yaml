@@ -19,7 +19,7 @@ storageClasses:
       - nfsvers=4
 
 volumeSnapshotClasses:
-- name: nfs
+- name: truenas-nfs
   parameters:
     detachedSnapshots: "true"
 
