@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-server
+spec:
+  dnsNames:
+    - argo.test.nf.lab
+  issuerRef:
+    kind: ClusterIssuer
+    name: nf-lab
+  secretName: argocd/argocd-server-tls
+  subject:
+    organizations:
+      - "Nforcer"
+  usages:
+    - server auth

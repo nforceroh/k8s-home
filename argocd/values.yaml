@@ -30,6 +30,8 @@ argo-cd:
       enabled: true
       ingressClassName: traefik
       annotations:
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.priority: "10"
         kubernetes.io/ingress.class: traefik
