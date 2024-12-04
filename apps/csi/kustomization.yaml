@@ -21,4 +21,3 @@ helmCharts:
   repo: https://democratic-csi.github.io/charts/
   namespace: csi
   valuesFile: ./resources/values-iscsi.yaml
-
