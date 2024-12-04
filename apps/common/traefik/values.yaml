@@ -41,7 +41,7 @@ traefik:
 
   ports:
     traefik:
-      port: 9000
+      port: 8080
       expose:
         default: true
     web:
