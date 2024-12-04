@@ -1,7 +1,7 @@
 # https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 clusterIssuer:
-  mail: sylvain@nforcer.com
+  mail: sylvain@nf.lab
 
 image:
   repository: harbor.nf.lab/proxy.quay.io/jetstack/cert-manager-controller
