@@ -26,21 +26,21 @@ argo-cd:
  #       group: "cert-manager.io"
  #       kind: ClusterIssuer
  #       name: nf-lab
-#    ingress:
-#      enabled: true
-#      ingressClassName: traefik
-#      annotations:
-#        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-#        traefik.ingress.kubernetes.io/router.priority: "10"
-#        kubernetes.io/ingress.class: traefik
-#        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
-#      hostname: argo.k3s.nf.lab
-#      hosts:
-#        - argo.k3s.nf.lab
-#      tls:
-#        - hosts:
-#            - argo.k3s.nf.lab
-#          secretName: argocd-server-tls
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.priority: "10"
+        kubernetes.io/ingress.class: traefik
+        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      hostname: argo.test.nf.lab
+      hosts:
+        - argo.test.nf.lab
+      tls:
+        - hosts:
+            - argo.test.nf.lab
+          secretName: argocd-server-tls
       https: false
 
   notifications:
