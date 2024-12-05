@@ -6,6 +6,9 @@ rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x"
 rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/Music root@nas01.v1000.nf.lab:/mnt/ssd01 
 ```
 
+for s in backup depot emby Music; do rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/ssd01/$s/* nas02.v101.nf.lab:/mnt/spins/$s ; done
+for s in backup depot emby Music; do rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/$s/* root@nas01.v1000.nf.lab:/mnt/ssd01 ; done
+
 # Create a cert for the webui
 ```
 step ca bootstrap --ca-url https://ca.nf.lab --fingerprint 50469643a11b4e72f2dd2eddae5c90d8b90acf1c51b2ab8ccba9391b5b97d9bc
