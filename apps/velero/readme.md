@@ -180,10 +180,15 @@ done
 
 # Using ns for cross cluster, need to disable snapshots
 ```
-NS="ai"
+NS="databases"
 velero create backup mig-ns-${NS}  --include-namespaces ${NS} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 watch velero backup describe mig-ns-${NS} --details
 
 
 velero restore create --from-backup mig-ns-${NS} --restore-volumes=true
 ```
+
+```
+for ns in iot minecraft tools torrent camera; do
+ velero create backup mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
+done
