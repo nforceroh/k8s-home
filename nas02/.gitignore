@@ -1,0 +1,5 @@
+charts/
+Chart.lock
+ArgoCD-Talos/
+secretsRaw/
+k8s-home-secrets/

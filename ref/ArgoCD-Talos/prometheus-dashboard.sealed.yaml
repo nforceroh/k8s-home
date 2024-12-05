@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: prometheus-dashboard
+  namespace: argo-monitoring
+spec:
+  encryptedData:
+    users: AgBFpgn3EjfO+mvRsXpXACM7Nnc3HrTgLDiObzJg/ml/Px5gDUUK3q4ACYm9lCdAWAZSR7QYfsyI7iXc4yNM7gkSMZxzz7pMIZ50Fiq7W9aStzUfqd0SoAe/XA3iYw0oGlLOly6TxdnSKQk3fEsoTux2x1gV69TMK+LyPuc0lHtR6vFqtdIs/+dUGcumBEA9/ouIV0dlvv2YvDDdHU0lORFF2C7oF0ZyhVpiZvLXCP1uLJp/GSd+wk2pzCKnkhpxYkz71UCHqeP7kWvxtCGLYCyLNviCNtEiyxJZc7ZMpwEoiHhrgA+mhpyanx1mTuWWN/+z2TxSd8VlCDmfzGruf7QMzce2FVg+qhOD8UXWotw4SpucE9vpvLKEWTkXiJCJGW6qVE343BBkMIKpWg9eCtxknctxLklGo0mm3mXebolzubVw3SKZr3lRuvX/4O5xjJ0UnVMQmjek3m081dm3f4RR+biTb4MgnBlwNODLDxAGThFsl0tK0ZvAv1lC6gvRxq45vUMRk7v+18jnt5xUHSUCayDcvGVCxodAyJTp8glhV9R9WCkupYBjpoY08td+eLtnKHX/4t1W4zHfmIP19druy+67l9aJRpanljTClMEz8KRUxMXQVNkbFVu9Lo2W0pcJnyx5LePg5oHSoS5nrWWSAMm5eP+QArFEbZ2YwXXjzMymAfMXntiUBsQhKHcGCZU32SgVR97sCSENW+0EpI0BCijhgE2jOeN95kyNoiAwi/aMBMdSbLF2kSIhdVk=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: prometheus-dashboard
+      namespace: argo-monitoring
+

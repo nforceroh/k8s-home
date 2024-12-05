@@ -1,0 +1,23 @@
+# Bootstrap the appsConfigurator, which will in turn deploy enabled applicationSets (ArgoCD "app of apps" model)
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: appsconfigurator
+  namespace: argocd
+spec:
+  project: argocd-talos
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+  source:
+    repoURL: {{ $.Values.global.repo }}
+    targetRevision: {{ $.Values.global.branch }}
+    path: appsConfigurator
+    helm:
+      valueFiles:
+        - values.yaml
+        - ../globalValues.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
