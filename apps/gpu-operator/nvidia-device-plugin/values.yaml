@@ -4,4 +4,4 @@ nvidia-device-plugin:
     enabled: true
   nfd:
     nameOverride: node-feature-discovery
-    enableNodeFeatureApi: true  
+    enableNodeFeatureApi: true
