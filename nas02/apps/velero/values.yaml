@@ -23,7 +23,7 @@ velero:
     logLevel: debug
     defaultVolumesToFsBackup: true
     backupStorageLocation:
-    - name: local-minio
+    - name: default
       provider: aws
       bucket: velero
       config:
