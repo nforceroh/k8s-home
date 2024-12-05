@@ -12,9 +12,19 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
+  name: restricted
+  namespace: {{ .Release.Namespace }}
+spec:
+  autoAssign: false
+  addresses:
+  - 10.0.0.3-10.0.0.10
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
   name: infra
   namespace: {{ .Release.Namespace }}
 spec:
   autoAssign: false
   addresses:
-  - 10.0.0.3-10.0.0.90
+  - 10.0.0.11-10.0.0.20
