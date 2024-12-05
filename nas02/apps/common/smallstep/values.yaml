@@ -23,7 +23,7 @@ step-certificates:
 
   service:
     annotations:
-        metallb.universe.tf/address-pool: infra
+        metallb.universe.tf/address-pool: apps
         external-dns.alpha.kubernetes.io/hostname: ca.nf.lab
         external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
