@@ -11,7 +11,7 @@ spec:
     solvers:
     - dns01:
         cloudflare:
-          email: {{ .Values.clusterIssuer.mail }}
+          email: sylvain@nforcer.com
           apiTokenSecretRef:
             name: cloudflare-api-token
             key: api-token
