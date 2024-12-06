@@ -33,7 +33,7 @@ velero:
         s3Url: https://minio.nf.lab
         checksumAlgorithm: ''
   credentials:
-    existingSecret: velero-minio-credentials
+    existingSecret: minio-credentials
 
   snapshotsEnabled: false
   
