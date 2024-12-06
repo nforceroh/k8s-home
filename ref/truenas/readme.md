@@ -34,7 +34,7 @@ iHfp87h4ssrokpRDE1fnEdobtA==
 -----END CERTIFICATE-----
 EOF
 
-cp >nf_lab_root_ca.crt <<EOF
+cat >nf_lab_root_ca.crt <<EOF
 -----BEGIN CERTIFICATE-----
 MIIBmTCCAT6gAwIBAgIRAMZA2d93OfSMpAURmdtuFUwwCgYIKoZIzj0EAwIwKjEP
 MA0GA1UEChMGbmYubGFiMRcwFQYDVQQDEw5uZi5sYWIgUm9vdCBDQTAeFw0yMzA5
