@@ -8,7 +8,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-  description: ArgoCD on Talos
+  description: ArgoCD on virt01
   clusterResourceWhitelist:
   - group: '*'
     kind: '*'
