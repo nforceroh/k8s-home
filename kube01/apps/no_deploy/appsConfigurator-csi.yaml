@@ -1,12 +1,12 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: democratic-csi
+  name: openebs
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  project: argocd-talos
+  project: argocd-kube01
   syncPolicy:
     automated:
       prune: false
@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: apps/csi
+    path: kube01/apps/csi
   destination:
     server: https://kubernetes.default.svc
     namespace: csi  

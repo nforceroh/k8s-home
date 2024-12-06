@@ -11,12 +11,12 @@ spec:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
       revision: HEAD
       directories:
-        - path: apps/gpu-operator/*
+        - path: kube01/apps/gpu-operator/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
     spec:
-      project: argocd-talos
+      project: argocd-kube01
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: HEAD

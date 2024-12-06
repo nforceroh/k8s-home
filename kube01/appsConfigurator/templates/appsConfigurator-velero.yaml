@@ -6,7 +6,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  project: argocd-talos
+  project: argocd-kube01
   syncPolicy:
     automated:
       prune: true
@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: apps/velero
+    path: kube01/apps/velero
   destination:
     server: https://kubernetes.default.svc
     namespace: velero  

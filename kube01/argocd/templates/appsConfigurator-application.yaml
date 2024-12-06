@@ -5,7 +5,7 @@ metadata:
   name: appsconfigurator
   namespace: argocd
 spec:
-  project: argocd-talos
+  project: argocd-kube01
   syncPolicy:
     automated:
       prune: false
@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: appsConfigurator
+    path: kube01/appsConfigurator
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

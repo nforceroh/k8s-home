@@ -11,7 +11,7 @@ argo-cd:
       server.insecure: true
     cm:
       kustomize.buildOptions: --enable-helm
-      url: 'https://argo.k3s.nf.lab'
+      url: 'https://argo.test.nf.lab'
       admin.enabled: true
       secret:
         argocdServerAdminPassword: "$2a$10$s2Ibc1ThAoM4pRBsGG6TMu.i5ptXZw.nIMNyFY2//awGak23UggGi"
@@ -20,7 +20,7 @@ argo-cd:
   server:
  #   certificate:
  #     enabled: true 
- #     domain: argo.k3s.nf.lab
+ #     domain: argo.test.nf.lab
  #     secretName: argocd-server-tls
  #     issuer:
  #       group: "cert-manager.io"
@@ -35,19 +35,19 @@ argo-cd:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.priority: "10"
         kubernetes.io/ingress.class: traefik
-        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-      hostname: argo.k3s.nf.lab
+        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      hostname: argo.test.nf.lab
       hosts:
-        - argo.k3s.nf.lab
+        - argo.test.nf.lab
       tls:
         - hosts:
-            - argo.k3s.nf.lab
+            - argo.test.nf.lab
           secretName: argocd-server-tls
       https: false
 
   notifications:
-    argocdUrl: 'https://argo.k3s.nf.lab'
+    argocdUrl: 'https://argo.test.nf.lab'
   
   applicationSet:
     certificate:
-      domain: argo.k3s.nf.lab
+      domain: argo.test.nf.lab
