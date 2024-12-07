@@ -2,14 +2,18 @@
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
 metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
   creationTimestamp: null
   name: external-dns-pdns
   namespace: common
 spec:
   encryptedData:
-    pdns_api_key: AgAaPKPUetHBJtiITvJGwqiN4AUUr7rYBa7volQubajNGKRUpIppD9LAFYoPUcgt3BlVhSiAlBDBjpkQQ8cqjRQopyU/rXSjyLfvyEk/WQdZ1s3UYQCl7ESqibJETx6Sk6B3RKZB/SK0dvhvg/cGKxJ4u5WaS7Ziz+x5sQfZf91iFc7xBA1hSfKykJWj7LrKHCh3pUx4o1jLF8+Z1nrop0P/YxemgZxTHBzzq55LzgIJQgnrCKmiasJ+YOBGmqV2++hjfY4NOU2aJt3ugUpe0CY7f7je6oO7TfYQxTUeIlo/cX7CQIx4RaXvLX0HfFS/nHI8VAByJsBJaVv1SaZ+V7z9MljuSrV9t2uREFOO1kFfFbB5HrFRtcOPmxEkdevcPcuYPGR2jBbXrlse1HqQtDR+FMYQMILb1DDb0oEuO7HljJlNDrZ10lHU7aP9vIcr2idfOr63S4Lbb/JVXfUiKCye2uApWhnBSxoxMm3Q1ON+WwmaLFhPnt/heFe8LACEvW1sqEh6VRdtDmSTGPq33JZW+3mD/SPgDFSbyD9RZFgUeIA66SbMWKltwKGDtv2Goeen/SGzpzS3qgtI3bXyI2vObK1GLhVG//CjwW+USPU0jNeAf1JhiF4MijUIJENKhmYNL7Dw3G/ICWgKjH5vjn5mvivlogCELJTHFROYgQZfk8BapCmil5D1BMWBKUiqT5Ypu/50AdbzZSyoCPbJZruu3NNVZsgG2fySxsPdEOcBYS6t/Qc=
+    pdns_api_key: AgCstuWQnCIhxLjP2SgE4pO2BnwGRGXac+VMvZmJeu3Kk90usbjP/cgCz9E3mU9i+dOEOYwf0iE0Ku/F0cs8x1Fs9N34E13Y6F6NCWxhEpHDQPUd2rxPYykD0eOrhRg8D9j5iQPuWhElHCynq7Wn1knhjt6xuA0+MHYs31Ci//2M5SvWTKPCX+CuQ9Sr3VHTtqFnWRfbhBxsuLyjLIBXscyPE+e8IKPUA/zabxnudzH7c9hxUBpqm2m/he+nppxD7oT77bHFceMyWkJvy844nHvvTWqj+wLfcfJNb/Q+jyVF7Tx/oh4NfXi6tVfAjGPSfHoB0ki8nVNqmtsgbdeACD+DoHGuucAD+DDqMAqvbfoe9nxuWwkLGuhxy7e/URahki7gJXHM+berDKtmx+RfUJHZPR+V0Ht9hOa3E+xWrnlvFdGlYVVU+BCeg+0+A0V0O34EhCPZzI+l9Ck3EG3PPcpQbCh8yznLkHUQQY5hDnhOWoXqSOJ9S97Rj/7Fe8TJ8be41zOtGxJHzefKCes2FDkqmK9A7sMUoy0kpFZ1NaGRx0+yBNEcpjOrYe4hK8ueWjB/s+2UnBrIQwL+BcIFlbOMLE9EbGrCDKfz4X+kDc42p4z6wPGsW8AzBq6elUR8Lyx5qW96dRkjpqn1U2pDpHOfwpZp0yKohKyKfwdv9/Lmryd9JYGo5ztZtgEtEC8o038XE4l1l78uphAKD0FRzSvPHLIE5rixnQ0//FBPLsE9PnXUa60=
   template:
     metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
       creationTimestamp: null
       name: external-dns-pdns
       namespace: common

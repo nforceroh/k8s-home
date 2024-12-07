@@ -2,4 +2,4 @@
 
 speaker:
   # ignore the exclude-from-external-loadbalancer label
-  ignoreExcludeLB: false
+  ignoreExcludeLB: true
