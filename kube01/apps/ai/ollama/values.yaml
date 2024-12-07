@@ -7,14 +7,11 @@ ollama:
       enabled: true
       type: 'nvidia'
     models:
-      pull:
-        - mistral
-        - llama3.1
-        - llama3.2
-        - llama3.2-vision
-        - codellama
-      run:
-        - llama3.2
+      - mistral
+      - llama3.1
+      - llama3.2
+      - llama3.2-vision
+      - codellama
 
   runtimeClassName: "nvidia"
   ingress:
