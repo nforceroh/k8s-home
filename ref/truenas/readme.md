@@ -1,13 +1,13 @@
 # rsync
 ```
-rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/depot root@nas01.v1000.nf.lab:/mnt/ssd01 
-rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/backup root@nas01.v1000.nf.lab:/mnt/ssd01 
-rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/emby root@nas01.v1000.nf.lab:/mnt/ssd01 
-rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/Music root@nas01.v1000.nf.lab:/mnt/ssd01 
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/depot root@virt01.v1001.nf.lab:/mnt/ssd01 
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/backup root@virt01.v1001.nf.lab:/mnt/ssd01 
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/emby root@virt01.v1001.nf.lab:/mnt/ssd01 
+rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -c arcfour -o Compression=no -x" /mnt/spins/Music root@virt01.v1001.nf.lab:/mnt/ssd01 
 ```
 
 for s in backup depot emby Music; do rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/ssd01/$s/* nas02.v101.nf.lab:/mnt/spins/$s ; done
-for s in backup depot Music; do rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/$s/* root@nas01.v1000.nf.lab:/mnt/ssd01/$s ; done
+for s in backup depot Music; do rsync -aHAXxv --numeric-ids --delete --progress -e "ssh -T -o Compression=no -x" /mnt/spins/$s/* root@virt01.v1001.nf.lab:/mnt/ssd01/$s ; done
 
 # Create a cert for the webui
 ```

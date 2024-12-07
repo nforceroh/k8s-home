@@ -1,0 +1,42 @@
+---
+ollama:
+  image:
+    repository: harbor.nf.lab/proxy.docker.io/ollama/ollama
+  ollama:
+    gpu:
+      enabled: true
+      type: 'nvidia'
+    models:
+      pull:
+        - mistral
+        - llama3.1
+        - llama3.2
+        - llama3.2-vision
+        - codellama
+      run:
+        - llama3.2
+
+  runtimeClassName: "nvidia"
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure  
+      kubernetes.io/ingress.class: traefik
+      external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+    hosts:
+    - host: ollama.test.nf.lab
+    tls:
+    - hosts:
+      - ollama.test.nf.lab
+      secretName: ollama-cert-tls
+  serviceAccount:
+    create: true
+    automount: true
+    name: ollama-sa
+  persistentVolume:
+    enabled: true
+    existingClaim: ollama
+    size: 50Gi
+

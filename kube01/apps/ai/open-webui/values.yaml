@@ -1,0 +1,25 @@
+---
+open-webui:
+  ollama:
+    enabled: false
+  ollamaUrls:
+    - http://ollama.ai.svc.cluster.local:11434
+  ingress:
+    enabled: true
+    class: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure  
+      external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+    hosts: "open-webui.test.nf.lab"
+    tls: true
+    existingSecret: open-webui-cert-tls
+  serviceAccount:
+    enable: true
+    name: open-webui-sa
+  persistence:
+    enabled: true
+    existingClaim: open-webui
+    size: 2Gi
+
