@@ -14,12 +14,12 @@ parameters:
   thinprovision: "yes"
   poolname: "ssd01/k8s"
 provisioner: zfs.csi.openebs.io
----
-kind: VolumeSnapshotClass
-apiVersion: snapshot.storage.k8s.io/v1
-metadata:
-  name: zfspv-snapclass
-  annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
-driver: zfs.csi.openebs.io
-deletionPolicy: Delete
+#---
+#kind: VolumeSnapshotClass
+#apiVersion: snapshot.storage.k8s.io/v1
+#metadata:
+#  name: zfspv-snapclass
+#  annotations:
+#    snapshot.storage.kubernetes.io/is-default-class: "true"
+#driver: zfs.csi.openebs.io
+#deletionPolicy: Delete

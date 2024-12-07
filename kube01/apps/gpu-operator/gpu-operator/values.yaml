@@ -1,0 +1,17 @@
+gpu-operator:
+  cdi:
+    enabled: false
+    default: false
+
+  nfd:
+    enabled: true
+  devicePlugin:
+    config:
+      name: time-slicing-config-all
+  driver:
+    enabled: true
+    nvidiaDriverCRD:
+      enabled: false
+
+  toolkit:
+    enabled: false

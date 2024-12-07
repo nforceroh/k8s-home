@@ -1,0 +1,1 @@
+helm upgrade --install -n gpu-operator --create-namespace gpu-operator .

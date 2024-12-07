@@ -125,3 +125,16 @@ kubectl get configmap kube-proxy -n kube-system -o yaml | \
 sed -e "s/strictARP: false/strictARP: true/" | \
 kubectl apply -f - -n kube-system
 ```
+
+# GPU
+https://www.jimangel.io/posts/nvidia-rtx-gpu-kubernetes-setup/
+
+```
+wget https://us.download.nvidia.com/tesla/550.127.08/nvidia-driver-local-repo-ubuntu2404-550.127.08_1.0-1_amd64.deb
+apt install ./nvidia-driver-local-repo-ubuntu2404-550.127.08_1.0-1_amd64.deb 
+sudo cp /var/nvidia-driver-local-repo-ubuntu2404-550.127.08/nvidia-driver-local-A0239FBD-keyring.gpg /usr/share/keyrings/
+```
+
+```
+sudo ubuntu-drivers --gpgpu list
+sudo ubuntu-drivers install
