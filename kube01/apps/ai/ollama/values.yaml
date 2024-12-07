@@ -24,6 +24,9 @@ ollama:
       external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
     hosts:
     - host: ollama.test.nf.lab
+      paths:
+        - path: /
+          pathType: Prefix
     tls:
     - hosts:
       - ollama.test.nf.lab
