@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kms-web-svc
+  labels:
+    app: kms
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: kms-web-svc-port
+  selector:
+    app: kms
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kms-svc
+  labels:
+    app: kms
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    external-dns.alpha.kubernetes.io/hostname: kms.test.nf.lab
+spec:
+  type: LoadBalancer
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+  selector:
+    app: kms
+  ports:
+  - name: kms-svc-port
+    port: 1688
+    protocol: TCP
+    targetPort: 1688
+ 

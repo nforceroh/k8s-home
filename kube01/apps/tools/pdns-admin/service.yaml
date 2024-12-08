@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pdns-admin-svc
+  labels:
+    app: pdns-admin
+spec:
+  ports:
+    - name: pdns-admin-svc-port
+      port: 80
+  selector:
+    app: pdns-admin

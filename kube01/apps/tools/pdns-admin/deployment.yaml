@@ -1,0 +1,33 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pdns-admin
+  labels:
+    app: pdns-admin
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: pdns-admin
+  template:
+    metadata:
+      labels:
+        app: pdns-admin
+    spec:
+      serviceAccountName: pdns-admin-sa
+      containers:
+        - name: pdns-admin
+          image: harbor.nf.lab/proxy.docker.io/powerdnsadmin/pda-legacy:latest
+          imagePullPolicy: Always
+          ports:
+            - name: pdns-admin-port
+              containerPort: 80
+          envFrom:
+          - secretRef:
+              name: pdns-admin-env
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"

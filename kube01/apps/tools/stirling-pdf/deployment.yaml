@@ -1,0 +1,38 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: stirling
+  labels:
+    app: stirling
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: stirling
+  template:
+    metadata:
+      labels:
+        app: stirling
+    spec:
+      serviceAccountName: stirling-sa
+      containers:
+        - name: stirling
+          image: harbor.nf.lab/proxy.docker.io/frooodle/s-pdf:latest-ultra-lite
+          imagePullPolicy: Always
+          env:
+          - name: DOCKER_ENABLE_SECURITY 
+            value: false
+          ports:
+            - name: stirling-port
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          volumeMounts:
+          - name: pdf-config
+            mountPath: /config
+          - name: pdf-ocr
+            mountPath: /usr/share/tesseract-ocr/4.00/tessdata

@@ -1,0 +1,85 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lubelog
+  labels:
+    app: lubelog
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: lubelog
+  template:
+    metadata:
+      labels:
+        app: lubelog
+    spec:
+      serviceAccountName: lubelog-sa
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: lubelogger-config-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: lubelogger-data-pvc
+        - name: documents
+          persistentVolumeClaim:
+            claimName: lubelogger-docs-pvc
+        - name: images
+          persistentVolumeClaim:
+            claimName: lubelogger-img-pvc
+      containers:
+        - name: lubelog
+          image: harbor.nf.lab/proxy.ghcr.io/hargata/lubelogger:latest
+          imagePullPolicy: Always
+          ports:
+            - name: lubelog-port
+              containerPort: 8080
+          env:
+            - name: "LC_ALL"
+              value: "en_US.UTF-8"
+            - name: "LANG"
+              value: "en_US.UTF-8"
+            - name: "LOGGING__LOGLEVEL__DEFAULT"
+              value: "Information"
+            - name: MailConfig__EmailServer
+              valueFrom:
+                secretKeyRef:
+                  name: lubelog-mailinfo
+                  key: MailConfig__EmailServer
+            - name: MailConfig__EmailFrom
+              valueFrom:
+                secretKeyRef:
+                  name: lubelog-mailinfo
+                  key: MailConfig__EmailFrom
+            - name: MailConfig__Port
+              valueFrom:
+                secretKeyRef:
+                  name: lubelog-mailinfo
+                  key: MailConfig__Port
+            - name: MailConfig__Username
+              valueFrom:
+                secretKeyRef:
+                  name: lubelog-mailinfo
+                  key: MailConfig__Username
+            - name: MailConfig__Password
+              valueFrom:
+                secretKeyRef:
+                  name: lubelog-mailinfo
+                  key: MailConfig__Password
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          volumeMounts:
+            - name: config
+              mountPath: /App/config
+            - name: data
+              mountPath: /App/data
+            - name: documents
+              mountPath: /App/wwwroot/documents
+            - name: images
+              mountPath: /App/wwwroot/images          
+

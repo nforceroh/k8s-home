@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: stirling-svc
+  labels:
+    app: stirling
+spec:
+  ports:
+    - name: stirling-svc-port
+      port: 8080
+  selector:
+    app: stirling

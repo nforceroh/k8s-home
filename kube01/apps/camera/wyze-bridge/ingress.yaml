@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wyze-ingress
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+spec:
+  rules:
+  - host: wyze.test.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: wyze-ui-svc
+            port:
+              number: 5000
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - wyze.test.nf.lab
+    secretName: wyze-cert-tls
+---

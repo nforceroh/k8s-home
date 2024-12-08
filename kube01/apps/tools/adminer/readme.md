@@ -1,0 +1,1 @@
+https://github.com/cetic/helm-adminer/blob/master/values.yaml

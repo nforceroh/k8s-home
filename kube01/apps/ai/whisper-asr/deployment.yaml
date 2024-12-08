@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: whisper-asr
+  labels:
+    app: whisper-asr
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: whisper-asr
+  template:
+    metadata:
+      labels:
+        app: whisper-asr
+    spec:
+      runtimeClassName: nvidia
+      serviceAccountName: whisper-asr-sa
+      containers:
+        - name: whisper-asr
+          image: harbor.nf.lab/proxy.docker.io/onerahmet/openai-whisper-asr-webservice:latest-gpu
+          imagePullPolicy: Always
+          ports:
+            - name: asr-port
+              containerPort: 9000
+          envFrom:
+          - secretRef:
+              name: whisper-asr-env
+

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: lubelog-svc
+  labels:
+    app: lubelog
+spec:
+  ports:
+    - name: lubelog-svc-port
+      port: 8080
+  selector:
+    app: lubelog

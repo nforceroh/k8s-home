@@ -1,0 +1,14 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: whisper-asr-svc
+  labels:
+    app: whisper-asr
+spec:
+  ports:
+    - name: whisper-asr-svc-port
+      port: 9000
+      targetPort: 9000
+  selector:
+    app: whisper-asr

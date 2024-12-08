@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kms-ingress
+  namespace: tools
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+spec:
+  rules:
+  - host: dashboard-kms.test.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: kms-web-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - dashboard-kms.test.nf.lab
+    secretName: kms-cert-tls

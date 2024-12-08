@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lubelog-ingress
+  namespace: tools
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+spec:
+  rules:
+  - host: lubelog.test.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: lubelog-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - lubelog.test.nf.lab
+    secretName: lubelog-cert-tls

@@ -1,0 +1,39 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: coqui
+  labels:
+    app: coqui
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: coqui
+  template:
+    metadata:
+      labels:
+        app: coqui
+    spec:
+      runtimeClassName: nvidia
+      serviceAccountName: coqui-sa
+      containers:
+        - name: coqui
+          image: harbor.nf.lab/proxy.ghcr.io/coqui-ai/tts
+          command: [ "python3", "/root/TTS/server/server.py" ]
+          args: ["--use_cuda", "true", "--model_name", "tts_models/en/vctk/vits"]
+          imagePullPolicy: Always
+          ports:
+            - name: coqui-port
+              containerPort: 5002
+          envFrom:
+          - secretRef:
+              name: coqui-env
+          volumeMounts:
+            - name: coqui-pv
+              mountPath: /root/.local
+      volumes:
+        - name: coqui-pv
+          persistentVolumeClaim:
+            claimName: coqui-pvc

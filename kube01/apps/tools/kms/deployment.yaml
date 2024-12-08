@@ -1,0 +1,75 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kms
+  labels:
+    app: kms
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kms
+  template:
+    metadata:
+      labels:
+        app: kms
+    spec:
+      serviceAccountName: kms-sa
+      containers:
+        - name: kms
+          image: harbor.nf.lab/proxy.ghcr.io/py-kms-organization/py-kms:python3
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          livenessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 1688
+            timeoutSeconds: 5
+          ports:
+          - containerPort: 1688
+            name: main
+            protocol: TCP
+          - containerPort: 8080
+            name: web
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 2
+            tcpSocket:
+              port: 1688
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "50Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - CHOWN
+              - SETUID
+              - SETGID
+              - FOWNER
+              - DAC_OVERRIDE
+              drop:
+              - ALL
+            privileged: false
+            readOnlyRootFilesystem: false
+            seccompProfile:
+              type: RuntimeDefault
+          volumeMounts:
+            - name: kms-pv
+              mountPath: /home/py-kms/db
+      volumes:
+        - name: kms-pv
+          persistentVolumeClaim:
+            claimName: kms-pvc
