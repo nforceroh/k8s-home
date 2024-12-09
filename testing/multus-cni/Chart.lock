@@ -1,6 +1,0 @@
-dependencies:
-- name: multus-cni
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 2.1.18
-digest: sha256:9681b977eb9d158547b0c6450f66f467186aece4a5be0eb1c48434912a1092de
-generated: "2024-10-28T22:13:19.220315716-04:00"
