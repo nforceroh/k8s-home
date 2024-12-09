@@ -10,7 +10,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
 spec:
   rules:
-  - host: coqui.test.nf.lab
+  - host: coqui.k3s.nf.lab
     http:
       paths:
       - backend:
@@ -22,5 +22,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - coqui.test.nf.lab
-    secretName: coqui-cert-tls
+    - coqui.k3s.nf.lab
+    secretName: coqui-k3s-tls

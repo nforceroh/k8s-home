@@ -12,7 +12,7 @@ open-webui:
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure  
       external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
-    host: open-webui.test.nf.lab
+    host: open-webui.k3s.nf.lab
     tls: true
     existingSecret: open-webui-cert-tls
   serviceAccount:

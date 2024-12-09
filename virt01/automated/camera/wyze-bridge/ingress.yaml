@@ -10,7 +10,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
 spec:
   rules:
-  - host: wyze.test.nf.lab
+  - host: wyze.k3s.nf.lab
     http:
       paths:
       - backend:
@@ -22,6 +22,6 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - wyze.test.nf.lab
+    - wyze.k3s.nf.lab
     secretName: wyze-cert-tls
 ---

@@ -6,7 +6,7 @@ metadata:
     app: wbridge
   annotations:
     metallb.universe.tf/ip-allocated-from-pool: apps
-    external-dns.alpha.kubernetes.io/target: wbridge-api.test.nf.lab
+    external-dns.alpha.kubernetes.io/target: wbridge-api.k3s.nf.lab
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster

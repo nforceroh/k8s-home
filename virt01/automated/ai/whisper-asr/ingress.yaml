@@ -10,7 +10,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
 spec:
   rules:
-  - host: asr.test.nf.lab
+  - host: asr.k3s.nf.lab
     http:
       paths:
       - backend:
@@ -22,5 +22,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - asr.test.nf.lab
+    - asr.k3s.nf.lab
     secretName: asr-cert-tls
