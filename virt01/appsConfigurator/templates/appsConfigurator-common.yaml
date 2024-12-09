@@ -11,12 +11,12 @@ spec:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
       revision: main
       directories:
-        - path: kube01/apps/common/*
+        - path: virt01/automated/common/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
     spec:
-      project: argocd-kube01
+      project: argocd-virt01
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: main

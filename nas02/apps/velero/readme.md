@@ -192,3 +192,8 @@ velero restore create --from-backup mig-ns-${NS} --restore-volumes=true
 for ns in iot minecraft tools torrent camera; do
  velero create backup mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 done
+
+
+for s in emby depot backup Music; do 
+  rsync -aHAXxvz --numeric-ids --delete --progress -e "ssh -T -c chacha20-poly1305@openssh.com -o Compression=no -x" /mnt/spins/$s root@virt01.v1001.nf.lab:/mnt/ssd01
+done

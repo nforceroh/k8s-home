@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/nforceroh/k8s-home.git
     targetRevision: main
-    path: kube01/appsConfigurator
+    path: virt01/appsConfigurator
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

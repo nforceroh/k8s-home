@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata: 
-  name: camera
+  name: ai
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -11,22 +11,22 @@ spec:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
       revision: main
       directories:
-        - path: kube01/apps/camera/*
+        - path: virt01/automated/ai/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
     spec:
-      project: argocd-kube01
+      project: argocd-virt01
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: main
         path:  "{{`{{ path }}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace:  camera
+        namespace:  ai
       syncPolicy:
         syncOptions:
-        - CreateNamespace=true
+        - CreateNamespace=false
         automated:
           prune: true
           selfHeal: true
