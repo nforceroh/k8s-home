@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: powerdns-ns2
+  labels:
+    app: powerdns-ns2
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: powerdns-ns2
+  template:
+    metadata:
+      labels:
+        app: powerdns-ns2
+    spec:
+      serviceAccountName: powerdns-sa
+      containers:
+      - name: powerdns-ns2
+        image: harbor.nf.lab/homelab/powerdns:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits: {}
+          requests: {}
+        ports:
+        - containerPort: 53
+          name: dns-tcp
+          protocol: TCP
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 8081
+          name: api-tcp
+          protocol: TCP
+        volumeMounts:
+          - name: pdns-config
+            mountPath: /etc/pdns/pdns.conf
+            subPath: pdns.conf
+      volumes:
+        - name: pdns-config
+          configMap:
+            name: ns2-pdns-conf-cm

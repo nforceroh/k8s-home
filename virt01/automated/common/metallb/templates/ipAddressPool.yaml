@@ -7,7 +7,7 @@ metadata:
 spec:
   autoAssign: true
   addresses:
-    - 10.1.0.100-10.1.0.200
+  - 10.1.0.100-10.1.0.200
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
