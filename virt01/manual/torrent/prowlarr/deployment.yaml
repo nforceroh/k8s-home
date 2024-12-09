@@ -1,0 +1,51 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: prowlarr
+  labels:
+    app: prowlarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: prowlarr
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+    spec:
+      serviceAccountName: prowlarr-sa
+      containers:
+        - name: prowlarr
+          image: harbor.nf.lab/proxy.docker.io/linuxserver/prowlarr:nightly
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: DOCKER_MODS
+              value: "ghcr.io/gilbn/theme.park:prowlarr"
+            - name: TP_THEME
+              value: dark
+          ports:
+            - containerPort: 9696
+              name: prowlarr-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: prowlarr-pv
+              mountPath: /config
+      volumes:
+        - name: prowlarr-pv
+          persistentVolumeClaim:
+            claimName: prowlarr-pvc

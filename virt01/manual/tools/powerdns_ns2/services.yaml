@@ -6,11 +6,11 @@ metadata:
     app: powerdns-ns2
   annotations:
     metallb.universe.tf/ip-allocated-from-pool: infra
-#    metallb.universe.tf/loadBalancerIPs: 10.0.0.3
+    external-dns.alpha.kubernetes.io/hostname: ns2.nf.lab
+    #    metallb.universe.tf/loadBalancerIPs: 10.0.0.3
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack  

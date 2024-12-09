@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: flaresolverr
+  labels:
+    app: flaresolverr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: flaresolverr
+  template:
+    metadata:
+      labels:
+        app: flaresolverr
+    spec:
+      serviceAccountName: flaresolverr-sa
+      containers:
+        - name: flaresolverr
+          image: harbor.nf.lab/proxy.docker.io/flaresolverr/flaresolverr:latest
+          imagePullPolicy: Always
+          ports:
+            - name: fs-port
+              containerPort: 8191
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi

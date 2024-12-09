@@ -1,20 +1,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: tools
+namespace: databases
 
 resources:
   - deployment.yaml
+  - service.yaml
   - serviceaccount.yaml
-  - services.yaml
-  
+
 commonLabels:
-  app: powerdns-ns2
+  app: mariadb
 
 configMapGenerator:
-- name: ns2-pdns-conf-cm
+- name: mariadb-config
   files:
-  - pdns.conf=maps/pdns.conf
+  - my.cnf=maps/my.cnf
+
+secretGenerator:
+- name: mariadb-env
+  envs:
+  - maps/env.txt
 
 generatorOptions:
   disableNameSuffixHash: true

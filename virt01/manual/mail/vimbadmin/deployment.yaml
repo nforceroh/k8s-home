@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: vimbadmin
+  labels:
+    app: vimbadmin
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: vimbadmin
+  template:
+    metadata:
+      labels:
+        app: vimbadmin
+    spec:
+      serviceAccountName: vimbadmin-sa
+      containers:
+        - name: vimbadmin
+          image: harbor.nf.lab/homelab/vimbadmin:latest
+          imagePullPolicy: Always
+          env:
+            - name: VIMBADMIN_DB_NAME
+              value: "mail"
+            - name: VIMBADMIN_DB_USER
+              value: "vimbadmin"
+            - name: VIMBADMIN_DB_PASSWORD
+              value: "jJ6GcngdNAchAB8y"
+            - name: VIMBADMIN_DB_HOST
+              value: "mariadb-svc.databases.svc.cluster.local"
+            - name: SMTP_HOST
+              value: "smtp.nf.lab"
+            - name: ADMIN_EMAIL
+              value: "sylvain@nforcer.com"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8080
+              name: vimbadmin-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+

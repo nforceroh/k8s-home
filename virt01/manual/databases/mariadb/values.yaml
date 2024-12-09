@@ -1,0 +1,17 @@
+architecture: standalone
+
+auth:
+#  existingSecret: mariadb-admin
+  rootPassword: "test"
+  username: "test"
+  password: "test"
+primary:
+  persistence:
+    enabled: true
+  #  existingClaim: true
+  service:
+    annotations:
+      metallb.universe.tf/address-pool: apps
+      external-dns.alpha.kubernetes.io/hostname: mariadb.test.nf.lab
+metrics:
+  enabled: false

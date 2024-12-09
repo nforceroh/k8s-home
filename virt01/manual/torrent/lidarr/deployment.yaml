@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: lidarr
+  labels:
+    app: lidarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: lidarr
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: torrent,music
+      labels:
+        app: lidarr
+    spec:
+      serviceAccountName: lidarr-sa
+      containers:
+        - name: lidarr
+          image: harbor.nf.lab/proxy.docker.io/linuxserver/lidarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: DOCKER_MODS
+              value: "ghcr.io/themepark-dev/theme.park:lidarr"
+            - name: TP_THEME
+              value: dark
+          ports:
+            - containerPort: 8686
+              name: lidarr-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: lidarr-pv
+              mountPath: /config
+            - name: music
+              mountPath: /music
+            - name: torrent
+              mountPath: /data
+      volumes:
+        - name: lidarr-pv
+          persistentVolumeClaim:
+            claimName: lidarr-pvc
+        - name: music
+          nfs:
+            path: /mnt/spins/Music
+            server: 10.0.0.99
+        - name: torrent
+          nfs:
+            path: /mnt/spins/torrent
+            server: 10.0.0.99      

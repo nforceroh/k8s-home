@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: clamav-svc
+  labels:
+    app: clamav
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.111
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.111
+  ports:
+    - name: clamd-port-svc
+      protocol: TCP
+      port: 3310
+      targetPort: 3310
+    - name: clamav-milter-svc
+      protocol: TCP
+      port: 7357
+      targetPort: 7357
+  selector:
+    app: clamav

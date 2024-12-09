@@ -1,0 +1,24 @@
+tmdb:
+  api_key: 78566ddd06a283d9b901fdaf871f803e
+  region: US
+radarr:
+  enabled: true
+  url: http://radarr-svc.torrent.svc.cluster.local:7878
+  api_key: 7288485bbfcb4e52bf16c3afb51dd8fc
+sonarr:
+  enabled: true
+  url: http://sonarr-svc.torrent.svc.cluster.local:8989
+  api_key: 9a94dab113dd4a1fb1a2ca60798c771b
+gotify:
+  enabled: false
+  url: http://localhost
+  token: xxx
+providers:
+  - Netflix
+  - Disney Plus
+  - Hulu
+  - Amazon Prime Video
+prefix: elsewherr-
+
+
+

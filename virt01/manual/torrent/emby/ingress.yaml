@@ -1,0 +1,54 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emby-int-ingress-https
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: movies.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: emby-svc
+            port:
+              number: 8096
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - movies.nf.lab
+    secretName: emby-int-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: emby-ext-ingress
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#    traefik.ingress.kubernetes.io/router.middlewares: ix-traefik-chain-basic@kubernetescrd
+spec:
+  rules:
+  - host: movies.nforcer.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: emby-svc
+            port:
+              number: 8096
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - movies.nforcer.com
+    secretName: emby-ext-cert-tls

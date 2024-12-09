@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sonarr
+  labels:
+    app: sonarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: torrent,tvshows
+      labels:
+        app: sonarr
+    spec:
+      serviceAccountName: sonarr-sa
+      containers:
+        - name: sonarr
+          image: harbor.nf.lab/proxy.docker.io/linuxserver/sonarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: DOCKER_MODS
+              value: "ghcr.io/themepark-dev/theme.park:sonarr"
+            - name: TP_THEME
+              value: dark
+          ports:
+            - containerPort: 8989
+              name: sonarr-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: sonarr-pv
+              mountPath: /config
+            - name: tvshows
+              mountPath: /tv
+            - name: torrent
+              mountPath: /data
+      volumes:
+        - name: sonarr-pv
+          persistentVolumeClaim:
+            claimName: sonarr-pvc
+        - name: tvshows
+          nfs:
+            path: /mnt/spins/emby/TVShows
+            server: 10.0.0.99
+        - name: torrent
+          nfs:
+            path: /mnt/spins/torrent
+            server: 10.0.0.99

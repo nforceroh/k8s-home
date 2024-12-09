@@ -1,0 +1,68 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nodered
+  labels:
+    app: nodered
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nodered
+  template:
+    metadata:
+      labels:
+        app: nodered
+    spec:
+      serviceAccountName: nodered-sa
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "Always"
+      containers:
+        - name: nodered
+          image: harbor.nf.lab/proxy.docker.io/nodered/node-red:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: NODE_RED_ENABLE_SAFE_MODE
+              value: "false"
+            - name: NODE_RED_ENABLE_PROJECTS
+              value: "true"
+            - name: PGID
+              value: "1000"
+            - name: PUID
+              value: "1000"
+          ports:
+            - containerPort: 1880
+              name: nodered-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "24Mi"
+          readinessProbe:
+            tcpSocket:
+              port: nodered-port
+          livenessProbe:
+            tcpSocket:
+              port: nodered-port
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 30
+            successThreshold: 1
+            timeoutSeconds: 1
+          volumeMounts:
+            - name: nodered-pv
+              mountPath: /data
+      volumes:
+        - name: nodered-pv
+          persistentVolumeClaim:
+            claimName: nodered-pvc

@@ -1,0 +1,77 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rspamd
+  labels:
+    app: rspamd
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: rspamd
+  template:
+    metadata:
+      labels:
+        app: rspamd
+    spec:
+      serviceAccountName: rspamd-sa
+      initContainers:
+        - name: disable-ipv6
+          command: [ '/bin/sysctl' , '-w', 'net.ipv6.conf.all.disable_ipv6=1']
+          image: docker.io/busybox
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+      containers:
+        - name: rspamd
+          image: harbor.nf.lab/homelab/rspamd:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: ADMIN_PASS
+              value: "$2$yrcy8wh9eb81ztg1ed18n8nuow9i1kdf$7k3qnc17s51dqfpk6wsqgqsxrctcqd4s9cupp11cqd8j3p5ypy4y"
+            - name: REDIS_HOST
+              value: "redis-svc.databases.svc.cluster.local"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: CLAMAV_HOSTNAME
+              value: "clamav-svc"
+            - name: CLAMAV_PORT
+              value: "3310"
+          ports:
+            - containerPort: 11332
+              name: milter-port
+              protocol: TCP
+            - containerPort: 11333
+              name: worker-port
+              protocol: TCP
+            - containerPort: 11334
+              name: web-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          volumeMounts:
+            - name: rspamd-pv
+              mountPath: /var/lib/rspamd
+            - name: rspamd-local-pv
+              mountPath: /etc/rspamd/local.d
+      dnsPolicy: "ClusterFirst"
+      dnsConfig:
+        nameservers:
+          - 1.1.1.1
+          - 8.8.8.8
+      volumes:
+        - name: rspamd-pv
+          persistentVolumeClaim:
+            claimName: rspamd-pvc
+        - name: rspamd-local-pv
+          persistentVolumeClaim:
+            claimName: rspamd-local-pvc

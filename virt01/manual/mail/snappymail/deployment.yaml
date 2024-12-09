@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: snappymail
+  labels:
+    app: snappymail
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: snappymail
+  template:
+    metadata:
+      labels:
+        app: snappymail
+    spec:
+      serviceAccountName: snappymail-sa
+      containers:
+        - name: snappymail
+          image: harbor.nf.lab/homelab/snappymail:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8080
+              name: snappymail-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+          volumeMounts:
+            - name: snappymail-pv
+              mountPath: /snappymail
+      volumes:
+        - name: snappymail-pv
+          persistentVolumeClaim:
+            claimName: snappymail-pvc

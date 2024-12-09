@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vimbadmin-svc
+  labels:
+    app: vimbadmin
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      name: vimbadmin-svc-port
+  selector:
+    app: vimbadmin

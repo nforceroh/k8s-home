@@ -1,0 +1,81 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: postfix
+  labels:
+    app: postfix
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: postfix
+  template:
+    metadata:
+      labels:
+        app: postfix
+    spec:
+      serviceAccountName: postfix-sa
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: postfix
+          image: harbor.nf.lab/homelab/postfix:latest
+          imagePullPolicy: Always
+          envFrom:
+          - configMapRef:
+              name: postfix-env
+          ports:
+            - containerPort: 25
+              name: smtp-port
+              protocol: TCP
+            - containerPort: 465
+              name: smtps-port
+              protocol: TCP
+            - containerPort: 587
+              name: submission-port
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 2
+            tcpSocket:
+              port: 25
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          readinessProbe:
+            failureThreshold: 2
+            tcpSocket:
+              port: 25
+            periodSeconds: 60
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "32Mi"
+          volumeMounts:
+            - name: postfix-spool-pv
+              mountPath: /var/spool/postfix
+            - name: dhparam
+              subPath: dh2048.pem
+              mountPath: /etc/postfix/dh2048.pem
+              readOnly: true
+            - name: dhparam
+              subPath: dh512.pem
+              mountPath: /etc/postfix/dh512.pem
+              readOnly: true
+            - name: certs
+              subPath: tls.crt
+              mountPath: /etc/postfix/certs/tls.crt
+              readOnly: true
+            - name: certs
+              subPath: tls.key
+              mountPath: /etc/postfix/certs/tls.key
+              readOnly: true
+      volumes:
+        - name: postfix-spool-pv
+          persistentVolumeClaim:
+            claimName: postfix-spool-pvc
+        - name: dhparam
+          secret:
+            secretName: postfix-dhparam
+        - name: certs
+          secret:
+            secretName: postfix-cert-tls

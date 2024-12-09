@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: recyclarr
+  labels:
+    app: recyclarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: recyclarr
+  template:
+    metadata:
+      labels:
+        app: recyclarr
+    spec:
+      serviceAccountName: recyclarr-sa
+      containers:
+        - name: recyclarr
+          image: harbor.nf.lab/proxy.ghcr.io/recyclarr/recyclarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: recyclarr-pv
+              mountPath: /config
+      volumes:
+        - name: recyclarr-pv
+          persistentVolumeClaim:
+            claimName: recyclarr-pvc

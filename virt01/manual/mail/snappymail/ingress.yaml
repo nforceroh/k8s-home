@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: snappymail-ext-ingress
+  namespace: mail
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: mail.nforcer.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: snappymail-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - mail.nforcer.com
+    secretName: snappymail-ext-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: snappymail-int-ingress
+  namespace: mail
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  rules:
+  - host: mail.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: snappymail-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - mail.k3s.nf.lab
+    - mail.nf.lab
+    secretName: snappymail-int-cert-tls
+

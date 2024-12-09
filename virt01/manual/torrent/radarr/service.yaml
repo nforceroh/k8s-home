@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: radarr-svc
+  labels:
+    app: radarr
+spec:
+  ports:
+    - port: 7878
+      protocol: TCP
+      name: radarr-svc-port
+  selector:
+    app: radarr

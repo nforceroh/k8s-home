@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sonarr-ingress
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: sonarr.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: sonarr-svc
+            port:
+              number: 8989
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - sonarr.k3s.nf.lab
+    secretName: sonarr-cert-tls

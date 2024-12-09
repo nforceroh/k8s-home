@@ -1,20 +1,26 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: tools
+namespace: mail
 
 resources:
   - deployment.yaml
+  - service.yaml
   - serviceaccount.yaml
-  - services.yaml
-  
+  - certificate.yaml
+
 commonLabels:
-  app: powerdns-ns2
+  app: postfix
 
 configMapGenerator:
-- name: ns2-pdns-conf-cm
+- name: postfix-dhparam
   files:
-  - pdns.conf=maps/pdns.conf
+  - maps/dhparam/dh512.pem
+  - maps/dhparam/dh2048.pem
+
+- name: postfix-env
+  envs:
+  - maps/env.txt
 
 generatorOptions:
   disableNameSuffixHash: true

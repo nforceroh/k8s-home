@@ -1,0 +1,23 @@
+---
+auth:
+  admin:
+    username: admin
+    org: nf
+    bucket: primary
+  existingSecret: influxdb-auth
+
+persistence:
+  enabled: true
+  existingClaim: influxdb-pv
+
+ingress:
+  enabled: true
+  tls: true
+  secrets: influx-tls
+  hostname: influx.test.nf.lab
+  annotations: 
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab

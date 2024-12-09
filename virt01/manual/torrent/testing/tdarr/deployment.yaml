@@ -1,0 +1,82 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tdarr
+  labels:
+    app: tdarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tdarr
+  template:
+    metadata:
+      labels:
+        app: tdarr
+    spec:
+      serviceAccountName: tdarr-sa
+      containers:
+        - name: tdarr
+          image: harbor.nf.lab/proxy.ghcr.io/haveagitgat/tdarr
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: nodeName
+              value: "server-node"
+            - name: internalNode
+              value: "true"
+            - name: nodeID
+              value: "internal"
+            - name: webUIPort
+              value: "8265"
+            - name: serverPort
+              value: "8266"
+            - name: serverIP
+              value: "0.0.0.0"
+          volumeMounts:
+            - name: cache
+              mountPath: /temp
+            - name: tvshows
+              mountPath: /tv
+            - name: movies
+              mountPath: /movies
+            - name: tdarr-config
+              mountPath: /app/configs
+            - name: tdarr-server
+              mountPath: /app/server
+            - name: tdarr-logs
+              mountPath: /app/logs
+          ports:
+            - containerPort: 8266
+            - containerPort: 8265
+      volumes:
+        - name: tdarr-server
+          persistentVolumeClaim:
+            claimName: tdarr-server
+        - name: tdarr-config
+          persistentVolumeClaim:
+            claimName: tdarr-config
+        - name: tdarr-logs
+          persistentVolumeClaim:
+            claimName: tdarr-logs
+        - name: cache
+          persistentVolumeClaim:
+            claimName: tdarr-cache
+        - name: movies
+          nfs:
+            path: /mnt/ssd01/emby/Movies
+            server: 10.0.0.100
+        - name: tvshows
+          nfs:
+            path: /mnt/ssd01/emby/TVShows
+            server: 10.0.0.100    
+

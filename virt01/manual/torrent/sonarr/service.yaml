@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sonarr-svc
+  labels:
+    app: sonarr
+spec:
+  ports:
+    - port: 8989
+      protocol: TCP
+      name: sonarr-svc-port
+  selector:
+    app: sonarr

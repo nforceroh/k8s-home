@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: emby
+  labels:
+    app: emby
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: emby
+  template:
+    metadata:
+      labels:
+        app: emby
+      annotations:
+        backup.velero.io/backup-volumes-excludes: movies,tvshows
+    spec:
+#      runtimeClassName: nvidia
+      serviceAccountName: emby-sa
+      containers:
+        - name: emby
+          image: harbor.nf.lab/proxy.docker.io/emby/embyserver
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8096
+              name: emby-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: emby-pv
+              mountPath: /config
+            - name: tvshows
+              mountPath: /tv
+            - name: movies
+              mountPath: /movies
+      volumes:
+        - name: emby-pv
+          persistentVolumeClaim:
+            claimName: emby-pvc
+        - name: movies
+          nfs:
+            path: /mnt/spins/emby/Movies
+            server: 10.0.0.99
+        - name: tvshows
+          nfs:
+            path: /mnt/spins/emby/TVShows
+            server: 10.0.0.99      

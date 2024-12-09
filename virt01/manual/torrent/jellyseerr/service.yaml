@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyseerr-svc
+  labels:
+    app: jellyseerr
+spec:
+  ports:
+    - port: 5055
+      protocol: TCP
+      name: jellyseerr-svc-port
+  selector:
+    app: jellyseerr

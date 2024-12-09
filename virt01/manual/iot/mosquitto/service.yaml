@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mosquitto-svc
+  labels:
+    app: mosquitto
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.118
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.118
+  ports:
+    - port: 1883
+      protocol: TCP
+      name: mqtt-svc-port
+    - port: 9001
+      protocol: TCP
+      name: mqtt-ws-svc-port
+  selector:
+    app: mosquitto
+

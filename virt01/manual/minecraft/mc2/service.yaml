@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mc2-svc
+  labels:
+    app: mc2
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.120
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.120
+  ports:
+    - name: mc2-port-svc
+      protocol: TCP
+      port: 25566
+      targetPort: mc2-port
+  selector:
+    app: mc2
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mc2-rcon-svc
+  labels:
+    app: mc2
+spec:
+  ports:
+    - name: mc2-rcon-svc
+      protocol: TCP
+      port: 25575
+      targetPort: mc2-rcon-port
+  selector:
+    app: mc2
+

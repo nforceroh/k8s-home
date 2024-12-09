@@ -1,0 +1,49 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: jellyseerr
+  labels:
+    app: jellyseerr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: jellyseerr
+  template:
+    metadata:
+      labels:
+        app: jellyseerr
+    spec:
+      serviceAccountName: jellyseerr-sa
+      containers:
+        - name: jellyseerr
+          image: harbor.nf.lab/proxy.docker.io/fallenbagel/jellyseerr
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "1000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: JELLYFIN_TYPE
+              value: "emby"
+          ports:
+            - containerPort: 5055
+              name: jellyseerr-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: jellyseerr-pv
+              mountPath: /app/config
+      volumes:
+        - name: jellyseerr-pv
+          persistentVolumeClaim:
+            claimName: jellyseerr-pvc

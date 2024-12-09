@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dovecot-svc
+  labels:
+    app: dovecot
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.116
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.116
+  ports:
+    - port: 24
+      protocol: TCP
+      name: lmtp-svc-port
+    - port: 110
+      protocol: TCP
+      name: pop3-svc-port
+    - port: 143
+      protocol: TCP
+      name: imap-svc-port
+    - port: 993
+      protocol: TCP
+      name: imaps-svc-port
+    - port: 3333
+      protocol: TCP
+      name: doveadm-svc-port
+    - port: 4190
+      protocol: TCP
+      name: sieve-svc-port
+    - port: 12345
+      protocol: TCP
+      name: sasl-svc-port
+  selector:
+    app: dovecot

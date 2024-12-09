@@ -1,0 +1,130 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dovecot
+  labels:
+    app: dovecot
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dovecot
+  template:
+    metadata:
+      labels:
+        app: dovecot
+    spec:
+      serviceAccountName: dovecot-sa
+      containers:
+        - name: dovecot
+          image: harbor.nf.lab/homelab/dovecot:latest
+          #          image: default-route-openshift-image-registry.apps.ocp.nf.lab/mail/ocp-dovecot:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: POSTMASTER
+              value: "sylvain@nforcer.com"
+            - name: HOSTNAME
+              value: "imap.nforcer.com"
+            - name: DB_HOST
+              value: "mariadb-svc.databases.svc.cluster.local"
+            - name: DB_USER
+              value: "mailro"
+            - name: DB_PASS
+              value: "UlbzOogXAlp0OAJ1"
+            - name: DB_NAME
+              value: "mail"
+            - name: FQDN
+              value: "imap.nforcer.com"
+            - name: RSPAMD_HOST
+              value: "rspamd-svc.mail.svc.cluster.local:11334"
+            - name: SSL_CRT_FILENAME
+              value: "/etc/dovecot/certs/tls.crt"
+            - name: SSL_KEY_FILENAME
+              value: "/etc/dovecot/certs/tls.key"
+            - name: DH_FILENAME
+              value: "/etc/dovecot/dh4096.pem"
+            - name: DEBUG
+              value: "1"
+          ports:
+            - containerPort: 24
+              name: ltmp-port
+              protocol: TCP
+            - containerPort: 110
+              name: pop3-port
+              protocol: TCP
+            - containerPort: 143
+              name: imap-port
+              protocol: TCP
+            - containerPort: 993
+              name: imaps-port
+              protocol: TCP
+            - containerPort: 3333
+              name: doveadm-port
+              protocol: TCP
+            - containerPort: 4190
+              name: sieve-port
+              protocol: TCP
+            - containerPort: 12345
+              name: sasl-port
+              protocol: TCP
+          securityContext:
+            capabilities:
+              add:
+                - SYS_CHROOT
+                - DAC_OVERRIDE
+                - FOWNER
+                - SETUID
+                - SETGID
+                - NET_BIND_SERVICE
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 24
+            initialDelaySeconds: 20
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 20
+          livenessProbe:
+            tcpSocket:
+              port: 24
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 3
+          volumeMounts:
+            - name: dovecot-pv
+              mountPath: /data
+            - name: dhparam
+              subPath: dh4096.pem
+              mountPath: /etc/dovecot/dh4096.pem
+              readOnly: true
+            - name: certs
+              subPath: tls.crt
+              mountPath: /etc/dovecot/certs/tls.crt
+              readOnly: true
+            - name: certs
+              subPath: tls.key
+              mountPath: /etc/dovecot/certs/tls.key
+              readOnly: true
+      volumes:
+        - name: dovecot-pv
+          persistentVolumeClaim:
+            claimName: dovecot-pvc
+        - name: dhparam
+          secret:
+            secretName: dovecot-dhparam
+        - name: certs
+          secret:
+            secretName: dovecot-cert-tls

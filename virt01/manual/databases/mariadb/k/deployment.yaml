@@ -1,0 +1,55 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mariadb
+  labels:
+    app: mariadb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      serviceAccountName: mariadb-sa
+      securityContext:
+        fsGroup: 1001
+      containers:
+        - name: mariadb
+          image: bitnami/mariadb:latest
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            runAsNonRoot: true
+            runAsUser: 1001
+          env:
+          - name: TZ
+            value: "America/New_York"
+          envFrom:
+          - secretRef:
+              name: mariadb-env
+          ports:
+            - name: mysql-port
+              containerPort: 3306
+          resources: 
+            limits: {}
+            requests: {}
+          volumeMounts:
+            - name: mariadb-pv
+              mountPath: /bitnami/mariadb
+            - name: config
+              mountPath: /opt/bitnami/mariadb/conf/my.cnf
+              subPath: my.cnf
+      volumes:
+        - name: config
+          configMap:
+            name: mariadb-config
+        - name: mariadb-pv
+          persistentVolumeClaim:
+            claimName: mariadb-pvc

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postfix-svc
+  labels:
+    app: postfix
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.115
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.115
+  ports:
+    - port: 25
+      protocol: TCP
+      name: smtp-svc-port
+    - port: 465
+      protocol: TCP
+      name: smtps-svc-port
+    - port: 587
+      protocol: TCP
+      name: submission-svc-port
+  selector:
+    app: postfix

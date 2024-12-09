@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nut2mqtt
+  labels:
+    app: nut2mqtt
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nut2mqtt
+  template:
+    metadata:
+      labels:
+        app: nut2mqtt
+    spec:
+      serviceAccountName: nut2mqtt-sa
+      containers:
+        - name: nut2mqtt
+          image: harbor.nf.lab/homelab/nut2mqtt:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          envFrom:
+          - secretRef:
+              name: nut2mqtt-env
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "50Mi"

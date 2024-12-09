@@ -1,0 +1,38 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: elsewherr
+  labels:
+    app: elsewherr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: elsewherr
+  template:
+    metadata:
+      labels:
+        app: elsewherr
+    spec:
+      serviceAccountName: elsewherr-sa
+      containers:
+        - name: elsewherr
+          image: harbor.nf.lab/homelab/elsewherr:dev
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: config
+              mountPath: /usr/src/app/config.yaml
+              subPath: config.yaml
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: SCHEDULE
+              value: "None"
+          resources: {}
+      volumes:
+        - name: config
+          configMap:
+            name: elsewherr-config-cm
+
