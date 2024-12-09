@@ -30,7 +30,7 @@ ollama:
     tls:
     - hosts:
       - ollama.k3s.nf.lab
-      secretName: ollama-cert-tls
+      secretName: ollama-tls
   serviceAccount:
     create: true
     automount: true

@@ -23,5 +23,5 @@ spec:
   tls:
   - hosts:
     - wyze.k3s.nf.lab
-    secretName: wyze-cert-tls
+    secretName: wyze-tls
 ---

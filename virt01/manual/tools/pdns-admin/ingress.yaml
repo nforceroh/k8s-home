@@ -4,11 +4,11 @@ metadata:
   name: pdns-admin-ingress
   namespace: tools
   annotations:
+    ingressClassName: traefik
     cert-manager.io/cluster-issuer: nf-lab
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    kubernetes.io/ingress.class: traefik
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
 spec:
   rules:
   - host: pdns.k3s.nf.lab
@@ -24,4 +24,4 @@ spec:
   tls:
   - hosts:
     - pdns.k3s.nf.lab
-    secretName: pdns-admin-cert-tls
+    secretName: pdns-admin-tls

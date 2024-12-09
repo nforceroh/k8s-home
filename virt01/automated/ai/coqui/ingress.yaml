@@ -23,4 +23,4 @@ spec:
   tls:
   - hosts:
     - coqui.k3s.nf.lab
-    secretName: coqui-k3s-tls
+    secretName: coqui-tls

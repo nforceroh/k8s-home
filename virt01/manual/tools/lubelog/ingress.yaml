@@ -11,7 +11,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
 spec:
   rules:
-  - host: lubelog.test.nf.lab
+  - host: lubelog.k3s.nf.lab
     http:
       paths:
       - backend:
@@ -23,5 +23,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - lubelog.test.nf.lab
-    secretName: lubelog-cert-tls
+    - lubelog.k3s.nf.lab
+    secretName: lubelog-tls
