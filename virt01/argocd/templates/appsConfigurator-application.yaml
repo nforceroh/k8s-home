@@ -5,7 +5,7 @@ metadata:
   name: appsconfigurator
   namespace: argocd
 spec:
-  project: argocd-kube01
+  project: argocd-virt01
   syncPolicy:
     automated:
       prune: false

@@ -77,7 +77,7 @@ sudo sysctl --system
 
 # Initialize the cluster (master)
 ```
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 
 ```
 
 # set up kubeconfig
