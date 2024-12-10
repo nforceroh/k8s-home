@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb-svc
+  labels:
+    app: influxdb
+spec:
+  ports:
+    - port: 8086
+      protocol: TCP
+      name: influxdb-svc-port
+  selector:
+    app: influxdb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb-ext-svc
+  labels:
+    app: influxdb
+  annotations:
+    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.121
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.121
+  ports:
+    - name: influxdb-svc-port
+      protocol: TCP
+      port: 8086
+  selector:
+    app: influxdb

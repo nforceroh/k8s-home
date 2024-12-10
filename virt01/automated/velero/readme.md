@@ -185,11 +185,10 @@ NS="torrent"
 velero create backup mig-ns-${NS}-new  --include-namespaces ${NS} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 watch velero backup describe mig-ns-${NS}-new --details
 
-
-velero restore create --from-backup mig-ns-${NS} --restore-volumes=true --include-resources pods,persistentvolumeclaims,persistentvolumes
-```
+NS="iot"
+velero restore create --from-backup nas02-mig-ns-${NS} --restore-volumes=true
 
 ```
 for ns in mail databases iot; do
- velero create backup talos-mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
+ velero create backup nas02-mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 done

@@ -4,7 +4,7 @@ metadata:
   name: mariadb-svc
   namespace: databases
   annotations:
-    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
     metallb.universe.tf/loadBalancerIPs: 10.0.1.112
 spec:
   type: LoadBalancer

@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: influxdb
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      serviceAccountName: influxdb-sa
+      containers:
+        - name: influxdb
+          image: influxdb:2.7-alpine
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TZ
+              value: "America/New_York"
+          envFrom:
+          - configMapRef:
+              name: influxdb-env
+          ports:
+            - containerPort: 8086
+              name: influxdb-port
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: "2Gi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          volumeMounts:
+            - name: influxdb-pv
+              mountPath: /var/lib/influxdb2
+            - name: influxdb-etc-pv
+              mountPath: /etc/influxdb2
+      volumes:
+        - name: influxdb-pv
+          persistentVolumeClaim:
+            claimName: influxdb-pvc
+        - name: influxdb-etc-pv
+          persistentVolumeClaim:
+            claimName: influxdb-etc-pvc

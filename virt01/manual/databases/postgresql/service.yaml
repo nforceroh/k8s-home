@@ -4,7 +4,7 @@ metadata:
   name: postgresql-svc
   namespace: databases
   annotations:
-    metallb.universe.tf/address-pool: apps
+    metallb.universe.tf/address-pool: vlan1000-apps
 #    metallb.universe.tf/loadBalancerIPs: 10.0.1.112
 spec:
   type: LoadBalancer
