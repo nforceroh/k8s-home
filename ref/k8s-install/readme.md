@@ -93,6 +93,11 @@ kubectl taint nodes --all node-role.kubernetes.io/master-
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 
+# Metallb fix
+```
+kubectl label nodes virt01 node.kubernetes.io/exclude-from-external-load-balancers-
+```
+
 # Install Flannel network plugin (run only on master node):
 ```
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
@@ -166,8 +171,9 @@ cp -r /etc/kubernetes-backup/pki /etc/kubernetes
 rm -rf /etc/kubernetes/pki/{apiserver.*,etcd/peer.*}
  
 # Start docker
-systemctl start docker
+systemctl start containerd
  
 # Init cluster with new ip address
+IP=10.0.0.100
 kubeadm init --control-plane-endpoint $IP --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 --ignore-preflight-errors=DirAvailable--var-lib-etcd
 ```
