@@ -2,7 +2,7 @@
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: vlan1000_apps
+  name: vlan1000-apps
   namespace: {{ .Release.Namespace }}
 spec:
   autoAssign: true
@@ -12,7 +12,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: vlan1000_infra
+  name: vlan1000-infra
   namespace: {{ .Release.Namespace }}
 spec:
   autoAssign: false
@@ -22,7 +22,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: vlan1000_restricted
+  name: vlan1000-restricted
   namespace: {{ .Release.Namespace }}
 spec:
   autoAssign: false

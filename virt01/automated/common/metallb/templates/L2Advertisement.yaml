@@ -6,6 +6,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   ipAddressPools:
-    - vlan1000_apps
-    - vlan1000_infra
-    - vlan1000_restricted
+    - vlan1000-apps
+    - vlan1000-infra
+    - vlan1000-restricted
