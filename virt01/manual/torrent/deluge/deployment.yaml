@@ -41,7 +41,7 @@ spec:
             - name: IP_CHECK_INTERVAL
               value: "60"
             - name: CLUSTER_SUBNET
-              value: "172.16.0.0/12 "
+              value: "10.0.0.0/23"
           resources:
             requests:
               memory: 10Mi
@@ -53,7 +53,7 @@ spec:
             - name: PUID
               value: "3000"
             - name: PGID
-              value: "1000"
+              value: "3000"
             - name: TZ
               value: "America/New_York"
             - name: DOCKER_MODS
@@ -85,8 +85,8 @@ spec:
             claimName: deluge-pvc
         - name: torrent
           nfs:
-            path: /mnt/spins/torrent
-            server: 10.0.0.99            
+            path: /mnt/ssd01/torrent
+            server: 10.0.0.100            
         - name: wg-config
           configMap:
             name: wireguard-cm

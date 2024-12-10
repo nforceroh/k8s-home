@@ -28,7 +28,7 @@ spec:
             - name: PUID
               value: "3000"
             - name: PGID
-              value: "1000"
+              value: "3000"
             - name: UMASK
               value: "000"
             - name: TZ
@@ -54,9 +54,9 @@ spec:
             claimName: emby-pvc
         - name: movies
           nfs:
-            path: /mnt/spins/emby/Movies
-            server: 10.0.0.99
+            path: /mnt/ssd01/emby/Movies
+            server: 10.0.0.100
         - name: tvshows
           nfs:
-            path: /mnt/spins/emby/TVShows
-            server: 10.0.0.99      
+            path: /mnt/ssd01/emby/TVShows
+            server: 10.0.0.100     

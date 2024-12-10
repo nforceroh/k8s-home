@@ -6,6 +6,7 @@ tar xvfz velero-v1.15.0-linux-amd64.tar.gz
 mv velero*/velero ~/.local/bin
 rm -rf velero-*
 chmod +x ~/.local/bin/velero
+sudo install -o root -g root -m 755 velero-v1.15.0-linux-amd64/velero /usr/local/bin
 ```
 
 ```
@@ -156,7 +157,7 @@ data:
   # add 1+ key-value pairs here, where the key is the old
   # storage class name and the value is the new storage
   # class name.
-  truenas-nfs: truenas-iscsi
+  truenas-iscsi: openebs-zfspv-lz4
 EOF
 
 # PVC only restore
@@ -180,12 +181,12 @@ done
 
 # Using ns for cross cluster, need to disable snapshots
 ```
-NS="databases"
-velero create backup mig-ns-${NS}  --include-namespaces ${NS} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
-watch velero backup describe mig-ns-${NS} --details
+NS="torrent"
+velero create backup mig-ns-${NS}-new  --include-namespaces ${NS} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
+watch velero backup describe mig-ns-${NS}-new --details
 
 
-velero restore create --from-backup mig-ns-${NS} --restore-volumes=true
+velero restore create --from-backup mig-ns-${NS} --restore-volumes=true --include-resources pods,persistentvolumeclaims,persistentvolumes
 ```
 
 ```
