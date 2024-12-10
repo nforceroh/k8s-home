@@ -1,0 +1,15 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: demo-mysql-dev-helm-route
+  namespace: databases
+spec:
+  entryPoints:
+    - mysql
+  routes:
+  - match: HostSNI(`db.test.nf.lab`)
+    services:
+    - name: mysql-test-service
+      port: 3306
+  tls:
+      secretName: tls-demo-dev-helm

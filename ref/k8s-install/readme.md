@@ -1,7 +1,15 @@
+# netplan setup for vlan trunks
+https://michaelwaterman.nl/2023/12/12/advanced-netplan-config-on-ubuntu/
+```
+
+```
+
+
+
 # Update the system and install dependencies:
 ```
 sudo apt update && sudo apt upgrade -y
-sudo apt install apt-transport-https curl containerd  -y
+sudo apt install apt-transport-https curl containerd psmisc -y
 ```
 
 # Configure containerd:
@@ -138,3 +146,28 @@ sudo cp /var/nvidia-driver-local-repo-ubuntu2404-550.127.08/nvidia-driver-local-
 ```
 sudo ubuntu-drivers --gpgpu list
 sudo ubuntu-drivers install
+
+
+# Reset certs/change IP
+```
+# Set IP Var
+IP=10.0.0.100
+ 
+# Stop Services
+systemctl stop kubelet containerd
+ 
+# Backup Kubernetes and kubelet
+mv -f /etc/kubernetes /etc/kubernetes-backup
+mv -f /var/lib/kubelet /var/lib/kubelet-backup
+ 
+# Keep the certs we need
+mkdir -p /etc/kubernetes
+cp -r /etc/kubernetes-backup/pki /etc/kubernetes
+rm -rf /etc/kubernetes/pki/{apiserver.*,etcd/peer.*}
+ 
+# Start docker
+systemctl start docker
+ 
+# Init cluster with new ip address
+kubeadm init --control-plane-endpoint $IP --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 --ignore-preflight-errors=DirAvailable--var-lib-etcd
+```
