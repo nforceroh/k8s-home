@@ -7,7 +7,7 @@ spec:
   renewBefore: 360h0m0s
   issuerRef:
     kind: ClusterIssuer
-    name: letsencrypt-prod
+    name: letsencrypt-production
   dnsNames:
     - imap.nforcer.com
   usages:

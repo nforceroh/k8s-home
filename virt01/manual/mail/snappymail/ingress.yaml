@@ -4,7 +4,7 @@ metadata:
   name: snappymail-ext-ingress
   namespace: mail
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
@@ -33,6 +33,7 @@ metadata:
     cert-manager.io/cluster-issuer: nf-lab
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
 spec:
   rules:
   - host: mail.k3s.nf.lab
