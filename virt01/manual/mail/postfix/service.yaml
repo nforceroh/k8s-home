@@ -11,11 +11,6 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack  
-#  loadBalancerIP: 10.0.1.115
   ports:
     - port: 25
       protocol: TCP

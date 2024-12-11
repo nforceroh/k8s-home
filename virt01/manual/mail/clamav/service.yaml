@@ -11,11 +11,6 @@ metadata:
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack  
-#  loadBalancerIP: 10.0.1.111
   ports:
     - name: clamd-port-svc
       protocol: TCP

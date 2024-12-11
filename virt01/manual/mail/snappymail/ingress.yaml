@@ -22,7 +22,7 @@ spec:
   tls:
   - hosts:
     - mail.nforcer.com
-    secretName: snappymail-ext-cert-tls
+    secretName: snappymail-ext-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -50,5 +50,5 @@ spec:
   - hosts:
     - mail.k3s.nf.lab
     - mail.nf.lab
-    secretName: snappymail-int-cert-tls
+    secretName: snappymail-int-tls
 
