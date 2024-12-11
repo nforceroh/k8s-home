@@ -6,6 +6,7 @@ metadata:
   annotations:
     metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
     metallb.universe.tf/loadBalancerIPs: 10.0.1.112
+    external-dns.alpha.kubernetes.io/hostname: mariadb.k3s.nf.lab
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster

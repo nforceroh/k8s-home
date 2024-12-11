@@ -21,6 +21,7 @@ metadata:
   annotations:
     metallb.universe.tf/ip-allocated-from-pool: apps
     metallb.universe.tf/loadBalancerIPs: 10.0.1.121
+    external-dns.alpha.kubernetes.io/hostname: influxdb.k3s.nf.lab
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster

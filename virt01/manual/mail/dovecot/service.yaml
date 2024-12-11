@@ -5,11 +5,12 @@ metadata:
   labels:
     app: dovecot
   annotations:
-    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
     metallb.universe.tf/loadBalancerIPs: 10.0.1.116
+    external-dns.alpha.kubernetes.io/hostname: dovecot.k3s.nf.lab
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

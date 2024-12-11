@@ -5,8 +5,9 @@ metadata:
   labels:
     app: clamav
   annotations:
-    metallb.universe.tf/ip-allocated-from-pool: apps
+    metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
     metallb.universe.tf/loadBalancerIPs: 10.0.1.111
+    external-dns.alpha.kubernetes.io/hostname: clamav.k3s.nf.lab
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Cluster
