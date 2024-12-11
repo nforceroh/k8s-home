@@ -1,0 +1,108 @@
+clamav:
+  replicaCount: 1
+
+  image:
+    repository: harbor.nf.lab/proxy.docker.io/clamav/clamav
+
+  extraEnvVars:
+    - name: CLAMAV_NO_CLAMD
+      value: "false"
+    - name: CLAMAV_NO_FRESHCLAMD
+      value: "false"
+  #  - name: CLAMAV_NO_MILTERD
+  #    value: "false"
+    - name: FRESHCLAM_CHECKS
+      value: "1"
+
+  ingress:
+    enabled: false
+
+
+  ## Ref: https://linux.die.net/man/5/clamd.conf
+  ## Note: will completely override default clamd.conf file at https://github.com/Mailu/Mailu/tree/master/optional/clamav/conf
+  clamdConfig: |
+    ###############
+    # General
+    ###############
+
+    DatabaseDirectory /data
+    TemporaryDirectory /tmp
+    LogTime yes
+    # CUSTOM: Use pid file in tmp
+    PidFile /tmp/clamd.pid
+    LocalSocket /tmp/clamd.sock
+    TCPSocket 3310
+    Foreground yes
+
+    ###############
+    # Results
+    ###############
+
+    DetectPUA yes
+    ExcludePUA NetTool
+    ExcludePUA PWTool
+    HeuristicAlerts yes
+    Bytecode yes
+
+    ###############
+    # Scan
+    ###############
+
+    ScanPE yes
+    DisableCertCheck yes
+    ScanELF yes
+    AlertBrokenExecutables yes
+    ScanOLE2 yes
+    ScanPDF yes
+    ScanSWF yes
+    ScanMail yes
+    PhishingSignatures yes
+    PhishingScanURLs yes
+    ScanHTML yes
+    ScanArchive yes
+
+    ###############
+    # Scan
+    ###############
+
+    MaxScanSize 150M
+    MaxFileSize 30M
+    MaxRecursion 10
+    MaxFiles 15000
+    MaxEmbeddedPE 10M
+    MaxHTMLNormalize 10M
+    MaxHTMLNoTags 2M
+    MaxScriptNormalize 5M
+    MaxZipTypeRcg 1M
+    MaxPartitions 128
+    MaxIconsPE 200
+    PCREMatchLimit 10000
+    PCRERecMatchLimit 10000
+
+  ## Ref: https://linux.die.net/man/5/freshclam.conf
+  ## Note: will completely override default clamd.conf file at https://github.com/Mailu/Mailu/tree/master/optional/clamav/conf
+  freshclamConfig: |
+    ###############
+    # General
+    ###############
+
+    DatabaseDirectory /data
+    LogTime yes
+    # CUSTOM: Use pid file in tmp
+    PidFile /tmp/freshclam.pid
+    # CUSTOM: Set defined user
+    DatabaseOwner 2000
+
+    ###############
+    # Updates
+    ###############
+
+    DatabaseMirror database.clamav.net
+    ScriptedUpdates yes
+    NotifyClamd /etc/clamav/clamd.conf
+    Bytecode yes
+
+
+  hpa:
+    enabled: false
+

@@ -30,8 +30,8 @@ spec:
               value: "redis-master.databases.svc.cluster.local"
             - name: REDIS_PORT
               value: "6379"
-            - name: CLAMAV_HOSTNAME
-              value: "clamav-svc"
+            - name: CLAMAV_HOST
+              value: "clamav"
             - name: CLAMAV_PORT
               value: "3310"
           ports:
