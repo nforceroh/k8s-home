@@ -8,7 +8,7 @@ kube-prometheus-stack:
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       hosts:
         - alertmanager.k3s.nf.lab
       tls:
@@ -25,7 +25,7 @@ kube-prometheus-stack:
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       hosts:
         - grafana-prom.k3s.nf.lab
       tls:
@@ -42,7 +42,7 @@ kube-prometheus-stack:
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       hosts:
         - prometheus.k3s.nf.lab
       tls:
