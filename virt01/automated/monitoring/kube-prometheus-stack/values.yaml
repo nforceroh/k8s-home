@@ -1,0 +1,63 @@
+---
+kube-prometheus-stack:
+  alertmanager:
+    ingress:
+      enabled: true
+      annotations: 
+        ingressClassName: traefik
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      hosts:
+        - alertmanager.k3s.nf.lab
+      tls:
+        - secretName: alertmanager-general-tls
+          hosts:
+            - alertmanager.k3s.nf.lab
+  grafana:
+    enabled: true
+    adminPassword: prom-operator
+    ingress:
+      enabled: true
+      annotations: 
+        ingressClassName: traefik
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      hosts:
+        - grafana-prom.k3s.nf.lab
+      tls:
+        - secretName: grafana-prom-general-tls
+          hosts:
+            - grafana-prom.k3s.nf.lab
+
+  prometheus:
+    enabled: true
+    ingress:
+      enabled: true
+      annotations: 
+        ingressClassName: traefik
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns.alpha.kubernetes.io/target: traefik.test.nf.lab
+      hosts:
+        - prometheus.k3s.nf.lab
+      tls:
+        - secretName: prometheus-general-tls
+          hosts:
+            - prometheus.k3s.nf.lab
+
+    prometheusSpec:
+      persistentVolumeClaimRetentionPolicy:
+        whenDeleted: Retain
+        whenScaled: Retain
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 50Gi
