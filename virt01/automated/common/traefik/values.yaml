@@ -40,8 +40,8 @@ traefik:
       allowCrossNamespace: true
     kubernetesGateway:
       # -- Enable Traefik Gateway provider for Gateway API
-      enabled: false
-      
+      enabled: true
+
   # Allow the Gateway to expose HTTPRoute from all namespaces
   gateway:
     namespacePolicy: All
