@@ -25,12 +25,12 @@ argo-cd:
       hostname: argo.k3s.nf.lab
       ingressClassName: traefik
       annotations:
-#        cert-manager.io/cluster-issuer: nf-lab
-#        cert-manager.io/private-key-rotation-policy: Always
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.priority: "10"
         external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-      tls: true
-#        - hosts:
-#            - argo.k3s.nf.lab
-#          secretName: argocd-server-tls
+      tls:
+        - hosts:
+            - argo.k3s.nf.lab
+          secretName: argocd-server-tls

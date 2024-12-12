@@ -7,7 +7,7 @@ metadata:
   annotations:
     metallb.universe.tf/ip-allocated-from-pool: vlan1000-restricted
     external-dns.alpha.kubernetes.io/hostname: ns2.nf.lab
-    #    metallb.universe.tf/loadBalancerIPs: 10.0.0.3
+    metallb.universe.tf/loadBalancerIPs: 10.0.0.3
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
