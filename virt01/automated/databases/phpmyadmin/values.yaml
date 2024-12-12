@@ -1,0 +1,21 @@
+# https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
+
+phpmyadmin:
+  image:
+    registry: docker.io
+    repository: bitnami/phpmyadmin
+
+  ingress:
+    enabled: true
+    hostname: db.k3s.nf.lab
+    annotations:
+      ingressClassName: traefik
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    tls: true
+
+  db:
+    port: 3306
+    host: mariadb-svc.databases.svc.cluster.local

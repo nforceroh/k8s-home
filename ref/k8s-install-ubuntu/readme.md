@@ -53,6 +53,13 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install apt-transport-https curl containerd psmisc -y
 ```
 
+# disable AppArmor
+```
+sudo systemctl stop apparmor
+sudo systemctl disable apparmor
+sudo apt remove apparmor -y
+```
+
 # Configure containerd:
 ```
 sudo mkdir -p /etc/containerd
