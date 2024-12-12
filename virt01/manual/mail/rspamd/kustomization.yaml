@@ -11,3 +11,11 @@ resources:
 
 commonLabels:
   app: rspamd
+
+configMapGenerator:
+- name: rspamd-env
+  envs:
+  - config/env.txt
+
+generatorOptions:
+  disableNameSuffixHash: true

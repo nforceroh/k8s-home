@@ -21,19 +21,9 @@ spec:
         - name: rspamd
           image: harbor.nf.lab/homelab/rspamd:latest
           imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-            - name: ADMIN_PASS
-              value: "$2$yrcy8wh9eb81ztg1ed18n8nuow9i1kdf$7k3qnc17s51dqfpk6wsqgqsxrctcqd4s9cupp11cqd8j3p5ypy4y"
-            - name: REDIS_HOST
-              value: "redis-master.databases.svc.cluster.local"
-            - name: REDIS_PORT
-              value: "6379"
-            - name: CLAMAV_HOST
-              value: "clamav"
-            - name: CLAMAV_PORT
-              value: "3310"
+          envFrom:
+          - configMapRef:
+              name: rspamd-env
           ports:
             - containerPort: 11332
               name: milter-port
