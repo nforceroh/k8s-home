@@ -1,7 +1,48 @@
 # netplan setup for vlan trunks
 https://michaelwaterman.nl/2023/12/12/advanced-netplan-config-on-ubuntu/
 ```
-
+network:
+  version: 2
+  ethernets:
+    eno1:
+      critical: true
+      dhcp-identifier: mac
+  bridges:
+    br0:
+      interfaces: [eno1]
+      dhcp4: no
+      dhcp6: no
+      accept-ra: false
+    br1000:
+      interfaces: [br0.1000]
+      dhcp4: no
+      dhcp6: no
+      accept-ra: false
+    br1400:
+      interfaces: [br0.1400]
+      dhcp4: no
+      dhcp6: no
+      accept-ra: false
+    br1990:
+      interfaces: [br0.1990]
+      dhcp4: no
+      dhcp6: no
+      accept-ra: false
+  vlans:
+    eno1.1000:
+      link: eno1
+      id: 1000
+      dhcp4: yes
+      dhcp6: yes
+    br0.1000:
+      link: br0
+      id: 1000
+    br0.1400:
+      link: br0
+      id: 1400
+    br0.1990:
+      link: br0
+      id: 1990
 ```
 
 
