@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whoamitcp
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: whoamitcp
+
+  template:
+    metadata:
+      labels:
+        app: whoamitcp
+    spec:
+      containers:
+        - name: whoami
+          image: traefik/whoamitcp
+          args:
+            - --port=:3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: whoamitcp
+  namespace: default
+spec:
+  selector:
+    app: whoamitcp
+  ports:
+    - port: 3000

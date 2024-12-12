@@ -20,6 +20,8 @@ traefik:
       external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab,traefik.test.nf.lab
       external-dns.alpha.kubernetes.io/access: public
     type: LoadBalancer
+    spec:
+      externalTrafficPolicy: Local
 
   ingressRoute:
     dashboard:
@@ -40,11 +42,11 @@ traefik:
       allowCrossNamespace: true
     kubernetesGateway:
       # -- Enable Traefik Gateway provider for Gateway API
-      enabled: true
+      enabled: false
 
   # Allow the Gateway to expose HTTPRoute from all namespaces
-  gateway:
-    namespacePolicy: All
+#  gateway:
+#    namespacePolicy: All
 
   ports:
     traefik:

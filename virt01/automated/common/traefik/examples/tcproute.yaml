@@ -1,0 +1,34 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: test
+  namespace: default
+spec:
+  gatewayClassName: traefik
+
+  # Only Routes from the same namespace are allowed.
+  listeners:
+    - name: tcp
+      protocol: TCP
+      port: 3000
+      allowedRoutes:
+        namespaces:
+          from: Same
+---
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: whoami-tcp
+  namespace: default
+spec:
+  parentRefs:
+    - name: test
+      sectionName: tcp
+      kind: Gateway
+
+  rules:
+     - backendRefs:
+        - name: whoamitcp
+          namespace: default
+          port: 3000
