@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: mc2-cf-key
+  namespace: minecraft
+spec:
+  encryptedData:
+    cf-api-key: AgAinjYGuN9/i7fGfjt00AKK9fmqxZYHB+u8zrTMt7wyTJrE8MfwJSITUI3aMRM0xzaXhkG3wscjsvyoQFRKBISEQU9J9IDKIEVLSAz5P4kuB3O9szlHY1Hs3vtlgJnq+OgEKfRs21W034n6Sbqxmcb4Re/BZXtzDFzGg/LOcJ6xOMHgFDUS38qptfaYSDAfH7o0ntBZkYR4g9UFIrtah5m3NMdq/vlYlJ0fkZ9tB+ygKdV3Z1r1a0Uvs/tShsRbwiVvW+wG4cftlfJxnd5i1nI6mk1yfbw9/IZvcK2zxuDci7VGE1c5FqzCr/ySKmTLTwk10yv1prsCoFIYtQVqfGsY2AjMl5gnJCMcQR9Q5EKSvT7iUZjZuP4rT0E7MT5RTs5ad4cEWFJsYukrxB6wDfpIoQplCNrpmSg3bb4BEo/z5xrliJFgMCNIz0blh8YtvWMmrHkVDZ7GFqH84MG7vjckejyVD9Rx3uquHbWiFpDqfJnokw/krCKdF8K/JC9qJpj6H4mCj7S7yJoWsqhr2iqeRTC4M4+syQmjkgl5mzuyfVfgPGKOUBfLcfSREGTioYlb7bfPh+ouwt2HoSoAGmVsEDXVG6croxTHtm3vembRMHZp/G8NWOb9aGEwuD8XVVupnNpIRh+7ZFJQHJOVH86uLD2fhGU0+Iof6AahLi48AyLiWvtcJKUqZg8zn8Bu84d9bgxZa4pMvZAWMmxdJz+S0EQbAm2uyzLui20Ekx8iDK5xCE535ALwsYB/KzGHOAH+OUUEw0eVPqxX3BA=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: mc2-cf-key
+      namespace: minecraft

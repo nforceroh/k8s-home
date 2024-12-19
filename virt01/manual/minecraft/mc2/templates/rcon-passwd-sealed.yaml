@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: rcon-passwd
+  namespace: minecraft
+spec:
+  encryptedData:
+    rcon-passwd: AgAfoOvjRdlyGfBnGCGzsFpExtGX2n/jD5g5lL0Dv9hINKZXQ0kapWWS4ZzSxv+d96jXDfpj3/4GqvAYpowsvWkhJ76R9CXxGoMPgvs1a4lpCbaTRewklJ3ldpvWVREHJo0B8dW6kABvKyg8UaHp0BF8aACG+QLvcvgYvCbXjt6qNYGbqPrBL06e7rl+ljusnLlmCZlimkyt7Ds41NCbY8wLikTWqev05jSR/iRvN6OEjpndcIvH8jqzV8Vp+slWWtd6lTLUiQZt/12hkg86gCVxSwGPPfT1J7ZLGChZFf8mNikSx5orOPsYNw6gOgG3mNWjbVSxZ0+gMOQggiZP8eqIa00xbXWgDf8JPf18jtKKkwRFJJ6iCZCW0P9rBsmpRdfAt7e66udoqDfs6/OOsrdNcfdiaXFdavloffdJKgnx/5WAzI+GdxAwHUtfalcDq8FVgSiUTlseCPgmYyW7CS50Mtql0M7qvWJiONKzrJRv9AuVFFm3ktQIwAZE5nGmkeo53jVUaFCNrpnGnACldV9usR4EoJ1VDwsHJ9X58iqJOICZtQVR4Z09rLPZic7+B0LsC0E79yuCJPGcXNXFKr6MZP8q/ZVjyARbHU0rP98gCfercZ9hG+H66k0+KHlkeeCrAHbk//lxJNXIVhLIZyDvWP12IyRQoFbcd33t0HDqFoZHTQrs5/7nMyCdtSm85tyzsJaayoQ=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: rcon-passwd
+      namespace: minecraft
