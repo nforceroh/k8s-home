@@ -1,67 +1,73 @@
-image:
-  repository: itzg/minecraft-server
-  tag: latest
-workloadAsStatefulSet: true
-minecraftServer:
-  # This must be overridden, since we can't accept this for the user.
-  eula: "TRUE"
-  # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
-  version: "LATEST"
-  # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA", "AUTO_CURSEFORGE"
-  # https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms
-  type: "VANILLA"
-  cfServerMod: https://www.curseforge.com/minecraft/modpacks/all-the-mods-8
-  # A comma-separated list of player names to whitelist.
-  whitelist:
-  # A comma-separated list of player names who should be admins.
-  ops:
-  gameMode: survival
-  # Message of the Day
-  motd: "Welcome to Minecraft on Kubernetes!"
-  # Check accounts against Minecraft account service.
-  onlineMode: default
-  # Require public key to be signed by Mojang to join
-  enforceSecureProfile: default
-  # If you adjust this, you may need to adjust resources.requests above to match.
-  memory: 1024M
-  serviceAnnotations:     
-    metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
-    metallb.universe.tf/loadBalancerIPs: 10.0.1.120
-  serviceType: LoadBalancer
-  servicePort: 25566
-  externalTrafficPolicy: Local
-  # Config for AUTO_CURSEFORGE server type
-  autoCurseForge:
-    # CurseForge API key obtained from developer console
-    apiKey:
-      existingSecret: mc2-cf-key
-      secretKey: cf-api-key
-    # Link to modpack in general or a specific file
-    # NOTE: In case of specific file - do not point at server file
-    pageUrl: "https://www.curseforge.com/minecraft/modpacks/all-the-mods-8"
+minecraft:
+  image:
+    repository: itzg/minecraft-server
+    tag: latest
+  workloadAsStatefulSet: false
+  strategyType: Recreate
+  minecraftServer:
+    # This must be overridden, since we can't accept this for the user.
+    eula: "TRUE"
+    # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
+    version: "LATEST"
+    # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA", "AUTO_CURSEFORGE"
+    # https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms
+    type: "FORGE"
+    cfServerMod: https://www.curseforge.com/minecraft/modpacks/all-the-mods-8
+    # A comma-separated list of player names to whitelist.
+    whitelist:
+    # A comma-separated list of player names who should be admins.
+    ops:
+    gameMode: survival
+    # Message of the Day
+    motd: "Welcome to Minecraft on Kubernetes!"
+    # Check accounts against Minecraft account service.
+    onlineMode: false
+    # Require public key to be signed by Mojang to join
+    enforceSecureProfile: default
+    # If you adjust this, you may need to adjust resources.requests above to match.
+    memory: 1024M
+    serviceAnnotations:     
+
+    serviceType: LoadBalancer
+    servicePort: 25566
+    externalTrafficPolicy: Local
+    # Config for AUTO_CURSEFORGE server type
+    autoCurseForge:
+      # CurseForge API key obtained from developer console
+      apiKey:
+        existingSecret: mc2-cf-key
+        secretKey: cf-api-key
+      # Link to modpack in general or a specific file
+      # NOTE: In case of specific file - do not point at server file
+      pageUrl: "https://www.curseforge.com/minecraft/modpacks/all-the-mods-8"
 
 
-  rcon:
-    # If you enable this, make SURE to change your password below.
-    enabled: false
-    # By default, the container will generate a random password at startup
-    # to ensure internal RCON tooling, including a backup container,
-    # can be used, but the password is secure.
-    withGeneratedPassword: false
-    port: 25575
-    existingSecret: rcon-passwd
-    secretKey: rcon-passwd
+    rcon:
+      # If you enable this, make SURE to change your password below.
+      enabled: true
+      # By default, the container will generate a random password at startup
+      # to ensure internal RCON tooling, including a backup container,
+      # can be used, but the password is secure.
+      withGeneratedPassword: false
+      port: 25575
+      existingSecret: rcon-passwd
+      secretKey: rcon-passwd
 
-  ## set this to false to not have colorized logs
-  tty: true
+    ## set this to false to not have colorized logs
+    tty: true
+
+  serviceAnnotations:
+    metallb.universe.tf/address-pool: vlan1000-apps
+    external-dns.alpha.kubernetes.io/hostname: mc2.k3s.nf.lab
+  #rconServiceAnnotations: {}
 
   persistence:
-  dataDir:
-    # Set this to false if you don't care to persist state between restarts.
-    enabled: true
-    Size: 5Gi
-    accessModes:
-      - ReadWriteOnce
-    # existingClaim: nil
-    ## specify a subpath in the volume where the data is. Useful when sharing volumes with other apps.
-    # subPath: /path/to/dataDir
+    dataDir:
+      # Set this to false if you don't care to persist state between restarts.
+      enabled: true
+      Size: 5Gi
+      accessModes:
+        - ReadWriteOnce
+      existingClaim: mc2-datadir
+      ## specify a subpath in the volume where the data is. Useful when sharing volumes with other apps.
+      # subPath: /path/to/dataDir
