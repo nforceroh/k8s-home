@@ -19,7 +19,7 @@ minecraft:
     ops:
     gameMode: survival
     # Message of the Day
-    motd: "Welcome to Minecraft mc2 on Kubernetes!"
+    motd: "Welcome to Minecraft test2 on Kubernetes!"
     # Check accounts against Minecraft account service.
     onlineMode: true
     # Require public key to be signed by Mojang to join
@@ -28,9 +28,8 @@ minecraft:
     memory: 1024M
     serviceAnnotations:     
 
-    serviceType: LoadBalancer
-    servicePort: 25566
-    externalTrafficPolicy: Local
+    serviceType: ClusterIP
+    servicePort: 25565
     # Config for AUTO_CURSEFORGE server type
 #    autoCurseForge:
 #      # CurseForge API key obtained from developer console
@@ -56,11 +55,6 @@ minecraft:
     ## set this to false to not have colorized logs
     tty: true
 
-  serviceAnnotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
-    external-dns.alpha.kubernetes.io/hostname: mc2.k3s.nf.lab
-  #rconServiceAnnotations: {}
-
   persistence:
     dataDir:
       # Set this to false if you don't care to persist state between restarts.
@@ -68,6 +62,6 @@ minecraft:
       Size: 5Gi
       accessModes:
         - ReadWriteOnce
-      existingClaim: mc2-datadir
+      existingClaim: test2-datadir
       ## specify a subpath in the volume where the data is. Useful when sharing volumes with other apps.
       # subPath: /path/to/dataDir

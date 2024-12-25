@@ -1,0 +1,47 @@
+rcon-web-admin:
+  ingress:
+    enabled: true
+    className: "traefik"
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    host: rcon.nf.lab
+    path: /
+    pathType: Prefix
+    tls:
+      - hosts:
+        - rcon.nf.lab
+        secretName: rcon-tls
+  rconWeb:
+    # Sets the initial user as an admin
+    isAdmin: true
+    # Sets the initial user's username
+    username: admin
+    # Sets the initial user's password
+##    password: ""
+    # Name of existing secret with UI password
+    passwordExistingSecret: rcon-passwd
+    passwordKey: rcon-passwd
+    # The initial game you wish to control (minecraft / rust / csgo / other)
+    game: minecraft
+    # The display name of the initial server (if unset; defaults to value of RWA_GAME)
+    serverName: mc2
+    # The initial RCON server to control
+    rconHost: mc2-minecraft-rcon
+    # The port number of the initial RCON server to control
+    rconPort: 25575
+    # The password for the initial RCON server to control
+    rconPassword: ""
+    # Name of existing secret with RCON password
+    rconPasswordExistingSecret: rcon-passwd
+    rconPasswordKey: rcon-passwd
+    # Prevent the initial user user executing these commands
+    restrictCommands: []
+    # Hide this list of widgets from the initial user
+    restrictWidgets: []
+    # Prevent the initial user changing options in the widget options tab
+    immutableWidgetOptions: false
+    # Enables 'web rcon' if supported by the game server
+    websocketRcon: false
