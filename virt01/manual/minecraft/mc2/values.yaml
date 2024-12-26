@@ -29,7 +29,7 @@ minecraft:
     serviceAnnotations:     
 
     serviceType: LoadBalancer
-    servicePort: 25566
+    servicePort: 25565
     externalTrafficPolicy: Local
     # Config for AUTO_CURSEFORGE server type
 #    autoCurseForge:

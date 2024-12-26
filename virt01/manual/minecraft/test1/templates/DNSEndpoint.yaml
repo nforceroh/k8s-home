@@ -1,0 +1,24 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: mc-test1-cname-record
+ namespace: minecraft
+spec:
+ endpoints:
+ - dnsName: mc-test1.nforcer.com
+   recordType: CNAME
+   targets:
+     - ipv4.nforcer.com
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: mc-test1-srv-record
+ namespace: minecraft
+spec:
+ endpoints:
+ - dnsName: "_minecraft._tcp.mc-test1.nforcer.com"
+   recordType: SRV
+   targets:
+     - "0 0 25565 mc-test1.nforcer.com"
