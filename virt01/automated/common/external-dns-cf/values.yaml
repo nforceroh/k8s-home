@@ -19,7 +19,7 @@ external-dns:
     dnsRecordsPerPage: 100
 
   ## List of domains that can be managed. 
-  domainFilters: ["nforcer.com", "_minecraft"]
+  domainFilters: ["nforcer.com"]
   # These help tell which records are owned by external-dns.
   registry: "txt"
   txtOwnerId: "k8s"
