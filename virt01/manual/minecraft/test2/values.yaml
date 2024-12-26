@@ -40,6 +40,12 @@ minecraft:
 #      # NOTE: In case of specific file - do not point at server file
 #      pageUrl: "https://www.curseforge.com/minecraft/modpacks/all-the-mods-8"
 
+    ## set this to false to not have colorized logs
+    tty: true
+    query:
+      # If you enable this, your server will be "published" to Gamespy
+      enabled: true
+      port: 25565
 
     rcon:
       # If you enable this, make SURE to change your password below.
@@ -51,9 +57,6 @@ minecraft:
       port: 25575
       existingSecret: rcon-passwd
       secretKey: rcon-passwd
-
-    ## set this to false to not have colorized logs
-    tty: true
 
   persistence:
     dataDir:

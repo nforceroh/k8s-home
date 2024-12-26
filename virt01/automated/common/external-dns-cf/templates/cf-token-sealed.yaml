@@ -1,0 +1,20 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: cf-api-token
+  namespace: common
+spec:
+  encryptedData:
+    cloudflare_api_token: AgB9kWUv/tqMynsZzdOfA1ziTt6Jf4S9iYTQi5uvaGOD03vj7hZG2Je1ErRAYxemGk6Gp7TTFxjz0OEir8C8XAimI21vuj/Afybg/BXU01bvtb9ovD+NaJlKhAFemS1S3lN7FgHcre6rjDWED9bWiGr84e50+9fqXEen9ib0Pu7KqHsHyOp3fTFjaZHTpFtk4+AhoaZCjsiidkR3Xx60rj/C8UzUeJc7Iswi564/7GMp0sjw3scnHW2DBQrK1zC5NPPzv1JemHNaZDlC2/nll3hVlD7L8zrsn71JpeKqgJs4JdvU+Y15RBYuxdh3Y9Fe7ujKZ1pKl0yo3lW41eP0r/Jmg5vhvgccfhAp2Jc2F/rnPiEqg9Vr7u+PjoEAtjCrWJRG/ChIUD07PCJuk3ie1v3YxaXPPK8K8Ib4e76XDvxIgilr5f8i5/CL88HeVzdQ5YWSlHW0Oe9daJCfDAvf/srZAoZiF75nIq/NNpxYXfuNOn4z4UR+JQtFkOXhgmsb8lNWJn8CCmf53jMh+yhbQzcU2dktfOVuqKtVwGPK9P3yVuoW8we1clzVfHKfifSFORcbcpEzB+HatGDLHAEpj75sRG6w4BZF3I1VVdBTP5IRo5/YJTdSP42/OVkGK212yvO0WefKcCvMccaviDB69pBgb60ef/vYOcBtXmbH8Ln/giERX/RYmp7U2bqKA1UlPXZugZqSCf7ud1ZQbf2o7GGX4V5WtIiywlKHhzOlTB3AjtxPTG1NktlQ
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: cf-api-token
+      namespace: common
+    type: Opaque
