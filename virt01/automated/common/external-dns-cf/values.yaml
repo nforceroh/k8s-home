@@ -6,6 +6,7 @@ external-dns:
     repository: bitnami/external-dns
   ## Watch these resources for new DNS records
   sources:
+    - crd
     - ingress
     - service
     
