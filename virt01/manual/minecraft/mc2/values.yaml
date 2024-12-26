@@ -16,7 +16,7 @@ minecraft:
     # A comma-separated list of player names to whitelist.
     whitelist:
     # A comma-separated list of player names who should be admins.
-    ops:
+    ops: xankibbs
     gameMode: survival
     # Message of the Day
     motd: "Welcome to Minecraft mc2 on Kubernetes!"

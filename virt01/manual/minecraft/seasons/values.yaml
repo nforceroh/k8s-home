@@ -8,13 +8,14 @@ minecraft:
     # This must be overridden, since we can't accept this for the user.
     eula: "TRUE"
     # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
+    #version: "1.20.1"
     version: "LATEST"
     whitelist:
     # A comma-separated list of player names who should be admins.
     ops: xankibbs
     # This can be one of "VANILLA", "FORGE", "SPIGOT", "BUKKIT", "PAPER", "FTBA", "SPONGEVANILLA", "AUTO_CURSEFORGE"
     # https://docker-minecraft-server.readthedocs.io/en/latest/types-and-platforms
-    type: "NEOFORGE"
+    type: "AUTO_CURSEFORGE"
     maxPlayers: default
     # This sets the maximum possible size in blocks, expressed as a radius, that the world border can obtain.
     maxWorldSize: default
@@ -68,11 +69,13 @@ minecraft:
         secretKey: cf-api-key
       # Link to modpack in general or a specific file
       # NOTE: In case of specific file - do not point at server file
-      pageUrl: "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10"
-#      slug: "jei:4593548"
-#      fileId: "5790654"
+      pageUrl: "https://www.curseforge.com/minecraft/modpacks/slightly-flavoured"
+      excludeMods:
+        - "quicksaving"            
+      #slug: "slightly-flavoured"
+      #fileId: "5950246"
 #      includeMods: 
-#        - https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty/download/6023473
+#        - 5962797
 
     ## set this to false to not have colorized logs
     tty: true
@@ -99,6 +102,6 @@ minecraft:
       Size: 5Gi
       accessModes:
         - ReadWriteOnce
-      existingClaim: test1-datadir
+      existingClaim: seasons-datadir
       ## specify a subpath in the volume where the data is. Useful when sharing volumes with other apps.
       # subPath: /path/to/dataDir

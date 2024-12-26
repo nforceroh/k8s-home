@@ -2,11 +2,11 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
- name: mc-test2-cname-record
+ name: seasons-cname-record
  namespace: minecraft
 spec:
  endpoints:
- - dnsName: mc-test2.nforcer.com
+ - dnsName: seasons.nforcer.com
    recordType: CNAME
    targets:
      - ipv4.nforcer.com
@@ -14,11 +14,11 @@ spec:
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
- name: mc-test2-srv-record
+ name: seasons-srv-record
  namespace: minecraft
 spec:
  endpoints:
- - dnsName: "_minecraft._tcp.mc-test2.nforcer.com"
+ - dnsName: "_minecraft._tcp.seasons.nforcer.com"
    recordType: SRV
    targets:
-     - "0 0 25565 mc-test2.nforcer.com"
+     - "0 0 25565 seasons.nforcer.com"

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: test2-datadir
+  name: seasons-datadir
   namespace: minecraft
 spec:
   accessModes:
