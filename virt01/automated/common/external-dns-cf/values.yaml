@@ -40,6 +40,10 @@ external-dns:
     create: true
     apiVersion: v1
 
+  crd:
+    ## @param crd.create Install and use the integrated DNSEndpoint CRD
+    ##
+    create: true
   serviceMonitor:
     enabled: true
     namespace: monitoring
