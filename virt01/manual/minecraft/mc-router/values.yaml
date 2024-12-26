@@ -32,8 +32,8 @@ mc-router:
       - externalHostname: "mc-test1.nforcer.com"
         host: "test1-minecraft"
         port: 25565
-      - externalHostname: "mc-test2.nforcer.com"
-        host: "test2-minecraft"
+      - externalHostname: "seasons.nforcer.com"
+        host: "seasons-minecraft"
         port: 25565
     metrics:
       # Backend to use for metrics exposure/publishing: discard,expvar,influxdb
