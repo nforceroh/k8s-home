@@ -58,7 +58,7 @@ minecraft:
     # Require public key to be signed by Mojang to join
     enforceSecureProfile: default
     # If you adjust this, you may need to adjust resources.requests above to match.
-    memory: 12000M
+    memory: 8096M
     serviceType: ClusterIP
     servicePort: 25565
     # Config for AUTO_CURSEFORGE server type
