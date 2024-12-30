@@ -1,0 +1,19 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: demo-mysql-dev-helm-route
+  namespace: databases
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    external-dns.alpha.kubernetes.io/target: maria.k3s.nf.lab
+spec:
+  entryPoints:
+    - mysql
+  routes:
+  - match: HostSNI(`maria.k3s.nf.lab`)
+    services:
+    - name: mysql-test-service
+      port: 3306
+  tls:
+      secretName: tls-demo-dev-helm

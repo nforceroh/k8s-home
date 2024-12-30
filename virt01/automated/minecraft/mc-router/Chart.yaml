@@ -1,0 +1,9 @@
+name: mc-router
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: mc-router
+  repository: https://itzg.github.io/minecraft-server-charts
+  version: 1.2.4
+sources:
+- https://github.com/itzg/minecraft-server-charts

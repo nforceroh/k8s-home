@@ -1,0 +1,49 @@
+# https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
+
+external-dns:
+  image:
+    registry: harbor.nf.lab/proxy.docker.io
+    repository: bitnami/external-dns
+  ## Watch these resources for new DNS records
+  sources:
+    - crd
+    - ingress
+    - service
+    
+  ## use google as the dns provider
+  provider: cloudflare
+
+  cloudflare:
+    secretName: "cf-api-token"
+    proxied: false
+    dnsRecordsPerPage: 100
+
+  ## List of domains that can be managed. 
+  domainFilters: ["nforcer.com"]
+  # These help tell which records are owned by external-dns.
+  registry: "txt"
+  txtOwnerId: "k8s"
+  txtPrefix: "txt-"
+  logLevel: debug
+  policy: upsert-only
+  #policy: sync
+
+  ## Limit external-dns resources
+  resources:
+    limits:
+      memory: 1Gi
+    requests:
+      memory: 50Mi
+      cpu: 10m
+  ## ensure RBAC is enabled
+  rbac:
+    create: true
+    apiVersion: v1
+
+  crd:
+    ## @param crd.create Install and use the integrated DNSEndpoint CRD
+    ##
+    create: true
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring

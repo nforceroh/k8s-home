@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mc2-pvc
+  name: mc2-datadir
   namespace: minecraft
 spec:
   accessModes:

@@ -14,12 +14,17 @@ ollama:
       - codellama
 
   runtimeClassName: "nvidia"
+  service:
+    type: LoadBalancer
+    annotations:
+      metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
+      external-dns.alpha.kubernetes.io/hostname: ollama-api.k3s.nf.lab
   ingress:
     enabled: true
     annotations:
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
-      traefik.ingress.kubernetes.io/router.entrypoints: websecure  
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure  
       kubernetes.io/ingress.class: traefik
       external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
     hosts:

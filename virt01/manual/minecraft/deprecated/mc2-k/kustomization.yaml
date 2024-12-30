@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minecraft
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - serviceaccount.yaml
+
+commonLabels:
+  app: mc2
+
+configMapGenerator:
+- name: mc2-env
+  envs:
+  - config/env.txt
+
+generatorOptions:
+  disableNameSuffixHash: true
