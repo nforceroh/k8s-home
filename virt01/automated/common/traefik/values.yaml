@@ -5,6 +5,8 @@ traefik:
     # -- Traefik image host registry
     registry: harbor.nf.lab/proxy.docker.io
   logs:
+    general:
+      level: DEBUG
     access:
       enabled: true
 
