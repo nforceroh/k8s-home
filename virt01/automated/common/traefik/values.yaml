@@ -6,7 +6,7 @@ traefik:
     registry: harbor.nf.lab/proxy.docker.io
   logs:
     general:
-      level: DEBUG
+      level: INFO
     access:
       enabled: true
 
