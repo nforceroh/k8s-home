@@ -9,6 +9,14 @@ spec:
     - vlan1000-apps
     - vlan1000-infra
     - vlan1000-restricted
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-ip-vlan100
+  namespace: {{ .Release.Namespace }}
+spec:
+  ipAddressPools:
     - vlan1400
-#  interfaces:
-#    - br1000
+  interfaces:
+  - br1400

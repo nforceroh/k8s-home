@@ -38,5 +38,3 @@ spec:
   autoAssign: false
   addresses:
   - 10.40.3.1-10.40.3.10
-  interfaces:
-    - br1400
