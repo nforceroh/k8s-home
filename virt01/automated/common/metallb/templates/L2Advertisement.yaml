@@ -13,7 +13,7 @@ spec:
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: l2-ip-vlan100
+  name: l2-ip-vlan1400
   namespace: {{ .Release.Namespace }}
 spec:
   ipAddressPools:
