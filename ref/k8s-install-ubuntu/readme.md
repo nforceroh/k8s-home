@@ -115,6 +115,18 @@ cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables  = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 net.ipv4.ip_forward                 = 1
+net.core.rmem_max=8388608
+net.core.wmem_max=8388608
+net.ipv4.tcp_rmem=4096 87380 8388608
+net.ipv4.tcp_wmem=4096 87380 8388608
+EOF
+```
+
+# Set limits
+```
+cat <<EOF | sudo tee /etc/security/limits.d/k8s
+*         soft    nofile      102400
+*         hard    nofile      102400
 EOF
 ```
 

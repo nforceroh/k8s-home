@@ -1,0 +1,7 @@
+name: cloudflare-tunnel
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: cloudflare-tunnel
+  repository: https://cloudflare.github.io/helm-charts/
+  version: 0.3.2

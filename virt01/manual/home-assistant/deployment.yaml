@@ -1,0 +1,82 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant
+  labels:
+    app: ha
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ha
+  template:
+    metadata:
+      labels:
+        app: ha
+    spec:
+      containers:
+      - name: home-assistant
+        image: homeassistant/home-assistant:2024.12.5
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "4"
+        ports:
+        - containerPort: 8123
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /config/configuration.yaml
+          subPath: configuration.yaml
+          name: configmap-file
+        - mountPath: /config/automations.yaml
+          subPath: automations.yaml
+          name: configmap-file
+        - mountPath: /media
+          name: media-volume          
+        - mountPath: /run/dbus
+          name: d-bus
+        #   readOnly: true
+        #- mountPath: /dev/ttyUSB1
+        #  name: zigbee
+        - name: data-volume
+          mountPath: /data
+        #- mountPath: /dev/video0
+        #  name: cam
+        securityContext:
+          privileged: true
+#          capabilities:
+#            add:
+#              - NET_ADMIN
+#              - NET_RAW
+#              - SYS_ADMIN
+#      hostNetwork: true
+      volumes:
+      - name: config
+        persistentVolumeClaim:
+          claimName: ha-config-pvc
+      - name: media-volume
+        hostPath:
+          path: /tmp/media
+      - name: configmap-file
+        configMap:
+          name: ha-cm
+      #  hostPath:
+      #    path: /tmp/home-assistant
+      #    type: DirectoryOrCreate
+      - name: d-bus
+        hostPath:
+          path: /run/dbus
+      - name: data-volume
+        hostPath:
+          path: /tmp/media
+      #- name: zigbee
+      #  hostPath:
+      #    path: /dev/ttyACM0
+      #- name: cam
+      #  hostPath:
+      #    path: /dev/video0
