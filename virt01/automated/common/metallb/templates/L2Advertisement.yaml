@@ -9,6 +9,9 @@ spec:
     - vlan1000-apps
     - vlan1000-infra
     - vlan1000-restricted
+  nodeSelectors:
+   - matchLabels:
+      kubernetes.io/hostname: virt01
   interfaces:
     - br1000
 ---
@@ -20,5 +23,8 @@ metadata:
 spec:
   ipAddressPools:
     - vlan1400
+  nodeSelectors:
+    - matchLabels:
+       kubernetes.io/hostname: virt01
   interfaces:
     - br1400
