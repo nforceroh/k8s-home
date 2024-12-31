@@ -21,4 +21,4 @@ spec:
   ipAddressPools:
     - vlan1400
   interfaces:
-  - br1400
+    - br1400
