@@ -17,7 +17,7 @@ ollama:
   service:
     type: LoadBalancer
     annotations:
-      metallb.universe.tf/ip-allocated-from-pool: vlan1000-apps
+      metallb.universe.tf/ip-allocated-from-pool: vlan1400
       external-dns.alpha.kubernetes.io/hostname: ollama-api.k3s.nf.lab
   ingress:
     enabled: true

@@ -28,3 +28,15 @@ spec:
   autoAssign: false
   addresses:
   - 10.0.0.3-10.0.0.10
+  ---
+  apiVersion: metallb.io/v1beta1
+  kind: IPAddressPool
+  metadata:
+    name: vlan1400
+    namespace: {{ .Release.Namespace }}
+  spec:
+    autoAssign: false
+    addresses:
+    - 10.40.3.1-10.40.3.10
+  interfaces:
+    - br1400

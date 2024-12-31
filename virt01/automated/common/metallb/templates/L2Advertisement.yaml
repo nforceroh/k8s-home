@@ -9,5 +9,6 @@ spec:
     - vlan1000-apps
     - vlan1000-infra
     - vlan1000-restricted
+    - vlan1400
 #  interfaces:
 #    - br1000
