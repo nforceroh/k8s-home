@@ -1,0 +1,64 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: esphome
+  labels:
+    app: esphome
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: esphome
+  template:
+    metadata:
+      labels:
+        app: esphome
+    spec:
+      serviceAccountName: esphome-sa
+      containers:
+        - name: esphome
+          image: ghcr.io/esphome/esphome-hassio:2024.12.2 
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          ports:
+          - containerPort: 6052
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          resources: {}
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          volumeMounts:
+          - mountPath: /config
+            name: config-volume
+          - mountPath: /cache
+            name: cache-volume
+      volumes:
+      - name: config-volume
+        persistentVolumeClaim: 
+          claimName: esphome-config-pvc
+      - name: cache-volume
+        emptyDir:
+          sizeLimit: 5Gi
