@@ -74,10 +74,10 @@ spec:
             - name: torrent
               mountPath: /data
             - name: web-config
-              mountPath: /config/web.conf
+              mountPath: /config/web.conf.cm
               subPath: web.conf
             - name: core-config
-              mountPath: /config/core.conf
+              mountPath: /config/core.conf.cm
               subPath: core.conf
       volumes:
         - name: deluge-pv
