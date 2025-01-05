@@ -1,0 +1,24 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: vh3-cname-record
+ namespace: minecraft
+spec:
+ endpoints:
+ - dnsName: vh3.nforcer.com
+   recordType: CNAME
+   targets:
+     - ipv4.nforcer.com
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: vh3-srv-record
+ namespace: minecraft
+spec:
+ endpoints:
+ - dnsName: "_minecraft._tcp.seasons.nforcer.com"
+   recordType: SRV
+   targets:
+     - "0 0 25565 vh3.nforcer.com"

@@ -35,6 +35,9 @@ mc-router:
       - externalHostname: "seasons.nforcer.com"
         host: "seasons-minecraft"
         port: 25565
+      - externalHostname: "vh3.nforcer.com"
+        host: "vh3-minecraft"
+        port: 25565
     metrics:
       # Backend to use for metrics exposure/publishing: discard,expvar,influxdb
       backend: discard
