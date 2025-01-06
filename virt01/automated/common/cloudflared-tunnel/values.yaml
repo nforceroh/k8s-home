@@ -7,8 +7,8 @@ cloudflare-tunnel:
     secretName: tunnel-credentials
     # https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress
     ingress: 
-#      - hostname: ha.nforcer.com
-#        service: http://ha-ui.home-assistant.svc.cluster.local:8123
+      - hostname: ha.nforcer.com
+        service: http://ha-ui.home-assistant.svc.cluster.local:8123
       - hostname: ollama-api.nforcer.com
         service: http://ollama.ai.svc.cluster.local:11434
 

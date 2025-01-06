@@ -16,15 +16,10 @@ spec:
         app: ha
     spec:
       containers:
-        - name: home-assistant
-          image: homeassistant/home-assistant:2024.12.5
-          resources:
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-            limits:
-              memory: "4Gi"
-              cpu: "4"
+        - name: homeassistant
+          #image: homeassistant/home-assistant:2024.12.5
+          image: ghcr.io/home-assistant/qemux86-64-homeassistant:2024.12.5
+          resources: {}
           ports:
           - containerPort: 8123
           volumeMounts:
@@ -40,21 +35,18 @@ spec:
             name: media-volume          
           - mountPath: /run/dbus
             name: d-bus
-          #   readOnly: true
           - name: data-volume
             mountPath: /data
           securityContext:
             privileged: true
-  #          capabilities:
-  #            add:
-  #              - NET_ADMIN
-  #              - NET_RAW
-  #              - SYS_ADMIN
       hostNetwork: true
       volumes:
       - name: config
         persistentVolumeClaim:
           claimName: ha-config-pvc
+      - name: data
+        persistentVolumeClaim:
+          claimName: data-pvc
       - name: media-volume
         hostPath:
           path: /tmp/media
