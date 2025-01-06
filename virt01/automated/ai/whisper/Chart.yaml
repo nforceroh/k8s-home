@@ -1,0 +1,7 @@
+name: whisper  
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: whisper  
+  repository: https://andrenarchy.github.io/helm-charts/
+  version: 1.0.0

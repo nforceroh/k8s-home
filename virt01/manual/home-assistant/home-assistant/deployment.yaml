@@ -16,6 +16,12 @@ spec:
         app: ha
     spec:
       containers:
+        - name: openwakeword
+          image: homeassistant/amd64-addon-openwakeword:1.10.0
+        - name: piper
+          image: homeassistant/amd64-addon-piper:1.5.2
+        - name: whisper
+          image: homeassistant/amd64-addon-whisper:2.4.0 
         - name: homeassistant
           #image: homeassistant/home-assistant:2024.12.5
           image: ghcr.io/home-assistant/qemux86-64-homeassistant:2024.12.5
