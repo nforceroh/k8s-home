@@ -12,11 +12,11 @@ resources:
 commonLabels:
   app: ha
 
-configMapGenerator:
-- name: ha-cm
-  files:
-  - configuration.yaml=config/configuration.yaml
-  - automations.yaml=config/automations.yaml
+#configMapGenerator:
+#- name: ha-cm
+#  files:
+#  - configuration.yaml=config/configuration.yaml
+#  - automations.yaml=config/automations.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
