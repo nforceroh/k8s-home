@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: piper-svc
+  labels:
+    app: piper
+spec:
+  ports:
+    - name: piper-svc-port
+      port: 10200
+  selector:
+    app: piper

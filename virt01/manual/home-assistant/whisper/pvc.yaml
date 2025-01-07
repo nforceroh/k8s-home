@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ollama
-  namespace: ai
+  name: whisper-data-pvc
+  namespace: home-assistant
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
+      storage: 5Gi
   volumeMode: Filesystem

@@ -2,23 +2,25 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ha-config-pvc
+  name: oww-data-pvc
   namespace: home-assistant
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
+  volumeMode: Filesystem
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ha-data-pvc
+  name: oww-custom-pvc
   namespace: home-assistant
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi
+      storage: 5Gi
+  volumeMode: Filesystem

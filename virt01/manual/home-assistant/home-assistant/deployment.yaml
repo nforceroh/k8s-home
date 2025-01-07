@@ -17,86 +17,24 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
-        - name: openwakeword
-          image: rhasspy/wyoming-openwakeword
-          args: ["--preload-model", "ok_nabu", "--custom-model-dir", "/custom", "--debug" ]
-          ports:
-          - containerPort: 10400
-          volumeMounts:
-          - mountPath: /data
-            name: oww-data
-          - mountPath: /custom
-            name: oww-custom
-        - name: piper
-          image: slackr31337/wyoming-piper-gpu:latest
-          args: ["--voice", "en-us-libritts-high", "--update-voices", "--cuda", "--debug" ]
-          ports:
-          - containerPort: 10200
-          volumeMounts:
-          - mountPath: /data
-            name: piper-data
-        - name: whisper
-          image: pedrogaldino/wyoming-whisper-cuda
-          args: [ "--model", "medium", "--language", "en", "--device", "cuda", "--debug" ]
-          ports:
-          - containerPort: 10300
-          volumeMounts:
-          - mountPath: /data
-            name: whisper-data
         - name: homeassistant
-          #image: homeassistant/home-assistant:2024.12.5
-          image: ghcr.io/home-assistant/qemux86-64-homeassistant:2024.12.5
+          image: homeassistant/home-assistant:latest
           ports:
           - containerPort: 8123
           volumeMounts:
-          - mountPath: /config
-            name: ha-config
-#          - mountPath: /config/configuration.yaml
-#            subPath: configuration.yaml
-#            name: configmap-file
-#          - mountPath: /config/automations.yaml
-#            subPath: automations.yaml
-#            name: configmap-file
-#          - mountPath: /media
-#            name: media-volume
-#          - mountPath: /run/dbus
-#            name: d-bus
-          - name: ha-data
+          - name: ha-config-pv
+            mountPath: /config
+          - name: ha-data-pv
             mountPath: /data
           securityContext:
             privileged: true
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       volumes:
-      - name: ha-config
-        persistentVolumeClaim:
-          claimName: ha-config-pvc
-      - name: ha-data
-        persistentVolumeClaim:
-          claimName: data-pvc
-#      - name: media-volume
-#        hostPath:
-#          path: /tmp/media
-#      - name: configmap-file
-#        configMap:
-#          name: ha-cm
-      #  hostPath:
-      #    path: /tmp/home-assistant
-      #    type: DirectoryOrCreate
-#      - name: d-bus
-#        hostPath:
-#          path: /run/dbus
-#      - name: data-volume
-#        hostPath:
-#          path: /tmp/media
-      - name: oww-data
-        persistentVolumeClaim:
-          claimName: oww-data
-      - name: oww-custom
-        persistentVolumeClaim:
-          claimName: oww-custom
-      - name: piper-data
-        persistentVolumeClaim:
-          claimName: piper-data
-      - name: whisper-data
-        persistentVolumeClaim:
-          claimName: whisper-data                           
+        - name: ha-config-pv
+          persistentVolumeClaim:
+            claimName: ha-config-pvc
+        - name: ha-data-pv
+          persistentVolumeClaim:
+            claimName: data-pvc
+                          

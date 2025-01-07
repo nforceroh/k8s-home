@@ -1,0 +1,34 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: piper
+  labels:
+    app: piper
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: piper
+  template:
+    metadata:
+      labels:
+        app: piper
+    spec:
+      runtimeClassName: nvidia
+      containers:
+        - name: piper
+          image: slackr31337/wyoming-piper-gpu:latest
+          args: ["--voice", "en-us-libritts-high", "--update-voices", "--cuda", "--debug" ]
+          imagePullPolicy: Always
+          ports:
+            - name: piper-port
+              containerPort: 10200
+          volumeMounts:
+            - name: piper-data-pv
+              mountPath: /data
+      volumes:
+        - name: piper-data-pv
+          persistentVolumeClaim:
+            claimName: piper-data-pvc

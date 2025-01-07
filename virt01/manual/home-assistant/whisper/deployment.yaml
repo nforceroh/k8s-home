@@ -1,0 +1,34 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: whisper
+  labels:
+    app: whisper
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: whisper
+  template:
+    metadata:
+      labels:
+        app: whisper
+    spec:
+      runtimeClassName: nvidia
+      containers:
+        - name: whisper
+          image: pedrogaldino/wyoming-whisper-cuda
+          args: [ "--model", "medium", "--language", "en", "--device", "cuda", "--debug" ]
+          imagePullPolicy: Always
+          ports:
+            - name: whisper-port
+              containerPort: 10300
+          volumeMounts:
+            - name: whisper-data-pv
+              mountPath: /data
+      volumes:
+        - name: whisper-data-pv
+          persistentVolumeClaim:
+            claimName: whisper-data-pvc

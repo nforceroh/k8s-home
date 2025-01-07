@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: oww-svc
+  labels:
+    app: openwakeword
+spec:
+  ports:
+    - name: oww-svc-port
+      port: 10400
+  selector:
+    app: openwakeword
