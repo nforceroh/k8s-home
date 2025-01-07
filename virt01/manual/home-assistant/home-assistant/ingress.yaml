@@ -1,3 +1,4 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -24,3 +25,30 @@ spec:
   - hosts:
     - ha.k3s.nf.lab
     secretName: ha-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hacode-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: hacode.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: ha-code-svc
+            port:
+              number: 8443
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - hacode.k3s.nf.lab
+    secretName: hacode-cert-tls

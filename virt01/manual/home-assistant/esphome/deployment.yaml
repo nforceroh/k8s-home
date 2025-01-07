@@ -19,7 +19,7 @@ spec:
       serviceAccountName: esphome-sa
       containers:
         - name: esphome
-          image: ghcr.io/esphome/esphome-hassio:2024.12.2 
+          image: esphome/esphome
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -42,7 +42,6 @@ spec:
             tcpSocket:
               port: 6052
             timeoutSeconds: 1
-          resources: {}
           startupProbe:
             failureThreshold: 30
             periodSeconds: 5
@@ -52,11 +51,11 @@ spec:
             timeoutSeconds: 1
           volumeMounts:
           - mountPath: /config
-            name: config-volume
+            name: config-pv
           - mountPath: /cache
             name: cache-volume
       volumes:
-      - name: config-volume
+      - name: config-pv
         persistentVolumeClaim: 
           claimName: esphome-config-pvc
       - name: cache-volume

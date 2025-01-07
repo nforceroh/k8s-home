@@ -17,24 +17,90 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
+        - name: code-server
+          image: linuxserver/code-server
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "0"
+            - name: PGID
+              value: "0"
+            - name: TZ
+              value: "America/New_York"
+            - name: DEFAULT_WORKSPACE
+              value: "/ha/config"
+          ports:
+          - containerPort: 8443
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 8443
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 8443
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 8443
+            timeoutSeconds: 1
+          volumeMounts:
+          - name: cs-config-pv
+            mountPath: /config
+          - name: cs-data-pv
+            mountPath: /data
+          - name: ha-config-pv
+            mountPath: /ha/config
+          securityContext:
+            privileged: true
         - name: homeassistant
           image: homeassistant/home-assistant:latest
+          imagePullPolicy: Always
           ports:
           - containerPort: 8123
           volumeMounts:
           - name: ha-config-pv
             mountPath: /config
-          - name: ha-data-pv
-            mountPath: /data
           securityContext:
             privileged: true
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 8123
+            timeoutSeconds: 1
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       volumes:
         - name: ha-config-pv
           persistentVolumeClaim:
             claimName: ha-config-pvc
-        - name: ha-data-pv
+        - name: cs-config-pv
           persistentVolumeClaim:
-            claimName: data-pvc
-                          
+            claimName: cs-config-pvc
+        - name: cs-data-pv
+          persistentVolumeClaim:
+            claimName: cs-data-pvc                               
