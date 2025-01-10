@@ -35,12 +35,8 @@ metadata:
   name: wyze-ui-svc
   labels:
     app: wbridge
-  annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
-    external-dns.alpha.kubernetes.io/hostname: wyze-feed.k3s.nf.lab
 spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
+  type: Cluster
   ports:
     - port: 5000
       protocol: TCP
