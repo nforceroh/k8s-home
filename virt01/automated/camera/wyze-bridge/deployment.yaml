@@ -20,7 +20,7 @@ spec:
       serviceAccountName: wbridge-sa
       containers:
         - name: wbridge
-          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest-hw
+          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest
           imagePullPolicy: Always
           env:
             - name: TZ
