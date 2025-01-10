@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: nextcloud-database
-  namespace: argo-home
-type: Opaque
-stringData:
-  nextcloud-username: 
-  nextcloud-password: 

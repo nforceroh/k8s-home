@@ -1,5 +1,0 @@
-# https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml
-
-speaker:
-  # ignore the exclude-from-external-loadbalancer label
-  ignoreExcludeLB: false

@@ -1,6 +1,0 @@
-global:
-  repo: https://github.com/nforceroh/k8s-home.git
-  branch: main
-  domain: k3s.nf.lab
-  extDomain: nforcer.com
-  TZ: America/New_York

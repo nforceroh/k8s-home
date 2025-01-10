@@ -1,9 +1,0 @@
----
-apiVersion: metallb.io/v1beta1
-kind: IPAddressPool
-metadata:
-  name: default-pool
-  namespace: argo-common
-spec:
-  addresses:
-    - "{{ .Values.global.metallb.defaultPool }}"
