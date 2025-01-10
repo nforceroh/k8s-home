@@ -8,7 +8,7 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - wyze-config-sealed.yaml
+  - wbridge-config-sealed.yaml
 
 commonLabels:
   app: wbridge

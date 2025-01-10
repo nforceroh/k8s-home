@@ -26,8 +26,8 @@ spec:
             - name: TZ
               value: "America/New_York"
           envFrom:
-          - configMapRef:
-              name: wbridge-env
+            - secretRef:
+              name: wbridge-config
           ports:
             - containerPort: 8554
               name: rtsp-port
