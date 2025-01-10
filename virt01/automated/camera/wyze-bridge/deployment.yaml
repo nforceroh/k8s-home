@@ -16,10 +16,11 @@ spec:
       labels:
         app: wbridge
     spec:
+      runtimeClassName: nvidia
       serviceAccountName: wbridge-sa
       containers:
         - name: wbridge
-          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest
+          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest-hw
           imagePullPolicy: Always
           env:
             - name: TZ

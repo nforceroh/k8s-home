@@ -8,14 +8,7 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-
-configMapGenerator:
-- name: wbridge-env
-  envs:
-  - config/env.txt
-
-generatorOptions:
-  disableNameSuffixHash: true
+  - wyze-config-sealed.yaml
 
 commonLabels:
   app: wbridge
