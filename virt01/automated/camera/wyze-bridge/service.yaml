@@ -36,7 +36,6 @@ metadata:
   labels:
     app: wbridge
 spec:
-  type: Cluster
   ports:
     - port: 5000
       protocol: TCP
