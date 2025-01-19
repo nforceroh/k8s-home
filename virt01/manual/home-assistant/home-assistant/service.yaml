@@ -26,3 +26,17 @@ spec:
       name: ha-code-port
   selector:
     app: ha
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: esphome-svc
+  labels:
+    app: ha
+spec:
+  ports:
+    - port: 6052
+      protocol: TCP
+      name: esphome-port
+  selector:
+    app: ha

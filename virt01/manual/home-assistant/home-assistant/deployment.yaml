@@ -17,6 +17,43 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
+        - name: esphome
+          image: esphome/esphome
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          ports:
+          - containerPort: 6052
+            name: http
+            protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          volumeMounts:
+          - mountPath: /config
+            name: esphome-config-pv
+          - mountPath: /cache
+            name: cache-volume
+
         - name: code-server
           image: linuxserver/code-server
           imagePullPolicy: Always
@@ -28,7 +65,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: DEFAULT_WORKSPACE
-              value: "/ha/config"
+              value: "/ha"
           ports:
           - containerPort: 8443
           livenessProbe:
@@ -59,8 +96,11 @@ spec:
             mountPath: /data
           - name: ha-config-pv
             mountPath: /ha/config
+          - name: esphome-config-pv
+            mountPath: /ha/esphome
           securityContext:
             privileged: true
+
         - name: homeassistant
           image: homeassistant/home-assistant:latest
           imagePullPolicy: Always
@@ -103,4 +143,10 @@ spec:
             claimName: cs-config-pvc
         - name: cs-data-pv
           persistentVolumeClaim:
-            claimName: cs-data-pvc                               
+            claimName: cs-data-pvc
+        - name: esphome-config-pv
+          persistentVolumeClaim: 
+            claimName: esphome-config-pvc
+        - name: cache-volume
+          emptyDir:
+            sizeLimit: 5Gi
