@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: avahi
+  labels:
+    app: avahi
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: avahi
+  template:
+    metadata:
+      labels:
+        app: avahi
+    spec:
+      serviceAccountName: avahi-sa
+      containers:
+        - name: avahi
+          image: flungo/avahi
+          imagePullPolicy: Always
+          env:
+            - name: SERVER_HOST_NAME
+              value: "home-assistant"
+            - name: SERVER_DOMAIN_NAME
+              value: "local"
