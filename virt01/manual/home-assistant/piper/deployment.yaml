@@ -20,7 +20,7 @@ spec:
       containers:
         - name: piper
           image: slackr31337/wyoming-piper-gpu:latest
-          args: ["--voice", "en-us-libritts-high", "--update-voices", "--cuda", "--debug" ]
+          args: ["--voice", "en-us-libritts-high", "--update-voices", "--use-cuda", "--debug" ]
           imagePullPolicy: Always
           ports:
             - name: piper-port
