@@ -52,7 +52,7 @@ spec:
           - mountPath: /config
             name: esphome-config-pv
           - mountPath: /cache
-            name: cache-volume
+            name: esphome-cache-pv
 
         - name: code-server
           image: linuxserver/code-server
@@ -147,6 +147,6 @@ spec:
         - name: esphome-config-pv
           persistentVolumeClaim: 
             claimName: esphome-config-pvc
-        - name: cache-volume
-          emptyDir:
-            sizeLimit: 5Gi
+        - name: esphome-cache-pv
+          persistentVolumeClaim:
+            claimName: esphome-cache-pvc
