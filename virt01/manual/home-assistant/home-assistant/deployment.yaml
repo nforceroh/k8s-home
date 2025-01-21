@@ -17,91 +17,7 @@ spec:
     spec:
       runtimeClassName: nvidia
       containers:
-        - name: esphome
-          image: esphome/esphome
-          imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-          livenessProbe:
-            failureThreshold: 3
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: 6052
-            timeoutSeconds: 1
-          ports:
-          - containerPort: 6052
-            name: http
-            protocol: TCP
-          readinessProbe:
-            failureThreshold: 3
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: 6052
-            timeoutSeconds: 1
-          startupProbe:
-            failureThreshold: 30
-            periodSeconds: 5
-            successThreshold: 1
-            tcpSocket:
-              port: 6052
-            timeoutSeconds: 1
-          volumeMounts:
-          - mountPath: /config
-            name: esphome-config-pv
-          - mountPath: /cache
-            name: esphome-cache-pv
-
-        - name: code-server
-          image: linuxserver/code-server
-          imagePullPolicy: Always
-          env:
-            - name: PUID
-              value: "0"
-            - name: PGID
-              value: "0"
-            - name: TZ
-              value: "America/New_York"
-            - name: DEFAULT_WORKSPACE
-              value: "/ha"
-          ports:
-          - containerPort: 8443
-          livenessProbe:
-            failureThreshold: 3
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: 8443
-            timeoutSeconds: 1
-          readinessProbe:
-            failureThreshold: 3
-            periodSeconds: 10
-            successThreshold: 1
-            tcpSocket:
-              port: 8443
-            timeoutSeconds: 1
-          startupProbe:
-            failureThreshold: 30
-            periodSeconds: 5
-            successThreshold: 1
-            tcpSocket:
-              port: 8443
-            timeoutSeconds: 1
-          volumeMounts:
-          - name: cs-config-pv
-            mountPath: /config
-          - name: cs-data-pv
-            mountPath: /data
-          - name: ha-config-pv
-            mountPath: /ha/config
-          - name: esphome-config-pv
-            mountPath: /ha/esphome
-          securityContext:
-            privileged: true
-
-        - name: homeassistant
+        - name: home-assistant
           image: homeassistant/home-assistant:latest
           imagePullPolicy: Always
           ports:
@@ -132,6 +48,72 @@ spec:
             tcpSocket:
               port: 8123
             timeoutSeconds: 1
+
+        - name: music-assistant-server
+          image: ghcr.io/music-assistant/server:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          ports:
+          - containerPort: 8095
+            name: webui
+          - containerPort: 8097
+            name: api
+          volumeMounts:
+          - name: ma-data-pv
+            mountPath: /data
+          - name: ma-library
+            mountPath: /media
+          securityContext:
+            privileged: true
+
+        - name: code-server
+          image: linuxserver/code-server
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "0"
+            - name: PGID
+              value: "0"
+            - name: TZ
+              value: "America/New_York"
+            - name: DEFAULT_WORKSPACE
+              value: "/ha"
+          ports:
+          - containerPort: 8443
+          volumeMounts:
+          - name: cs-config-pv
+            mountPath: /config
+          - name: cs-data-pv
+            mountPath: /data
+          - name: ha-config-pv
+            mountPath: /ha/config
+          securityContext:
+            privileged: true
+
+        - name: esphome
+          image: esphome/esphome
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: 6052
+            timeoutSeconds: 1
+          ports:
+          - containerPort: 6052
+            name: http
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /config
+            name: esphome-config-pv
+          - mountPath: /cache
+            name: esphome-cache-pv
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       volumes:
@@ -150,3 +132,10 @@ spec:
         - name: esphome-cache-pv
           persistentVolumeClaim:
             claimName: esphome-cache-pvc
+        - name: ma-data-pv
+          persistentVolumeClaim: 
+            claimName: ma-data-pvc
+        - name: ma-library
+          hostPath:
+            path: /mnt/ssd01/Music
+            type: Directory
