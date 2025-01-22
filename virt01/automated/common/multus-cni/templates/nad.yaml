@@ -8,22 +8,15 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "bridge",
+          "cniVersion": "0.3.1",
           "name": "br1000",
-          "bridge": "cni0",
-          "isDefaultGateway": false,
-          "uplinkInterface": "br1000",
-          "enableIPv6": false,
+          "type": "macvlan",
+          "master": "br1000",
+          "linkInContainer": false,
+          "mode": "bridge",
           "ipam": {
-            "type": "host-local",
-            "subnet": "10.0.0.0/16",
-            "rangeStart": "10.1.0.200",
-            "rangeEnd": "10.1.0.216",
-            "routes": [
-              { "dst": "0.0.0.0/0" }
-            ],
-            "gateway": "10.0.0.1"
-          }
+            "type": "dhcp"
+            }
         }
       ]
     }'
@@ -37,22 +30,15 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "bridge",
+          "cniVersion": "0.3.1",
           "name": "br1400",
-          "bridge": "cni0",
-          "isDefaultGateway": false,
-          "uplinkInterface": "br1400",
-          "enableIPv6": false,
+          "type": "macvlan",
+          "master": "br1400",
+          "linkInContainer": false,
+          "mode": "bridge",
           "ipam": {
-            "type": "host-local",
-            "subnet": "10.40.0.0/24",
-            "rangeStart": "10.40.0.200",
-            "rangeEnd": "10.40.0.216",
-            "routes": [
-              { "dst": "0.0.0.0/0" }
-            ],
-            "gateway": "10.40.0.1"
-          }
+            "type": "dhcp"
+            }
         }
       ]
     }'
@@ -66,22 +52,15 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "bridge",
+          "cniVersion": "0.3.1",
           "name": "br1990",
-          "bridge": "cni0",
-          "isDefaultGateway": false,
-          "uplinkInterface": "br1990",
-          "enableIPv6": false,
+          "type": "macvlan",
+          "master": "br1990",
+          "linkInContainer": false,
+          "mode": "bridge",
           "ipam": {
-            "type": "host-local",
-            "subnet": "10.99.0.0/24",
-            "rangeStart": "10.99.0.200",
-            "rangeEnd": "10.99.0.216",
-            "routes": [
-              { "dst": "0.0.0.0/0" }
-            ],
-            "gateway": "10.99.0.1"
-          }
+            "type": "dhcp"
+            }
         }
       ]
     }'
