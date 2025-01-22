@@ -15,10 +15,14 @@ spec:
           "uplinkInterface": "br1000",
           "enableIPv6": true,
           "ipam": {
-            "type": "dhcp",
-            "provide": [
-               { "option": "12", "fromArg": "K8S_POD_NAME" }
-            ]
+            "type": "host-local",
+            "subnet": "10.0.0.0/16",
+            "rangeStart": "10.1.0.200",
+            "rangeEnd": "10.1.0.216",
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ],
+            "gateway": "10.0.0.1"
           }
         }
       ]
@@ -40,10 +44,14 @@ spec:
           "uplinkInterface": "br1400",
           "enableIPv6": true,
           "ipam": {
-            "type": "dhcp",
-            "provide": [
-               { "option": "12", "fromArg": "K8S_POD_NAME" }
-            ]
+            "type": "host-local",
+            "subnet": "10.40.0.0/24",
+            "rangeStart": "10.40.0.200",
+            "rangeEnd": "10.40.0.216",
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ],
+            "gateway": "10.40.0.1"
           }
         }
       ]
@@ -65,10 +73,14 @@ spec:
           "uplinkInterface": "br1990",
           "enableIPv6": true,
           "ipam": {
-            "type": "dhcp",
-            "provide": [
-               { "option": "12", "fromArg": "K8S_POD_NAME" }
-            ]
+            "type": "host-local",
+            "subnet": "10.99.0.0/24",
+            "rangeStart": "10.99.0.200",
+            "rangeEnd": "10.99.0.216",
+            "routes": [
+              { "dst": "0.0.0.0/0" }
+            ],
+            "gateway": "10.99.0.1"
           }
         }
       ]
