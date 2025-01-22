@@ -8,22 +8,18 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "macvlan",
-          "capabilities": { "ips": true },
-          "master": "br1000",
-          "mode": "bridge",
+          "type": "bridge",
+          "name": "br1000",
+          "bridge": "cni0",
+          "isDefaultGateway": false,
+          "uplinkInterface": "br1000",
+          "enableIPv6": true,
           "ipam": {
-            "type": "static",
-            "routes": [
-              {
-                "dst": "0.0.0.0/0",
-                "gw": "10.0.0.1"
-              }
-            ] 
+            "type": "dhcp",
+            "provide": [
+               { "option": "12", "fromArg": "K8S_POD_NAME" }
+            ]
           }
-        }, {
-          "capabilities": { "mac": true },
-          "type": "tuning"
         }
       ]
     }'
@@ -37,22 +33,18 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "macvlan",
-          "capabilities": { "ips": true },
-          "master": "br1400",
-          "mode": "bridge",
+          "type": "bridge",
+          "name": "br1400",
+          "bridge": "cni0",
+          "isDefaultGateway": false,
+          "uplinkInterface": "br1400",
+          "enableIPv6": true,
           "ipam": {
-            "type": "static",
-            "routes": [
-              {
-                "dst": "0.0.0.0/0",
-                "gw": "10.40.0.1"
-              }
-            ] 
+            "type": "dhcp",
+            "provide": [
+               { "option": "12", "fromArg": "K8S_POD_NAME" }
+            ]
           }
-        }, {
-          "capabilities": { "mac": true },
-          "type": "tuning"
         }
       ]
     }'
@@ -66,22 +58,18 @@ spec:
       "cniVersion": "0.3.1",
       "plugins": [
         {
-          "type": "macvlan",
-          "capabilities": { "ips": true },
-          "master": "br1990",
-          "mode": "bridge",
+          "type": "bridge",
+          "name": "br1990",
+          "bridge": "cni0",
+          "isDefaultGateway": false,
+          "uplinkInterface": "br1990",
+          "enableIPv6": true,
           "ipam": {
-            "type": "static",
-            "routes": [
-              {
-                "dst": "0.0.0.0/0",
-                "gw": "10.99.0.1"
-              }
-            ] 
+            "type": "dhcp",
+            "provide": [
+               { "option": "12", "fromArg": "K8S_POD_NAME" }
+            ]
           }
-        }, {
-          "capabilities": { "mac": true },
-          "type": "tuning"
         }
       ]
     }'

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: samplepod
+  namespace: common
+  annotations:
+    k8s.v1.cni.cncf.io/networks: "br1400"
+spec:
+  containers:
+  - name: samplepod
+    command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: dougbtv/centos-network
+    ports:
+    - containerPort: 80
+  automountServiceAccountToken: false
