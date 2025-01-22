@@ -54,7 +54,10 @@ spec:
           "master": "br1990",
           "linkInContainer": false,
           "mode": "bridge",
-          "ipam": { }
+          "ipam": {
+            "type": "host-local",
+            "type": "dhcp"
+          }
         }
       ]
     }'
