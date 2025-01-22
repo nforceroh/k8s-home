@@ -11,7 +11,7 @@ spec:
           "type": "bridge",
           "name": "br1000",
           "bridge": "cni0",
-          "isDefaultGateway": true,
+          "isDefaultGateway": false,
           "uplinkInterface": "br1000",
           "enableIPv6": false,
           "ipam": {
@@ -40,7 +40,7 @@ spec:
           "type": "bridge",
           "name": "br1400",
           "bridge": "cni0",
-          "isDefaultGateway": true,
+          "isDefaultGateway": false,
           "uplinkInterface": "br1400",
           "enableIPv6": false,
           "ipam": {
@@ -69,7 +69,7 @@ spec:
           "type": "bridge",
           "name": "br1990",
           "bridge": "cni0",
-          "isDefaultGateway": true,
+          "isDefaultGateway": false,
           "uplinkInterface": "br1990",
           "enableIPv6": false,
           "ipam": {
