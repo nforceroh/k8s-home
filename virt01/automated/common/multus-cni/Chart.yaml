@@ -1,0 +1,7 @@
+name: multus-cni
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: multus-cni
+  repository:  oci://registry-1.docker.io/bitnamicharts
+  version: 2.2.2
