@@ -16,6 +16,17 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp"
+            "request": [
+                {
+                    "skipDefault": false
+                }
+            ],
+            "provide": [
+                {
+                    "option": "host-name",
+                    "fromArg": "K8S_POD_NAME"
+                }
+            ]
           }
         }
       ]
@@ -38,6 +49,17 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp"
+            "request": [
+                {
+                    "skipDefault": false
+                }
+            ],
+            "provide": [
+                {
+                    "option": "host-name",
+                    "fromArg": "K8S_POD_NAME"
+                }
+            ]
           }
         }
       ]
@@ -60,6 +82,17 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp"
+            "request": [
+                {
+                    "skipDefault": false
+                }
+            ],
+            "provide": [
+                {
+                    "option": "host-name",
+                    "fromArg": "K8S_POD_NAME"
+                }
+            ]
           }
         }
       ]
