@@ -49,12 +49,7 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp"
-            "request": [
-                {
-                    "skipDefault": false
-                }
-            ],
-            "provide": [
+            "provide": [ 
                 {
                     "option": "host-name",
                     "fromArg": "K8S_POD_NAME"
