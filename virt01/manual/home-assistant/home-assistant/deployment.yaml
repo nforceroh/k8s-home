@@ -15,8 +15,8 @@ spec:
     metadata:
       labels:
         app: ha
-      annotations:
-        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-ha" }]'
+#      annotations:
+#        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-ha" }]'
     spec:
       runtimeClassName: nvidia
       containers:
@@ -117,7 +117,7 @@ spec:
             name: esphome-config-pv
           - mountPath: /cache
             name: esphome-cache-pv
-#      hostNetwork: true
+      hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       volumes:
         - name: ha-config-pv
