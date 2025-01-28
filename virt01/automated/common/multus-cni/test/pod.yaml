@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Pod
 metadata:
@@ -6,8 +7,43 @@ metadata:
   annotations:
     k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400" }]'
 spec:
+  initContainers:
+      - name: fixroutes
+        image: jrecord/nettools
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: DEVICE
+            value: eth0
+        command:
+        - '/bin/bash'
+        - '-c'
+        - |
+          echo -e "ip route before fix:"      && ip route && \
+          echo -e "\ngrep:"                   && ip route | grep -P $DEVICE\\s && \
+          echo -e "\ntr:"                     && ip route | grep -P $DEVICE\\s | tr -s ' ' && \
+          echo -e "\ncut:"                    && ip route | grep -P $DEVICE\\s | tr -s ' ' | cut -d ' ' -f 3 && \
+          echo -e "\nadding route to k3s services subnet" && \
+          ip route add 10.96.0.0/16 via $( ip route | grep -P $DEVICE\\s | grep default | tr -s ' ' | cut -d ' ' -f 3 ) dev $DEVICE && \
+          echo -e "\nip route after fix:"     && ip route
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
   containers:
   - name: samplepod
+    command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
+    image: dougbtv/centos-network
+    ports:
+    - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: samplepod2
+  namespace: common
+spec:
+  containers:
+  - name: samplepod2
     command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
     image: dougbtv/centos-network
     ports:

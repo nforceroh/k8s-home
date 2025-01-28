@@ -23,6 +23,20 @@ spec:
                 }
             ]
           }
+        },
+        {
+            "type" : "route-override",
+            "flushroutes" : true,
+            "delroutes": [
+            {
+                "dst": "0.0.0.0/0",
+                "gw": "10.0.0.1"
+            }],
+            "addroutes": [
+            {
+                "dst": "10.0.0.0/16",
+                "gw": "10.0.0.1"
+            }]
         }
       ]
     }'
@@ -51,6 +65,20 @@ spec:
                 }
             ]
           }
+        },
+        {
+            "type" : "route-override",
+            "flushroutes" : true,
+            "delroutes": [
+            {
+                "dst": "0.0.0.0/0".
+                "gw": "10.40.0.1"
+            }],
+            "addroutes": [
+            {
+                "dst": "10.40.0.0/16",
+                "gw": "10.40.0.1"
+            }]
         }
       ]
     }'
@@ -79,6 +107,20 @@ spec:
                 }
             ]
           }
+        },
+        {
+            "type" : "route-override",
+            "flushroutes" : true,
+            "delroutes": [
+            {
+                "dst": "0.0.0.0/0",
+                "gw": "10.99.0.1"
+            }],
+            "addroutes": [
+            {
+                "dst": "10.99.0.0/24",
+                "gw": "10.99.0.1"
+            }]
         }
       ]
     }'
