@@ -15,7 +15,7 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "dhcp"
+            "type": "dhcp",
             "request": [
                 {
                     "skipDefault": false
@@ -48,7 +48,7 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "dhcp"
+            "type": "dhcp",
             "provide": [ 
                 {
                     "option": "host-name",
@@ -76,7 +76,7 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "dhcp"
+            "type": "dhcp",
             "request": [
                 {
                     "skipDefault": false
