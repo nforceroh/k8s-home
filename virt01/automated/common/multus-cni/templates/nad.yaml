@@ -16,11 +16,6 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp",
-            "request": [
-                {
-                    "skipDefault": false
-                }
-            ],
             "provide": [
                 {
                     "option": "host-name",
@@ -77,11 +72,6 @@ spec:
           "mode": "bridge",
           "ipam": {
             "type": "dhcp",
-            "request": [
-                {
-                    "skipDefault": false
-                }
-            ],
             "provide": [
                 {
                     "option": "host-name",

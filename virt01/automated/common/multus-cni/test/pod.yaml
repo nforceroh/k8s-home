@@ -4,7 +4,7 @@ metadata:
   name: samplepod
   namespace: common
   annotations:
-    k8s.v1.cni.cncf.io/networks: "br1400"
+    k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400" }]'
 spec:
   containers:
   - name: samplepod
@@ -12,4 +12,3 @@ spec:
     image: dougbtv/centos-network
     ports:
     - containerPort: 80
-  automountServiceAccountToken: false
