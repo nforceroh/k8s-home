@@ -14,7 +14,9 @@ spec:
           "master": "br1000",
           "linkInContainer": false,
           "mode": "bridge",
-          "ipam": {}
+          "ipam": {
+            "type": "dhcp"
+          }
         }
       ]
     }'
@@ -34,7 +36,9 @@ spec:
           "master": "br1400",
           "linkInContainer": false,
           "mode": "bridge",
-          "ipam": { }
+          "ipam": {
+            "type": "dhcp"
+          }
         }
       ]
     }'
@@ -55,7 +59,6 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "host-local",
             "type": "dhcp"
           }
         }
