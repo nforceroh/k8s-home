@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: dcc-svc
+  labels:
+    app: dcc
+spec:
+  ports:
+    - name: dcc-port-svc
+      protocol: TCP
+      port: 10045
+      targetPort: 10045
+  selector:
+    app: dcc

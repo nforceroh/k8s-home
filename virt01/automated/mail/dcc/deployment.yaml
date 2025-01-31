@@ -1,0 +1,50 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: dcc
+  labels:
+    app: dcc
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: dcc
+  template:
+    metadata:
+      labels:
+        app: dcc
+    spec:
+      serviceAccountName: dcc-sa
+      containers:
+        - name: dcc
+          image: harbor.nf.lab/homelab/dcc:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "1"
+              memory: "3Gi"
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
+          readinessProbe:
+            tcpSocket:
+              port: 10045
+            initialDelaySeconds: 20
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 20
+          livenessProbe:
+            tcpSocket:
+              port: 10045
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 3
+          ports:
+            - name: dccifd-port
+              containerPort: 10045
+              protocol: TCP
