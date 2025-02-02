@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubevirt-manager
+  namespace: kubevirt-manager
+  labels:
+    app: kubevirt-manager
+  annotations:
+    kubevirt-manager.io/version: 1.5.0
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: km.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: kubevirt-manager
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - km.k3s.nf.lab
+    secretName: km-tls
