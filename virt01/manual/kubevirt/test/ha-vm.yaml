@@ -1,0 +1,44 @@
+---
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/os: linux
+  name: home-assistant
+  namespace: virtualmachines
+spec:
+  runStrategy: Always
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        kubevirt.io/domain: vm1
+    spec:
+      domain:
+        cpu:
+          cores: 2
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: disk0
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: cloudinitdisk
+        resources:
+          requests:
+            memory: 2Gi
+      volumes:
+      - name: disk0
+        persistentVolumeClaim:
+          claimName: home-assistant-14.2-dv
+      - cloudInitNoCloud:
+          userData: |
+            #cloud-config
+            hostname: home-assistant
+            ssh_pwauth: True
+            disable_root: false
+            ssh_authorized_keys:
+            - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC9E5CuOAS/gLE0QO7b34g2JJ1JchwZXycSkxRcUzOqC Sylvain@DESKTOP-GBRM2C1
+        name: cloudinitdisk

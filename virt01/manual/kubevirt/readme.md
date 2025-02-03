@@ -4,18 +4,20 @@
 
 ```bash
 KUBEVIRT_VERSION=$(curl -s https://api.github.com/repos/kubevirt/kubevirt/releases/latest | awk -F '[ \t":]+' '/tag_name/ {print $3}')
-```
 
-## insert that version into Chart.yaml
-
-```bash
 echo $KUBEVIRT_VERSION
-sed -e "s/^appVersion: .*$/appVersion: \"$KUBEVIRT_VERSION\"\n/g" Chart.yaml
 ```
 
 ```bash
-wget https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml -O templates/kubevirt-operator.yaml
-wget https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml -O templates/kubevirt-cr.yaml
+kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml
+kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml
+```
+
+## Install cdi
+```bash
+export VERSION=$(curl -Ls https://github.com/kubevirt/containerized-data-importer/releases/latest | grep -m 1 -o "v[0-9]\.[0-9]*\.[0-9]*")
+
+echo $VERSION
 ```
 
 ## install virtctl
@@ -25,10 +27,14 @@ sudo install -m 0755 -o root -g root virtctl /usr/local/bin/virtctl
 rm virtctl
 ```
 
+## Install cdi
 ```bash
-kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml
-kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml
+export CDI_VERSION=$(curl -Ls https://github.com/kubevirt/containerized-data-importer/releases/latest | grep -m 1 -o "v[0-9]\.[0-9]*\.[0-9]*")
+echo $CDI_VERSION
+kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/${CDI_VERSION}/cdi-operator.yaml
+kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/${CDI_VERSION}/cdi-cr.yaml
 ```
+
 
 ## install kubevirt manager
 ```bash
