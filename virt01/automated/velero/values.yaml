@@ -32,8 +32,7 @@ velero:
         region: virginia
         s3Url: https://v7k8.va.idrivee2-60.com
   credentials:
-    key: cloud
-    name: idrive-credentials
+    existingSecret: idrive-credentials
 
   snapshotsEnabled: false
   
