@@ -28,11 +28,8 @@ velero:
       provider: aws
       bucket: velero
       config:
-        region: Virginia
-        insecureSkipTLSVerify: true
-        s3ForcePathStyle: true
+        region: virginia
         s3Url: https://v7k8.va.idrivee2-60.com
-        checksumAlgorithm: ''
   credentials:
     key: cloud
     name: idrive-credentials
