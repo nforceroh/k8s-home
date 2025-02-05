@@ -16,7 +16,7 @@ spec:
     itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
-        app.kubernetes.io/instance=open-webui
+        app.kubernetes.io/instance: open-webui
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

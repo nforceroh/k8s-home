@@ -16,7 +16,7 @@ spec:
     itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
-        app.kubernetes.io/name=step-certificates
+        app.kubernetes.io/name: step-certificates
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
