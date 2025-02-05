@@ -1,0 +1,22 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: idrive-ai-open-webui
+  namespace: velero
+spec:
+  schedule: 50 9 * * 1
+  skipImmediately: false
+  template:
+    csiSnapshotTimeout: 0s
+    hooks: {}
+    includedNamespaces:
+      - ai
+    includedResources:
+      - '*'
+    itemOperationTimeout: 0s
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance=open-webui
+    metadata: {}
+    ttl: 216h0m0s
+  useOwnerReferencesInBackup: false

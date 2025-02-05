@@ -65,25 +65,25 @@ velero schedule create ai-open-webui --schedule="40 7 * * *" --ttl 168h0m0s  --s
 
 # cron times are in UTC!!!! so add 4hr to current time Weekly backup to idrive 9 days ttl
 ```
-velero schedule create idrive-databases-influxdb --schedule="0 7 * * 1" --ttl 216h0m0s  --selector app=influxdb --include-namespaces databases --include-resources '*' --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-databases-redis --schedule="15 7 * * 1" --ttl 216h0m0s  --selector app=redis --include-namespaces databases --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-databases-mariadb --schedule="30 7 * * 1" --ttl 216h0m0s  --selector app=mariadb --include-namespaces databases --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-harbor-harbor --schedule="45 7 * * 1" --ttl 216h0m0s  --selector app=harbor --include-namespaces harbor --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-iot-grafana --schedule="0 8 * * 1" --ttl 216h0m0s  --selector app=grafana --include-namespaces databases --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-iot-nodered --schedule="15 8 * * 1" --ttl 216h0m0s  --selector app=nodered --include-namespaces databases --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-mail-rspamd --schedule="30 8 * * 1" --ttl 216h0m0s  --selector app=rspamd --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-mail-dovecot --schedule="45 8 * * 1" --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-#velero schedule create idrive-minecraft-mc1 --schedule="0 12 * * 1" --ttl 216h0m0s  --selector app=mc1 --include-namespaces minecraft --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-minecraft-mc2 --schedule="0 12 * * 1" --ttl 216h0m0s  --selector app=mc2 --include-namespaces minecraft --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-emby --schedule="0 9 * * 1" --ttl 216h0m0s  --selector app=emby --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-jellyseerr --schedule="10 9 * * 1" --ttl 216h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-lidarr --schedule="20 9 * * 1" --ttl 216h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-prowlarr --schedule="25 9 * * 1" --ttl 216h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-radarr --schedule="30 9 * * 1" --ttl 216h0m0s  --selector app=radarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero schedule create idrive-ai-open-webui --schedule="50 9 * * 1" --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
+velero schedule create idrive-databases-influxdb --schedule="0 7 * * 1" --ttl 216h0m0s  --selector app=influxdb --include-namespaces databases --include-resources '*'
+velero schedule create idrive-databases-redis --schedule="15 7 * * 1" --ttl 216h0m0s  --selector app=redis --include-namespaces databases --include-resources '*'
+velero schedule create idrive-databases-mariadb --schedule="30 7 * * 1" --ttl 216h0m0s  --selector app=mariadb --include-namespaces databases --include-resources '*'
+velero schedule create idrive-harbor-harbor --schedule="45 7 * * 1" --ttl 216h0m0s  --selector app=harbor --include-namespaces harbor --include-resources '*'
+velero schedule create idrive-iot-grafana --schedule="0 8 * * 1" --ttl 216h0m0s  --selector app=grafana --include-namespaces databases --include-resources '*'
+velero schedule create idrive-iot-nodered --schedule="15 8 * * 1" --ttl 216h0m0s  --selector app=nodered --include-namespaces databases --include-resources '*'
+velero schedule create idrive-mail-rspamd --schedule="30 8 * * 1" --ttl 216h0m0s  --selector app=rspamd --include-namespaces mail --include-resources '*'
+velero schedule create idrive-mail-dovecot --schedule="45 8 * * 1" --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'
+#velero schedule create idrive-minecraft-mc1 --schedule="0 12 * * 1" --ttl 216h0m0s  --selector app=mc1 --include-namespaces minecraft --include-resources '*'
+#velero schedule create idrive-minecraft-mc2 --schedule="0 12 * * 1" --ttl 216h0m0s  --selector app=mc2 --include-namespaces minecraft --include-resources '*'
+velero schedule create idrive-torrent-emby --schedule="0 9 * * 1" --ttl 216h0m0s  --selector app=emby --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-torrent-jellyseerr --schedule="10 9 * * 1" --ttl 216h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-torrent-lidarr --schedule="20 9 * * 1" --ttl 216h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-torrent-prowlarr --schedule="25 9 * * 1" --ttl 216h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-torrent-radarr --schedule="30 9 * * 1" --ttl 216h0m0s  --selector app=radarr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'
+velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'
+velero schedule create idrive-ai-open-webui --schedule="50 9 * * 1" --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'
 ```
 
 ```
