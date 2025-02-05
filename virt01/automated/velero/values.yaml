@@ -18,6 +18,9 @@ velero:
       - mountPath: /target
         name: plugins
   configuration:
+    extraEnvVars:
+    - name: TZ
+      value: America/New_York
     features: EnableCSI
     logLevel: info
     defaultVolumesToFsBackup: true
