@@ -25,6 +25,7 @@ velero:
     defaultVolumesToFsBackup: true
     backupStorageLocation:
     - name: default
+      profile: ''
       provider: aws
       bucket: velero
       config:
