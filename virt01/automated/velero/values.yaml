@@ -22,7 +22,7 @@ velero:
     logLevel: info
     defaultVolumesToFsBackup: true
     backupStorageLocation:
-    - name: idrive
+    - name: default
       provider: aws
       bucket: velero
       config:
