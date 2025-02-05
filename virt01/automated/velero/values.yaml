@@ -21,7 +21,7 @@ velero:
     extraEnvVars:
       'TZ': 'America/New_York'
     features: EnableCSI
-    logLevel: info
+    logLevel: debug
     defaultVolumesToFsBackup: true
     backupStorageLocation:
     - name: default
