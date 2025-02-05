@@ -32,7 +32,7 @@ velero:
         s3Url: https://v7k8.va.idrivee2-60.com
         checksumAlgorithm: ''
   credentials:
-    key: bsl
+    key: cloud
     name: idrive-credentials
 
   snapshotsEnabled: false
