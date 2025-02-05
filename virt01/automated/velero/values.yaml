@@ -2,7 +2,6 @@
 velero:
   image:
     repository: harbor.nf.lab/proxy.docker.io/velero/velero
-    tag: v1.15.0
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
   resources:
     requests:
@@ -20,20 +19,21 @@ velero:
         name: plugins
   configuration:
     features: EnableCSI
-    logLevel: debug
+    logLevel: info
     defaultVolumesToFsBackup: true
     backupStorageLocation:
-    - name: default
+    - name: idrive
       provider: aws
       bucket: velero
       config:
-        region: None
+        region: Virginia
         insecureSkipTLSVerify: true
         s3ForcePathStyle: true
-        s3Url: https://minio.nf.lab
+        s3Url: https://v7k8.va.idrivee2-60.com
         checksumAlgorithm: ''
   credentials:
-    existingSecret: minio-credentials
+    key: bsl
+    name: idrive-credentials
 
   snapshotsEnabled: false
   
@@ -41,23 +41,4 @@ velero:
   kubectl:
     image:
       repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl
-#  schedules:
-#    daily:
-      # Tell ArgoCD not to automatically prune/delete backups
-#      annotations:
-#        argocd.argoproj.io/compare-options: IgnoreExtraneous
-#        argocd.argoproj.io/sync-options: Delete=false,Prune=false
-      # UTC. Backup every day at 1400
-#      schedule: "0 14 * * *"
-#      template:
-        # expire backups after 1 week
-#        ttl: "168h"
-#        excludedNamespaces:
-          # skip namespaces managed by TrueNAS SCALE
-#          - default
-#          - kube-system
-#          - kube-public
-#          - kube-node-lease
-#          - openebs
-#          - ix-minio
-#          - ix-minio-snsd
+

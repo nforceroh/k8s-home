@@ -2,15 +2,15 @@
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
-  name: idrive
+  name: minio
   namespace: velero
 spec:
   config:
-    region: Virginia
-    s3Url: https://v7k8.va.idrivee2-60.com
+    region: None
+    s3Url: https://minio.nf.lab
     checksumAlgorithm: ""
   credential:
-    key: bsl
+    key: cloud
     name: idrive-credentials
   objectStorage:
     bucket: velero
