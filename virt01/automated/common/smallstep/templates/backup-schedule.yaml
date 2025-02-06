@@ -4,7 +4,7 @@ metadata:
   name: idrive-common-smallstep
   namespace: velero
 spec:
-  schedule: 50 9 * * 1
+  schedule: 50 9 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
