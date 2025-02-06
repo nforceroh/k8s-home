@@ -10,13 +10,16 @@ spec:
   runStrategy: Always
   template:
     metadata:
-      creationTimestamp: null
       labels:
         kubevirt.io/domain: vm1
+        k8s.v1.cni.cncf.io/networks: br1400-ha
     spec:
       domain:
         cpu:
+          sockets: 1
           cores: 4
+        memory:
+          guest: 4Gi
         devices:
           disks:
           - disk:
@@ -26,9 +29,21 @@ spec:
               bus: sata
               readonly: true
             name: cloudinitdisk
-        resources:
-          requests:
-            memory: 2Gi
+          interfaces:
+            - bridge: {}
+              name: net0
+        features:
+          acpi: {}
+          smm:
+            enabled: true
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false
+      networks:
+        - multus:
+            networkName: home-assistant/br1400-ha
+          name: net0
       volumes:
       - name: disk0
         persistentVolumeClaim:
