@@ -10,7 +10,7 @@ spec:
     csiSnapshotTimeout: 0s
     hooks: {}
     includedNamespaces:
-      - ai
+      - common
     includedResources:
       - '*'
     itemOperationTimeout: 0s
