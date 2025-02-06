@@ -4,8 +4,8 @@ kind: VirtualMachine
 metadata:
   labels:
     kubevirt.io/os: linux
-  name: home-assistant
-  namespace: virtualmachines
+  name: home-assistant-test
+  namespace: home-assistant
 spec:
   runStrategy: Always
   template:
@@ -16,7 +16,7 @@ spec:
     spec:
       domain:
         cpu:
-          cores: 2
+          cores: 4
         devices:
           disks:
           - disk:

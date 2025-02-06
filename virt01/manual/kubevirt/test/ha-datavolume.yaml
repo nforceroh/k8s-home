@@ -3,7 +3,7 @@ apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
   name: "home-assistant-14.2-dv"
-  namespace: virtualmachines
+  namespace: home-assistant
 spec:
   source:
       http:
