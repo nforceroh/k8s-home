@@ -10,7 +10,7 @@ spec:
       labels:
         kubevirt.io/size: small
         kubevirt.io/domain: testvm
-        k8s.v1.cni.cncf.io/networks: br1400-ha
+        k8s.v1.cni.cncf.io/networks: br1990-vm
     spec:
       domain:
         devices:
@@ -30,7 +30,8 @@ spec:
       networks:
       - name: net0
         multus:
-          networkName: home-assistant/br1400-ha
+          networkName: br1990-vm
+          default: true
       volumes:
         - name: containerdisk
           containerDisk:

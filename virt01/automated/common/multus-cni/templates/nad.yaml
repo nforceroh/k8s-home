@@ -10,7 +10,7 @@ spec:
       "plugins": [
         {
           "cniVersion": "0.3.1",
-          "name": "br1000",
+          "name": "br1000-ha",
           "type": "macvlan",
           "master": "br1000",
           "linkInContainer": false,
@@ -53,7 +53,7 @@ spec:
       "plugins": [
         {
           "cniVersion": "0.3.1",
-          "name": "br1400",
+          "name": "br1400-ha-fr",
           "type": "macvlan",
           "master": "br1400",
           "linkInContainer": false,
@@ -98,7 +98,7 @@ spec:
       "plugins": [
         {
           "cniVersion": "0.3.1",
-          "name": "br1400",
+          "name": "br1400-ha",
           "type": "macvlan",
           "master": "br1400",
           "linkInContainer": false,
@@ -121,7 +121,7 @@ spec:
       "plugins": [
         {
           "cniVersion": "0.3.1",
-          "name": "br1990",
+          "name": "br1990-ha",
           "type": "macvlan",
           "master": "br1990",
           "linkInContainer": false,
@@ -151,4 +151,18 @@ spec:
             }]
         }
       ]
+    }'
+---
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: br1990-vm
+  namespace: virtualmachines
+spec:
+  config: '{
+      "cniVersion": "0.3.1",
+      "name": "br1990-vm",
+      "type": "macvlan",
+      "mode": "bridge",
+      "master": "br1990"
     }'
