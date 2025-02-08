@@ -104,13 +104,7 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "dhcp",
-            "provide": [ 
-                {
-                    "option": "host-name",
-                    "fromArg": "K8S_POD_NAME"
-                }
-            ]
+            "type": "dhcp"
           }
         }
       ]
