@@ -4,7 +4,7 @@ metadata:
   name: testvm
   namespace: virtualmachines
 spec:
-  runStrategy: Halted
+  runStrategy: Always
   template:
     metadata:
       labels:
@@ -28,15 +28,12 @@ spec:
           requests:
             memory: 64M
       networks:
-      - name: net0
-        multus:
-          networkName: virtualmachines/br1990-vm
-          default: true
+        - multus:
+            networkName: virtualmachines/br1990-vm
+          name: net0
       volumes:
         - name: containerdisk
           containerDisk:
             image: quay.io/kubevirt/cirros-container-disk-demo
-        - name: cloudinitdisk
-          cloudInitNoCloud:
-            userDataBase64: SGkuXG4=
+
 
