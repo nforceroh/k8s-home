@@ -10,7 +10,7 @@ spec:
       labels:
         kubevirt.io/size: small
         kubevirt.io/domain: testvm
-        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-ha" }]'
+        k8s.v1.cni.cncf.io/networks: br1400-ha
     spec:
       domain:
         devices:
