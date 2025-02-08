@@ -2,7 +2,7 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   name: testvm
-  namespace: home-assistant
+  namespace: virtualmachines
 spec:
   runStrategy: Halted
   template:
@@ -30,7 +30,7 @@ spec:
       networks:
       - name: net0
         multus:
-          networkName: br1990-vm
+          networkName: virtualmachines/br1990-vm
           default: true
       volumes:
         - name: containerdisk
