@@ -164,5 +164,6 @@ spec:
       "name": "br1990",
       "type": "macvlan",
       "mode": "bridge",
-      "master": "br1990"
+      "master": "br1990",
+      "linkInContainer": false
     }'
