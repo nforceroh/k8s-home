@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: readarr
+  labels:
+    app: readarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: readarr
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: torrent,tvshows
+      labels:
+        app: readarr
+    spec:
+      serviceAccountName: readarr-sa
+      containers:
+        - name: readarr
+          image: harbor.nf.lab/proxy.docker.io/linuxserver/readarr:develop
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: DOCKER_MODS
+              value: "ghcr.io/themepark-dev/theme.park:readarr"
+            - name: TP_THEME
+              value: dark
+          ports:
+            - containerPort: 8787
+              name: readarr-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: readarr-pv
+              mountPath: /config
+            - name: books
+              mountPath: /books
+            - name: torrent
+              mountPath: /data
+      volumes:
+        - name: readarr-pv
+          persistentVolumeClaim:
+            claimName: readarr-pvc
+        - name: books
+          nfs:
+            path: /mnt/ssd01/Books
+            server: 10.0.0.100
+        - name: torrent
+          nfs:
+            path: /mnt/ssd01/torrent
+            server: 10.0.0.100
