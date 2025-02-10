@@ -1,0 +1,56 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: calibre-webui-ingress
+  namespace: torrent
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: calibre.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: calibre-webui-svc
+            port:
+              number: 8081
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - calibre.k3s.nf.lab
+    secretName: calibre-webui-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: calibre-gui-ingress
+  namespace: torrent
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: calibre-gui.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: calibre-gui-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - calibre-gui.k3s.nf.lab
+    secretName: calibre-gui-cert-tls

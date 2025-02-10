@@ -84,9 +84,11 @@ spec:
           persistentVolumeClaim:
             claimName: deluge-pvc
         - name: torrent
-          nfs:
+          hostPath:
+            type: Directory
+#          nfs:
             path: /mnt/ssd01/torrent
-            server: 10.0.0.100            
+#            server: 10.0.0.100            
         - name: wg-config
           configMap:
             name: wireguard-cm

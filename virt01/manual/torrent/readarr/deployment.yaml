@@ -56,10 +56,15 @@ spec:
           persistentVolumeClaim:
             claimName: readarr-pvc
         - name: books
-          nfs:
+#          nfs:
+          hostPath:
             path: /mnt/ssd01/Books
-            server: 10.0.0.100
+            type: Directory
+#            server: 10.0.0.100
         - name: torrent
-          nfs:
+#          nfs:
+          hostPath:
+#          nfs:
             path: /mnt/ssd01/torrent
-            server: 10.0.0.100
+            type: Directory
+#            server: 10.0.0.100

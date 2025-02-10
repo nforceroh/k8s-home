@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calibre-gui-svc
+  labels:
+    app: calibre
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      name: desktop-gui-svc-port
+  selector:
+    app: calibre
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calibre-webui-svc
+  labels:
+    app: calibre
+spec:
+  ports:
+    - port: 8081
+      protocol: TCP
+      name: calibre-webui-svc-port
+  selector:
+    app: calibre

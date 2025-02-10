@@ -18,7 +18,7 @@ spec:
           service:
             name: readarr-svc
             port:
-              number: 8989
+              number: 8787
         path: /
         pathType: Prefix
   tls:

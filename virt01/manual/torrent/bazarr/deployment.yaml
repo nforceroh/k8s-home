@@ -56,10 +56,14 @@ spec:
           persistentVolumeClaim:
             claimName: bazarr-pvc
         - name: tvshows
-          nfs:
+          hostPath:
+            type: Directory
+#          nfs:
             path: /mnt/ssd01/emby/TVShows
-            server: 10.0.0.100
+#            server: 10.0.0.100
         - name: movies
-          nfs:
+          hostPath:
+            type: Directory
+#          nfs:
             path: /mnt/ssd01/emby/Movies
-            server: 10.0.0.100
+#            server: 10.0.0.100
