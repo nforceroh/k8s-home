@@ -1,12 +1,13 @@
 # Get velero cli
 ```
+VERSION=v1.15.2
 mkdir -p ~/.local/bin
-wget -c https://github.com/vmware-tanzu/velero/releases/download/v1.15.0/velero-v1.15.0-linux-amd64.tar.gz
-tar xvfz velero-v1.15.0-linux-amd64.tar.gz
+wget -c https://github.com/vmware-tanzu/velero/releases/download/${VERSION}/velero-${VERSION}-linux-amd64.tar.gz
+tar xvfz velero-${VERSION}-linux-amd64.tar.gz
+sudo install -o root -g root -m 755 velero-${VERSION}-linux-amd64/velero /usr/local/bin
 mv velero*/velero ~/.local/bin
 rm -rf velero-*
 chmod +x ~/.local/bin/velero
-sudo install -o root -g root -m 755 velero-v1.15.0-linux-amd64/velero /usr/local/bin
 ```
 
 ```
@@ -83,7 +84,7 @@ velero schedule create idrive-torrent-radarr --schedule="30 9 * * 1" --ttl 216h0
 velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'
 velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'
 velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'
-velero schedule create idrive-ai-open-webui2 --schedule="50 9 * * 1" --ttl 216h0m0s  --selector app.kubernetes.io/instance=open-webui --include-namespaces ai --include-resources '*'
+velero schedule create idrive-ai-open-webui3 --schedule="27 9 * * *" --ttl 216h0m0s  --selector app.kubernetes.io/instance=open-webui --include-namespaces ai --include-resources '*'
 ```
 
 ```
