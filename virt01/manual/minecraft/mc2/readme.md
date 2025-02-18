@@ -1,3 +1,9 @@
+# Install
+```
+helm upgrade --install mc2 . -n minecraft --create-namespace -f values.yaml 
+```
+
+
 # DNS setup
 https://www.name.com/support/articles/205188518-setting-up-dns-for-a-minecraft-server
 

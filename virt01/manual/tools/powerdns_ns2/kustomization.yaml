@@ -3,14 +3,15 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: powerdns-ns2
+
 resources:
   - deployment.yaml
   - serviceaccount.yaml
   - services.yaml
   
-commonLabels:
-  app: powerdns-ns2
-
 configMapGenerator:
 - name: ns2-pdns-conf-cm
   files:

@@ -1,22 +1,24 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-common-smallstep
+  creationTimestamp: null
+  name: idrive-ai-open-webui3
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 5 * * *
-  skipImmediately: false
+  schedule: CRON_TZ=America/New_York 37 10 * * *
   template:
     csiSnapshotTimeout: 0s
     hooks: {}
     includedNamespaces:
-      - common
+    - ai
     includedResources:
-      - '*'
+    - '*'
     itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
-        app.kubernetes.io/instance: smallstep
+        app.kubernetes.io/instance: open-webui
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
+status: {}
+

@@ -3,11 +3,14 @@ kind: Kustomization
 
 namespace: iot
 
+labels:
+  - pairs:
+      app: mosquitto
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
   - configmap.yaml
+  - backup-schedule.yaml
   
-commonLabels:
-  app: mosquitto

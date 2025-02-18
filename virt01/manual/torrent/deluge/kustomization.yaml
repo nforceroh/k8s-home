@@ -12,7 +12,8 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-
+  - backup-schedule.yaml
+  
 configMapGenerator:
 - name: wireguard-cm
   files:

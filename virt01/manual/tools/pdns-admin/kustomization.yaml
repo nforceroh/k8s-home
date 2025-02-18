@@ -3,14 +3,15 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: pdns-admin
+
 resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
-
-commonLabels:
-  app: pdns-admin
 
 secretGenerator:
 - name: pdns-admin-env

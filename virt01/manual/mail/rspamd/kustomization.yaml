@@ -3,14 +3,17 @@ kind: Kustomization
 
 namespace: mail
 
+labels:
+  - pairs:
+      app: rspamd
+
 resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
+  - backup-schedule.yaml
 
-commonLabels:
-  app: rspamd
 
 configMapGenerator:
 - name: rspamd-env

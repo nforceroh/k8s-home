@@ -12,4 +12,4 @@ resources:
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
-
+  - backup-schedule.yaml

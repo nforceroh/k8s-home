@@ -3,11 +3,13 @@ kind: Kustomization
 
 namespace: mail
 
+labels:
+  - pairs:
+      app: snappymail
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-
-commonLabels:
-  app: snappymail
+  - backup-schedule.yaml

@@ -3,11 +3,13 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: adminer
+
 resources:
   - deployment.yaml
   - serviceaccount.yaml
   - services.yaml
   - ingress.yaml
   
-commonLabels:
-  app: adminer
