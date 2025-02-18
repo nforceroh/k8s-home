@@ -4,7 +4,7 @@ metadata:
   name: idrive-ai-open-webui
   namespace: velero
 spec:
-  schedule: 50 9 * * *
+  schedule: 23 9 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

@@ -83,7 +83,7 @@ velero schedule create idrive-torrent-radarr --schedule="30 9 * * 1" --ttl 216h0
 velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'
 velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'
 velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'
-velero schedule create idrive-ai-open-webui --schedule="50 9 * * 1" --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'
+velero schedule create idrive-ai-open-webui2 --schedule="50 9 * * 1" --ttl 216h0m0s  --selector app.kubernetes.io/instance=open-webui --include-namespaces ai --include-resources '*'
 ```
 
 ```
