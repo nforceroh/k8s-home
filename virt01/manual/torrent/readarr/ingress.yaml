@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: readarr-ingress
+  namespace: torrent
+  annotations:
+    ingressClassName: traefik
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  rules:
+  - host: readarr.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: readarr-svc
+            port:
+              number: 8787
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - readarr.k3s.nf.lab
+    secretName: readarr-cert-tls

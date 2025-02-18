@@ -4,7 +4,7 @@ kind: StorageClass
 metadata:
   name: openebs-zfspv-lz4
   annotations:
-    snapshot.storage.kubernetes.io/is-default-class: "true"
+    storageclass.kubernetes.io/is-default-class: "true"
 allowVolumeExpansion: true
 parameters:
   recordsize: "128k"

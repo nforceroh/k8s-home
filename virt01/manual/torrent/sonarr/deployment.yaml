@@ -56,10 +56,14 @@ spec:
           persistentVolumeClaim:
             claimName: sonarr-pvc
         - name: tvshows
-          nfs:
+          hostPath:
+#          nfs:
             path: /mnt/ssd01/emby/TVShows
-            server: 10.0.0.100
+            type: Directory
+#            server: 10.0.0.100
         - name: torrent
-          nfs:
+          hostPath:
+            type: Directory
+#          nfs:
             path: /mnt/ssd01/torrent
-            server: 10.0.0.100
+#            server: 10.0.0.100

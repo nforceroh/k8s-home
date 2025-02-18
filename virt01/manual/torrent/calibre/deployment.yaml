@@ -1,0 +1,55 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: calibre
+  labels:
+    app: calibre
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: calibre
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: torrent
+      labels:
+        app: calibre
+    spec:
+      serviceAccountName: calibre-sa
+      containers:
+        - name: calibre
+          image: lscr.io/linuxserver/calibre:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+          ports:
+            - containerPort: 8080
+              name: desktop-gui
+              protocol: TCP
+            - containerPort: 8081
+              name: calibre-webui
+              protocol: TCP
+          volumeMounts:
+            - name: calibre-pv
+              mountPath: /config
+            - name: library
+              mountPath: /library
+      volumes:
+        - name: calibre-pv
+          persistentVolumeClaim:
+            claimName: calibre-pvc
+        - name: library
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Books
+     
