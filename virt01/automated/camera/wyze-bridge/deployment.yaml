@@ -16,6 +16,7 @@ spec:
       labels:
         app: wbridge
     spec:
+      hostNetwork: true
       runtimeClassName: nvidia
       serviceAccountName: wbridge-sa
       containers:
