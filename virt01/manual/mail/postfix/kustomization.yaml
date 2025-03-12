@@ -3,14 +3,16 @@ kind: Kustomization
 
 namespace: mail
 
+labels:
+  - pairs:
+      app: postfix
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
   - certificate.yaml
-
-commonLabels:
-  app: postfix
+  - backup-schedule.yaml
 
 configMapGenerator:
 - name: postfix-dhparam

@@ -3,6 +3,10 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: stirling
+
 resources:
   - deployment.yaml
   - service.yaml
@@ -10,8 +14,6 @@ resources:
   - serviceaccount.yaml
   - configmap.yaml
 
-commonLabels:
-  app: stirling
 
 generatorOptions:
   disableNameSuffixHash: true

@@ -12,14 +12,14 @@ velero:
       memory: 3072Mi
   initContainers:
   - name: velero-plugin-for-aws
-    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.11.0
-    imagePullPolicy: IfNotPresent
+    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.11.1
+    imagePullPolicy: Always
     volumeMounts:
       - mountPath: /target
         name: plugins
   configuration:
-    extraEnvVars:
-      'TZ': 'America/New_York'
+#    extraEnvVars:
+#      'TZ': 'America/New_York'
     features: EnableCSI
     logLevel: debug
     defaultVolumesToFsBackup: true

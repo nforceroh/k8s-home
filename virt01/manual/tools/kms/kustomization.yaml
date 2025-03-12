@@ -3,11 +3,14 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: kms
+
 resources:
   - deployment.yaml
   - serviceaccount.yaml
   - services.yaml
   - ingress.yaml
+  - backup-schedule.yaml
   
-commonLabels:
-  app: kms

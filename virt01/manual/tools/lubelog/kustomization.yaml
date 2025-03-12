@@ -3,15 +3,17 @@ kind: Kustomization
 
 namespace: tools
 
+labels:
+  - pairs:
+      app: lubelog
+
 resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
   - lubelog-sealed.yaml
-
-commonLabels:
-  app: lubelog
+  - backup-schedule.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

@@ -3,13 +3,15 @@ kind: Kustomization
 
 namespace: databases
 
+labels:
+  - pairs:
+      app: mariadb
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
-
-commonLabels:
-  app: mariadb
+  - backup-schedule.yaml
 
 configMapGenerator:
 - name: mariadb-config

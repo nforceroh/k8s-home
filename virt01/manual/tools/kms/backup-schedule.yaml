@@ -1,7 +1,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-common-smallstep
+  name: idrive-tools-kms
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 5 * * *
@@ -10,13 +10,13 @@ spec:
     csiSnapshotTimeout: 0s
     hooks: {}
     includedNamespaces:
-      - common
+      - tools
     includedResources:
       - '*'
     itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
-        app.kubernetes.io/instance: smallstep
+        app: kms
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

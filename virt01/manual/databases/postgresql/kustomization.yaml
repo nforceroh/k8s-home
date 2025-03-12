@@ -3,13 +3,16 @@ kind: Kustomization
 
 namespace: databases
 
+labels:
+  - pairs:
+      app: postgresql
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
+  - backup-schedule.yaml
 
-commonLabels:
-  app: postgresql
 
 secretGenerator:
 - name: postgresql-env

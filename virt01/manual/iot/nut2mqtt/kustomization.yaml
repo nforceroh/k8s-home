@@ -3,12 +3,13 @@ kind: Kustomization
 
 namespace: iot
 
+labels:
+  - pairs:
+      app: nut2mqtt
+
 resources:
   - deployment.yaml
   - serviceaccount.yaml
-
-commonLabels:
-  app: nut2mqtt
 
 secretGenerator:
 - name: nut2mqtt-env

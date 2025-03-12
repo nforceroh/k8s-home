@@ -3,12 +3,14 @@ kind: Kustomization
 
 namespace: mail
 
+labels:
+  - pairs:
+      app: dovecot
+
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
   - certificate.yaml
   - secrets.yaml
-
-commonLabels:
-  app: dovecot
+  - backup-schedule.yaml

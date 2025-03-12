@@ -3,14 +3,16 @@ kind: Kustomization
 
 namespace: databases
 
+labels:
+  - pairs:
+      app: influxdb
+
 resources:
   - deployment.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
-
-commonLabels:
-  app: influxdb
+  - backup-schedule.yaml
 
 configMapGenerator:
 - name: influxdb-env
