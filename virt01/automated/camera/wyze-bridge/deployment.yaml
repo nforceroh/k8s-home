@@ -21,9 +21,6 @@ spec:
       runtimeClassName: nvidia
       serviceAccountName: wbridge-sa
       containers:
-        - name: net
-          command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
-          image: dougbtv/centos-network
         - name: wbridge
           image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest
           imagePullPolicy: Always
