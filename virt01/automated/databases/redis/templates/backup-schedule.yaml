@@ -16,7 +16,7 @@ spec:
     itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
-        app.kubernetes.io/instance=redis
+        app.kubernetes.io/instance: redis
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
