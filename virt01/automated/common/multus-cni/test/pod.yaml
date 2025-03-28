@@ -3,9 +3,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: samplepod
-  namespace: common
+  namespace: camera
   annotations:
-    k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400" }]'
+    k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-camera" }]'
 spec:
   containers:
   - name: samplepod
@@ -18,7 +18,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: samplepod2
-  namespace: common
+  namespace: camera
   annotations:
     k8s.v1.cni.cncf.io/networks: '[ { "name": "br1990" }]'
 spec:
