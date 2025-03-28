@@ -189,8 +189,30 @@ spec:
           "linkInContainer": false,
           "mode": "bridge",
           "ipam": {
-            "type": "dhcp"
+            "type": "dhcp",
+            "provide": [ 
+                {
+                    "option": "host-name",
+                    "fromArg": "K8S_POD_NAME"
+                }
+            ]
           }
+        },
+        {
+          "type" : "route-override",
+          "flushroutes" : true,
+          "delroutes": [
+            {
+                "dst": "0.0.0.0/0",
+                "gw": "10.40.0.1"
+            }
+          ],
+          "addroutes": [
+            {
+                "dst": "10.40.0.0/16",
+                "gw": "10.40.0.1"
+            }
+          ]
         }
       ]
     }'
