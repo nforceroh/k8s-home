@@ -21,7 +21,6 @@ spec:
       runtimeClassName: nvidia
       serviceAccountName: wbridge-sa
       containers:
-      containers:
         - name: net
           command: ["/bin/bash", "-c", "trap : TERM INT; sleep infinity & wait"]
           image: dougbtv/centos-network
