@@ -4,8 +4,6 @@ metadata:
   name: wbridge
   labels:
     app: wbridge
-  annotations:
-    k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-camera" }]'
 spec:
   replicas: 1
   strategy:
@@ -17,6 +15,8 @@ spec:
     metadata:
       labels:
         app: wbridge
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-camera" }]'
     spec:
       runtimeClassName: nvidia
       serviceAccountName: wbridge-sa
