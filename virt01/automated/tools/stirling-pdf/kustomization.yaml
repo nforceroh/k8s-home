@@ -15,5 +15,6 @@ resources:
   - configmap.yaml
 
 
+
 generatorOptions:
   disableNameSuffixHash: true

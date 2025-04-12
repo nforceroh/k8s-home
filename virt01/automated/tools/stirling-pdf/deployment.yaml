@@ -17,6 +17,13 @@ spec:
         app: stirling
     spec:
       serviceAccountName: stirling-sa
+      volumes:
+        - name: pdf-config
+          persistentVolumeClaim:
+            claimName: pdf-config
+        - name: pdf-ocr
+          persistentVolumeClaim:
+            claimName: pdf-ocr
       containers:
         - name: stirling
           image: harbor.nf.lab/proxy.docker.io/frooodle/s-pdf:latest-ultra-lite
