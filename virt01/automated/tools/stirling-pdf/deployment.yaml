@@ -23,7 +23,7 @@ spec:
           imagePullPolicy: Always
           env:
           - name: DOCKER_ENABLE_SECURITY 
-            value: false
+            value: "false"
           ports:
             - name: stirling-port
               containerPort: 8080
