@@ -85,6 +85,7 @@ velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0
 velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'
 velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'
 velero schedule create idrive-ai-open-webui3 --schedule="27 9 * * *" --ttl 216h0m0s  --selector app.kubernetes.io/instance=open-webui --include-namespaces ai --include-resources '*'
+velero schedule create cf-ai-open-webui --schedule="27 9 * * *" --ttl 216h0m0s  --selector app.kubernetes.io/instance=open-webui --include-namespaces ai --include-resources '*' --storage-location cloudfront
 ```
 
 ```
@@ -106,7 +107,7 @@ velero create backup idrive-torrent-radarr --ttl 216h0m0s  --selector app=radarr
 velero create backup idrive-torrent-sonarr --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-smallstep-step-ca --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-tools-kms --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero create backup idrive-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
+velero create backup cf-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudfront
 
 
 ```

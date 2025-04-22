@@ -1,3 +1,4 @@
+---
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
@@ -18,6 +19,31 @@ spec:
       matchLabels:
         app.kubernetes.io/instance: open-webui
     metadata: {}
+    ttl: 216h0m0s
+  useOwnerReferencesInBackup: false
+status: {}
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: cf-ai-open-webui
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 4 * * *
+  skipImmediately: false
+  template:
+    csiSnapshotTimeout: 0s
+    hooks: {}
+    includedNamespaces:
+      - ai
+    includedResources:
+      - '*'
+    itemOperationTimeout: 0s
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: open-webui
+    metadata: {}
+    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
 status: {}

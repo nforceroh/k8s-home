@@ -1,3 +1,4 @@
+---
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
@@ -18,5 +19,29 @@ spec:
       matchLabels:
         app.kubernetes.io/instance: redis
     metadata: {}
+    ttl: 216h0m0s
+  useOwnerReferencesInBackup: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: cf-databases-redis
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * *
+  skipImmediately: false
+  template:
+    csiSnapshotTimeout: 0s
+    hooks: {}
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    itemOperationTimeout: 0s
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: redis
+    metadata: {}
+    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
