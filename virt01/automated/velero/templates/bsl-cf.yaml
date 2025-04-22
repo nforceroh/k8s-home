@@ -1,0 +1,17 @@
+---
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: cloudfront
+  namespace: velero
+spec:
+  config:
+    region: None
+    s3Url: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+    checksumAlgorithm: ""
+  credential:
+    key: cloud
+    name: cf-credentials
+  objectStorage:
+    bucket: velero
+  provider: aws
