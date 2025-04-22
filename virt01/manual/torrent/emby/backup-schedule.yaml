@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-emby
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 15 6 * * *
+  schedule: CRON_TZ=America/New_York 15 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

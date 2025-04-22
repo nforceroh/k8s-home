@@ -28,7 +28,7 @@ metadata:
   name: cf-databases-influxdb
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 1 * * *
+  schedule: CRON_TZ=America/New_York 0 2 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

@@ -28,7 +28,7 @@ metadata:
   name: cf-databases-mariadb
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 10 1 * * *
+  schedule: CRON_TZ=America/New_York 10 2 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

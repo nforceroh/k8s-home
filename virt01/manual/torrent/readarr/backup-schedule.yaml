@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-readarr
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 55 6 * * *
+  schedule: CRON_TZ=America/New_York 55 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

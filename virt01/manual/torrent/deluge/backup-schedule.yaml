@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-deluge
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 10 6 * * *
+  schedule: CRON_TZ=America/New_York 10 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

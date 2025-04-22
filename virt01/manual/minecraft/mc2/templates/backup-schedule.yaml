@@ -28,7 +28,7 @@ metadata:
   name: cf-minecraft-mc2
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 4 * * *
+  schedule: CRON_TZ=America/New_York 0 5 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

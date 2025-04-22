@@ -28,7 +28,7 @@ metadata:
   name: cf-iot-grafana
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 2 * * *
+  schedule: CRON_TZ=America/New_York 0 3 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

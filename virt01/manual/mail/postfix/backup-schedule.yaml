@@ -28,7 +28,7 @@ metadata:
   name: cf-mail-postfix
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 15 3 * * *
+  schedule: CRON_TZ=America/New_York 15 4 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

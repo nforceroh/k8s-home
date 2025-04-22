@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-sonarr
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 7 * * *
+  schedule: CRON_TZ=America/New_York 0 8 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

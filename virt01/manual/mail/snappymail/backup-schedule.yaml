@@ -28,7 +28,7 @@ metadata:
   name: cf-mail-snappymail
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 40 3 * * *
+  schedule: CRON_TZ=America/New_York 40 4 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

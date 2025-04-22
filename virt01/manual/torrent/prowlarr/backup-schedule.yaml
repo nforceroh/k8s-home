@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-prowlarr
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 40 6 * * *
+  schedule: CRON_TZ=America/New_York 40 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

@@ -28,7 +28,7 @@ metadata:
   name: cf-torrent-jellyseerr
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 30 6 * * *
+  schedule: CRON_TZ=America/New_York 30 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

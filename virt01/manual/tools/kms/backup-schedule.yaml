@@ -28,7 +28,7 @@ metadata:
   name: cf-tools-kms
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 5 * * *
+  schedule: CRON_TZ=America/New_York 0 6 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

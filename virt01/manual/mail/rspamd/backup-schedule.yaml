@@ -28,7 +28,7 @@ metadata:
   name: cf-mail-rspamd
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 30 3 * * *
+  schedule: CRON_TZ=America/New_York 30 4 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

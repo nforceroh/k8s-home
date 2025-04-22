@@ -28,7 +28,7 @@ metadata:
   name: cf-tools-lubelog
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 10 5 * * *
+  schedule: CRON_TZ=America/New_York 10 6 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s

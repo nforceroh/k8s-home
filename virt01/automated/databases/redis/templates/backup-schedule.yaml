@@ -28,7 +28,7 @@ metadata:
   name: cf-databases-redis
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 6 * * *
+  schedule: CRON_TZ=America/New_York 0 7 * * *
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
