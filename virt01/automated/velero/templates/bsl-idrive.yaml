@@ -2,16 +2,16 @@
 apiVersion: velero.io/v1
 kind: BackupStorageLocation
 metadata:
-  name: cloudflared
+  name: idrive
   namespace: velero
 spec:
   config:
-    region: enam
-    s3Url: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+    region: virginia
+    s3Url: https://v7k8.va.idrivee2-60.com
     checksumAlgorithm: ""
   credential:
     key: cloud
-    name: cf-credentials
+    name: idrive-credentials
   objectStorage:
     bucket: velero
   provider: aws

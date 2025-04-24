@@ -108,6 +108,7 @@ velero create backup idrive-torrent-sonarr --ttl 216h0m0s  --selector app=sonarr
 velero create backup idrive-smallstep-step-ca --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-tools-kms --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup cf-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudfront
+velero create backup idrive-mail-dovecot --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 
 
 ```
