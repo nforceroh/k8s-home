@@ -1,5 +1,21 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
+
 velero:
+  namespace:
+    labels:
+      - key: pod-security.kubernetes.io/enforce
+        value: privileged
+      - key: pod-security.kubernetes.io/enforce-version
+        value: latest
+      - key: pod-security.kubernetes.io/audit
+        value: privileged
+      - key: pod-security.kubernetes.io/audit-version
+        value: latest
+      - key: pod-security.kubernetes.io/warn
+        value: privileged
+      - key: pod-security.kubernetes.io/warn-version
+        value: latest
+
   image:
     repository: harbor.nf.lab/proxy.docker.io/velero/velero
   # https://velero.io/docs/v1.6/customize-installation/#customize-resource-requests-and-limits
@@ -10,19 +26,24 @@ velero:
     limits:
       cpu: 6000m
       memory: 3072Mi
+
   initContainers:
   - name: velero-plugin-for-aws
     image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.12.0
-    imagePullPolicy: Always
     volumeMounts:
       - mountPath: /target
         name: plugins
+  metrics:
+    serviceMonitor:
+      enabled: true
+    nodeAgentPodMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: true
+
   configuration:
-#    extraEnvVars:
-#      'TZ': 'America/New_York'
-    features: EnableCSI
+    features: EnableCSI,EnableAPIGroupVersions
     logLevel: debug
-    defaultVolumesToFsBackup: true
     backupStorageLocation:
     - name: default
       provider: aws
@@ -30,13 +51,16 @@ velero:
       config:
         region: virginia
         s3Url: https://v7k8.va.idrivee2-60.com
+        s3ForcePathStyle: "true"
         checksumAlgorithm: ""
-  credentials:
-    existingSecret: idrive-credentials
+      credential:
+        key: cloud
+        name: idrive-credentials
 
   snapshotsEnabled: false
   
   deployNodeAgent: true
+
   kubectl:
     image:
       repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl

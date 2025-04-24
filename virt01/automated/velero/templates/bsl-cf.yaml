@@ -8,6 +8,7 @@ spec:
   config:
     region: enam
     s3Url: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+    s3ForcePathStyle: "true"
     checksumAlgorithm: ""
   credential:
     key: cloud

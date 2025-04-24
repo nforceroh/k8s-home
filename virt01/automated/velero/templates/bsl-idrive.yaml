@@ -8,6 +8,7 @@ spec:
   config:
     region: virginia
     s3Url: https://v7k8.va.idrivee2-60.com
+    s3ForcePathStyle: "true"
     checksumAlgorithm: ""
   credential:
     key: cloud
