@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-tools-lubelog
+  name: cf-tools-lubelog
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 10 5 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: lubelog
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-tools-lubelog
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 10 6 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - tools
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: lubelog
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

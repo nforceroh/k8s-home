@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-torrent-calibre
+  name: cf-torrent-calibre
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 5 6 * * *
@@ -21,27 +21,4 @@ spec:
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-torrent-calibre
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 5 7 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - torrent
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: calibre
-    metadata: {}
-    storageLocation: cloudfront
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
+

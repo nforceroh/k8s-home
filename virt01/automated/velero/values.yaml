@@ -29,7 +29,7 @@ velero:
 
   initContainers:
   - name: velero-plugin-for-aws
-    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.11.1
+    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.12.0
     volumeMounts:
       - mountPath: /target
         name: plugins
@@ -49,13 +49,13 @@ velero:
       provider: aws
       bucket: velero
       config:
-        region: virginia
-        s3Url: https://v7k8.va.idrivee2-60.com
+        region: enam
+        s3Url: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
         s3ForcePathStyle: "true"
         checksumAlgorithm: ""
       credential:
         key: cloud
-        name: idrive-credentials
+        name: cf-credentials
 
   snapshotsEnabled: false
   

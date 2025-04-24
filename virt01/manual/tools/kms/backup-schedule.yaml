@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-tools-kms
+  name: cf-tools-kms
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 5 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: kms
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-tools-kms
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 0 6 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - tools
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: kms
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

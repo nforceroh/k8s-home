@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-minecraft-seasons
+  name: cf-minecraft-seasons
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 10 4 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app.kubernetes.io/instance: seasons-minecraft
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-minecraft-seasons
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 10 5 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - minecraft
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/instance: seasons-minecraft
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-mail-dovecot
+  name: cf-mail-dovecot
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 3 * * *
@@ -21,27 +21,4 @@ spec:
     metadata: {}
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-mail-dovecot
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 0 4 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - mail
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: dovecot
-    metadata: {}
-    storageLocation: cloudfront
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
+

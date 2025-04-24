@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-torrent-prowlarr
+  name: cf-torrent-prowlarr
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 40 6 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: prowlarr
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-torrent-prowlarr
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 40 7 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - torrent
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: prowlarr
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

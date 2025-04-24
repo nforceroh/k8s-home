@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-databases-postgresql
+  name: cf-databases-postgresql
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 20 1 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: postgresql
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-databases-postgresql
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 20 2 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - databases
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: postgresql
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

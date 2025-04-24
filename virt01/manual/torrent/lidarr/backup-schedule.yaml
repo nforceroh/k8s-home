@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-torrent-lidarr
+  name: cf-torrent-lidarr
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 35 6 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: lidarr
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-torrent-lidarr
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 35 7 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - torrent
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: lidarr
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

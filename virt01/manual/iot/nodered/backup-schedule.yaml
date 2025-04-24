@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: idrive-iot-nodered
+  name: cf-iot-nodered
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 20 2 * * *
@@ -19,29 +19,5 @@ spec:
       matchLabels:
         app: nodered
     metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
----
-apiVersion: velero.io/v1
-kind: Schedule
-metadata:
-  name: cf-iot-nodered
-  namespace: velero
-spec:
-  schedule: CRON_TZ=America/New_York 20 3 * * *
-  skipImmediately: false
-  template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
-    includedNamespaces:
-      - iot
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
-    labelSelector:
-      matchLabels:
-        app: nodered
-    metadata: {}
-    storageLocation: cloudfront
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false
