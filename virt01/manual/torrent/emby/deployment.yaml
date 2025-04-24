@@ -17,6 +17,7 @@ spec:
         app: emby
       annotations:
         backup.velero.io/backup-volumes-excludes: movies,tvshows
+        backup.velero.io/backup-volume: emby-pv
     spec:
 #      runtimeClassName: nvidia
       serviceAccountName: emby-sa

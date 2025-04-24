@@ -15,6 +15,7 @@ spec:
     metadata:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent,tvshows
+        backup.velero.io/backup-volume: readarr-pv
       labels:
         app: readarr
     spec:

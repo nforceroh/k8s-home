@@ -15,6 +15,8 @@ spec:
     metadata:
       labels:
         app: lubelog
+      annotations:
+        backup.velero.io/backup-volume: config,data,documents,images
     spec:
       serviceAccountName: lubelog-sa
       volumes:

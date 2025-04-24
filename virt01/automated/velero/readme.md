@@ -99,7 +99,7 @@ velero create backup idrive-mail-rspamd --ttl 216h0m0s  --selector app=rspamd --
 velero create backup idrive-mail-dovecot --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 #velero create backup idrive-minecraft-mc1 --ttl 216h0m0s  --selector app=mc1 --include-namespaces minecraft --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 #velero create backup idrive-minecraft-mc2 ---ttl 216h0m0s  --selector app=mc2 --include-namespaces minecraft --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero create backup idrive-torrent-emby --ttl 216h0m0s  --selector app=emby --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
+velero create backup cf-torrent-emby --ttl 216h0m0s  --selector app=emby --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudflared
 velero create backup idrive-torrent-jellyseerr --ttl 216h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-torrent-lidarr --ttl 216h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-torrent-prowlarr --ttl 216h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
@@ -107,7 +107,7 @@ velero create backup idrive-torrent-radarr --ttl 216h0m0s  --selector app=radarr
 velero create backup idrive-torrent-sonarr --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-smallstep-step-ca --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-tools-kms --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero create backup cf-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudfront
+velero create backup cf-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudflared
 velero create backup cf-mail-dovecot --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudflared
 
 

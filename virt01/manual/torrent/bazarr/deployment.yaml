@@ -15,6 +15,7 @@ spec:
     metadata:
       annotations:
         backup.velero.io/backup-volumes-excludes: tvshows,movies
+        backup.velero.io/backup-volume: bazarr-pv
       labels:
         app: bazarr
     spec:

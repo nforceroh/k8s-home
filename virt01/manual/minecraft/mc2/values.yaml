@@ -5,6 +5,8 @@ minecraft:
   workloadAsStatefulSet: false
   strategyType: Recreate
   minecraftServer:
+    podAnnotations:
+      backup.velero.io/backup-volume: datadir
     # This must be overridden, since we can't accept this for the user.
     eula: "TRUE"
     # One of: LATEST, SNAPSHOT, or a specific version (ie: "1.7.9").
