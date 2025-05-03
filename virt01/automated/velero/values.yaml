@@ -69,7 +69,7 @@ velero:
         key: cloud
         name: cf-credentials
 
-  snapshotsEnabled: false
+  snapshotsEnabled: true
   
   deployNodeAgent: true
 
