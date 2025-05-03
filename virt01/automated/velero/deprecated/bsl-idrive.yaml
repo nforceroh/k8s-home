@@ -6,11 +6,12 @@ metadata:
   namespace: velero
 spec:
   config:
-    region: Virginia
+    region: virginia
     s3Url: https://v7k8.va.idrivee2-60.com
+    s3ForcePathStyle: "true"
     checksumAlgorithm: ""
   credential:
-    key: bsl
+    key: cloud
     name: idrive-credentials
   objectStorage:
     bucket: velero
