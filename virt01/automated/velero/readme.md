@@ -195,3 +195,4 @@ velero restore create --from-backup nas02-mig-ns-${NS} --restore-volumes=true
 for ns in mail databases iot; do
  velero create backup nas02-mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 done
+
