@@ -46,7 +46,7 @@ velero:
     logLevel: debug
     backupStorageLocation:
     - name: default
-      defaultVolumesToFsBackup: true
+      defaultVolumesToFsBackup: false
       provider: aws
       bucket: velero
       config:
