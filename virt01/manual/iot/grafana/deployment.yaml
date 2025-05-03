@@ -16,7 +16,7 @@ spec:
       labels:
         app: grafana
       annotations:
-        backup.velero.io/backup-volume: grafana-pv
+        backup.velero.io/backup-volumes: grafana-pv
     spec:
       serviceAccountName: grafana-sa
       securityContext:

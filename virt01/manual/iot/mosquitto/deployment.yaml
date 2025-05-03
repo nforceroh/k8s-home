@@ -16,7 +16,7 @@ spec:
       labels:
         app: mosquitto
       annotations:
-        backup.velero.io/backup-volume: mosquitto-pv
+        backup.velero.io/backup-volumes: mosquitto-pv
     spec:
       serviceAccountName: mosquitto-sa
       containers:

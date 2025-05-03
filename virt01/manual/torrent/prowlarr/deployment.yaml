@@ -16,7 +16,7 @@ spec:
       labels:
         app: prowlarr
       annotations:
-        backup.velero.io/backup-volume: prowlarr-pv
+        backup.velero.io/backup-volumes: prowlarr-pv
     spec:
       serviceAccountName: prowlarr-sa
       containers:

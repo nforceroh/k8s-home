@@ -16,7 +16,7 @@ spec:
       labels:
         app: nodered
       annotations:
-        backup.velero.io/backup-volume: nodered-pv
+        backup.velero.io/backup-volumes: nodered-pv
     spec:
       serviceAccountName: nodered-sa
       securityContext:

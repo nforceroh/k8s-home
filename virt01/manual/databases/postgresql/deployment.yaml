@@ -16,7 +16,7 @@ spec:
       labels:
         app: postgresql
       annotations:
-        backup.velero.io/backup-volume: postgresql-pv
+        backup.velero.io/backup-volumes: postgresql-pv
     spec:
       serviceAccountName: postgresql-sa
       containers:
