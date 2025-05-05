@@ -1,0 +1,35 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: dpa-minio-nf-lab
+  namespace: openshift-adp
+spec:
+  backupLocations:
+    - velero:
+        provider: aws
+        default: true
+        config:
+          insecureSkipTLSVerify: "true"
+          profile: "default"
+          region: minio
+          s3ForcePathStyle: "true"
+          s3Url: "https://minio.nf.lab"
+        credential:
+          key: minio
+          name: minio-velero
+        objectStorage:
+          bucket: velero
+          prefix: backups
+  configuration:
+    restic:
+      enable: true
+    velero:
+      podConfig:
+        resourceAllocations:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+      defaultPlugins:
+        - openshift
+        - aws
+        - csi

@@ -1,0 +1,19 @@
+apiVersion: velero.io/v1
+kind: BackupStorageLocation
+metadata:
+  name: idrive
+  namespace: openshift-adp
+spec:
+  config:
+    profile: ocpbackup
+    insecureSkipTLSVerify: "true"
+    region: nf
+    s3ForcePathStyle: "true"
+    s3Url: "https://j2d7.va.idrivee2-54.com"
+  credential:
+    key: bsl
+    name: idrive-creds
+  objectStorage:
+    bucket: ocpbackup
+    prefix: ocp
+  provider: aws

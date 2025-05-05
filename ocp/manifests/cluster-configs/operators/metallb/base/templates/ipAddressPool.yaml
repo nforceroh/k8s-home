@@ -1,0 +1,40 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: vlan1000-apps
+  namespace: {{ .Release.Namespace }}
+spec:
+  autoAssign: true
+  addresses:
+  - 10.0.1.100-10.0.1.200
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: vlan1000-infra
+  namespace: metallb-system
+spec:
+  autoAssign: false
+  addresses:
+  - 10.0.1.91-10.0.1.101
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: vlan1000-restricted
+  namespace: metallb-system
+spec:
+  autoAssign: false
+  addresses:
+  - 10.0.3.1-10.0.3.10
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: vlan1400
+  namespace: metallb-system
+spec:
+  autoAssign: false
+  addresses:
+  - 10.40.4.1-10.40.4.10
