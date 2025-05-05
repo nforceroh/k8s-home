@@ -16,7 +16,7 @@ spec:
       labels:
         app: kms
       annotations:
-        backup.velero.io/backup-volume: kms-pv
+        backup.velero.io/backup-volumes: kms-pv
     spec:
       serviceAccountName: kms-sa
       containers:

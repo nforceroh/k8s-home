@@ -15,7 +15,7 @@ spec:
     metadata:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent
-        backup.velero.io/backup-volume: calibre-pv
+        backup.velero.io/backup-volumes: calibre-pv
       labels:
         app: calibre
     spec:

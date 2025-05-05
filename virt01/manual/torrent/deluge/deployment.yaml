@@ -17,7 +17,7 @@ spec:
         app: deluge
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent
-        backup.velero.io/backup-volume: deluge-pv
+        backup.velero.io/backup-volumes: deluge-pv
     spec:
       serviceAccountName: deluge-sa
       containers:

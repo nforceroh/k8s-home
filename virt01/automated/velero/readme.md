@@ -108,7 +108,7 @@ velero create backup idrive-torrent-sonarr --ttl 216h0m0s  --selector app=sonarr
 velero create backup idrive-smallstep-step-ca --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-tools-kms --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup cf-ai-open-webui --ttl 216h0m0s  --selector app=open-webui --include-namespaces ai --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudflared
-velero create backup cf-mail-dovecot --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup --storage-location cloudflared
+velero create backup cf-mail-dovecot-$(date +%s) --ttl 216h0m0s  --selector app=dovecot --include-namespaces mail --include-resources '*'  --default-volumes-to-fs-backup 
 
 
 ```
@@ -195,3 +195,4 @@ velero restore create --from-backup nas02-mig-ns-${NS} --restore-volumes=true
 for ns in mail databases iot; do
  velero create backup nas02-mig-ns-${ns}  --include-namespaces ${ns} --include-resources '*'  --default-volumes-to-fs-backup --snapshot-volumes=false --storage-location idrive
 done
+

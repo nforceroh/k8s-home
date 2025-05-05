@@ -202,10 +202,20 @@ kubectl apply -f - -n kube-system
 # GPU
 https://www.jimangel.io/posts/nvidia-rtx-gpu-kubernetes-setup/
 
-```
+
+# 550
+```bash
 wget https://us.download.nvidia.com/tesla/550.127.08/nvidia-driver-local-repo-ubuntu2404-550.127.08_1.0-1_amd64.deb
 apt install ./nvidia-driver-local-repo-ubuntu2404-550.127.08_1.0-1_amd64.deb 
 sudo cp /var/nvidia-driver-local-repo-ubuntu2404-550.127.08/nvidia-driver-local-A0239FBD-keyring.gpg /usr/share/keyrings/
+```
+
+# 570
+
+```bash
+wget https://us.download.nvidia.com/tesla/570.133.20/nvidia-driver-local-repo-ubuntu2404-570.133.20_1.0-1_amd64.deb
+apt install ./nvidia-driver-local-repo-ubuntu2404-570.133.20_1.0-1_amd64.deb
+sudo cp /var/nvidia-driver-local-repo-ubuntu2404-570.133.20/nvidia-driver-local-BB6607B3-keyring.gpg /usr/share/keyrings/
 ```
 
 ```

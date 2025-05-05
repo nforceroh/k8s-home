@@ -46,6 +46,7 @@ velero:
     logLevel: debug
     backupStorageLocation:
     - name: default
+      defaultVolumesToFsBackup: false
       provider: aws
       bucket: velero
       config:
@@ -56,8 +57,19 @@ velero:
       credential:
         key: cloud
         name: cf-credentials
+    volumeSnapshotLocation:
+    - name: default
+      provider: aws
+      config:
+        region: enam
+        s3Url: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+        s3ForcePathStyle: "true"
+        checksumAlgorithm: ""
+      credential:
+        key: cloud
+        name: cf-credentials
 
-  snapshotsEnabled: false
+  snapshotsEnabled: true
   
   deployNodeAgent: true
 

@@ -15,7 +15,7 @@ spec:
     metadata:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent,movies
-        backup.velero.io/backup-volume: radarr-pv
+        backup.velero.io/backup-volumes: radarr-pv
       labels:
         app: radarr
     spec:

@@ -15,7 +15,7 @@ spec:
     metadata:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent,music
-        backup.velero.io/backup-volume: lidarr-pv        
+        backup.velero.io/backup-volumes: lidarr-pv        
       labels:
         app: lidarr
     spec:

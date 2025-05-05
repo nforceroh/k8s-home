@@ -16,7 +16,7 @@ spec:
       labels:
         app: mariadb
       annotations:
-        backup.velero.io/backup-volume: mariadb-pv
+        backup.velero.io/backup-volumes: mariadb-pv
     spec:
       serviceAccountName: mariadb-sa
       securityContext:

@@ -1,22 +1,32 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata: 
   name: gpu-operator
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
-  project: argocd-virt01
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    syncOptions:
-    - CreateNamespace=true
-  source:
-    repoURL: https://github.com/nforceroh/k8s-home.git
-    targetRevision: main
-    path: virt01/automated/gpu-operator
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: gpu-operator  
+  generators:
+  - git:
+      repoURL: 'https://github.com/nforceroh/k8s-home.git'
+      revision: main
+      directories:
+        - path: virt01/automated/gpu-operator/*
+  template:
+    metadata:
+      name:  "{{`{{ path.basename }}`}}"
+    spec:
+      project: argocd-virt01
+      source:
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        targetRevision: main
+        path:  "{{`{{ path }}`}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace: gpu-operator
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
