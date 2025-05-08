@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata: 
+  name: metallb
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  generators:
+  - git:
+      repoURL: 'https://github.com/nforceroh/k8s-home.git'
+      revision: main
+      directories:
+        - path: virt01/automated/metallb/*
+  template:
+    metadata:
+      name:  "{{`{{ path.basename }}`}}"
+    spec:
+      ignoreDifferences:
+      - group: "apiextensions.k8s.io"
+        kind: CustomResourceDefinition
+        name: bgppeers.metallb.io
+        jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+      - group: "apiextensions.k8s.io"
+        kind: CustomResourceDefinition
+        name: addresspools.metallb.io
+        jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle    
+      project: argocd-virt01
+      source:
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        targetRevision: main
+        path:  "{{`{{ path }}`}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace:  metallb
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+
