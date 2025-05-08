@@ -2,7 +2,7 @@
 # domain names are overridden due to derivation from Values.global.domain
 
 
-argo-cd:
+argocd:
   crds:
     install: true
   configs:

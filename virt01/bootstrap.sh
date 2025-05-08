@@ -25,7 +25,7 @@ sleep 10
 helm dependency update argocd
 #kubectl apply -k https://github.com/argoproj/argo-cd/manifests/crds\?ref\=stable
 #helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values globalValues.yaml
-helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s
+helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values argocd/values-tls.yaml
 
 # Set the ArgoCD admin password
 #kubectl patch secret -n argocd argocd-secret -p '{"stringData": { "admin.password": "'$(htpasswd -bnBC 10 "" ${adminpassword} | tr -d ':\n')'"}}'
@@ -36,3 +36,5 @@ helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeo
 # Uncomment these lines if you want to port-forward the ArgoCD server to localhost:8080 and/or use kubeseal for secrets management
 kubectl port-forward -n argocd svc/argocd-server 8080:80 &
 # kubeseal --controller-name sealed-secrets --controller-namespace argo-common -o yaml < infile > outfile
+
+#helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --set crds.install=true --values argocd/values-tls.yaml
