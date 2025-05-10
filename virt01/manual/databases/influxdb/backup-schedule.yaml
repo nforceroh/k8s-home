@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-databases-influxdb
+  name: databases-influxdb
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 1 * * *
@@ -19,5 +19,6 @@ spec:
       matchLabels:
         app: influxdb
     metadata: {}
+    snapshotMoveData: true
     ttl: 216h0m0s
   useOwnerReferencesInBackup: false

@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-ai-open-webui
+  name: ai-open-webui
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 4 * * *
@@ -20,4 +20,5 @@ spec:
         app.kubernetes.io/instance: open-webui
     metadata: {}
     ttl: 216h0m0s
+    snapshotMoveData: true
   useOwnerReferencesInBackup: false
