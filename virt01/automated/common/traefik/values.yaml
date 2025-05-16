@@ -55,10 +55,10 @@ traefik:
 #      port: 8080
       expose:
         default: true
-    web:
-      redirectTo:
-        port: websecure
-        priority: 10
+#    web:
+#      redirectTo:
+#        port: websecure
+#        priority: 10
 #    emby:
 #      port: 8096
 #      expose: 
