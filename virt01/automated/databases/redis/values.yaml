@@ -11,8 +11,8 @@ redis:
 
   master:
     count: 1
-    podAnnotations:
-      backup.velero.io/backup-volumes: redis-data
+#    podAnnotations:
+#      backup.velero.io/backup-volumes: redis-data
     resources:
      requests:
        cpu: 10m

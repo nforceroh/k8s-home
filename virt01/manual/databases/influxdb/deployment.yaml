@@ -15,8 +15,8 @@ spec:
     metadata:
       labels:
         app: influxdb
-      annotations:
-        backup.velero.io/backup-volumes: influxdb-pv,influxdb-etc-pv
+#      annotations:
+#        backup.velero.io/backup-volumes: influxdb-pv,influxdb-etc-pv
     spec:
       serviceAccountName: influxdb-sa
       containers:
