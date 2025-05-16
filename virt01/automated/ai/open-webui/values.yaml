@@ -4,8 +4,8 @@ open-webui:
     enabled: false
   ollamaUrls:
     - http://ollama.ai.svc.cluster.local:11434
-  podAnnotations:
-    backup.velero.io/backup-volumes: data
+#  podAnnotations:
+#    backup.velero.io/backup-volumes: data
   ingress:
     enabled: true
     class: traefik
