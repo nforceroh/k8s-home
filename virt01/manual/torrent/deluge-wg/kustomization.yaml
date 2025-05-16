@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+labels:
+  - pairs:
+      app: deluge
+
+namespace: torrent
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - ingress.yaml
+  - backup-schedule.yaml
+  
+configMapGenerator:
+- name: wireguard-cm
+  files:
+  - wg0.conf=maps/wg0.conf
+- name: web-conf-cm
+  files:
+  - web.conf=maps/web.conf
+- name: core-conf-cm
+  files:
+  - core.conf=maps/core.conf
+
+generatorOptions:
+  disableNameSuffixHash: true
