@@ -29,7 +29,7 @@ spec:
             paths:
               - backend:
                   service:
-                    name: grafana-test
+                    name: grafana-test-service
                     port:
                       number: 3000
                 path: /
