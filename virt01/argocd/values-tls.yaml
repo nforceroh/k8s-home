@@ -1,4 +1,4 @@
-# https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
+# https://github.com/argoproj/argo-helm/blob/master/char  ts/argo-cd/values.yaml
 # domain names are overridden due to derivation from Values.global.domain
 
 
