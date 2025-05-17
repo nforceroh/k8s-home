@@ -1,1 +1,3 @@
 ---
+service:
+  listenOnAllInterfaces: false
