@@ -34,10 +34,10 @@ spec:
                       number: 3000
                 path: /
                 pathType: Prefix
-        tls:
-          - hosts:
-            - testgraf.k3s.nf.lab
-            secretName: testgraf-tls           
+      tls:
+        - hosts:
+          - testgraf.k3s.nf.lab
+          secretName: testgraf-tls           
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
