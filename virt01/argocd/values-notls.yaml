@@ -3,6 +3,8 @@
 
 
 argocd:
+  global:
+    domain: argo.k3s.nf.lab
   crds:
     install: true
   configs:
@@ -22,7 +24,7 @@ argocd:
       enabled: false 
     ingress:
       enabled: true
-      hostname: argo.k3s.nf.lab
+      hostname: "argo.k3s.nf.lab"
       ingressClassName: traefik
       annotations:
         cert-manager.io/cluster-issuer: nf-lab

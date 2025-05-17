@@ -1,12 +1,13 @@
 # https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 # domain names are overridden due to derivation from Values.global.domain
 
-argocd:
+argo-cd:
   crds:
     install: true
+  global:
+    domain: argo.k3s.nf.lab
   configs:
     params:
-      # traefik terminates TLS at edge
       server.insecure: true
     cm:
       kustomize.buildOptions: --enable-helm
@@ -17,14 +18,6 @@ argocd:
       argocdServerAdminPasswordMtime: "2020-09-01T10:11:12Z"
 
   server:
-#    certificate:
-#      enabled: true 
-#      domain: argo.k3s.nf.lab
-#      secretName: argocd-server-tls
-#      issuer:
-#        group: "cert-manager.io"
-#        kind: ClusterIssuer
-#        name: nf-lab
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -37,14 +30,6 @@ argocd:
         - hosts:
             - argo.k3s.nf.lab
           secretName: argocd-server-tls
-#      hostname: argo.k3s.nf.lab
-#      hosts:
-#        - argo.k3s.nf.lab
-#      tls:
-#        - hosts:
-#            - argo.k3s.nf.lab
-#          secretName: argocd-server-tls
-#      https: false
 
   notifications:
     argocdUrl: 'https://argo.k3s.nf.lab'
