@@ -1,0 +1,7 @@
+name: prometheus-node-exporter
+apiVersion: v2
+version: 1.0.0
+dependencies:
+- name: prometheus-node-exporter
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 4.46.0
