@@ -1,3 +1,4 @@
 ---
-service:
-  listenOnAllInterfaces: false
+prometheus-node-exporter:
+  service:
+    listenOnAllInterfaces: false
