@@ -36,7 +36,7 @@ spec:
                 pathType: Prefix
         tls:
           - hosts:
-              - testgraf.k3s.nf.lab
+            - testgraf.k3s.nf.lab
             secretName: testgraf-tls           
 ---
 apiVersion: grafana.integreatly.org/v1beta1
