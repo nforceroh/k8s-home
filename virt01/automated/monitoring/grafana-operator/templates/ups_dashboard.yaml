@@ -3190,7 +3190,7 @@ metadata:
 spec:
   instanceSelector:
     matchLabels:
-      dashboards: grafanadashboard-sample
+      dashboards: grafana
   configMapRef:
     name: ups-dashboard-definition
     key: json
