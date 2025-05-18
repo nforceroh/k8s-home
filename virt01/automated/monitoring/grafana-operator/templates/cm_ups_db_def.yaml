@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: ups-dashboard-definition
 spec:
-  resyncPeriod: 30s
+#  resyncPeriod: 30s
   instanceSelector:
     matchLabels:
       dashboards: grafana
