@@ -21,4 +21,4 @@ spec:
       dashboards: grafana
   configMapRef:
     name: ups-dashboard-def
-    key: data
+    key: json
