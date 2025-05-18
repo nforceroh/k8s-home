@@ -10,3 +10,15 @@ spec:
   folder: "node-exporter"
   grafanaCom:
     id: 1860
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
+  name: ups-dashboard
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
+  configMapRef:
+    name: ups-dashboard-def
+    key: json
