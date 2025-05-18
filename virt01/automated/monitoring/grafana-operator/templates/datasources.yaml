@@ -11,7 +11,7 @@ spec:
     name: prometheus
     type: prometheus
     access: proxy
-    url: http://prometheus-service:9090
+    url: http://kube-prometheus-stack-prometheus:9090
     isDefault: true
     jsonData:
       "tlsSkipVerify": true
