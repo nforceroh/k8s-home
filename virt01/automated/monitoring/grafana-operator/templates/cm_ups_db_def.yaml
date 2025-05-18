@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ups-dashboard-def
-  json: >
+json: >
     {
     "id": null,
     "title": "Simple Dashboard",
