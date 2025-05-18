@@ -1,0 +1,39 @@
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: prometheus
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus-service:9090
+    isDefault: true
+    jsonData:
+      "tlsSkipVerify": true
+      "timeInterval": "5s"
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: "influxdb:upsdata"
+spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  datasource:
+    name: influxdb
+    type: influxdb
+    access: proxy
+    url: "http://influxdb-svc.databases.svc.cluster.local:8086"
+    isDefault: true
+    jsonData:
+      "defaultBucket": "upsdata/autogen"
+      "httpMode": "POST"
+      "organization": "nf"
+      "version": "Flux"
+      "tlsSkipVerify": true
