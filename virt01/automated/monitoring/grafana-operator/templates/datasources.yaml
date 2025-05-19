@@ -37,4 +37,4 @@ spec:
       "organization": "nf"
       "version": "Flux"
       "tlsSkipVerify": true
-      "Token": "2MMV2Fc4HfueJHozVHsqUfPm-d4kTWfvo-SgJKm00gBbQVg_t3d2kJ4K7Y3eItfueun_Lqb9B5HWVYnSD_p97w=="
+      "token": "2MMV2Fc4HfueJHozVHsqUfPm-d4kTWfvo-SgJKm00gBbQVg_t3d2kJ4K7Y3eItfueun_Lqb9B5HWVYnSD_p97w=="
