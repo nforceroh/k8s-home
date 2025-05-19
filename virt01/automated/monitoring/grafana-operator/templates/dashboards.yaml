@@ -7,7 +7,6 @@ spec:
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  folder: "node-exporter"
   grafanaCom:
     id: 1860
 ---
