@@ -346,7 +346,7 @@ spec:
               "measurement": "ups_load",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> aggregateWindow(every: 1m , fn: mean, createEmpty: true)\r\n  |> yield()  ",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> aggregateWindow(every: 1m , fn: mean, createEmpty: true)\r\n  |> yield()  ",
               "rawQuery": false,
               "refId": "A",
               "resultFormat": "time_series",
@@ -396,7 +396,7 @@ spec:
               "measurement": "ups_power",
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> aggregateWindow(every: 10m, fn: mean, createEmpty: true)\r\n  |> yield()",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> aggregateWindow(every: 10m, fn: mean, createEmpty: true)\r\n  |> yield()",
               "rawQuery": false,
               "refId": "B",
               "resultFormat": "time_series",
@@ -428,7 +428,7 @@ spec:
                 "uid": "${DS_INFLUX}"
               },
               "hide": false,
-              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> drop(columns: [\"_field\"])\r\n  |> yield(name: \"TotalPowerUsage\")",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> drop(columns: [\"_field\"])\r\n  |> yield(name: \"TotalPowerUsage\")",
               "refId": "C"
             }
           ],
@@ -665,7 +665,7 @@ spec:
                 "type": "influxdb",
                 "uid": "${DS_INFLUX}"
               },
-              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"input.voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"input.voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
               "refId": "A"
             }
           ],
