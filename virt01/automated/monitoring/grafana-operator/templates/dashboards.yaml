@@ -15,9 +15,3185 @@ kind: GrafanaDashboard
 metadata:
   name: ups-dashboard
 spec:
+  datasources:
+    - inputName: "DS_INFLUX"
+      datasourceName: "influx"
+  resyncPeriod: 30s
   instanceSelector:
     matchLabels:
-      dashboards: grafana
-  configMapRef:
-    name: ups-dashboard-def
-    key: json
+      dashboards: "grafana"
+  json: >
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": {
+              "type": "datasource",
+              "uid": "grafana"
+            },
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "target": {
+              "limit": 100,
+              "matchAny": false,
+              "tags": [],
+              "type": "dashboard"
+            },
+            "type": "dashboard"
+          }
+        ]
+      },
+      "description": "https://technicalramblings.com/blog/monitoring-your-ups-stats-and-cost-with-influxdb-and-grafana-on-unraid-v2-0/",
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": 1,
+      "links": [],
+      "panels": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "${DS_INFLUX}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "Percent",
+                "axisPlacement": "left",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineStyle": {
+                  "fill": "solid"
+                },
+                "lineWidth": 2,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": true,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "line"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups ups.load E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "left"
+                  },
+                  {
+                    "id": "custom.axisLabel",
+                    "value": "Load"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups ups.load E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "left"
+                  },
+                  {
+                    "id": "custom.axisLabel",
+                    "value": "Load"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 3
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups ups.power E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.axisLabel",
+                    "value": "Usage"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "watt"
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "normal"
+                    }
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "super-light-yellow",
+                      "mode": "continuous-BlYlRd"
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 25
+                  },
+                  {
+                    "id": "max",
+                    "value": 3000
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups ups.power E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  },
+                  {
+                    "id": "custom.axisLabel",
+                    "value": "Usage"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "watt"
+                  },
+                  {
+                    "id": "custom.stacking",
+                    "value": {
+                      "group": "A",
+                      "mode": "normal"
+                    }
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-yellow",
+                      "mode": "continuous-BlYlRd"
+                    }
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 25
+                  },
+                  {
+                    "id": "max",
+                    "value": 3000
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "C"
+                },
+                "properties": [
+                  {
+                    "id": "custom.axisPlacement",
+                    "value": "right"
+                  },
+                  {
+                    "id": "unit",
+                    "value": "watt"
+                  },
+                  {
+                    "id": "custom.axisLabel",
+                    "value": "Usage"
+                  },
+                  {
+                    "id": "max",
+                    "value": 3000
+                  },
+                  {
+                    "id": "displayName",
+                    "value": "Total Usage"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 14,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "legend": {
+              "calcs": [
+                "mean",
+                "max",
+                "min"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "multi",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "Alpha UPS Load",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "ups_load",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> aggregateWindow(every: 1m , fn: mean, createEmpty: true)\r\n  |> yield()  ",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            },
+            {
+              "alias": "Alpha Watts",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "ups_power",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> aggregateWindow(every: 10m, fn: mean, createEmpty: true)\r\n  |> yield()",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> drop(columns: [\"_field\"])\r\n  |> yield(name: \"TotalPowerUsage\")",
+              "refId": "C"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "UPS Load",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "dark-red",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 65
+                  },
+                  {
+                    "color": "dark-green",
+                    "value": 85
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.charge E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.charge E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  },
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 0
+          },
+          "id": 54,
+          "options": {
+            "displayMode": "lcd",
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": false
+            },
+            "maxVizHeight": 300,
+            "minVizHeight": 5,
+            "minVizWidth": 0,
+            "namePlacement": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showUnfilled": true,
+            "sizing": "auto",
+            "text": {},
+            "valueMode": "color"
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.charge\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+              "refId": "A"
+            }
+          ],
+          "title": "Battery Charge",
+          "type": "bargauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "axisSoftMax": 130,
+                "axisSoftMin": 110,
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "line"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 115
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 125
+                  }
+                ]
+              },
+              "unit": "volt"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "input.voltage E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "input.voltage E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 0
+          },
+          "id": 55,
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"input.voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "1d",
+          "title": "Voltage",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups.load E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups.load E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 5
+          },
+          "hideTimeOverride": true,
+          "id": 10,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto",
+            "text": {}
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_A",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "ups_load",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> last()",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "1m",
+          "title": "Current UPS Load",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 2000,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "watt"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups.power E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "ups.power E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 5
+          },
+          "hideTimeOverride": true,
+          "id": 40,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "mean"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto",
+            "text": {}
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_A",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "ups_power",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> last()",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "30s",
+          "title": "Average UPS Power Usage",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-BlYlRd"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 0,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Power Usage"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "bars"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  },
+                  {
+                    "id": "unit",
+                    "value": "kwatth"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 30
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 50
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cost"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "unit",
+                    "value": "currencyUSD"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 10
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 10,
+            "x": 0,
+            "y": 8
+          },
+          "hideTimeOverride": false,
+          "id": 32,
+          "interval": "1d",
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerUsage = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerCost = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
+              "refId": "B"
+            }
+          ],
+          "timeFrom": "7d",
+          "title": "This Week Consumption/Costs",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "OB": {
+                      "text": "On Battery"
+                    },
+                    "OL": {
+                      "text": "AC Power"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 0
+                  },
+                  {
+                    "color": "#d44a3a"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 10,
+            "y": 8
+          },
+          "hideTimeOverride": true,
+          "id": 56,
+          "interval": "1m",
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^ups\\.status E5130_A$/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_B",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "limit": "1",
+              "measurement": "ups_status",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.status\")\r\n  |> last()",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_B"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "now-1m",
+          "title": "UPS Status E5130_A",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "OB": {
+                      "text": "On Battery"
+                    },
+                    "OL": {
+                      "text": "AC Power"
+                    }
+                  },
+                  "type": "value"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "#299c46",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 0
+                  },
+                  {
+                    "color": "#d44a3a"
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 4,
+            "x": 10,
+            "y": 10
+          },
+          "hideTimeOverride": true,
+          "id": 46,
+          "interval": "1m",
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^ups\\.status E5130_B$/",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_B",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "limit": "1",
+              "measurement": "ups_status",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_B\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.status\")\r\n  |> last()",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_B"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "now-1m",
+          "title": "UPS Status E5130_B",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 3600,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.runtime E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.runtime E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 14,
+            "y": 10
+          },
+          "hideTimeOverride": true,
+          "id": 6,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto",
+            "text": {}
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_A",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "battery_runtime",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.runtime\")\r\n  |> last()",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "last"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "1m",
+          "title": "UPS Runtime",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "max": 100,
+              "min": 0,
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "percent"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.charge E5130_A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_A"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "battery.charge E5130_B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "E5130_B"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 5,
+            "x": 19,
+            "y": 10
+          },
+          "hideTimeOverride": true,
+          "id": 4,
+          "options": {
+            "minVizHeight": 75,
+            "minVizWidth": 75,
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showThresholdLabels": false,
+            "showThresholdMarkers": true,
+            "sizing": "auto",
+            "text": {}
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "alias": "E5130_A",
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "none"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "charge_percent",
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.charge\")\r\n  |> last()",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "slimit": "",
+              "tags": [
+                {
+                  "key": "ups",
+                  "operator": "=",
+                  "value": "E5130_A"
+                }
+              ]
+            }
+          ],
+          "timeFrom": "60s",
+          "title": "Battery Charge",
+          "type": "gauge"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 10,
+            "y": 12
+          },
+          "hideTimeOverride": true,
+          "id": 57,
+          "maxDataPoints": 1440,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * 24.0}))  ",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Estimated Daily KW/h",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 12,
+            "y": 12
+          },
+          "hideTimeOverride": true,
+          "id": 60,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * 24.0 * ${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Estimated Daily $",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-BlYlRd"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 0,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Power Usage"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "bars"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  },
+                  {
+                    "id": "unit",
+                    "value": "kwatth"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 30
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 50
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cost"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "unit",
+                    "value": "currencyUSD"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 10
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 10,
+            "x": 0,
+            "y": 13
+          },
+          "hideTimeOverride": false,
+          "id": 47,
+          "interval": "1d",
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerUsage = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerCost = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
+              "refId": "B"
+            }
+          ],
+          "timeFrom": "30d",
+          "title": "Last 30 Days Consumption/Costs",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 10,
+            "y": 14
+          },
+          "hideTimeOverride": true,
+          "id": 59,
+          "maxDataPoints": 1440,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value/1000.0 }))  ",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Instant Usage Estimate",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 12,
+            "y": 14
+          },
+          "hideTimeOverride": true,
+          "id": 58,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * ${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Instant Cost Estimate",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 20,
+            "y": 15
+          },
+          "hideTimeOverride": true,
+          "id": 41,
+          "maxDataPoints": 1440,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Last 24hrs Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 22,
+            "y": 15
+          },
+          "hideTimeOverride": true,
+          "id": 22,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Last 24hrs Cost",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 20,
+            "y": 17
+          },
+          "hideTimeOverride": true,
+          "id": 16,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "7d",
+          "title": "Last 7 Days Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 22,
+            "y": 17
+          },
+          "hideTimeOverride": true,
+          "id": 24,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "now/w",
+          "title": "Last 7 Days Cost",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "continuous-BlYlRd"
+              },
+              "custom": {
+                "axisBorderShow": false,
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "barWidthFactor": 0.6,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 0,
+                "pointSize": 1,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "normal"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "links": [],
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "A"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Power Usage"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "bars"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 1
+                  },
+                  {
+                    "id": "unit",
+                    "value": "kwatth"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 30
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 50
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byFrameRefID",
+                  "options": "B"
+                },
+                "properties": [
+                  {
+                    "id": "displayName",
+                    "value": "Cost"
+                  },
+                  {
+                    "id": "custom.drawStyle",
+                    "value": "line"
+                  },
+                  {
+                    "id": "custom.lineWidth",
+                    "value": 2
+                  },
+                  {
+                    "id": "unit",
+                    "value": "currencyUSD"
+                  },
+                  {
+                    "id": "custom.barAlignment",
+                    "value": 0
+                  },
+                  {
+                    "id": "max",
+                    "value": 10
+                  },
+                  {
+                    "id": "custom.fillOpacity",
+                    "value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 7,
+            "w": 20,
+            "x": 0,
+            "y": 18
+          },
+          "hideTimeOverride": false,
+          "id": 48,
+          "interval": "1d",
+          "options": {
+            "legend": {
+              "calcs": [],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "maxHeight": 600,
+              "mode": "single",
+              "sort": "none"
+            }
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0}))\r\n  |> yield(name: \"PowerUsage\")",
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "hide": false,
+              "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0* ${kwhprice}}))\r\n  |> yield(name: \"PowerUsage\")",
+              "refId": "B"
+            }
+          ],
+          "timeFrom": "365d",
+          "title": "Last 365 Days Consumption/Costs",
+          "type": "timeseries"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 20,
+            "y": 19
+          },
+          "hideTimeOverride": true,
+          "id": 49,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              },
+              "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "30d",
+          "title": "Last 30 Days Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 22,
+            "y": 19
+          },
+          "hideTimeOverride": true,
+          "id": 50,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0 *${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "30d",
+          "title": "Last 30 Days Cost",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "kwatth"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 20,
+            "y": 21
+          },
+          "hideTimeOverride": true,
+          "id": 52,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "none",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "365d",
+          "title": "Last 365 Days Usage",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "decimals": 2,
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "currencyUSD"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 2,
+            "x": 22,
+            "y": 21
+          },
+          "hideTimeOverride": true,
+          "id": 53,
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "none",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "percentChangeColorMode": "standard",
+            "reduceOptions": {
+              "calcs": [
+                "sum"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "showPercentChange": false,
+            "text": {},
+            "textMode": "auto",
+            "wideLayout": true
+          },
+          "pluginVersion": "11.4.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "influxdb",
+                "uid": "sKrgDzgVk"
+              },
+              "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0*${kwhprice}}))\r\n",
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "365d",
+          "title": "Last 365 Days Cost",
+          "type": "stat"
+        }
+      ],
+      "preload": false,
+      "refresh": "30s",
+      "schemaVersion": 40,
+      "tags": [],
+      "templating": {
+        "list": [
+          {
+            "current": {
+              "text": "0.13",
+              "value": "0.13"
+            },
+            "includeAll": false,
+            "label": "kWh Price",
+            "name": "kwhprice",
+            "options": [
+              {
+                "selected": false,
+                "text": "0.01",
+                "value": "0.01"
+              },
+              {
+                "selected": false,
+                "text": "0.02",
+                "value": "0.02"
+              },
+              {
+                "selected": false,
+                "text": "0.03",
+                "value": "0.03"
+              },
+              {
+                "selected": false,
+                "text": "0.04",
+                "value": "0.04"
+              },
+              {
+                "selected": false,
+                "text": "0.05",
+                "value": "0.05"
+              },
+              {
+                "selected": false,
+                "text": "0.06",
+                "value": "0.06"
+              },
+              {
+                "selected": false,
+                "text": "0.07",
+                "value": "0.07"
+              },
+              {
+                "selected": false,
+                "text": "0.08",
+                "value": "0.08"
+              },
+              {
+                "selected": false,
+                "text": "0.09",
+                "value": "0.09"
+              },
+              {
+                "selected": false,
+                "text": "0.1",
+                "value": "0.1"
+              },
+              {
+                "selected": false,
+                "text": "0.11",
+                "value": "0.11"
+              },
+              {
+                "selected": false,
+                "text": "0.12",
+                "value": "0.12"
+              },
+              {
+                "selected": true,
+                "text": "0.13",
+                "value": "0.13"
+              },
+              {
+                "selected": false,
+                "text": "0.14",
+                "value": "0.14"
+              },
+              {
+                "selected": false,
+                "text": "0.15",
+                "value": "0.15"
+              },
+              {
+                "selected": false,
+                "text": "0.16",
+                "value": "0.16"
+              },
+              {
+                "selected": false,
+                "text": "0.17",
+                "value": "0.17"
+              },
+              {
+                "selected": false,
+                "text": "0.18",
+                "value": "0.18"
+              },
+              {
+                "selected": false,
+                "text": "0.19",
+                "value": "0.19"
+              },
+              {
+                "selected": false,
+                "text": "0.2",
+                "value": "0.2"
+              },
+              {
+                "selected": false,
+                "text": "0.3",
+                "value": "0.3"
+              },
+              {
+                "selected": false,
+                "text": "0.4",
+                "value": "0.4"
+              },
+              {
+                "selected": false,
+                "text": "0.5",
+                "value": "0.5"
+              },
+              {
+                "selected": false,
+                "text": "0.6",
+                "value": "0.6"
+              },
+              {
+                "selected": false,
+                "text": "0.65",
+                "value": "0.65"
+              },
+              {
+                "selected": false,
+                "text": "0.7",
+                "value": "0.7"
+              },
+              {
+                "selected": false,
+                "text": "0.8",
+                "value": "0.8"
+              },
+              {
+                "selected": false,
+                "text": "0.9",
+                "value": "0.9"
+              },
+              {
+                "selected": false,
+                "text": "1",
+                "value": "1"
+              }
+            ],
+            "query": "0.01,0.02,0.03,0.04,0.05,0.06,0.07,0.08,0.09,0.1,0.11,0.12,0.13,0.14,0.15,0.16,0.17,0.18,0.19,0.2,0.3,0.4,0.5,0.6,0.65,0.7,0.8,0.9,1",
+            "type": "custom"
+          },
+          {
+            "current": {
+              "text": "upsdata/month",
+              "value": "upsdata/month"
+            },
+            "datasource": {
+              "type": "influxdb",
+              "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            },
+            "definition": "    //Bucketfilter to filter only buckets beginning with name upsdata..\r\n    bucketfilter = /upsdata.*/\r\n\r\n    buckets()\r\n    |> filter(fn: (r) => r.name =~ bucketfilter)\r\n    //convert retentionperiod from nanosecond to days\r\n    |> map(fn: (r) => ({r with retentionPeriodinDays: r.retentionPeriod / 86400000000000})   )\r\n    //replace retentionpolicy infinity with a high number in NS\r\n    |> map(fn: (r) => ({r with retentionPeriod: if r.retentionPeriod == 0 then 999999999999999999\r\n        else r.retentionPeriod})\r\n    )\r\n    //calculate the duration from \"to\" and \"from\" timespan and convert it to nanosecond\r\n    |> map(fn: (r) => ({r with \r\n        DashboardDurationinNS: (${__to} - ${__from}) * 1000000})\r\n    )\r\n    |> filter(fn: (r) => \r\n        r.DashboardDurationinNS <= r.retentionPeriod and\r\n        r.retentionPeriod >= uint(v: now()) - uint(v: ${__from} * 1000000)\r\n    )\r\n    |> sort(columns: [\"retentionPeriod\"], desc: false)\r\n    |> limit(n: 1)\r\n    |> keep(columns: [\"name\"]) //remove all fields except for \"name\"",
+            "includeAll": false,
+            "name": "dynamicbucket",
+            "options": [],
+            "query": "    //Bucketfilter to filter only buckets beginning with name upsdata..\r\n    bucketfilter = /upsdata.*/\r\n\r\n    buckets()\r\n    |> filter(fn: (r) => r.name =~ bucketfilter)\r\n    //convert retentionperiod from nanosecond to days\r\n    |> map(fn: (r) => ({r with retentionPeriodinDays: r.retentionPeriod / 86400000000000})   )\r\n    //replace retentionpolicy infinity with a high number in NS\r\n    |> map(fn: (r) => ({r with retentionPeriod: if r.retentionPeriod == 0 then 999999999999999999\r\n        else r.retentionPeriod})\r\n    )\r\n    //calculate the duration from \"to\" and \"from\" timespan and convert it to nanosecond\r\n    |> map(fn: (r) => ({r with \r\n        DashboardDurationinNS: (${__to} - ${__from}) * 1000000})\r\n    )\r\n    |> filter(fn: (r) => \r\n        r.DashboardDurationinNS <= r.retentionPeriod and\r\n        r.retentionPeriod >= uint(v: now()) - uint(v: ${__from} * 1000000)\r\n    )\r\n    |> sort(columns: [\"retentionPeriod\"], desc: false)\r\n    |> limit(n: 1)\r\n    |> keep(columns: [\"name\"]) //remove all fields except for \"name\"",
+            "refresh": 1,
+            "regex": "",
+            "type": "query"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-7d",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "UPS Dashboard",
+      "uid": "9z3XNkg4k",
+      "version": 18,
+      "weekStart": ""
+    }      
