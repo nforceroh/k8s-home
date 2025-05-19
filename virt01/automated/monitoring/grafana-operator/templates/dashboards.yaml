@@ -17,7 +17,7 @@ metadata:
 spec:
   datasources:
     - inputName: "DS_INFLUX"
-      datasourceName: "influx"
+      datasourceName: "influxdb"
   resyncPeriod: 30s
   instanceSelector:
     matchLabels:
