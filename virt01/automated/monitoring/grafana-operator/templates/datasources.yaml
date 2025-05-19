@@ -30,10 +30,11 @@ spec:
     type: influxdb
     access: proxy
     url: "http://influxdb-svc.databases.svc.cluster.local:8086"
-    isDefault: true
+    isDefault: false
     jsonData:
       "defaultBucket": "upsdata/autogen"
       "httpMode": "POST"
       "organization": "nf"
       "version": "Flux"
       "tlsSkipVerify": true
+      "token": "2MMV2Fc4HfueJHozVHsqUfPm-d4kTWfvo-SgJKm00gBbQVg_t3d2kJ4K7Y3eItfueun_Lqb9B5HWVYnSD_p97w=="
