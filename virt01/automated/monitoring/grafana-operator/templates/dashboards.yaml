@@ -323,7 +323,7 @@ spec:
               "alias": "Alpha UPS Load",
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -373,7 +373,7 @@ spec:
               "alias": "Alpha Watts",
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -422,7 +422,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> drop(columns: [\"_field\"])\r\n  |> yield(name: \"TotalPowerUsage\")",
@@ -436,7 +436,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -534,7 +534,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.charge\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
               "refId": "A"
@@ -546,7 +546,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -660,7 +660,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"input.voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
               "refId": "A"
@@ -673,7 +673,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -756,7 +756,7 @@ spec:
               "alias": "E5130_A",
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -810,7 +810,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -893,7 +893,7 @@ spec:
               "alias": "E5130_A",
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -947,7 +947,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1106,7 +1106,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerUsage = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
@@ -1115,7 +1115,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerCost = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
@@ -1129,7 +1129,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1203,7 +1203,7 @@ spec:
               "alias": "E5130_B",
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -1257,7 +1257,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1331,7 +1331,7 @@ spec:
               "alias": "E5130_B",
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -1385,7 +1385,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1467,7 +1467,7 @@ spec:
               "alias": "E5130_A",
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -1519,7 +1519,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1601,7 +1601,7 @@ spec:
               "alias": "E5130_A",
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "groupBy": [
                 {
@@ -1654,7 +1654,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -1724,7 +1724,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * 24.0}))  ",
@@ -1738,7 +1738,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -1807,7 +1807,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * 24.0 * ${kwhprice}}))\r\n",
               "refId": "A"
@@ -1820,7 +1820,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -1979,7 +1979,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerUsage = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
@@ -1988,7 +1988,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerCost = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
@@ -2002,7 +2002,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2072,7 +2072,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value/1000.0 }))  ",
@@ -2086,7 +2086,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2155,7 +2155,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -1m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1m, fn: sum, createEmpty: true)\r\n  |> last()\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0 * ${kwhprice}}))\r\n",
               "refId": "A"
@@ -2168,7 +2168,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2238,7 +2238,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
@@ -2252,7 +2252,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2321,7 +2321,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
               "refId": "A"
@@ -2334,7 +2334,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2403,7 +2403,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
               "refId": "A"
@@ -2416,7 +2416,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2485,7 +2485,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
               "refId": "A"
@@ -2498,7 +2498,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "fieldConfig": {
             "defaults": {
@@ -2657,7 +2657,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0}))\r\n  |> yield(name: \"PowerUsage\")",
@@ -2666,7 +2666,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "hide": false,
               "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0* ${kwhprice}}))\r\n  |> yield(name: \"PowerUsage\")",
@@ -2680,7 +2680,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2749,7 +2749,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
               "refId": "A"
@@ -2762,7 +2762,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2831,7 +2831,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0 *${kwhprice}}))\r\n",
               "refId": "A"
@@ -2844,7 +2844,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2913,7 +2913,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
               "refId": "A"
@@ -2926,7 +2926,7 @@ spec:
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+            "uid": "${DS_INFLUX}"
           },
           "description": "",
           "fieldConfig": {
@@ -2991,7 +2991,7 @@ spec:
             {
               "datasource": {
                 "type": "influxdb",
-                "uid": "sKrgDzgVk"
+                "uid": "${DS_INFLUX}"
               },
               "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.power\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0*${kwhprice}}))\r\n",
               "refId": "A"
@@ -3173,7 +3173,7 @@ spec:
             },
             "datasource": {
               "type": "influxdb",
-              "uid": "f8ff9c6c-4e46-4860-a2ad-c6545e136749"
+              "uid": "${DS_INFLUX}"
             },
             "definition": "    //Bucketfilter to filter only buckets beginning with name upsdata..\r\n    bucketfilter = /upsdata.*/\r\n\r\n    buckets()\r\n    |> filter(fn: (r) => r.name =~ bucketfilter)\r\n    //convert retentionperiod from nanosecond to days\r\n    |> map(fn: (r) => ({r with retentionPeriodinDays: r.retentionPeriod / 86400000000000})   )\r\n    //replace retentionpolicy infinity with a high number in NS\r\n    |> map(fn: (r) => ({r with retentionPeriod: if r.retentionPeriod == 0 then 999999999999999999\r\n        else r.retentionPeriod})\r\n    )\r\n    //calculate the duration from \"to\" and \"from\" timespan and convert it to nanosecond\r\n    |> map(fn: (r) => ({r with \r\n        DashboardDurationinNS: (${__to} - ${__from}) * 1000000})\r\n    )\r\n    |> filter(fn: (r) => \r\n        r.DashboardDurationinNS <= r.retentionPeriod and\r\n        r.retentionPeriod >= uint(v: now()) - uint(v: ${__from} * 1000000)\r\n    )\r\n    |> sort(columns: [\"retentionPeriod\"], desc: false)\r\n    |> limit(n: 1)\r\n    |> keep(columns: [\"name\"]) //remove all fields except for \"name\"",
             "includeAll": false,
