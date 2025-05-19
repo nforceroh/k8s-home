@@ -4,6 +4,9 @@ kind: GrafanaDashboard
 metadata:
   name: node-exporter-latest
 spec:
+  datasources:
+    - inputName: "DS_PROMETHEUS"
+      datasourceName: "prometheus"
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
