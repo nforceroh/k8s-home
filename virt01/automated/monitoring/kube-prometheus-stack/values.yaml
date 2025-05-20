@@ -51,18 +51,15 @@ kube-prometheus-stack:
             - prometheus.k3s.nf.lab
 
     prometheusSpec:
-      podMonitorNamespaceSelector:
-        any: true
-      podMonitorSelector: {}
-      podMonitorSelectorNilUsesHelmValues: false
-      ruleNamespaceSelector:
-        any: true
       ruleSelector: {}
+      ruleNamespaceSelector: {}
       ruleSelectorNilUsesHelmValues: false
-      serviceMonitorNamespaceSelector:
-        any: true
       serviceMonitorSelector: {}
-      serviceMonitorSelectorNilUsesHelmValues: false    
+      serviceMonitorNamespaceSelector: {}
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelector: {}
+      podMonitorNamespaceSelector: {}
+      podMonitorSelectorNilUsesHelmValues: false
       persistentVolumeClaimRetentionPolicy:
         whenDeleted: Retain
         whenScaled: Retain
