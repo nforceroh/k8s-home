@@ -29,13 +29,7 @@ spec:
             - containerPort: 3000
               name: grafana-port
               protocol: TCP
-          resources:
-            limits:
-              cpu: "1"
-              memory: "2Gi"
-            requests:
-              cpu: "10m"
-              memory: "128Mi"
+          resources: {}
           readinessProbe:
             tcpSocket:
               port: grafana-port
