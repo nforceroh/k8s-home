@@ -32,6 +32,21 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
+  name: k8s-memory-namespace
+  namespace: monitoring
+spec:
+  datasources:
+    - inputName: "DS_PROMETHEUS"
+      datasourceName: "prometheus"
+  instanceSelector:
+    matchLabels:
+      dashboards: "grafana"
+  grafanaCom:
+    id: 13421
+---
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDashboard
+metadata:
   name: ups-dashboard
   namespace: monitoring
 spec:
