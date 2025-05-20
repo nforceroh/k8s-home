@@ -19,7 +19,7 @@ idrac-exporter:
       storage: true
       memory: true
       network: true
-      oem: true
+      oem:  false
     events:
       severity: warning
       maxage: 7d
