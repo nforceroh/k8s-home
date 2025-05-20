@@ -6,7 +6,17 @@ stringData:
       - targets: ["zyxel01.v101.nf.lab:9100", "zyxel02.v101.nf.lab:9100"]  
     - job_name: "opnsense"
       static_configs:
-      - targets: ["192.168.101.1:9100"]  
+      - targets: ["192.168.101.1:9100"]
+    - job_name: idrac
+      static_configs:
+        - targets: ['virt01m.v101.nf.lab', 'fw-mgmt.v101.nf.lab']
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: idrac-exporter:9348      
 kind: Secret
 metadata:
   name: additional-scrape-configs
