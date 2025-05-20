@@ -1,0 +1,13 @@
+apiVersion: v1
+stringData:
+  prometheus-additional.yaml: |
+    - job_name: "openwrt_zyxel01"
+      static_configs:
+      - targets: ["zyxel01.v101.nf.lab:9100"]  
+    - job_name: "openwrt_zyxel02"
+      static_configs:
+      - targets: ["zyxel02.v101.nf.lab:9100"]  
+kind: Secret
+metadata:
+  name: additional-scrape-configs
+  namespace: monitoring
