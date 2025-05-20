@@ -1,0 +1,32 @@
+---
+idrac-exporter:
+  idracConfig: |
+    address: 0.0.0.0
+    port: 9348
+    timeout: 60
+    hosts:
+      virt01m.v101.nf.lab:
+        username: monitor
+        password: monitor
+      fw-mgmt.v101.nf.lab:
+        username: monitor
+        password: monitor
+    metrics:
+      system: true
+      sensors: true
+      power: true
+      events: true
+      storage: true
+      memory: true
+      network: true
+      oem: true
+    events:
+      severity: warning
+      maxage: 7d
+
+  prometheus:
+    monitor:
+      enabled: true
+
+    rules:
+      enabled: true
