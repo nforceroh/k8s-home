@@ -60,7 +60,8 @@ kube-prometheus-stack:
       podMonitorSelector: {}
       podMonitorNamespaceSelector: {}
       podMonitorSelectorNilUsesHelmValues: false
-      additionalScrapeConfigs:
+      additionalScrapeConfigsSecret:
+        enabled: true
         name: additional-scrape-configs
         key: prometheus-additional.yaml
       persistentVolumeClaimRetentionPolicy:
