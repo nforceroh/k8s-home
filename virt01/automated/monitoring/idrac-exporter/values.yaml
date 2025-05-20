@@ -27,6 +27,3 @@ idrac-exporter:
   prometheus:
     monitor:
       enabled: true
-
-    rules:
-      enabled: true
