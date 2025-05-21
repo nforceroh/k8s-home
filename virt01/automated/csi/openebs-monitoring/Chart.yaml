@@ -1,7 +1,0 @@
-name: monitoring
-apiVersion: v2
-version: 1.0.0
-dependencies:
-- name: monitoring
-  repository: https://openebs.github.io/monitoring/
-  version: 4.0.1
