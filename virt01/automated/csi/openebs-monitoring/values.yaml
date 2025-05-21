@@ -12,6 +12,9 @@ monitoring:
   grafana:
     enabled: false
 
+  localpv-provisioner:
+    enabled: false
+    
   openebsMonitoringAddon:
     lvmLocalPV:
       enabled: false
