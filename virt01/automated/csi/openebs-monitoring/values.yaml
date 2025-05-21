@@ -1,0 +1,18 @@
+
+openebs-monitoring:
+  alertmanager:
+    enabled: false
+
+  prometheusOperator:
+    enabled: false
+
+  grafana:
+    enabled: false
+
+  ## Enabling service monitors of npd
+  metrics:
+    serviceMonitor:
+      enabled: true
+
+  mayastor:
+    enabled: false
