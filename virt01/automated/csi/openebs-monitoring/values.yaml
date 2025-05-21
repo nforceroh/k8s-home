@@ -12,13 +12,26 @@ monitoring:
   grafana:
     enabled: false
 
-  localpv-provisioner:
-    enabled: false
-    
-  ## Enabling service monitors of npd
-  metrics:
-    serviceMonitor:
-      enabled: true
+  openebsMonitoringAddon:
+    lvmLocalPV:
+      enabled: false
 
-  mayastor:
-    enabled: false
+    npd:
+      enabled: false
+      dashboards:
+        enabled: false
+      alertRules:
+        enabled: false
+
+    volume:
+      enabled: true
+      alertRules:
+        enabled: true
+
+    zfsLocalPV:
+      enabled: true
+      dashboards:
+        enabled: true
+
+    mayastor:
+      enabled: false
