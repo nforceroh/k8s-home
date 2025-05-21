@@ -137,7 +137,7 @@ sudo sysctl --system
 
 # Initialize the cluster (master)
 ```
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 --allocate-node-cidrs=true
 ```
 
 # set up kubeconfig
@@ -157,11 +157,21 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
 kubectl label nodes virt01 node.kubernetes.io/exclude-from-external-load-balancers-
 ```
+# OR Install Calico
+```bash
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.0/manifests/flannel-migration/calico.yaml
+```
+# Install calicoctl
+```
+curl -L https://github.com/projectcalico/calico/releases/download/v3.30.0/calicoctl-linux-amd64 -o kubectl-calico
+sudo install -m 755 -o root -g root kubectl-calico /usr/local/bin
+```
 
-# Install Flannel network plugin (run only on master node):
+# OR Install Flannel network plugin (run only on master node):
 ```
 kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 ```
+
 
 # Install helm
 ```

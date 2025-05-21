@@ -51,6 +51,19 @@ kube-prometheus-stack:
             - prometheus.k3s.nf.lab
 
     prometheusSpec:
+      ruleSelector: {}
+      ruleNamespaceSelector: {}
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelector: {}
+      serviceMonitorNamespaceSelector: {}
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelector: {}
+      podMonitorNamespaceSelector: {}
+      podMonitorSelectorNilUsesHelmValues: false
+      additionalScrapeConfigsSecret:
+        enabled: true
+        name: additional-scrape-configs
+        key: prometheus-additional.yaml
       persistentVolumeClaimRetentionPolicy:
         whenDeleted: Retain
         whenScaled: Retain
