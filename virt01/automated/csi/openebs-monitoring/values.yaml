@@ -1,5 +1,8 @@
 
 openebs-monitoring:
+  kube-prometheus-stack:
+    install: false
+    
   alertmanager:
     enabled: false
 
