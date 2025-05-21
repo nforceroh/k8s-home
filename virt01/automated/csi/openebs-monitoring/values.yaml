@@ -12,6 +12,9 @@ monitoring:
   grafana:
     enabled: false
 
+  localpv-provisioner:
+    enabled: false
+    
   ## Enabling service monitors of npd
   metrics:
     serviceMonitor:
