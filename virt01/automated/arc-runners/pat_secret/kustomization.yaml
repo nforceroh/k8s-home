@@ -4,5 +4,5 @@ kind: Kustomization
 namespace: arc-runners
 
 resources:
-  - github-pat-secret.yaml
+  - github-pat-sealed.yaml
 
