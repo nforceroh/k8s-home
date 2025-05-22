@@ -8,4 +8,4 @@ gha-runner-scale-set:
 
   controllerServiceAccount:
     namespace: arc-runners
-#    name: arc-gha-runner-scale-set-controller
+    name: gha-runner-scale-set-controller-gha-rs-controller
