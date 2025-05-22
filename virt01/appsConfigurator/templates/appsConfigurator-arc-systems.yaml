@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata: 
-  name: arc-system
+  name: arc-systems
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
@@ -11,7 +11,7 @@ spec:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
       revision: main
       directories:
-        - path: virt01/automated/arc-system/*
+        - path: virt01/automated/arc-systems/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
@@ -23,7 +23,7 @@ spec:
         path:  "{{`{{ path }}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace:  arc-system
+        namespace:  arc-systems
       syncPolicy:
         syncOptions:
         - CreateNamespace=true
