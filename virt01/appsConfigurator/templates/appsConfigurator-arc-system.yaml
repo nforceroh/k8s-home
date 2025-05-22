@@ -11,7 +11,7 @@ spec:
       repoURL: 'https://github.com/nforceroh/k8s-home.git'
       revision: main
       directories:
-        - path: virt01/automated/arc-systems/*
+        - path: virt01/automated/arc-system/*
   template:
     metadata:
       name:  "{{`{{ path.basename }}`}}"
