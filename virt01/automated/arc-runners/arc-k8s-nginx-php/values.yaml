@@ -1,0 +1,11 @@
+---
+gha-runner-scale-set:
+  githubConfigUrl: https://github.com/nforceroh/k8s-nginx-php
+  githubConfigSecret: github-pat-secret
+  containerMode:
+    type: "dind"  ## type can be set to dind or kubernetes
+
+
+  controllerServiceAccount:
+    namespace: arc-runners
+    name: gha-runner-scale-set-controller-gha-rs-controller
