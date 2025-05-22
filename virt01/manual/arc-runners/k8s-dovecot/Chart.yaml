@@ -1,7 +1,0 @@
-apiVersion: v2
-name: k8s-dovecot
-version: 1.0.0
-dependencies:
-- name: gha-runner-scale-set
-  repository: oci://ghcr.io/actions/actions-runner-controller-charts
-  version: 0.10.1

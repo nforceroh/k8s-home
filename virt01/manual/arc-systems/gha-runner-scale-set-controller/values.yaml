@@ -1,6 +1,0 @@
----
-
-gha-runner-scale-set-controller:
-  serviceAccount:
-    create: true
-    name: arc-gha-runner-scale-set-controller

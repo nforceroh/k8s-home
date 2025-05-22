@@ -4,8 +4,6 @@ gha-runner-scale-set:
   githubConfigSecret: github-pat-secret
   containerMode:
     type: "dind"  ## type can be set to dind or kubernetes
-
-
   #controllerServiceAccount:
   #  create: true
 #    name: arc-gha-runner-scale-set-controller

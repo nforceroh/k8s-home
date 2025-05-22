@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: github-pat-secret
+  namespace: arc-runners
+spec:
+  encryptedData:
+    github_token: AgCVjjZYe7Ic5QCA9Ghii+rgx8yjah+KqFdvav2z6aiX5zxJMGm34RiSTL1lIOpXhzw+0fcSfAocWEc8GMCEvVc/2WiCWsV4XyvnJcVKR0A+n7+ekQtbpF5Xt+EnStXb8qJPFOkOAfU4zGOVHJ75tsJgA30+rdDbifI2WtPOO95y0tYJPXXujKUEvCT8e2jOVb867bpr/+0cDcXEkDiKCcioS8gYufWV6FeD5zhwVKq7A3VVhBxYHB+0ReNWLtLBiD6mT0cBB3coijNbALL/6g2nIt+ARUwUN/WfmnQSrB6rhGuKsAMLGBnXya2TbCR1bdxY5tDXer+L6HEH1ciyWJpr8F/TdDjCXkA+zpA1t0ExySdymhqiaXX6wJvi2KB9iSpf3J/DvoeTwi5CovSCCo7QqCcqpjP7++iYuNP2R2I+efvoN81hc0B5MhPGcZR6sWVa4t2wEJerJ/XLAL2WA1rdMO+hnIV49NSmcRjEpVvOxMeYGF9qokU4MpispVb/LjPSLWnnH7K6mXUcEHCqK2FxfeZ9OiKJpxtJGzc48zXji70RMP1Iu5siq6+WqeI6sQVQVNbjfaern1eFrjbD36ikkCtngLIucyRuhU81nBmXNYWyHn23earZ5RMsJ/uywGRHE/bNtIJPBw2tlZ+gHnGinVfKNVvLyE+wRbJq2aU2N+an9kbe8KHbHh5rsjLG0+sTMQ2XeJIq57E52lttgMvPBwITQ/24fqwV4nligml6or0S6IboUTJR
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: github-pat-secret
+      namespace: arc-runners

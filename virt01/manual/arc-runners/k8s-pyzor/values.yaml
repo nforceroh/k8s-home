@@ -1,6 +1,0 @@
----
-gha-runner-scale-set:
-  githubConfigUrl: "https://github.com/nforceroh/k8s-alpine-baseimage"
-  githubConfigSecret: github-pat-secret
-  containerMode:
-    type: "dind"  ## type can be set to dind or kubernetes

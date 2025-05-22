@@ -1,0 +1,8 @@
+---
+
+gha-runner-scale-set-controller:
+  serviceAccount:
+    create: true
+  flags:
+    watchSingleNamespace: "arc-runners"
+#    name: arc-gha-runner-scale-set-controller
