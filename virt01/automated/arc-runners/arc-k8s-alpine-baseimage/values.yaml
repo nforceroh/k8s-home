@@ -6,6 +6,6 @@ gha-runner-scale-set:
     type: "dind"  ## type can be set to dind or kubernetes
 
 
-  #controllerServiceAccount:
-  #  create: true
+  controllerServiceAccount:
+    create: true
 #    name: arc-gha-runner-scale-set-controller
