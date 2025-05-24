@@ -7,7 +7,7 @@ MAXTEMP=40
 FANSPEED=5
 
 function get_temp {
-  local TEMP=$(ipmitool -I lanplus -H $IDRAC_HOST -U $IDRAC_USER -P $IDRAC_PW sdr type temperature | grep Exhaust | grep -o -e '[0-9][0-9] degrees' | grep -o -e '[0-9][0-9]')
+  local TEMP=$(ipmitool -I lanplus -H $IDRAC_HOST -U $IDRAC_USER -P $IDRAC_PW sdr type temperature | egrep "01h|^Temp"|head -1 | grep -o -e '[0-9][0-9] degrees' | grep -o -e '[0-9][0-9]')
   echo $TEMP
 }
 
@@ -26,7 +26,7 @@ function set_speed {
 for IDRAC_HOST in 192.168.101.200 192.168.101.199; do
   echo "Setting fan speed for $IDRAC_HOST"
   TEMP=$(get_temp)
-  if [ $TEMP -gt $MAXTEMP ]; then
+  if [[ -n "$TEMP" && -n "$MAXTEMP" && "$TEMP" =~ ^[0-9]+$ && "$MAXTEMP" =~ ^[0-9]+$ && $TEMP -gt $MAXTEMP ]]; then
     echo "Exhaust Temperature is $TEMP C - Temperature is too high; using dynamic fan control"
     set_dynamic 1
   else
