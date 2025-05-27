@@ -3,8 +3,8 @@ kube-prometheus-stack:
   alertmanager:
     ingress:
       enabled: true
+      ingressClassName: traefik
       annotations: 
-        ingressClassName: traefik
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
@@ -20,8 +20,8 @@ kube-prometheus-stack:
     adminPassword: prom-operator
     ingress:
       enabled: true
-      annotations: 
-        ingressClassName: traefik
+      ingressClassName: traefik
+      annotations:         
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
