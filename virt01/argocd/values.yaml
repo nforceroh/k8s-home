@@ -37,3 +37,14 @@ argo-cd:
   applicationSet:
     certificate:
       domain: argo.k3s.nf.lab
+  
+  controller:
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: monitoring
+        interval: 30s
+    rules:
+      enabled: true
+      namespace: monitoring
