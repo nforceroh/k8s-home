@@ -23,7 +23,7 @@ external-dns:
     name: pdns
   env:
     - name: EXTERNAL_DNS_PDNS_SERVER
-      value: "http://ns.example.com:8081"
+      value: http://10.0.0.2:8081
     - name: EXTERNAL_DNS_PDNS_API_KEY
       valueFrom:
         secretKeyRef:
