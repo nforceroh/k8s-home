@@ -1,0 +1,41 @@
+---
+influxdb2:
+  livenessProbe:
+    path: "/health"
+    scheme: "HTTP"
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 3
+
+  readinessProbe:
+    path: "/health"
+    scheme: "HTTP"
+    initialDelaySeconds: 0
+    periodSeconds: 10
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+
+  adminUser:
+    user: admin
+    organization: nf
+    bucket: primary
+    existingSecret: influxdb2-auth
+
+  persistence:
+    enabled: true
+    useExisting: true
+    name: influxdb2-pv
+
+  ingress:
+    enabled: true
+    tls: true
+    secretName: influxdb2-tls
+    hostname: influxdb2.k3s.nf.lab
+    ingressClassName: traefik
+    annotations: 
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
