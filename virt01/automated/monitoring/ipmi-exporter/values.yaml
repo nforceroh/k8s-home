@@ -1,7 +1,7 @@
 ---
 prometheus-ipmi-exporter:
   serviceMonitor:
-    enabled: true
+    enabled: false
 
   modules:
     virt01m.v101.nf.lab:
