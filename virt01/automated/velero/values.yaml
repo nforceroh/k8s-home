@@ -33,13 +33,6 @@ velero:
     volumeMounts:
       - mountPath: /target
         name: plugins
-  metrics:
-    serviceMonitor:
-      enabled: true
-    nodeAgentPodMonitor:
-      enabled: true
-    prometheusRule:
-      enabled: true
 
   configuration:
     features: EnableCSI,EnableAPIGroupVersions
@@ -77,3 +70,28 @@ velero:
     image:
       repository: harbor.nf.lab/proxy.docker.io/bitnami/kubectl
 
+
+  metrics:
+    serviceMonitor:
+      enabled: true
+    nodeAgentPodMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: true
+      spec:
+        - alert: VeleroBackupPartialFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} partialy failed backups.
+          expr: |-
+            velero_backup_partial_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning
+        - alert: VeleroBackupFailures
+          annotations:
+            message: Velero backup {{ $labels.schedule }} has {{ $value | humanizePercentage }} failed backups.
+          expr: |-
+            velero_backup_failure_total{schedule!=""} / velero_backup_attempt_total{schedule!=""} > 0.25
+          for: 15m
+          labels:
+            severity: warning

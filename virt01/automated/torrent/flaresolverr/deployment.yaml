@@ -19,7 +19,7 @@ spec:
       serviceAccountName: flaresolverr-sa
       containers:
         - name: flaresolverr
-          image: harbor.nf.lab/proxy.docker.io/flaresolverr/flaresolverr:latest
+          image: ghcr.io/flaresolverr/flaresolverr:latest
           imagePullPolicy: Always
           ports:
             - name: fs-port
