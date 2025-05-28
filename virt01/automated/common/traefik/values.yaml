@@ -30,7 +30,7 @@ traefik:
       enabled: true
       # Custom match rule with host domain
       matchRule: Host(`traefik.k3s.nf.lab`)
-      entryPoints: ["traefik"]
+      entryPoints: ["websecure", "traefik"]
       # Add custom middlewares : authentication and redirection
       tls:
         secretName: traefik-tls
