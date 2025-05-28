@@ -1,6 +1,11 @@
 # https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
 
-image:
-  registry: harbor.nf.lab/proxy.docker.io
-  repository: bitnami/sealed-secrets-controller
-keyrenewperiod: 0
+sealed-secrets:
+  image:
+    registry: harbor.nf.lab/proxy.docker.io
+    repository: bitnami/sealed-secrets-controller
+  keyrenewperiod: 0
+
+  metrics:
+    serviceMonitor:
+      enabled: true
