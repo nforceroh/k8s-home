@@ -28,7 +28,6 @@ traefik:
   ingressRoute:
     dashboard:
       enabled: true
-        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       # Custom match rule with host domain
       matchRule: Host(`traefik.k3s.nf.lab`)
       entryPoints: ["traefik"]
