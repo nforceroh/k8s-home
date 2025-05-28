@@ -5,7 +5,8 @@ metallb:
     # ignore the exclude-from-external-loadbalancer label
     ignoreExcludeLB: true
   prometheus:
-    enabled: true
+    serviceAccount: "kube-prometheus-stack-operator"
+    namespace: "monitoring"  
     serviceMonitor:
       enabled: true
     prometheusRule:
