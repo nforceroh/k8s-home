@@ -19,33 +19,6 @@ stringData:
           target_label: instance
         - target_label: __address__
           replacement: idrac-exporter:9348      
-    - job_name: ipmi
-      params:
-        module: ['default']
-      scrape_interval: 1m
-      scrape_timeout: 30s
-      metrics_path: /ipmi
-      scheme: http
-      static_configs:
-        - targets: ['virt01m.v101.nf.lab', 'fw-mgmt.v101.nf.lab']
-      relabel_configs:
-        - source_labels: [__address__]
-          separator: ;
-          regex: (.*)
-          target_label: __param_target
-          replacement: ${1}
-          action: replace
-        - source_labels: [__param_target]
-          separator: ;
-          regex: (.*)
-          target_label: instance
-          replacement: ${1}
-          action: replace
-        - separator: ;
-          regex: .*
-          target_label: __address__
-          replacement: ipmi-exporter-prometheus-ipmi-exporter:9290
-          action: replace          
 kind: Secret
 metadata:
   name: additional-scrape-configs
