@@ -28,25 +28,24 @@ stringData:
       scheme: http
       static_configs:
         - targets: ['virt01m.v101.nf.lab', 'fw-mgmt.v101.nf.lab']
-        refresh_interval: 5m
       relabel_configs:
-      - source_labels: [__address__]
-        separator: ;
-        regex: (.*)
-        target_label: __param_target
-        replacement: ${1}
-        action: replace
-      - source_labels: [__param_target]
-        separator: ;
-        regex: (.*)
-        target_label: instance
-        replacement: ${1}
-        action: replace
-      - separator: ;
-        regex: .*
-        target_label: __address__
-        replacement: ipmi-exporter:9290
-        action: replace          
+        - source_labels: [__address__]
+          separator: ;
+          regex: (.*)
+          target_label: __param_target
+          replacement: ${1}
+          action: replace
+        - source_labels: [__param_target]
+          separator: ;
+          regex: (.*)
+          target_label: instance
+          replacement: ${1}
+          action: replace
+        - separator: ;
+          regex: .*
+          target_label: __address__
+          replacement: ipmi-exporter:9290
+          action: replace          
 kind: Secret
 metadata:
   name: additional-scrape-configs
