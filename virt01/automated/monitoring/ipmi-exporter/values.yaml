@@ -4,6 +4,10 @@ prometheus-ipmi-exporter:
     enabled: false
 
   modules:
+    advanced: {}
+    dcmi: {}
+    default: {}
+    thatspecialhost: {}
     virt01m.v101.nf.lab:
       user: "monitor"
       pass: "monitor"
