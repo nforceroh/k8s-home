@@ -11,6 +11,16 @@ kube-prometheus-stack:
       forceEnableClusterMode: true
       alertmanagerConfigMatcherStrategy: 
         type: None
+      persistentVolumeClaimRetentionPolicy:
+        whenDeleted: Retain
+        whenScaled: Retain
+      storage:
+        volumeClaimTemplate:
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 10Gi
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -26,22 +36,7 @@ kube-prometheus-stack:
           hosts:
             - alertmanager.k3s.nf.lab
   grafana:
-    enabled: true
-    adminPassword: prom-operator
-    ingress:
-      enabled: true
-      ingressClassName: traefik
-      annotations:         
-        cert-manager.io/cluster-issuer: nf-lab
-        cert-manager.io/private-key-rotation-policy: Always
-        traefik.ingress.kubernetes.io/router.entrypoints: websecure
-        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-      hosts:
-        - grafana-prom.k3s.nf.lab
-      tls:
-        - secretName: grafana-prom-general-tls
-          hosts:
-            - grafana-prom.k3s.nf.lab
+    enabled: false
 
   prometheus:
     enabled: true
