@@ -27,8 +27,5 @@ cloudflare-tunnel:
 
   image:
     repository: cloudflare/cloudflared
-    pullPolicy: IfNotPresent
-    # If supplied, this overrides "appVersion"
-    tag: "2024.12.2"
-
+ 
   replicaCount: 1

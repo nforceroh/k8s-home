@@ -4,6 +4,8 @@ metadata:
   name: wbridge
   labels:
     app: wbridge
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   strategy:

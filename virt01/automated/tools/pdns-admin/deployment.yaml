@@ -4,6 +4,8 @@ metadata:
   name: pdns-admin
   labels:
     app: pdns-admin
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   strategy:

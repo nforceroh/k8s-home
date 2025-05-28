@@ -1,21 +1,14 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
 
 external-dns:
-  image:
-    registry: harbor.nf.lab/proxy.docker.io
-    repository: bitnami/external-dns
+  serviceMonitor:
+    enabled: true
   ## Watch these resources for new DNS records
   sources:
+    - crd
     - ingress
     - service
-    
-  ## use google as the dns provider
-  provider: pdns
 
-  pdns:
-    apiUrl: http://10.0.0.2
-    apiPort: 8081
-    secretName: external-dns-pdns
   ## List of domains that can be managed. 
   domainFilters: ["nf.lab", "k3s.nf.lab", "test.nf.lab"]
   #domainFilters: ["test.nf.lab"]
@@ -23,22 +16,16 @@ external-dns:
   registry: "txt"
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
-  logLevel: debug
+  logLevel: info
   policy: upsert-only
-  #policy: sync
 
-  ## Limit external-dns resources
-  resources:
-    limits:
-      memory: 1Gi
-    requests:
-      memory: 50Mi
-      cpu: 10m
-  ## ensure RBAC is enabled
-  rbac:
-    create: true
-    apiVersion: v1
-
-  serviceMonitor:
-    enabled: true
-    namespace: monitoring
+  provider: 
+    name: pdns
+  env:
+    - name: EXTERNAL_DNS_PDNS_SERVER
+      value: "http://ns.example.com:8081"
+    - name: EXTERNAL_DNS_PDNS_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: external-dns-pdns
+          key: pdns_api_key

@@ -4,6 +4,8 @@ metadata:
   name: coqui
   labels:
     app: coqui
+  annotations:
+  reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   strategy:

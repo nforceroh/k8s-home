@@ -1,26 +1,16 @@
 ---
 # https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
-image:
-  repository: harbor.nf.lab/proxy.quay.io/jetstack/cert-manager-controller
-
 cert-manager:
-  installCRDs: true
+  crds:
+    enabled: true
+    keep: true
   podDnsPolicy: "None"
   podDnsConfig:
     nameservers:
       - "10.0.0.1"
 
-prometheus:
-  enabled: true
-  servicemonitor:
+  prometheus:
     enabled: true
-    prometheusInstance: default
-    targetPort: 9402
-    path: /metrics
-    interval: 60s
-    scrapeTimeout: 30s
-    labels: {}
-    annotations: {}
-    honorLabels: false
-    endpointAdditionalProperties: {}
+    servicemonitor:
+      enabled: true
