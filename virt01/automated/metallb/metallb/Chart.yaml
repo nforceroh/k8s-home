@@ -1,5 +1,5 @@
-name: metallb
 apiVersion: v2
+name: metallb
 version: 1.0.1
 dependencies:
 - name: metallb

@@ -1,5 +1,5 @@
-name: velero
 apiVersion: v2
+name: velero
 version: 1.0.0
 dependencies:
 - name: velero

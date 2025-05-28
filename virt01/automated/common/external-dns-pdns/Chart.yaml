@@ -1,5 +1,5 @@
-name: external-dns
 apiVersion: v2
+name: external-dns
 version: 1.0.0
 dependencies:
 - name: external-dns

@@ -50,7 +50,23 @@ network:
 # Update the system and install dependencies:
 ```
 sudo apt update && sudo apt upgrade -y
-sudo apt install apt-transport-https curl containerd psmisc -y
+sudo apt install apt-transport-https curl containerd psmisc tlp-stat -y
+```
+
+## Install racadm
+```bash
+wget -U="Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0" "https://dl.dell.com/FOLDER08952875M/1/Dell-iDRACTools-Web-LX-11.0.0.0-5139_A00.tar.gz?uid=fddb997f-1529-47ea-f794-f5a7a5ef564d&fn=Dell-iDRACTools-Web-LX-11.0.0.0" -O /tmp/idrac.tar.gz
+cd /tmp
+tar xvfz idrac.tar.gz 
+cd /tmp/iDRACTools/racadm/UBUNTU22/x86_64
+
+apt install libargtable2-0
+dpkg -i srvadmin-*.deb
+sudo ln -s /opt/dell/srvadmin/bin/idracadm7 /usr/local/bin/racadm
+cd /tmp
+rm -rf idrac.tar.gz iDRACTools
+
+racadm getsysinfo
 ```
 
 # disable AppArmor

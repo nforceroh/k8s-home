@@ -1,5 +1,5 @@
-name: minecraft
 apiVersion: v2
+name: minecraft
 version: 1.0.0
 dependencies:
 - name: minecraft

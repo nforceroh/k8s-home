@@ -1,5 +1,5 @@
-name: mc-router
 apiVersion: v2
+name: mc-router
 version: 1.0.0
 dependencies:
 - name: mc-router

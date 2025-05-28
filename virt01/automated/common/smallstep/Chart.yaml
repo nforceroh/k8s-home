@@ -1,5 +1,5 @@
-name: step-certificates
 apiVersion: v2
+name: step-certificates
 version: 1.0.0
 dependencies:
 - name: step-certificates

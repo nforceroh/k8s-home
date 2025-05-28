@@ -1,5 +1,5 @@
-name: multus-cni
 apiVersion: v2
+name: multus-cni
 version: 1.0.0
 dependencies:
 - name: multus-cni

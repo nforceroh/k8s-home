@@ -1,5 +1,5 @@
-name: rcon-web-admin
 apiVersion: v2
+name: rcon-web-admin
 version: 1.0.0
 dependencies:
 - name: rcon-web-admin

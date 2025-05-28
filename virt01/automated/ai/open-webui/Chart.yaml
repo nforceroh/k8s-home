@@ -1,5 +1,5 @@
-name: open-webui
 apiVersion: v2
+name: open-webui
 version: 1.0.0
 dependencies:
 - name: open-webui

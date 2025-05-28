@@ -1,5 +1,5 @@
-name: openebs
 apiVersion: v2
+name: openebs
 version: 1.0.0
 dependencies:
 - name: openebs

@@ -1,5 +1,5 @@
-name: cloudflare-tunnel
 apiVersion: v2
+name: cloudflare-tunnel
 version: 1.0.0
 dependencies:
 - name: cloudflare-tunnel
