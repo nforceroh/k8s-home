@@ -1,7 +1,7 @@
 ---
 prometheus-ipmi-exporter:
   serviceMonitor:
-    enabled: false
+    enabled: true
 
   modules:
     advanced: {}
