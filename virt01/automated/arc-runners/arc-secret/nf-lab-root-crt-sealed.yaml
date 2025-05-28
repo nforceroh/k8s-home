@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: nf-lab-root-crt
+  namespace: arc-runners
+spec:
+  encryptedData:
+    ca.crt: AgDGy8ZX2WilRMfLCujxXZpi9oalfR9LPu5rsH8cTJ5RrQzWsHza/qqVMy1oPdcNDVIGvTxRXRFrusUxPeINkzZw3GGEwmpf1gYd3ZkieOV/XcUOrcLfoFuWet34ENPDVC6izrOBp3IzjKDPoZAhcfWNggjy5VLrW/uDO11J5gJCyz8SHnCpnRz29s2nblPbdAjet8pNFIHRHomfYmDRmdp6+bnVBqVTyayg50P3Obj0zutLs91IRFJHFZKL5dr71r2sINuVhV8/ye3CTjtLrvXD+FDuSGCJ2kV5PPmBmIjaPeI7Jrl7WwHdrkjNvbcUIJDN6YDEN0VK03aAXSEJ24qmAnensCdo9lslSg/nylFS2rzToLUY+OwhwTinyY2/yBf7OMT0L9XN/erF56E85g1v9DZ6Kg/68zps7AqHomqPueCUx9QlvQKTnJW4jEzB7mENhIyQSzExWgjcukNNTbUzdYZsn2dkYdwavmzviLn8MhrMPArNrJ9ubiChPgv4JzUoznhoB33Z473fNDgVBHv8CJpeJB6zvbqLlFMexkaGaqGyxTXibWn1Smb/F9i1MEZFGA421L3tabsST6hs658sSpcnwyNbclNGQonsQywK6GLQdD+g2d+rTYCwD3jheF2qsQSek4xDr9nW2J8IsUCjk7I84gNiil1vZywb1OinldsphVafEzxYXhHVT1nnurKXwSXEcakPvM7qMrJjlUersoFufvNsAy+MkDU/a8DM7+qxun8bM0iPhce391e9+I4bVN9BuPjkm5/HC/ahTiTDcDeCsH9spQP9jfGuZBwtJlTQN9lU+uGSHRUoEfm2MApzWY+/Ii8mLB4nT3mbSYfXYDz6mkEbPBKhljeF2AaAp6NwrxXjWs8Qbt7+SkNkO9LxM73/BL1uhY1sV4XpNJI8Zxc6xtxXu/L39LfxVxOR1hwMuyh9DV55cGzzKVWEwpWtmnDIp4GXZEC86Wi0PUOVAM3/Ha0zYxE+Z/zJutWxAUkSFL59RsBxOKZKZth9iQfXAzQ2L/Wf+HU5K8la58BCHn3Kn6ezqm+hmx35Jq5/miDi8G0y8VQhykNiiS4d9L+a7vrW0w3S94vRRjorLEgSM2iIo1d5IcPIlVKVIMUNGwbieq4otr225j9aYZt9CnhDwnpUOvAVFnICMo/MjFbMuSVFN9CIp+zpjEyXNEP41nmBgcwPXglSZBkoU3TFniWNyhNJbu9CyABOsfvkRpu7+fXaKyOOk6zU9q8JWZQbKf3Mv2SnNfcpHka3859uy0RS/p8FEtFQVsN8VRn4BiNYsGN52Ixi2DbVJc7XGsJBb7IAO2bj6yo4uSfBOYqk+PFAxcV9rNHu7YZ7kGQTlc+gjJUBjYp6PTJHRszJhhTbTI9pckyfCvtuF2TLBDH+jub8xWDLJRPE2LNsSpnRp8f4rnCDEawGiqXD3FybB3Yc00oT54y0fZ0NSGDxC+hYMMlv52bVekvNPN5aSP7H0WWaQNAh1tyq3zv0C/VBcaWjkb9+t+9PsQ==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: nf-lab-root-crt
+      namespace: arc-runners

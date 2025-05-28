@@ -5,4 +5,5 @@ namespace: arc-runners
 
 resources:
   - github-pat-sealed.yaml
+  - nf-lab-root-crt-sealed.yaml
 

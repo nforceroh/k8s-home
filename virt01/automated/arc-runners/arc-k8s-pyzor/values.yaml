@@ -9,3 +9,10 @@ gha-runner-scale-set:
   controllerServiceAccount:
     namespace: arc-runners
     name: gha-runner-scale-set-controller-gha-rs-controller
+
+  githubServerTLS:
+    certificateFrom:
+      configMapKeyRef:
+        name: nf-lab-root-crt
+        key: ca.crt
+    runnerMountPath: /usr/local/share/ca-certificates/
