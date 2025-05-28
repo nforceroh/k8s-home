@@ -1,6 +1,14 @@
 ---
 kube-prometheus-stack:
+  crds:
+    enabled: true
+    upgradeJob:
+      enabled: true
+
   alertmanager:
+    alertmanagerSpec:
+      forceEnableClusterMode: true
+      alertmanagerConfigMatcherStrategy: None
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -37,8 +45,8 @@ kube-prometheus-stack:
     enabled: true
     ingress:
       enabled: true
+      ingressClassName: traefik
       annotations: 
-        ingressClassName: traefik
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
