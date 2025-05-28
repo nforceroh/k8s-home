@@ -3,16 +3,7 @@ prometheus-ipmi-exporter:
   serviceMonitor:
     enabled: true
 
-  modules:
-    advanced: {}
-    dcmi: {}
-    default: {}
-    thatspecialhost: {}
-    virt01m.v101.nf.lab:
-      user: "monitor"
-      pass: "monitor"
-      driver: "LAN"
-    fw-mgmt.v101.nf.lab:
-      user: "monitor"
-      pass: "monitor"
-      driver: "LAN"
+  configSecret:
+    enabled: true
+    name:  ipmi-exporter-config
+    key: config.yml
