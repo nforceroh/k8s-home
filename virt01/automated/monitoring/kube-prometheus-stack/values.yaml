@@ -8,7 +8,8 @@ kube-prometheus-stack:
   alertmanager:
     alertmanagerSpec:
       forceEnableClusterMode: true
-      alertmanagerConfigMatcherStrategy: None
+      alertmanagerConfigMatcherStrategy: 
+        type: None
     ingress:
       enabled: true
       ingressClassName: traefik
