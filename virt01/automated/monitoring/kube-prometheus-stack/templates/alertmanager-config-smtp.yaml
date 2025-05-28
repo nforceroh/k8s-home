@@ -2,18 +2,14 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
-  name: pod-restarts-receiver
-  namespace: monitoring
-  labels:
-    alertmanagerConfig: email
-    release: prometheus
+  name: nf-lab-receiver
 spec:
   route:
     receiver: 'email-receiver'
     groupBy: ['alertname']
     groupWait: 30s
     groupInterval: 5m
-    repeatInterval: 5m
+    repeatInterval: 12h
   receivers:
   - name: 'email-receiver'
     emailConfigs:

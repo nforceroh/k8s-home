@@ -7,6 +7,7 @@ kube-prometheus-stack:
 
   alertmanager:
     alertmanagerSpec:
+      externalUrl: https://alertmanager.k3s.nf.lab
       forceEnableClusterMode: true
       alertmanagerConfigMatcherStrategy: 
         type: None
@@ -60,6 +61,7 @@ kube-prometheus-stack:
             - prometheus.k3s.nf.lab
 
     prometheusSpec:
+      externalUrl: https://prometheus.k3s.nf.lab
       ruleSelector: {}
       ruleNamespaceSelector: {}
       ruleSelectorNilUsesHelmValues: false
