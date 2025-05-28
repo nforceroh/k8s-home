@@ -1,4 +1,4 @@
-# https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
+# https://github.com/bitnami/charts/blob/main/bitnami/phpmyadmin/values.yaml
 
 phpmyadmin:
   image:
@@ -8,8 +8,8 @@ phpmyadmin:
   ingress:
     enabled: true
     hostname: db.k3s.nf.lab
+    ingressClassName: traefik
     annotations:
-      ingressClassName: traefik
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
