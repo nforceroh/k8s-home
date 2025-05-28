@@ -7,10 +7,8 @@ prometheus-ipmi-exporter:
     virt01m.v101.nf.lab:
       user: "monitor"
       pass: "monitor"
-      privilege: "admin"
       driver: "LAN"
     fw-mgmt.v101.nf.lab:
       user: "monitor"
       pass: "monitor"
-      privilege: "admin"
       driver: "LAN"
