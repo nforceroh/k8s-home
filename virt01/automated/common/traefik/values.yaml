@@ -28,9 +28,6 @@ traefik:
   ingressRoute:
     dashboard:
       enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: nf-lab
-        cert-manager.io/private-key-rotation-policy: Always
         external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       # Custom match rule with host domain
       matchRule: Host(`traefik.k3s.nf.lab`)

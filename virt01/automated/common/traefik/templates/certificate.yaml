@@ -1,0 +1,13 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-tls
+  namespace: traefik
+spec:
+  secretName: traefik-tls        # <===  Name of secret where the generated certificate will be stored.
+  dnsNames:
+    - "traefik.k3s.nf.lab"
+  issuerRef:
+    name: nf-lab
+    kind: ClusterIssuer
