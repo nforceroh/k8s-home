@@ -44,7 +44,7 @@ stringData:
         - separator: ;
           regex: .*
           target_label: __address__
-          replacement: ipmi-exporter:9290
+          replacement: ipmi-exporter-prometheus-ipmi-exporter:9290
           action: replace          
 kind: Secret
 metadata:
