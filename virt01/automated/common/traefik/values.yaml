@@ -37,10 +37,8 @@ traefik:
       entryPoints: ["traefik"]
       # Add custom middlewares : authentication and redirection
       tls:
-        - hosts:
-          - traefik.k3s.nf.lab
-          secretName: traefik-tls
-          
+        secretName: traefik-tls
+
   # Stops ArgoCD from thinking that ingresses never complete successfully
   # https://github.com/argoproj/argo-cd/issues/968#issuecomment-451082913
   providers:
