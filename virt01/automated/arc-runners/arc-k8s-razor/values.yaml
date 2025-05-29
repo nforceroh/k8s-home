@@ -2,14 +2,14 @@
 gha-runner-scale-set:
   githubConfigUrl: https://github.com/nforceroh/k8s-razor
   githubConfigSecret: github-pat-secret
-#  containerMode:
-#    type: "kubernetes"  ## type can be set to dind or kubernetes
-#    kubernetesModeWorkVolumeClaim:
-#      accessModes: ["ReadWriteOnce"]
-#      storageClassName: "openebs-zfspv-lz4"
-#      resources:
-#        requests:
-#          storage: 1Gi
+  containerMode:
+    type: "kubernetes"  ## type can be set to dind or kubernetes
+    kubernetesModeWorkVolumeClaim:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "openebs-zfspv-lz4"
+      resources:
+        requests:
+          storage: 1Gi
 
   listenerTemplate:
     spec:
@@ -32,15 +32,18 @@ gha-runner-scale-set:
   template:
     spec:
       containers:
-      - name: runner
-        image: ghcr.io/actions/actions-runner:latest
-        command: ["/home/runner/run.sh"]
-        securityContext:
-          privileged: true
-          allowPrivilegeEscalation: true
-          runAsNonRoot: true
-          runAsUser: 1001
-          runAsGroup: 123
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
+          env:
+          - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+            value: "false"
+          securityContext:
+            privileged: true
+            allowPrivilegeEscalation: true
+            runAsNonRoot: true
+            runAsUser: 1001
+            runAsGroup: 123
       securityContext:
         fsGroup: 1001
           
