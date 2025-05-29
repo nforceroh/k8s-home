@@ -15,5 +15,4 @@ gha-runner-scale-set:
       configMapKeyRef:
         name: nf-lab-root-crt
         key: ca.crt
-    runnerMountPath: /etc/docker/certs.d/harbor.nf.lab/ca.crt
-#    runnerMountPath: /usr/local/share/ca-certificates/
+    runnerMountPath: /usr/local/share/ca-certificates/
