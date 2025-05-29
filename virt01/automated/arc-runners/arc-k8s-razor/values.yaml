@@ -26,7 +26,3 @@ gha-runner-scale-set:
     spec:
       securityContext:
         fsGroup: 1001    
-      containers:
-      - name: runner
-        image: ghcr.io/actions/actions-runner:latest
-        command: ["/home/runner/run.sh"]
