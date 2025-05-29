@@ -4,7 +4,12 @@ gha-runner-scale-set:
   githubConfigSecret: github-pat-secret
   containerMode:
     type: "kubernetes"  ## type can be set to dind or kubernetes
-
+    kubernetesModeWorkVolumeClaim:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "openebs-zfspv-lz4"
+      resources:
+        requests:
+          storage: 1Gi
 
   controllerServiceAccount:
     namespace: arc-runners
