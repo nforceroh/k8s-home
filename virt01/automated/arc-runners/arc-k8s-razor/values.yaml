@@ -37,7 +37,6 @@ gha-runner-scale-set:
         command: ["/home/runner/run.sh"]
         securityContext:
           privileged: true
-          fsGroup: 1001
           allowPrivilegeEscalation: true
           runAsNonRoot: true
           runAsUser: 1001
