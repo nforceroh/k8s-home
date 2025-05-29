@@ -14,5 +14,5 @@ gha-runner-scale-set:
     certificateFrom:
       configMapKeyRef:
         name: nf-lab-root-crt
-        key: nf_lab_intermediate_ca.crt
+        key: nf_lab_root_ca.crt
     runnerMountPath: /usr/local/share/ca-certificates/
