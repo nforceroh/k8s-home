@@ -21,8 +21,4 @@ gha-runner-scale-set:
         name: nf-lab-root-crt
         key: nf_lab_root.crt
     runnerMountPath: /usr/local/share/ca-certificates/
-
-  template:
-    spec:
-      securityContext:
-        fsGroup: 1001    
+ 
