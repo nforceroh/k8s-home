@@ -40,8 +40,7 @@ gha-runner-scale-set:
               cpu: 500m
               memory: 512Mi
           securityContext:
-            readOnlyRootFilesystem: true
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             capabilities:
               add:
                 - NET_ADMIN
