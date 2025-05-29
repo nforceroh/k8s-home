@@ -1,28 +1,7 @@
 ---
 apiVersion: v1
 data:
-  nf_lab_intermediate_ca.crt: |-
-    -----BEGIN CERTIFICATE-----
-    MIIBvzCCAWagAwIBAgIQU9EaPXfERZ4zHExBjiiCdTAKBggqhkjOPQQDAjAqMQ8w
-    DQYDVQQKEwZuZi5sYWIxFzAVBgNVBAMTDm5mLmxhYiBSb290IENBMB4XDTIzMDkw
-    NzAyMDYzNFoXDTMzMDkwNDAyMDYzNFowMjEPMA0GA1UEChMGbmYubGFiMR8wHQYD
-    VQQDExZuZi5sYWIgSW50ZXJtZWRpYXRlIENBMFkwEwYHKoZIzj0CAQYIKoZIzj0D
-    AQcDQgAEJ9IDnHYSBP0Zqu52WAwKWOqUaE3aMYKYCEZymZ1uxQ9aJQa/07uzTnW6
-    Vyt+T9p4oR36emzLb8UAK5wlvKC7xqNmMGQwDgYDVR0PAQH/BAQDAgEGMBIGA1Ud
-    EwEB/wQIMAYBAf8CAQAwHQYDVR0OBBYEFHsSx3fFbKz81GtwFHh/n598bpZ7MB8G
-    A1UdIwQYMBaAFPN50HuutUiXeksGg3uGLjCF605hMAoGCCqGSM49BAMCA0cAMEQC
-    IEZCwEcgHaFQdwmNElARcSj1VpqVR/6kZHosbqHnKkiaAiA7pw+1ehtOw/jmOGKS
-    iHfp87h4ssrokpRDE1fnEdobtA==
-    -----END CERTIFICATE-----
-kind: ConfigMap
-metadata:
-  creationTimestamp: null
-  name: nf-lab-intermediate-crt
-  namespace: arc-runners
----
-apiVersion: v1
-data:
-  nf_lab_root_ca.crt: |-
+  nf_lab_root.crt: |-
     -----BEGIN CERTIFICATE-----
     MIIBmTCCAT6gAwIBAgIRAMZA2d93OfSMpAURmdtuFUwwCgYIKoZIzj0EAwIwKjEP
     MA0GA1UEChMGbmYubGFiMRcwFQYDVQQDEw5uZi5sYWIgUm9vdCBDQTAeFw0yMzA5

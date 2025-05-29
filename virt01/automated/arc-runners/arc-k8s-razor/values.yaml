@@ -3,7 +3,7 @@ gha-runner-scale-set:
   githubConfigUrl: https://github.com/nforceroh/k8s-razor
   githubConfigSecret: github-pat-secret
   containerMode:
-    type: "dind"  ## type can be set to dind or kubernetes
+    type: "kubernetes"  ## type can be set to dind or kubernetes
 
 
   controllerServiceAccount:
@@ -14,5 +14,5 @@ gha-runner-scale-set:
     certificateFrom:
       configMapKeyRef:
         name: nf-lab-root-crt
-        key: nf_lab_root_ca.crt
+        key: nf_lab_root.crt
     runnerMountPath: /usr/local/share/ca-certificates/
