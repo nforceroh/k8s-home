@@ -21,3 +21,12 @@ gha-runner-scale-set:
         name: nf-lab-root-crt
         key: nf_lab_root.crt
     runnerMountPath: /usr/local/share/ca-certificates/
+
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1001    
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]    
