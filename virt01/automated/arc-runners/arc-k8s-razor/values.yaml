@@ -3,7 +3,7 @@ gha-runner-scale-set:
   githubConfigUrl: https://github.com/nforceroh/k8s-razor
   githubConfigSecret: github-pat-secret
   containerMode:
-#    type: "kubernetes"  ## type can be set to dind or kubernetes
+    type: "kubernetes"  ## type can be set to dind or kubernetes
     kubernetesModeWorkVolumeClaim:
       accessModes: ["ReadWriteOnce"]
       storageClassName: "openebs-zfspv-lz4"
