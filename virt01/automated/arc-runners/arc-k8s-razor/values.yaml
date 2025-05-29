@@ -11,6 +11,13 @@ gha-runner-scale-set:
         requests:
           storage: 1Gi
 
+  listenerTemplate:
+    spec:
+      containers:
+        - name: listener
+          securityContext:
+            runAsUser: 1000
+
   controllerServiceAccount:
     namespace: arc-runners
     name: gha-runner-scale-set-controller-gha-rs-controller
@@ -26,3 +33,14 @@ gha-runner-scale-set:
     spec:
       securityContext:
         fsGroup: 1001
+      containers:
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
+          resources:
+            requests:
+              cpu: "4"
+              memory: "16Gi"
+            limits:
+              cpu: "8"
+              memory: "32Gi"
