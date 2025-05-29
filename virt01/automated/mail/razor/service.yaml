@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: razor-svc
+  labels:
+    app: razor
+spec:
+  ports:
+    - name: razor-port-svc
+      protocol: TCP
+      port: 11342
+      targetPort: 11342
+  selector:
+    app: razor

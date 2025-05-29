@@ -1,0 +1,43 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: razor
+  labels:
+    app: razor
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: razor
+  template:
+    metadata:
+      labels:
+        app: razor
+    spec:
+      serviceAccountName: razor-sa
+      containers:
+        - name: razor
+          image: ghcr.io/nforceroh/k8s-razor:latest
+          imagePullPolicy: Always
+          readinessProbe:
+            tcpSocket:
+              port: 11342
+            initialDelaySeconds: 20
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 20
+          livenessProbe:
+            tcpSocket:
+              port: 11342
+            initialDelaySeconds: 120
+            timeoutSeconds: 1
+            periodSeconds: 60
+            successThreshold: 1
+            failureThreshold: 3
+          ports:
+            - name: razor
+              containerPort: 11342
+              protocol: TCP
