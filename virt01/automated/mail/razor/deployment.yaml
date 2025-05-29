@@ -21,22 +21,6 @@ spec:
         - name: razor
           image: ghcr.io/nforceroh/k8s-razor:latest
           imagePullPolicy: Always
-          readinessProbe:
-            tcpSocket:
-              port: 11342
-            initialDelaySeconds: 20
-            timeoutSeconds: 1
-            periodSeconds: 60
-            successThreshold: 1
-            failureThreshold: 20
-          livenessProbe:
-            tcpSocket:
-              port: 11342
-            initialDelaySeconds: 120
-            timeoutSeconds: 1
-            periodSeconds: 60
-            successThreshold: 1
-            failureThreshold: 3
           ports:
             - name: razor
               containerPort: 11342

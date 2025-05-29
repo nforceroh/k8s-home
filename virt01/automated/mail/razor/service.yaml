@@ -2,8 +2,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: razor-svc
-  labels:
-    app: razor
 spec:
   ports:
     - name: razor-port-svc
