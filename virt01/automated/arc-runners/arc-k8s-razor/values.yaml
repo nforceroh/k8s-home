@@ -32,15 +32,17 @@ gha-runner-scale-set:
   template:
     spec:
       containers:
-      - name: runner
-        image: ghcr.io/actions/actions-runner:latest
-        command: ["/home/runner/run.sh"]
-        securityContext:
-          privileged: true
-          allowPrivilegeEscalation: true
-          runAsNonRoot: true
-          runAsUser: 1001
-          runAsGroup: 123
-      securityContext:
-        fsGroup: 1001
-          
+        - name: runner
+          image: ghcr.io/actions/actions-runner:latest
+          command: ["/home/runner/run.sh"]
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+                - NET_ADMIN
+              
