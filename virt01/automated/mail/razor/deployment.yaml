@@ -25,3 +25,9 @@ spec:
             - name: razor
               containerPort: 11342
               protocol: TCP
+          env:
+            - name: RAZORFY_BINDADDRESS
+              value: "0.0.0.0"
+            - name: RAZORFY_DEBUG
+              value: 1
+            
