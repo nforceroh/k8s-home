@@ -19,7 +19,8 @@ spec:
       serviceAccountName: rspamd-sa
       containers:
         - name: rspamd
-          image: harbor.nf.lab/homelab/rspamd:latest
+#          image: harbor.nf.lab/homelab/rspamd:latest
+          image: ghcr.io/nforceroh/k8s-rspamd:latest
           imagePullPolicy: Always
           envFrom:
           - configMapRef:
