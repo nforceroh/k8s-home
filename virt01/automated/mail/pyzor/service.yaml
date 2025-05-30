@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: pyzor-svc
+spec:
+  ports:
+    - name: pyzor-port-svc
+      protocol: TCP
+      port: 24441
+      targetPort: 24441
+  selector:
+    app: pyzor

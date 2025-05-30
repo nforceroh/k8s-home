@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: pyzor
+  labels:
+    app: pyzor
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pyzor
+  template:
+    metadata:
+      labels:
+        app: pyzor
+    spec:
+      serviceAccountName: pyzor-sa
+      containers:
+        - name: pyzor
+          image: ghcr.io/nforceroh/k8s-pyzor:latest
+          imagePullPolicy: Always
+          ports:
+            - name: pyzor
+              containerPort: 24441
+              protocol: TCP
+          env:
+            - name: REDIS_SERVER
+              value: "redis-master.databases.svc.cluster.local"
+            - name: REDIS_DB
+              value: "5"
+            - name: REDIS_PORT
+              value: "6379"
+          volumeMounts:
+            - name: pyzor-pv
+              mountPath: /data/logs
+      volumes:
+        - name: pyzor-pv
+          persistentVolumeClaim:
+            claimName: pyzor-pvc
