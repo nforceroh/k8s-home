@@ -32,6 +32,8 @@ spec:
               value: "5"
             - name: REDIS_PORT
               value: "6379"
+            - name: PYZOR_DEBUG
+              value: "1"
           volumeMounts:
             - name: pyzor-pv
               mountPath: /data/logs
