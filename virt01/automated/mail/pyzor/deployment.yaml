@@ -37,6 +37,23 @@ spec:
           volumeMounts:
             - name: pyzor-pv
               mountPath: /data/logs
+          livenessProbe:
+            tcpSocket:
+              port: 24441
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 24441
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+      restartPolicy: Always
       volumes:
         - name: pyzor-pv
           persistentVolumeClaim:
