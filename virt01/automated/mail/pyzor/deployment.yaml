@@ -37,7 +37,6 @@ spec:
           volumeMounts:
             - name: pyzor-pv
               mountPath: /data/logs
-    restartPolicy: Always
       volumes:
         - name: pyzor-pv
           persistentVolumeClaim:
