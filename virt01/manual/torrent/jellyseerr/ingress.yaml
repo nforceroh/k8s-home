@@ -1,15 +1,16 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: jellyseerr-ingress
   namespace: torrent
   annotations:
-    ingressClassName: traefik
     cert-manager.io/cluster-issuer: nf-lab
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
 spec:
+  ingressClassName: traefik
   rules:
   - host: jellyseerr.k3s.nf.lab
     http:
@@ -25,3 +26,30 @@ spec:
   - hosts:
     - jellyseerr.k3s.nf.lab
     secretName: jellyseerr-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jellyseerr-ext-ingress
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: jelly.nforcer.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: jellyseerr-svc
+            port:
+              number: 5055
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - jelly.nforcer.com
+    secretName: jellyseerr-ext-cert-tls

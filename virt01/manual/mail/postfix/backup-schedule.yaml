@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-mail-postfix
+  name: mail-postfix
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 15 3 * * *

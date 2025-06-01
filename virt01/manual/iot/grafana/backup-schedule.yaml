@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-iot-grafana
+  name: iot-grafana
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 2 * * *

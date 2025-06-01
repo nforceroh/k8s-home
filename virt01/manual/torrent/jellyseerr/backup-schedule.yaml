@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-torrent-jellyseerr
+  name: torrent-jellyseerr
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 30 6 * * *

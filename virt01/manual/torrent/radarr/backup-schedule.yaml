@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-torrent-radarr
+  name: ctorrent-radarr
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 50 6 * * *
