@@ -10,7 +10,13 @@ spec:
     groupWait: 30s
     groupInterval: 5m
     repeatInterval: 12h
+    routes:
+    - matchers:
+        alertname: "InfoInhibitor|Watchdog"
+      receiver: 'null'    
   receivers:
+  - name: 'null'
+  # Adding a new receiver below the default 'null' receiver  
   - name: 'email-receiver'
     emailConfigs:
       - to: 'sylvain@nf.lab'
