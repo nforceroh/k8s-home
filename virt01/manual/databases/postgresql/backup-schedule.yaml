@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-databases-postgresql
+  name: databases-postgresql
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 20 1 * * *

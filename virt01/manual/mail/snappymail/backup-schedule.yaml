@@ -2,7 +2,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: cf-mail-snappymail
+  name: mail-snappymail
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 40 3 * * *

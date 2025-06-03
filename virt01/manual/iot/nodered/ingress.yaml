@@ -10,6 +10,7 @@ metadata:
     kubernetes.io/ingress.class: traefik
     external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
 spec:
+  ingressClassName: traefik
   rules:
   - host: nodered.k3s.nf.lab
     http:
