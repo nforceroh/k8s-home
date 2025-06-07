@@ -19,8 +19,9 @@ spec:
       serviceAccountName: powerdns-sa
       containers:
       - name: powerdns-ns2
-        image: harbor.nf.lab/homelab/powerdns:latest
-        imagePullPolicy: IfNotPresent
+#        image: harbor.nf.lab/homelab/powerdns:latest
+        image: ghcr.io/nforceroh/k8s-pdns:latest
+        imagePullPolicy: Always
         resources:
           limits: {}
           requests: {}
