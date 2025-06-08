@@ -1,0 +1,25 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: idrac-fans
+  labels:
+    app: idrac-fans
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: idrac-fans
+  template:
+    metadata:
+      labels:
+        app: idrac-fans
+    spec:
+      containers:
+        - name: idrac-fans
+          image: ghcr.io/nforceroh/k8s-idrac-fans:latest
+          imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: idrac-fans-env

@@ -22,7 +22,8 @@ spec:
       serviceAccountName: deluge-sa
       containers:
         - name: wireguard
-          image: harbor.nf.lab/homelab/wireguard-go:latest
+#          image: harbor.nf.lab/homelab/wireguard-go:latest
+          image: ghcr.io/nforceroh/k8s-wireguard:latest
           imagePullPolicy: Always
           volumeMounts:
             - name: wg-config
