@@ -20,6 +20,31 @@ spec:
         - name: idrac-fans
           image: ghcr.io/nforceroh/k8s-idrac-fans:latest
           imagePullPolicy: Always
-          envFrom:
-          - secretRef:
-              name: idrac-fans-env
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+          env:
+            - name: IDRAC_HOST
+              value: "192.168.101.200"
+            - name: FAN_SPEED
+              value: "10"
+            - name: CHECK_INTERVAL
+              value: "30"
+            - name: DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE
+              value: "true"
+            - name: KEEP_THIRD_PARTY_PCIE_CARD_COOLING_RESPONSE_STATE_ON_EXIT
+              value: "true"
+            - name: IDRAC_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: idrac-fans-env
+                  key: IDRAC_USERNAME
+            - name: IDRAC_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: idrac-fans-env
+                  key: IDRAC_PASSWORD
