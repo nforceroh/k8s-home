@@ -19,7 +19,8 @@ spec:
       serviceAccountName: vimbadmin-sa
       containers:
         - name: vimbadmin
-          image: harbor.nf.lab/homelab/vimbadmin:latest
+#          image: harbor.nf.lab/homelab/vimbadmin:latest
+          image: ghcr.io/nforceroh/k8s-vimbadmin:latest
           imagePullPolicy: Always
           env:
             - name: VIMBADMIN_DB_NAME
