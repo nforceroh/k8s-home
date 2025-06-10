@@ -19,7 +19,8 @@ spec:
       serviceAccountName: snappymail-sa
       containers:
         - name: snappymail
-          image: harbor.nf.lab/homelab/snappymail:latest
+#          image: harbor.nf.lab/homelab/snappymail:latest
+          image: ghcr.io/nforceroh/k8s-snappymail:latest
           imagePullPolicy: Always
           env:
             - name: TZ
