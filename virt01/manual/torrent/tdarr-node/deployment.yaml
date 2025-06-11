@@ -1,0 +1,96 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tdarr-node
+  labels:
+    app: tdarr-node
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tdarr-node
+  template:
+    metadata:
+      labels:
+        app: tdarr-node
+    spec:
+      runtimeClassName: nvidia
+      volumes:
+        - name: tdarr-node
+          persistentVolumeClaim:
+            claimName: tdarr-node-pvc
+        - name: tdarr-config
+          persistentVolumeClaim:
+            claimName: tdarr-node-config-pvc
+        - name: media
+          hostPath:
+            path: /mnt/ssd01/emby
+            type: Directory
+        - name: cache
+          persistentVolumeClaim:
+            claimName: tdarr-node-cache-pvc
+      containers:
+        - name: tdarr-node
+          image: ghcr.io/haveagitgat/tdarr_node
+          volumeMounts:
+            - name: cache
+              mountPath: /temp
+            - name: media
+              mountPath: /media
+            - name: tdarr-config
+              mountPath: /app/configs
+            - name: tdarr-node
+              mountPath: /app/server
+          ports:
+            - containerPort: 8268
+          env:
+            - name: PGID
+              value: "3000"
+            - name: PUID
+              value: "3000"
+            - name: nodeName
+              value: "worker-node"
+            - name: serverPort
+              value: "8266"
+            - name: serverIP
+              value: "tdarr-server-svc"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "all" 
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+            - name: inContainer
+              value: "true"
+            - name: ffmpegVersion
+              value: "7"
+            - name: nodeType
+              value: "mapped"
+            - name: priority
+              value: "-1"
+            - name: maxLogSizeMB
+              value: "10"
+            - name: pollInterval
+              value: "2000"
+            - name: startPaused
+              value: "false"
+            - name: transcodegpuWorkers
+              value: "2"
+            - name: transcodecpuWorkers
+              value: "0"
+            - name: healthcheckgpuWorkers
+              value: "0"
+            - name: healthcheckcpuWorkers
+              value: "2"
+          resources:
+            limits:
+              cpu: "10"
+              memory: "6Gi"
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+          securityContext:
+            privileged: true
+            capabilities:
+              drop: ["ALL"]

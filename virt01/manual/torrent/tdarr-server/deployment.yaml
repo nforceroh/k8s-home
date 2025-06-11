@@ -1,0 +1,79 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tdarr-server
+  labels:
+    app: tdarr-server
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: tdarr-server
+  template:
+    metadata:
+      labels:
+        app: tdarr-server
+    spec:
+      runtimeClassName: nvidia
+      volumes:
+        - name: tdarr-server
+          persistentVolumeClaim:
+            claimName: tdarr-server-pvc
+        - name: tdarr-config
+          persistentVolumeClaim:
+            claimName: tdarr-config-pvc
+        - name: media
+          hostPath:
+            path: /mnt/ssd01/emby
+            type: Directory
+        - name: cache
+          persistentVolumeClaim:
+            claimName: tdarr-cache-pvc
+      containers:
+        - name: tdarr-server
+          image: ghcr.io/haveagitgat/tdarr
+          volumeMounts:
+            - name: cache
+              mountPath: /temp
+            - name: media
+              mountPath: /media
+            - name: tdarr-config
+              mountPath: /app/configs
+            - name: tdarr-server
+              mountPath: /app/server
+          ports:
+            - containerPort: 8266
+            - containerPort: 8265
+          env:
+            - name: PGID
+              value: "3000"
+            - name: PUID
+              value: "3000"
+            - name: nodeName
+              value: "server-node"
+            - name: internalNode
+              value: "false"
+            - name: webUIPort
+              value: "8265"
+            - name: serverPort
+              value: "8266"
+            - name: serverIP
+              value: "0.0.0.0"
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "all" 
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+          resources:
+            limits:
+              cpu: "4"
+              memory: "6Gi"
+            requests:
+              cpu: "1"
+              memory: "1Gi"
+          securityContext:
+            privileged: true
+            capabilities:
+              drop: ["ALL"]
