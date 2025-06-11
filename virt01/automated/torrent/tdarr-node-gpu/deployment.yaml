@@ -2,27 +2,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: tdarr-server
+  name: tdarr-node-gpu
   labels:
-    app: tdarr-server
+    app: tdarr-node-gpu
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: tdarr-server
+      app: tdarr-node-gpu
   template:
     metadata:
       labels:
-        app: tdarr-server
+        app: tdarr-node-gpu
     spec:
       runtimeClassName: nvidia
       volumes:
-        - name: server
-          hostPath:
-            path: /mnt/ssd01/tdarr/server
-            type: Directory
         - name: config
           hostPath:
             path: /mnt/ssd01/tdarr/config
@@ -36,8 +32,8 @@ spec:
             path: /mnt/ssd01/tdarr/cache
             type: Directory
       containers:
-        - name: tdarr-server
-          image: ghcr.io/haveagitgat/tdarr
+        - name: tdarr-node-gpu
+          image: ghcr.io/haveagitgat/tdarr_node
           volumeMounts:
             - name: cache
               mountPath: /temp
@@ -45,30 +41,45 @@ spec:
               mountPath: /media
             - name: config
               mountPath: /app/configs
-            - name: server
-              mountPath: /app/server
           ports:
             - containerPort: 8266
-            - containerPort: 8265
           env:
             - name: PGID
               value: "3000"
             - name: PUID
               value: "3000"
             - name: nodeName
-              value: "server-node"
-            - name: internalNode
-              value: "false"
-            - name: webUIPort
-              value: "8265"
+              value: "gpu-node"
             - name: serverPort
               value: "8266"
             - name: serverIP
-              value: "0.0.0.0"
+              value: "tdarr-server-svc"
             - name: NVIDIA_DRIVER_CAPABILITIES
               value: "all" 
             - name: NVIDIA_VISIBLE_DEVICES
               value: "all"
+            - name: inContainer
+              value: "true"
+            - name: ffmpegVersion
+              value: "7"
+            - name: nodeType
+              value: "mapped"
+            - name: priority
+              value: "-1"
+            - name: maxLogSizeMB
+              value: "10"
+            - name: pollInterval
+              value: "2000"
+            - name: startPaused
+              value: "false"
+            - name: transcodegpuWorkers
+              value: "1"
+            - name: transcodecpuWorkers
+              value: "0"
+            - name: healthcheckgpuWorkers
+              value: "0"
+            - name: healthcheckcpuWorkers
+              value: "0"
           resources:
             limits:
               cpu: "2"

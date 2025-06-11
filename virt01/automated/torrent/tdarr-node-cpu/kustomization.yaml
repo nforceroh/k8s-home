@@ -3,13 +3,9 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: tdarr-node
+      app: tdarr-node-cpu
 
 namespace: torrent
 
 resources:
   - deployment.yaml
-  - service.yaml
-  
-
-
