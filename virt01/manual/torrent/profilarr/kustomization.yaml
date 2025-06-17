@@ -3,11 +3,15 @@ kind: Kustomization
 
 namespace: torrent
 
+labels:
+  - pairs:
+      app: profilarr
+
 resources:
   - deployment.yaml
-  - service.yaml
   - serviceaccount.yaml
+  - service.yaml
   - ingress.yaml
 
-commonLabels:
-  app: tdarr
+generatorOptions:
+  disableNameSuffixHash: true

@@ -1,0 +1,38 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: profilarr
+  labels:
+    app: profilarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: profilarr
+  template:
+    metadata:
+      labels:
+        app: profilarr
+    spec:
+      serviceAccountName: profilarr-sa
+      containers:
+        - name: profilarr
+          image: santiagosayshey/profilarr:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: profilarr-pv
+              mountPath: /config
+      volumes:
+        - name: profilarr-pv
+          persistentVolumeClaim:
+            claimName: profilarr-pvc
+
