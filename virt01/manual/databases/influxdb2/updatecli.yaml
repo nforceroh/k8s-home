@@ -1,0 +1,18 @@
+
+sources:
+   lastMinorRelease:
+       kind: helmChart
+       spec:
+           url: "https://helm.influxdata.com/"
+           name: "influxdb2"
+           version: "2.*.*"
+conditions: {}
+targets:
+   chart:
+       name: Bump Chart dependencies
+       kind: helmChart
+       spec:
+           Name: "/home/sylvain/gitdev/k8s-home/virt01/manual/databases/influxdb2"
+           file: "Chart.yaml"
+           key: "dependencies[0].version"
+           versionIncrement: "patch"

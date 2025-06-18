@@ -1,0 +1,18 @@
+
+sources:
+   lastMinorRelease:
+       kind: helmChart
+       spec:
+           url: "https://charts.jetstack.io"
+           name: "cert-manager"
+           version: "v1.*.*"
+conditions: {}
+targets:
+   chart:
+       name: Bump Chart dependencies
+       kind: helmChart
+       spec:
+           Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/common/cert-manager"
+           file: "Chart.yaml"
+           key: "dependencies[0].version"
+           versionIncrement: "patch"

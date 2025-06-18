@@ -1,0 +1,18 @@
+
+sources:
+   lastMinorRelease:
+       kind: helmChart
+       spec:
+           url: "oci://registry-1.docker.io/bitnamicharts"
+           name: "phpmyadmin"
+           version: "18.*.*"
+conditions: {}
+targets:
+   chart:
+       name: Bump Chart dependencies
+       kind: helmChart
+       spec:
+           Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/databases/phpmyadmin"
+           file: "Chart.yaml"
+           key: "dependencies[0].version"
+           versionIncrement: "patch"

@@ -1,0 +1,18 @@
+
+sources:
+   lastMinorRelease:
+       kind: helmChart
+       spec:
+           url: "https://smallstep.github.io/helm-charts"
+           name: "step-certificates"
+           version: "1.*.*"
+conditions: {}
+targets:
+   chart:
+       name: Bump Chart dependencies
+       kind: helmChart
+       spec:
+           Name: "/home/sylvain/gitdev/k8s-home/virt01/manual/no_deploy/smallstep"
+           file: "Chart.yaml"
+           key: "dependencies[0].version"
+           versionIncrement: "patch"

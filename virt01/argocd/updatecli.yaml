@@ -1,0 +1,18 @@
+
+sources:
+   lastMinorRelease:
+       kind: helmChart
+       spec:
+           url: "https://argoproj.github.io/argo-helm"
+           name: "argo-cd"
+           version: "8.*.*"
+conditions: {}
+targets:
+   chart:
+       name: Bump Chart dependencies
+       kind: helmChart
+       spec:
+           Name: "/home/sylvain/gitdev/k8s-home/virt01/argocd"
+           file: "Chart.yaml"
+           key: "dependencies[0].version"
+           versionIncrement: "patch"
