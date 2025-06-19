@@ -28,19 +28,6 @@ jobs:
       - name: Run updatecli/chart_bumper.py
         run: |
           python3 /home/runner/work/k8s-home/k8s-home/updatecli/chart_bumper.py --apply --charts-root /home/runner/work/k8s-home/k8s-home/virt01/automated/arc-runners
-
-      # Collect data & generate markdown
-      - name: GitHub Dependents Info
-        uses: nvuillam/github-dependents-info@v1.5.1 # If you trust me enough you can replace version by "main" :)
-        # See documentation for variables details: https://github.com/nvuillam/github-dependents-info?tab=readme-ov-file#%EF%B8%8F-usage
-        with:
-          repo: ${{ github.repository }}
-          # markdownfile: docs/github-dependents-info.md
-          # badgemarkdownfile: README.md
-          # sort: stars
-          # minstars: "0"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
