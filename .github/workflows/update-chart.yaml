@@ -35,7 +35,7 @@ jobs:
 
       - name: Run chart_bumber.py
         run: |
-          python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumber.py -charts-root /
+          python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumber.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
 
       - name: Configure Git
         run: |
