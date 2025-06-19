@@ -4,6 +4,7 @@ kube-prometheus-stack:
     enabled: true
     upgradeJob:
       enabled: true
+      forceConflicts: true
 
   alertmanager:
     alertmanagerSpec:
