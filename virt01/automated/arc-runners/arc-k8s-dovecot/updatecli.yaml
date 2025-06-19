@@ -1,18 +1,18 @@
 
 sources:
-   lastMinorRelease:
-       kind: helmChart
-       spec:
-           url: "oci://ghcr.io/actions/actions-runner-controller-charts"
-           name: "gha-runner-scale-set"
-           version: "0.*.*"
+  lastMinorRelease:
+    kind: helmchart
+    spec:
+      url: "oci://ghcr.io/actions/actions-runner-controller-charts"
+      name: "gha-runner-scale-set"
+      version: "0.*.*"
 conditions: {}
 targets:
-   chart:
-       name: Bump Chart dependencies
-       kind: helmChart
-       spec:
-           Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/arc-runners/arc-k8s-dovecot"
-           file: "Chart.yaml"
-           key: "dependencies[0].version"
-           versionIncrement: "patch"
+  chart:
+    name: Bump Chart dependencies
+    kind: helmchart
+    spec:
+      Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/arc-runners/arc-k8s-dovecot"
+      file: "Chart.yaml"
+      key: "$.dependencies[0].version"
+      versionIncrement: "patch"

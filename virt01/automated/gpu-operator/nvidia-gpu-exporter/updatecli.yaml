@@ -1,18 +1,18 @@
 
 sources:
-   lastMinorRelease:
-       kind: helmChart
-       spec:
-           url: "https://utkuozdemir.org/helm-charts"
-           name: "nvidia-gpu-exporter"
-           version: "1.*.*"
+  lastMinorRelease:
+    kind: helmchart
+    spec:
+      url: "https://utkuozdemir.org/helm-charts"
+      name: "nvidia-gpu-exporter"
+      version: "1.*.*"
 conditions: {}
 targets:
-   chart:
-       name: Bump Chart dependencies
-       kind: helmChart
-       spec:
-           Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/gpu-operator/nvidia-gpu-exporter"
-           file: "Chart.yaml"
-           key: "dependencies[0].version"
-           versionIncrement: "patch"
+  chart:
+    name: Bump Chart dependencies
+    kind: helmchart
+    spec:
+      Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/gpu-operator/nvidia-gpu-exporter"
+      file: "Chart.yaml"
+      key: "$.dependencies[0].version"
+      versionIncrement: "patch"

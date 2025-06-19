@@ -6,24 +6,35 @@ idrac-exporter:
     timeout: 300
     hosts:
       virt01m.v101.nf.lab:
-        username: monitor
-        password: monitor
       fw-mgmt.v101.nf.lab:
-        username: monitor
-        password: monitor
     metrics:
-      system: true
-      sensors: true
-      power: true
-      events: true
-      storage: true
-      memory: true
-      network: true
-      oem:  false
+      all: true         # CONFIG_METRICS_ALL=false
+#      processors: true  # CONFIG_METRICS_PROCESSORS=false
+#      system: true      # CONFIG_METRICS_SYSTEM=false
+#      sensors: true     # CONFIG_METRICS_SENSORS=false
+#      power: true       # CONFIG_METRICS_POWER=false
+#      events: true      # CONFIG_METRICS_EVENTS=false
+#      storage: true     # CONFIG_METRICS_STORAGE=false
+#      memory: true      # CONFIG_METRICS_MEMORY=false
+#      network: true     # CONFIG_METRICS_NETWORK=false
+#      extra: true       # CONFIG_METRICS_EXTRA=false
     events:
       severity: warning
       maxage: 7d
 
+
+  env:
+   - name: CONFIG_DEFAULT_USERNAME
+     valueFrom:
+       secretKeyRef:
+          name: idrac-exporter-env
+          key: IDRAC_USERNAME
+   - name: CONFIG_DEFAULT_PASSWORD
+     valueFrom:
+       secretKeyRef:
+          name: idrac-exporter-env
+          key: IDRAC_PASSWORD
+          
   prometheus:
     monitor:
       enabled: true

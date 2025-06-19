@@ -5,13 +5,14 @@ From: https://blog.promaton.com/how-to-set-up-automated-helm-chart-upgrades-e292
 https://gist.github.com/nielstenboom/8b1116f7fd00a98aace28d826518e86f#file-chart_bumper-py
 """
 
-from pathlib import Path
+from pathlib import Path, PosixPath
 import subprocess
 import os
-import traceback
 import logging
 from typing import Any
+import argparse
 import yaml
+import re
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -37,7 +38,7 @@ def find_files(directory, extension) -> list[Path]:
         list[Path]: A list of Path objects representing files that match the given extension.
     """
     # Create a Path object for the given directory
-    path = Path(directory)
+    path = Path(os.path.abspath(directory))
     # Finding all files matching the extension recursively
     return list(path.rglob(f"*{extension}"))
 
@@ -63,39 +64,39 @@ def generate_updatecli_manifest(
         version = "*.*.*"
     manifest = f"""
 sources:
-lastMinorRelease:
-    kind: helmChart
+  lastMinorRelease:
+    kind: helmchart
     spec:
-        url: "{dependency["repository"]}"
-        name: "{dependency["name"]}"
-        version: "{version}"
+      url: "{dependency["repository"]}"
+      name: "{dependency["name"]}"
+      version: "{version}"
 conditions: {{}}
 targets:
-chart:
+  chart:
     name: Bump Chart dependencies
-    kind: helmChart
+    kind: helmchart
     spec:
-        Name: "{path_to_chart}"
-        file: "Chart.yaml"
-        key: "dependencies[{index}].version"
-        versionIncrement: "patch"
+      Name: "{path_to_chart}"
+      file: "Chart.yaml"
+      key: "$.dependencies[{index}].version"
+      versionIncrement: "patch"
 """
     return manifest
 
 
-def update_chart(path_chart: str):
+def update_chart(path_chart: Path, apply: bool = False) -> None:
     """
     Given a path to a helm chart. Bump the version of the dependencies of this chart
     if any newer versions exist.
     """
-    path_to_chart = Path(path_chart).parent
-    with open(path_chart) as f:
+    path_to_chart = PosixPath(Path(path_chart).parent)
+    with open(path_chart, encoding="utf-8") as f:
         text = f.read()
 
     chart: dict[str, Any] = yaml.safe_load(text)
     if "dependencies" not in chart:
         return
-
+    mode = "apply" if apply else "diff"
     for i, dependency in enumerate(chart["dependencies"]):
         if dependency["name"] in EXCLUDED_CHARTS:
             print(f"Skipping {dependency['name']} because it is excluded..")
@@ -103,19 +104,44 @@ def update_chart(path_chart: str):
 
         manifest = generate_updatecli_manifest(dependency, i, path_to_chart)
         updatecli_yaml_file = f"{path_to_chart}/updatecli.yaml"
-        with open(updatecli_yaml_file, "w+") as f:
+        with open(updatecli_yaml_file, "w+", encoding="utf-8") as f:
             f.write(manifest)
             f.flush()
-            
-        logging.info("Generated updatecli manifest for %s, located at %s", dependency["name"], updatecli_yaml_file)
+
+        logging.info(
+            "Generated updatecli manifest for %s, located at %s",
+            dependency["name"],
+            updatecli_yaml_file,
+        )
         try:
-            subprocess.check_output(
-                ["updatecli", "apply", "--config", updatecli_yaml_file],
-                cwd=path_to_chart,
+            output = subprocess.check_output(
+              ["updatecli", mode, "--config", updatecli_yaml_file],
+              cwd=path_to_chart,
+              stderr=subprocess.STDOUT,
             )
-            logging.info("Updated %s to latest version", dependency["name"])
+            # Regex to match the updatecli output line for version bump
+            pattern = re.compile(
+              r'\*\skey "\$\.dependencies\[(\d+)\]\.version" should be updated from "([^"]+)" to "([^"]+)", in file "([^"]+)"'
+            )
+            matches = pattern.findall(output.decode())
+            for match in matches:
+              dep_index, current_version, next_version, chart_file = match
+              logging.info(
+                "Dependency at index %s in %s: version will be bumped from %s to %s",
+                dep_index,
+                chart_file,
+                current_version,
+                next_version,
+              )
+            logging.info(
+              "Successfully ran updatecli %s for %s.\n\n",
+              mode,
+              dependency["name"]
+            )
         except subprocess.CalledProcessError as e:
-            logging.error("Failed to update %s: %s", dependency["name"], e.output.decode())
+            logging.error(
+                "Failed to update %s: %s", dependency["name"], e.output.decode()
+            )
             raise RuntimeError(f"Failed to update {dependency['name']}") from e
 
 
@@ -128,14 +154,30 @@ def main():
     function. If an error occurs during the update of a chart, it logs the failure and
     prints the exception traceback for debugging purposes.
     """
-    charts = find_files("/home/sylvain/gitdev/k8s-home/virt01", "Chart.yaml")
+    parser = argparse.ArgumentParser(
+        description="Bump Helm chart dependencies using updatecli."
+    )
+    parser.add_argument(
+        "--charts-root",
+        type=str,
+        default=".",
+        help="Root directory to search for Helm charts (default: current directory).",
+    )
+    parser.add_argument(
+        "--apply",
+        action="store_true",
+        help="Apply the updates instead of just showing the diff.",
+    )
+    args = parser.parse_args()
+
+    charts = find_files(args.charts_root, "Chart.yaml")
     for chart in charts:
         logging.info("Processing %s", chart)
         try:
-            update_chart(chart)
+            update_chart(chart, apply=args.apply)
         except (OSError, RuntimeError, yaml.YAMLError) as e:
             print(f"Failed processing chart {chart}: {e}")
-            print(traceback.format_exc())
+            logging.exception("Exception occurred")
 
 
 if __name__ == "__main__":

@@ -1,18 +1,18 @@
 
 sources:
-   lastMinorRelease:
-       kind: helmChart
-       spec:
-           url: "https://otwld.github.io/ollama-helm/"
-           name: "ollama"
-           version: "1.*.*"
+  lastMinorRelease:
+    kind: helmchart
+    spec:
+      url: "https://otwld.github.io/ollama-helm/"
+      name: "ollama"
+      version: "1.*.*"
 conditions: {}
 targets:
-   chart:
-       name: Bump Chart dependencies
-       kind: helmChart
-       spec:
-           Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/ai/ollama"
-           file: "Chart.yaml"
-           key: "dependencies[0].version"
-           versionIncrement: "patch"
+  chart:
+    name: Bump Chart dependencies
+    kind: helmchart
+    spec:
+      Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/ai/ollama"
+      file: "Chart.yaml"
+      key: "$.dependencies[0].version"
+      versionIncrement: "patch"

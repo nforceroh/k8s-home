@@ -1,0 +1,20 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: idrac-exporter-env
+  namespace: monitoring
+spec:
+  encryptedData:
+    IDRAC_PASSWORD: AgCdHL++HPmuuaUEKGMwk/O0Bpw+JhApB535yhsyCn9CO0yz1Hx3rU9I44MLd9Z4VwTB3wEOC1faUxMZt6WoEiW7StTI/NVQcNGTld5eKmnEKqtOCyzlUY9T3J/VQYm5UlSMaV8AnScDe4b2B1IpLby0AywZlrS3jKB5VqSzXzL2P0P7zPo9AGKkQn/acUJIV1mHZZ6qN28TPTY+ogljRxhe9X2MCLLl1wUAhkGV+/D9RxjPym0GThVbqpzXDwq7HOByfek+5JuRDK78bUKd13DFxkQTl2eo8Ups/wjEsiwqwGlKFgnRXGxc0TusbjtEOee6WXoQz24YAdXvUxj0ZeCIBUqyjKVGhpX/vAw+F0pcUfUHKcz9ArgSRRA14NNUmvOLA6A+IhQYI8lPxDSiEYpnxMw9Jm9Xhe0FGwRuMTjELQAm3DMg5Bj063kW8ZUHYqhPZGLrsxEOjYtnZHT+ssZO+i25X7OCA/U8EiG08cWp+LPDZ0K+QuFhSXeYqA3KK5a/6W81cTbtkV2+zwmUb8nbsHJIeT7iN4RyeinKRDLE692yXGEBr13paD0u9fhgzWlGoSYjyF8HhyTFdANcLnBGB0pTxJ8z5y9ecJrEt0EpVsOGlwvvESpCpsLKwKkZtMqyonVyvasyLE7CjcGdsoAIJHyRB2itYQq2ZffJDB5eB1AcZh85l/YZh/SyGyhNsNM4Sd+aufC4
+    IDRAC_USERNAME: AgBIWrEwA2MfHfmYwM6z+EMc2U26bdKUiV+RclQCYKvChGxWMmlgjv1mSwz4pUEAmllzQkcbDsn+1VwHF2gZRfuts/n5y6uriMUmx8WALHnDst7lGhthsv2wp0y9cWPtV2ETkoYjAUyVlqJd9j2ldamyseVRLbMl8UkzSOaW7NiADCBWKhvxzwFMjr39hbYaN9GkTxTdUTwe80lwKNLY5qwIfFviZaSfao2kGEoT1Bj7uH0i6DSaqZ1RlpwEOwZQMg7G7OUD/b+wXLazPZER/thVfflPrF+eMhlUgsqSkdOy3bCR3bHqlESNG07M1Ls/255GP2LL9TCXgtg/ASZKWQcMv64W4Q3TqGsvU1NYyfnfeqIcvHc9KwivQUChxxqkZjrxd7q33KbblFU3G2GTQZC8yIYkLwFun6qSOQgR1UbpP0+c+wNJtIW+B27SO8jhL0UZaMqsnyB/icDggiIfiqGX7sXg6sYRfCd/yMpxBYElBtJOIkPJhZg7vyfO2M63ommcx1aVjH/MhZuQwt8OeNgNbD/sRQtBKWVYTcf/Z2lI7I8bfKesbUiiqPg/LZxFfcX2jcG1RHG8EBf2h+nV9FNj3b1qNlj+JdAfmwLUUiGpPk4L+gcMFcl19XHwnVOYt8yo4q7CE+GceLPBomwRuKwUyO0ALlmBdyteUksemRfSuJ2Ylr81dGeyg+Pk+fc2mP/WNnJ6NwFx
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: idrac-exporter-env
+      namespace: monitoring
