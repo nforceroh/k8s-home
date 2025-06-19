@@ -30,9 +30,9 @@ jobs:
       - name: List repository contents
         run: ls -alR /home/runner/work/k8s-home/k8s-home/scripts
 
-      - name: Run chart_bumber.py
+      - name: Run chart_bumper.py
         run: |
-          python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumber.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
+          python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumper.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
 
       - name: Configure Git
         run: |
