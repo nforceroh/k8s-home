@@ -10,8 +10,13 @@ mc-router:
   minecraftRouter:
     # "Wake up" any stopped Minecraft servers.
     # This requires Minecraft servers to be kind: StatefulSet
-    autoScaleUp:
-      enabled: false
+    autoScale:
+      up: 
+        enabled: false
+      down:
+        # Shut down any running Minecraft servers after there are no more connections.
+        # This requires Minecraft servers to be kind: StatefulSet
+        enabled: false    
 
     # Max number of connections to allow per second
     connectionRateLimit: 1
