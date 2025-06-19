@@ -9,32 +9,23 @@ idrac-exporter:
       fw-mgmt.v101.nf.lab:
     metrics:
       all: true         # CONFIG_METRICS_ALL=false
-#      processors: true  # CONFIG_METRICS_PROCESSORS=false
-#      system: true      # CONFIG_METRICS_SYSTEM=false
-#      sensors: true     # CONFIG_METRICS_SENSORS=false
-#      power: true       # CONFIG_METRICS_POWER=false
-#      events: true      # CONFIG_METRICS_EVENTS=false
-#      storage: true     # CONFIG_METRICS_STORAGE=false
-#      memory: true      # CONFIG_METRICS_MEMORY=false
-#      network: true     # CONFIG_METRICS_NETWORK=false
-#      extra: true       # CONFIG_METRICS_EXTRA=false
     events:
       severity: warning
       maxage: 7d
 
 
   env:
-   - name: CONFIG_DEFAULT_USERNAME
-     valueFrom:
-       secretKeyRef:
-          name: idrac-exporter-env
-          key: IDRAC_USERNAME
-   - name: CONFIG_DEFAULT_PASSWORD
-     valueFrom:
-       secretKeyRef:
-          name: idrac-exporter-env
-          key: IDRAC_PASSWORD
-          
+  - name: CONFIG_DEFAULT_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: idrac-exporter-env
+        key: IDRAC_USERNAME
+  - name: CONFIG_DEFAULT_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: idrac-exporter-env
+        key: IDRAC_PASSWORD
+
   prometheus:
     monitor:
       enabled: true
