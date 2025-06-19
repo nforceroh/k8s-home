@@ -1,0 +1,46 @@
+name: Update Helm Chart Version
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *' # Runs daily at 03:00 UTC
+
+jobs:
+  update-chart:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Updatecli
+        run: |
+          curl -sL https://github.com/updatecli/updatecli/releases/latest/download/updatecli_Linux_x86_64.tar.gz | tar xz
+          sudo mv updatecli /usr/local/bin/
+
+#      - name: Install Python dependencies
+#        run: |
+#          pip install -r requirements.txt
+
+      - name: Run chart_bumber.py
+        run: |
+          python scripts/chart_bumber.py -charts-root /
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: bump chart version(s) via chart_bumber.py"
+          title: "chore: bump chart version(s)"
+          body: "Automated chart version bump using chart_bumber.py"
+          branch: "chart-bump/updatecli"
+          delete-branch: true

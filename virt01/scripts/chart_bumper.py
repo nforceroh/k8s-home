@@ -166,8 +166,9 @@ def main():
     parser.add_argument(
         "--apply",
         action="store_true",
-        help="Apply the updates instead of just showing the diff.",
+        help="Apply the updates to the charts. If not set, only show the diff.",
     )
+
     args = parser.parse_args()
 
     charts = find_files(args.charts_root, "Chart.yaml")
