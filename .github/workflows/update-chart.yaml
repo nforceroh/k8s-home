@@ -23,16 +23,13 @@ jobs:
           curl -sL https://github.com/updatecli/updatecli/releases/latest/download/updatecli_Linux_x86_64.tar.gz | tar xz
           sudo mv updatecli /usr/local/bin/
 
-#      - name: Install Python dependencies
-#        run: |
-#          pip install -r requirements.txt
-
-      - name: List repository contents
-        run: ls -alR /home/runner/work/k8s-home/k8s-home/scripts
+      - name: Install Python dependencies
+        run: |
+          pip install -r chart_bumper/requirements.txt
 
       - name: Run chart_bumper.py
         run: |
-          python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumper.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
+          python3 /home/runner/work/k8s-home/k8s-home/chart_bumper/chart_bumper.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
 
       - name: Configure Git
         run: |
