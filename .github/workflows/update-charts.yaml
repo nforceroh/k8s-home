@@ -30,8 +30,9 @@ jobs:
           python3 /home/runner/work/k8s-home/k8s-home/updatecli/chart_bumper.py --apply --charts-root /home/runner/work/k8s-home/k8s-home/virt01/automated/arc-runners
           
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN  }}
           commit-message: "chore: bump chart version(s) via chart_bumper.py"
           title: "chore: bump chart version(s)"
           body: "Automated chart version bump using chart_bumper.py"
@@ -40,3 +41,35 @@ jobs:
           base: main
           reviewers: |
             nforceroh
+
+      # Collect data & generate markdown
+      - name: GitHub Dependents Info
+        uses: nvuillam/github-dependents-info@v1.5.1 # If you trust me enough you can replace version by "main" :)
+        # See documentation for variables details: https://github.com/nvuillam/github-dependents-info?tab=readme-ov-file#%EF%B8%8F-usage
+        with:
+          repo: ${{ github.repository }}
+          outputrepo: ${{ github.repository }}
+          # markdownfile: docs/github-dependents-info.md
+          # badgemarkdownfile: README.md
+          # sort: stars
+          # minstars: "0"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      # Create pull request
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN  }}
+          branch: github-dependents-info-auto-update
+          commit-message: "[GitHub Dependents Info] Updated markdown file(s)"
+          delete-branch: true
+          title: "[GitHub Dependents Info] Updated markdown file"
+          body: "_Generated with [github-dependents-info](https://github.com/nvuillam/github-dependents-info), by [Nicolas Vuillamy](https://github.com/nvuillam)_"
+          labels: documentation
+
+      - name: Create PR output
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
