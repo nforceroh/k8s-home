@@ -1,9 +1,9 @@
 apiVersion: v2
 name: phpmyadmin
-version: 1.0.0
+version: 1.0.1
 dependencies:
 - name: phpmyadmin
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 18.1.8
+  version: 18.1.12
 sources:
   - https://github.com/bitnami/charts/tree/main/bitnami/phpmyadmin
