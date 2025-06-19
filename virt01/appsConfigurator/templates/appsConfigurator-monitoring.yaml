@@ -32,4 +32,8 @@ spec:
         automated:
           prune: true
           selfHeal: true
-
+      ignoreDifferences:
+      - group: monitoring.coreos.com
+        kind: ServiceMonitor
+        jqPathExpressions:
+        - .metadata.annotations
