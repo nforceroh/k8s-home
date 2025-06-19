@@ -40,8 +40,6 @@ jobs:
           branch: "chart-bump/updatecli"
           delete-branch: true
           base: main
-          reviewers: |
-            nforceroh
 
       - name: Create PR output
         run: |
