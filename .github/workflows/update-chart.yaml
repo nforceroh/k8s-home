@@ -27,12 +27,6 @@ jobs:
 #        run: |
 #          pip install -r requirements.txt
 
-      - name: My path
-        run: pwd
-
-      - name: List repository contents
-        run: ls -alR
-
       - name: Run chart_bumber.py
         run: |
           python3 /home/runner/work/k8s-home/k8s-home/scripts/chart_bumber.py --charts-root /home/runner/work/k8s-home/k8s-home/virt01
