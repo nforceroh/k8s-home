@@ -1,20 +1,20 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
 
 velero:
-  namespace:
-    labels:
-      - key: pod-security.kubernetes.io/enforce
-        value: privileged
-      - key: pod-security.kubernetes.io/enforce-version
-        value: latest
-      - key: pod-security.kubernetes.io/audit
-        value: privileged
-      - key: pod-security.kubernetes.io/audit-version
-        value: latest
-      - key: pod-security.kubernetes.io/warn
-        value: privileged
-      - key: pod-security.kubernetes.io/warn-version
-        value: latest
+  # namespace:
+  #   labels:
+  #   - key: pod-security.kubernetes.io/enforce
+  #     value: privileged
+  #   - key: pod-security.kubernetes.io/enforce-version
+  #     value: latest
+  #   - key: pod-security.kubernetes.io/audit
+  #     value: privileged
+  #   - key: pod-security.kubernetes.io/audit-version
+  #     value: latest
+  #   - key: pod-security.kubernetes.io/warn
+  #     value: privileged
+  #   - key: pod-security.kubernetes.io/warn-version
+  #     value: latest
 
   image:
     repository: harbor.nf.lab/proxy.docker.io/velero/velero
