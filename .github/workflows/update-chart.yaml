@@ -42,3 +42,6 @@ jobs:
           body: "Automated chart version bump using chart_bumber.py"
           branch: "chart-bump/updatecli"
           delete-branch: true
+          base: main
+          reviewers: |
+            nforceroh
