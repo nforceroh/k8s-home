@@ -6,13 +6,17 @@ idrac-exporter:
     timeout: 300
     hosts:
       virt01m.v101.nf.lab:
+        username: monitor
+        password: monitor
       fw-mgmt.v101.nf.lab:
+        username: monitor
+        password: monitor
     metrics:
       all: true         # CONFIG_METRICS_ALL=false
+
     events:
       severity: warning
       maxage: 7d
-
 
   env:
   - name: CONFIG_DEFAULT_USERNAME
