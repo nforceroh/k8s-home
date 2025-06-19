@@ -29,7 +29,7 @@ velero:
 
   initContainers:
   - name: velero-plugin-for-aws
-    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.12.0
+    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.12.1
     volumeMounts:
       - mountPath: /target
         name: plugins
