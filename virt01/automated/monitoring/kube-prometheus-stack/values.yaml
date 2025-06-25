@@ -90,11 +90,12 @@ kube-prometheus-stack:
       kubeSchedulerAlerting: false
       kubeSchedulerRecording: false
 
-  kubeProxy:
-    enabled: false
+## Component scraping
+#  kubeProxy:
+#    enabled: false
 
-  kubeEtcd:
-    enabled: false
+#  kubeEtcd:
+#    enabled: false
      
-  kubeScheduler:
-    enabled: false
+#  kubeScheduler:
+#    enabled: false
