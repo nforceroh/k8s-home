@@ -11,11 +11,13 @@ spec:
     groupInterval: 5m
     repeatInterval: 12h
     routes:
-      - receiver: 'null'
-        matchers:
-          - alertname=~"InfoInhibitor|Watchdog"
+    - matchers:
+      - matchType: =~
+        name: alertname
+        value: "InfoInhibitor|Watchdog"
+      receiver: 'watchdog'
   receivers:
-  - name: 'null'
+  - name: 'watchdog'
   # Adding a new receiver below the default 'null' receiver  
   - name: 'email-receiver'
     emailConfigs:
