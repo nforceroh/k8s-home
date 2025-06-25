@@ -18,7 +18,6 @@ spec:
       receiver: 'watchdog'
   receivers:
   - name: 'watchdog'
-  # Adding a new receiver below the default 'null' receiver  
   - name: 'email-receiver'
     emailConfigs:
       - to: 'sylvain@nf.lab'
@@ -26,3 +25,4 @@ spec:
         from: 'alertmanager@nf.lab'
         smarthost: 'smtp.nf.lab:25'
         requireTLS: false
+k
