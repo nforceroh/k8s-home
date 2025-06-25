@@ -11,9 +11,9 @@ spec:
     groupInterval: 5m
     repeatInterval: 12h
     routes:
-    - matchers:
-        alertname: "InfoInhibitor|Watchdog"
-      receiver: 'null'    
+      - receiver: 'null'
+        matchers:
+          - alertname=~"InfoInhibitor|Watchdog"
   receivers:
   - name: 'null'
   # Adding a new receiver below the default 'null' receiver  
