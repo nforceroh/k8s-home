@@ -25,4 +25,3 @@ spec:
         from: 'alertmanager@nf.lab'
         smarthost: 'smtp.nf.lab:25'
         requireTLS: false
-k
