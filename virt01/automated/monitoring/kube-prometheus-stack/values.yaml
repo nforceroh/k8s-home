@@ -89,6 +89,8 @@ kube-prometheus-stack:
       kubeProxy: false
       kubeSchedulerAlerting: false
       kubeSchedulerRecording: false
+      kubeControllerManager: false
+      
 
 ## Component scraping
 #  kubeProxy:
