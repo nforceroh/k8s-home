@@ -83,20 +83,18 @@ kube-prometheus-stack:
               requests:
                 storage: 50Gi
 
-#  defaultRules:
-#    rules:
-#      kubeSchedulerAlerting: false
-#      kubeSchedulerRecording: false
+  defaultRules:
+    rules:
+      etcd: false
+      kubeProxy: false
+      kubeSchedulerAlerting: false
+      kubeSchedulerRecording: false
 
   kubeProxy:
-    enabled: true
-    endpoints:
-      - 10.0.0.100
+    enabled: false
+
   kubeEtcd:
-    enabled: true
-    endpoints:
-      - 10.0.0.100      
+    enabled: false
+     
   kubeScheduler:
-    enabled: true
-    endpoints:
-      - 10.0.0.100       
+    enabled: false
