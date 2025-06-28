@@ -1,7 +1,7 @@
 apiVersion: v2
 name: arc-k8s-postfix
-version: 1.0.1
+version: 1.0.2
 dependencies:
 - name: gha-runner-scale-set
   repository: oci://ghcr.io/actions/actions-runner-controller-charts
-  version: 0.12.0
+  version: 0.12.1
