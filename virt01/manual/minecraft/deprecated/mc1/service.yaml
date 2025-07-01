@@ -5,8 +5,8 @@ metadata:
   labels:
     app: mc1
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
-    metallb.universe.tf/loadBalancerIPs: 10.0.1.119
+    metallb.io/address-pool: vlan1000-apps
+    metallb.io/loadBalancerIPs: 10.0.1.119
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

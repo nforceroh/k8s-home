@@ -4,8 +4,8 @@ metadata:
   name: mariadb-svc
   namespace: databases
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
-    metallb.universe.tf/loadBalancerIPs: 10.0.1.112
+    metallb.io/address-pool: vlan1000-apps
+    metallb.io/loadBalancerIPs: 10.0.1.112
     external-dns.alpha.kubernetes.io/hostname: mariadb.k3s.nf.lab
 spec:
   type: LoadBalancer

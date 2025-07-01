@@ -31,7 +31,7 @@ redis:
       type: LoadBalancer
       externalTrafficPolicy: Local
       annotations:
-        metallb.universe.tf/address-pool: vlan1000-apps
+        metallb.io/address-pool: vlan1000-apps
         external-dns.alpha.kubernetes.io/hostname: redis.k3s.nf.lab
   metrics:
     enabled: true

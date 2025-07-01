@@ -4,7 +4,7 @@ mc-router:
       type: LoadBalancer
       port: 25565
       annotations:
-        metallb.universe.tf/address-pool: vlan1000-apps
+        metallb.io/address-pool: vlan1000-apps
         external-dns.alpha.kubernetes.io/hostname: mc-router.k3s.nf.lab
 
   minecraftRouter:

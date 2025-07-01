@@ -59,7 +59,7 @@ minecraft:
     tty: true
 
   serviceAnnotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
+    metallb.io/address-pool: vlan1000-apps
     external-dns.alpha.kubernetes.io/hostname: mc2.k3s.nf.lab
   #rconServiceAnnotations: {}
 

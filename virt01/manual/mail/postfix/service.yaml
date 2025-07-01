@@ -5,8 +5,8 @@ metadata:
   labels:
     app: postfix
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
-    metallb.universe.tf/loadBalancerIPs: 10.0.1.115
+    metallb.io/address-pool: vlan1000-apps
+    metallb.io/loadBalancerIPs: 10.0.1.115
     external-dns.alpha.kubernetes.io/hostname: postfix.k3s.nf.lab, smtp.nf.lab
 spec:
   type: LoadBalancer

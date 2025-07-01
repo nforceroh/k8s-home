@@ -5,7 +5,7 @@ metadata:
   labels:
     app: rspamd
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
+    metallb.io/address-pool: vlan1000-apps
 spec:
   ipFamilies:
   - IPv4

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: wbridge
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-apps
+    metallb.io/address-pool: vlan1000-apps
     external-dns.alpha.kubernetes.io/hostname: wbridge-api.k3s.nf.lab
 spec:
   type: LoadBalancer

@@ -5,9 +5,9 @@ metadata:
   labels:
     app: powerdns-ns2
   annotations:
-    metallb.universe.tf/address-pool: vlan1000-restricted
+    metallb.io/address-pool: vlan1000-restricted
+    metallb.io/loadBalancerIPs: 10.0.0.3
     external-dns.alpha.kubernetes.io/hostname: ns2.nf.lab
-    metallb.universe.tf/loadBalancerIPs: 10.0.0.3
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
