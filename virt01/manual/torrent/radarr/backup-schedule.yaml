@@ -5,7 +5,7 @@ metadata:
   name: ctorrent-radarr
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 50 6 * * *
+  schedule: CRON_TZ=America/New_York 50 6 * * 3
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
@@ -19,5 +19,5 @@ spec:
       matchLabels:
         app: radarr
     metadata: {}
-    ttl: 216h0m0s
+    ttl: 336h0m0s
   useOwnerReferencesInBackup: false

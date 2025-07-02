@@ -5,7 +5,7 @@ metadata:
   name: iot-mosquitto
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 10 2 * * *
+  schedule: CRON_TZ=America/New_York 10 2 * * 2
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
@@ -19,5 +19,5 @@ spec:
       matchLabels:
         app: mosquitto
     metadata: {}
-    ttl: 216h0m0s
+    ttl: 336h0m0s
   useOwnerReferencesInBackup: false

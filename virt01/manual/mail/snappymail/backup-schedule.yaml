@@ -5,7 +5,7 @@ metadata:
   name: mail-snappymail
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 40 3 * * *
+  schedule: CRON_TZ=America/New_York 40 3 * * 4
   skipImmediately: false
   template:
     csiSnapshotTimeout: 0s
@@ -19,5 +19,5 @@ spec:
       matchLabels:
         app: snappymail
     metadata: {}
-    ttl: 216h0m0s
+    ttl: 336h0m0s
   useOwnerReferencesInBackup: false
