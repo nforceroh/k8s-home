@@ -13,11 +13,9 @@ resources:
   - serviceaccount.yaml
   - ingress.yaml
   - backup-schedule.yaml
+  - maps/wg-config-sealed.yaml
   
 configMapGenerator:
-- name: wireguard-cm
-  files:
-  - wg0.conf=maps/wg0.conf
 - name: web-conf-cm
   files:
   - web.conf=maps/web.conf

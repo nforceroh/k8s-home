@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: wg-config
+  namespace: torrent
+spec:
+  encryptedData:
+    wg0.conf: AgC/azBlW0TqFtDcuVLmwlLhhUJE7/1EqlkUg0RD9zbIEBXlXzh4sFCG0h2AfJ5ahCOSBrnWJZrkK8o/Qv/DqYPiW8Iklj9Aj3H7NH4f7Xk/ej9rSeoZqqDp6Huvd4Y2/t5QO75Qs32IjEw9FisWiyCoykeA0iYZ8kdqAFbhpR0H/A9nAv2ZNSrN//url+77HJTApD3JDNcZ5/LqVm6TGsWchrJJ5EPmFjA7Oai03fM9gzYDF8/XWeqg3FU/try3/p/PU0hDeNJpWn7YuWLeuvYeLimLQsOD3XNeX8LAH4ChvyggLzfooGbYvQfEIZjJxiXxYKanEqiqlb8jII3d0e1uQAcb9Ghn65qWZTcBqHuUFqX/nTePb+xoJBi8bn8L3MRZeydTQcoweXneM31VkBTZPJ5tnVAyfbNxzKtc1wtnARD1n5SXu+NCuKxRQptGsu2OAJ5ZC/JhuDGub0uTH8LI8heF7A7rjgCDxxVgyi9Ph0psSSZ10caFSaxhNNYgyunAn8VOZEeAxLvYN8nZ1nvX6B9FPLwgccXnHwendsTZGEPAEkCoWQnGpT6rfgZ0pzlakjbignrmZjL1ytHkgz5zJbDpaMp0tQCIqrp/4YfnAcbaOEPeft8ysdPkoniEMjrZsf5zvzfErm1jdWHpG5spfnLIpWING4/p3981SvuZo4JDTM08gjUDd9QAvP3pScJlzYtotgHSUsB4y0FCPxvBTSVruIeYGyaCEQww2FI4SQxZV6WClYkYrnRfBAUGbkGZBtW/lCM5/5+vOWFjEsS3mYqaUjK2aWDCuT5lBCx8vuEdh09yk99YmwflP8p1ZT6BgUzGfN00FTL+gvafKNzx2DyAlNGiAZSJdy9n0zFdKPWvoERNz8tAGCquS8WckDZTE1Yj5wkWF/Avuqa71rGJNWMDbEIM6k2VdC3/IWvs+kmWnob0AbzuDXi+iA8h9+D1lKY4NbmMc8fsMwUSAq1p/YpANOPPVVaIBmYbm5v/OyTvOVHSt8QLVois5qpHuY8EkzZH9Do8Eb/0hcUGhBSwaVsUmwzGUC6mR5h/LX7Ke6vs15z5N8dGDepu5U7nSKSXeY+pjFqg/zZcUL5pz3xvzM9MfCYH
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: wg-config
+      namespace: torrent
