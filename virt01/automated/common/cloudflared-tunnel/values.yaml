@@ -27,5 +27,6 @@ cloudflare-tunnel:
 
   image:
     repository: cloudflare/cloudflared
- 
+    tag: 2025.7.0
+    
   replicaCount: 1
