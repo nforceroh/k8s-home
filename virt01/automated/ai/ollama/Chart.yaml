@@ -1,7 +1,7 @@
 apiVersion: v2
 name: ollama
-version: 1.0.4
+version: 1.0.5
 dependencies:
 - name: ollama
   repository: https://otwld.github.io/ollama-helm/
-  version: 1.23.0
+  version: 1.24.0
