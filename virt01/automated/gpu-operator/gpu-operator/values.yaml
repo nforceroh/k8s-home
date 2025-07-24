@@ -5,14 +5,20 @@ gpu-operator:
 
   nfd:
     enabled: true
+
   devicePlugin:
+    enabled: false
     config:
       name: time-slicing-config-all
+
   driver:
-    enabled: true
+    enabled: false
     nvidiaDriverCRD:
       enabled: false
     version: "575.57.08"
+
+  migManager:
+    enabled: false
 
   toolkit:
     enabled: false
