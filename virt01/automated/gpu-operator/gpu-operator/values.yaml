@@ -12,6 +12,7 @@ gpu-operator:
     enabled: true
     nvidiaDriverCRD:
       enabled: false
+    version: "575.57.08"
 
   toolkit:
     enabled: false
