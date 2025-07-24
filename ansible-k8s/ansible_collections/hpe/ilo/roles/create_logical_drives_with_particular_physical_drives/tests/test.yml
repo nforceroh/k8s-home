@@ -1,0 +1,5 @@
+---
+- hosts: myhosts
+  connection: local
+  roles:
+    - create_logical_drives_with_particular_physical_drives

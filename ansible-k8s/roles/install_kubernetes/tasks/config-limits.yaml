@@ -1,0 +1,9 @@
+---
+
+- name: Set Kubernetes file limits in /etc/security/limits.d/k8s
+  ansible.builtin.copy:
+    src: limits.d/k8s
+    dest: /etc/security/limits.d/k8s
+    owner: root
+    group: root
+    mode: '0644'

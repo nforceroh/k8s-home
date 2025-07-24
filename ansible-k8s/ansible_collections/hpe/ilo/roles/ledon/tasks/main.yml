@@ -1,0 +1,9 @@
+---
+# tasks file for ledon
+- name: Turn LED on
+  ilo_device:
+    category: Chassis
+    command: IndicatorLedOn
+    baseuri: "{{ baseuri }}"
+    username: "{{ username }}"
+    password: "{{ password }}"

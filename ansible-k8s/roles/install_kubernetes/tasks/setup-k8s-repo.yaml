@@ -1,0 +1,21 @@
+---
+
+- name: Add Kubernetes repository.
+  ansible.builtin.deb822_repository:
+    name: kubernetes
+    types: deb
+    uris: "{{ kubernetes_apt_repository }}"
+    suites: /
+    signed_by: "{{ kubernetes_apt_repository }}/Release.key"
+  register: kubernetes_repository
+
+- name: Update Apt cache.
+  ansible.builtin.apt:
+    update_cache: true
+  when: kubernetes_repository.changed
+
+- name: Add Kubernetes apt preferences file to pin a version.
+  ansible.builtin.template:
+    src: apt-preferences-kubernetes.j2
+    dest: /etc/apt/preferences.d/kubernetes
+    mode: "0644"

@@ -1,0 +1,9 @@
+---
+# tasks file for ledoff
+- name: Turn LED off
+  ilo_device:
+    category: Chassis
+    command: IndicatorLedOff
+    baseuri: "{{ baseuri }}"
+    username: "{{ username }}"
+    password: "{{ password }}"

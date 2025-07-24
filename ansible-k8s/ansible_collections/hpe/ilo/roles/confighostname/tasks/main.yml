@@ -1,0 +1,11 @@
+---
+# tasks file for configHostName
+- name: Set Manager NIC
+  community.general.redfish_config:
+    category: Manager
+    command: SetManagerNic
+    nic_config:
+      HostName: "{{ attribute_value }}"
+    baseuri: "{{ baseuri }}"
+    username: "{{ username }}"
+    password: "{{ password }}"

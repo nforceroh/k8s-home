@@ -1,0 +1,18 @@
+---
+
+- name: Disable AppArmor
+  ansible.builtin.command: systemctl disable apparmor
+  ignore_errors: true
+  changed_when: false
+
+- name: Stop AppArmor service
+  ansible.builtin.command: systemctl stop apparmor
+  ignore_errors: true
+  changed_when: false
+
+- name: Remove AppArmor package
+  ansible.builtin.package:
+    name: apparmor
+    state: absent
+  ignore_errors: true
+  changed_when: false

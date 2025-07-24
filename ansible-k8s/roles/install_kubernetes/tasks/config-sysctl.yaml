@@ -1,0 +1,23 @@
+---
+- name: Ensure procps is installed.
+  package:
+    name: "{{ procps_package }}"
+    state: present
+  when: >
+    ansible_distribution != 'Debian'
+    or ansible_distribution_major_version | int < 10
+
+# See: https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#letting-iptables-see-bridged-traffic
+- name: Set Kubernetes sysctl parameters in /etc/sysctl.d/k8s.conf
+  ansible.builtin.copy:
+    src: sysctl.d/k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Ensure sysctl parameters are applied
+  ansible.builtin.command: sysctl --system
+  register: sysctl_result
+  changed_when: sysctl_result.stdout != ''
+  failed_when: sysctl_result.rc != 0

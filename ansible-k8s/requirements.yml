@@ -1,0 +1,6 @@
+collections:
+  - name: hpe.ilo
+  - name: kubernetes.core
+  - name: dellemc.openmanage
+  - name: community.general
+  - name: ansible.posix

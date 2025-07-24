@@ -1,0 +1,74 @@
+---
+- name: Include OS-specific variables.
+  ansible.builtin.include_vars: "{{ ansible_os_family }}.yaml"
+
+- name: Update Apt cache.
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Ensure dependencies are installed.
+  ansible.builtin.apt:
+    name:
+      - curl
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - psmisc
+      - tlp-stat
+      - procps
+      - python3-debian
+    state: present
+
+- name: Include setup-k8s-repo setup tasks
+  ansible.builtin.include_tasks: setup-k8s-repo.yaml
+  when: ansible_os_family == 'Debian'
+
+- name: Install Kubernetes packages.
+  ansible.builtin.apt:
+    name: "{{ item.name | default(item) }}"
+    state: "{{ item.state | default('present') }}"
+  notify: restart kubelet
+  with_items: "{{ kubernetes_packages }}"
+
+- name: Include sysctl setup tasks
+  ansible.builtin.include_tasks: config-sysctl.yml
+
+- name: Include modprobe tasks
+  ansible.builtin.include_tasks: config-modprobe.yml
+
+- name: Disable swap
+  ansible.builtin.include_tasks: disable-swap.yaml
+
+- name: Disable AppArmor
+  ansible.builtin.include_tasks: disable-apparmor.yaml
+
+- name: Install runc
+  ansible.builtin.include_tasks: install-runc.yaml
+
+- name: Install containerd
+  ansible.builtin.include_tasks: install-containerd.yaml
+
+- name: Install CNI plugins
+  ansible.builtin.include_tasks: install-cni-plugins.yaml
+
+- name: Ensure kubelet is started and enabled at boot.
+  ansible.builtin.service:
+    name: kubelet
+    state: started
+    enabled: true
+
+- name: Check if Kubernetes has already been initialized.
+  ansible.builtin.stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubernetes_init_stat
+
+# Set up control plane.
+- name: Set up control plane
+  ansible.builtin.include_tasks: control-plane-setup.yml
+  when: kubernetes_role == 'control_plane'
+
+
+- name: Include node setup tasks
+  ansible.builtin.include_tasks: node-setup.yml
+  when: kubernetes_role == 'node'

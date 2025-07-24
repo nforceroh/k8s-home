@@ -1,0 +1,5 @@
+---
+- hosts: myhosts
+  connection: local
+  roles:
+    - get_pci_slot_details

@@ -1,0 +1,17 @@
+---
+
+- name: Ensure containerd kernel modules are loaded at boot
+  copy:
+    dest: /etc/modules-load.d/containerd.conf
+    content: |
+      overlay
+      br_netfilter
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Ensure containerd kernel modules are loaded
+  ansible.builtin.command: modprobe {{ item }}
+  with_items: 
+    - overlay
+    - br_netfilter

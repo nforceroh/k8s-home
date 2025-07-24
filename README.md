@@ -1,13 +1,20 @@
 # k8s-home
 
-# set up harvester hci
+## Prep workstation
 
-# set up talos single node cluster
-# pxe setup
-# boot
-# config node
+```bash
+git clone git@github.com:nforceroh/k8s-home.git
+```
 
+## Install ansible and tools to WSL instance
 
+```bash
+sudo apt update
+# Install Ansible
+sudo apt install ansible kubectl -y
+# Install Helm
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | sudo bash
+```
 
 # bootstrap argocd...
 

@@ -1,0 +1,25 @@
+[master]
+
+[hpe]
+hpe1      
+hpe2      
+
+[myhosts:children]
+master
+hpe
+
+[myhosts:vars]
+# Credentials for OOB controller
+username=
+password=
+
+# Local directory where all results are placed
+rootdir=~/output_files
+
+host="{{inventory_hostname}}"
+
+# For managing users
+id=3
+new_user=newuser123
+new_pass=myNewPass123
+role_id=User

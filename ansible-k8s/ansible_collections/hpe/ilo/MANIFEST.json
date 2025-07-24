@@ -1,0 +1,43 @@
+{
+ "collection_info": {
+  "namespace": "hpe",
+  "name": "ilo",
+  "version": "1.0.41",
+  "authors": [
+   "Rajeevalochana Kallur <rajeevalochana.kallur@hpe.com>",
+   "Bhavya B <bhavyab@hpe.com>",
+   "Gayathiri devi Ramasamy gayathiri.dev.ramasamy@hpe.com",
+   "Nagendra M nagendra-m@hpe.com",
+   "T S Kushal t-s.kushal@hpe.com"
+  ],
+  "readme": "README.md",
+  "tags": [
+   "ansible",
+   "devops",
+   "hpe_ilo",
+   "infrastructure_as_code",
+   "bare_metal",
+   "linux",
+   "infrastructure",
+   "networking",
+   "storage",
+   "security"
+  ],
+  "description": "Ansible Modules for HPE iLO",
+  "license": [],
+  "license_file": "LICENSE",
+  "dependencies": {},
+  "repository": "https://github.com/HewlettPackard/iLO-ansible-collection",
+  "documentation": "http://docs.example.com",
+  "homepage": "http://example.com",
+  "issues": "https://github.com/HewlettPackard/iLO-ansible-collection/issues"
+ },
+ "file_manifest_file": {
+  "name": "FILES.json",
+  "ftype": "file",
+  "chksum_type": "sha256",
+  "chksum_sha256": "afe67091b88926efa08623ad2a0491ae1001dfd49eecbe6c762b28180fd2b289",
+  "format": 1
+ },
+ "format": 1
+}

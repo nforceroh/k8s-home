@@ -1,0 +1,2651 @@
+ansible-playbook 2.9.6
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/bhavya/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.8.5 (default, Jan 27 2021, 15:41:15) [GCC 9.3.0]
+Using /etc/ansible/ansible.cfg as config file
+setting up inventory plugins
+host_list declined parsing /etc/ansible/hosts as it did not pass its verify_file() method
+script declined parsing /etc/ansible/hosts as it did not pass its verify_file() method
+auto declined parsing /etc/ansible/hosts as it did not pass its verify_file() method
+Not replacing invalid character(s) "{'-'}" in group name (test-servers)
+[DEPRECATION WARNING]: The TRANSFORM_INVALID_GROUP_CHARS settings is set to allow bad characters in group names by default, this will change, but still be user configurable on deprecation. This feature 
+will be removed in version 2.10. Deprecation warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+[WARNING]: Invalid characters were found in group names but not replaced, use -vvvv to see details
+Not replacing invalid character(s) "{'-'}" in group name (test-servers)
+Parsed /etc/ansible/hosts inventory source with ini plugin
+Loading callback plugin default of type stdout, v2.0 from /usr/lib/python3/dist-packages/ansible/plugins/callback/default.py
+
+PLAYBOOK: automation.yml **********************************************************************************************************************************************************************************
+Positional arguments: automation.yml
+verbosity: 4
+connection: smart
+timeout: 10
+become_method: sudo
+tags: ('all',)
+inventory: ('/etc/ansible/hosts',)
+forks: 5
+1 plays in automation.yml
+
+PLAY [Automation testing] *********************************************************************************************************************************************************************************
+META: ran handlers
+
+TASK [getBiosattr : Get BIOS attributes] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getBiosattr/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869 `" && echo ansible-tmp-1620214153.2160952-249599874552869="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpn5c0qz9r TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214153.2160952-249599874552869/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetBiosAttributes"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "bios_attribute": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "AcpiHpet": "Enabled",
+                        "AcpiRootBridgePxm": "Enabled",
+                        "AcpiSlit": "Enabled",
+                        "AdjSecPrefetch": "Enabled",
+                        "AdminEmail": "",
+                        "AdminName": "",
+                        "AdminOtherInfo": "",
+                        "AdminPhone": "",
+                        "AdvCrashDumpMode": "Disabled",
+                        "AdvancedMemProtection": "AdvancedEcc",
+                        "AsrStatus": "Enabled",
+                        "AsrTimeoutMinutes": "Timeout10",
+                        "AssetTagProtection": "Unlocked",
+                        "AutoPowerOn": "AlwaysPowerOn",
+                        "BootMode": "LegacyBios",
+                        "BootOrderPolicy": "RetryIndefinitely",
+                        "ChannelInterleaving": "Enabled",
+                        "CollabPowerControl": "Enabled",
+                        "ConsistentDevNaming": "LomsAndSlots",
+                        "CustomPostMessage": "",
+                        "DaylightSavingsTime": "Disabled",
+                        "DcuIpPrefetcher": "Enabled",
+                        "DcuStreamPrefetcher": "Enabled",
+                        "Dhcpv4": "Enabled",
+                        "EmbSas1Aspm": "Disabled",
+                        "EmbSas1Boot": "TwentyFourTargets",
+                        "EmbSas1Enable": "Auto",
+                        "EmbSas1LinkSpeed": "Auto",
+                        "EmbSas1PcieOptionROM": "Enabled",
+                        "EmbVideoConnection": "Auto",
+                        "EmbeddedDiagnostics": "Enabled",
+                        "EmbeddedSata": "Ahci",
+                        "EmbeddedSerialPort": "Com2Irq3",
+                        "EmbeddedUefiShell": "Enabled",
+                        "EmsConsole": "Virtual",
+                        "EnabledCoresPerProc": 0,
+                        "EnergyEfficientTurbo": "Enabled",
+                        "EnergyPerfBias": "BalancedPerf",
+                        "EnhancedProcPerf": "Disabled",
+                        "EraseUserDefaults": "No",
+                        "ExtendedAmbientTemp": "Disabled",
+                        "ExtendedMemTest": "Disabled",
+                        "F11BootMenu": "Enabled",
+                        "FCScanPolicy": "CardConfig",
+                        "FlexLom1Aspm": "Disabled",
+                        "HttpSupport": "Auto",
+                        "HwPrefetcher": "Enabled",
+                        "IODCConfiguration": "Auto",
+                        "IntelDmiLinkFreq": "Auto",
+                        "IntelNicDmaChannels": "Enabled",
+                        "IntelPerfMonitoring": "Disabled",
+                        "IntelProcVtd": "Enabled",
+                        "IntelligentProvisioning": "Enabled",
+                        "InternalSDCardSlot": "Enabled",
+                        "IoNonPostedPrefetching": "Enabled",
+                        "Ipv4Address": "0.0.0.0",
+                        "Ipv4Gateway": "0.0.0.0",
+                        "Ipv4PrimaryDNS": "0.0.0.0",
+                        "Ipv4SecondaryDNS": "0.0.0.0",
+                        "Ipv4SubnetMask": "0.0.0.0",
+                        "Ipv6Address": "::",
+                        "Ipv6ConfigPolicy": "Automatic",
+                        "Ipv6Duid": "Auto",
+                        "Ipv6Gateway": "::",
+                        "Ipv6PrimaryDNS": "::",
+                        "Ipv6SecondaryDNS": "::",
+                        "LLCDeadLineAllocation": "Enabled",
+                        "LlcPrefetch": "Disabled",
+                        "LocalRemoteThreshold": "Auto",
+                        "MaxMemBusFreqMHz": "Auto",
+                        "MaxPcieSpeed": "PerPortCtrl",
+                        "MemClearWarmReset": "Disabled",
+                        "MemFastTraining": "Enabled",
+                        "MemMirrorMode": "Full",
+                        "MemPatrolScrubbing": "Enabled",
+                        "MemRefreshRate": "Refreshx1",
+                        "MemoryControllerInterleaving": "Auto",
+                        "MemoryRemap": "NoAction",
+                        "MinProcIdlePkgState": "C6Retention",
+                        "MinProcIdlePower": "C6",
+                        "NetworkBootRetry": "Enabled",
+                        "NetworkBootRetryCount": 20,
+                        "NodeInterleaving": "Disabled",
+                        "NumaGroupSizeOpt": "Flat",
+                        "NvmeOptionRom": "Enabled",
+                        "OpportunisticSelfRefresh": "Disabled",
+                        "PciPeerToPeerSerialization": "Disabled",
+                        "PciResourcePadding": "Normal",
+                        "PciSlot3Aspm": "Disabled",
+                        "PciSlot3Enable": "Auto",
+                        "PciSlot3LinkSpeed": "Auto",
+                        "PciSlot3OptionROM": "Enabled",
+                        "PersistentMemBackupPowerPolicy": "WaitForBackupPower",
+                        "PostBootProgress": "Disabled",
+                        "PostDiscoveryMode": "Auto",
+                        "PostF1Prompt": "Delayed20Sec",
+                        "PostVideoSupport": "DisplayAll",
+                        "PowerButton": "Enabled",
+                        "PowerRegulator": "DynamicPowerSavings",
+                        "PreBootNetwork": "Auto",
+                        "PrebootNetworkEnvPolicy": "Auto",
+                        "PrebootNetworkProxy": "",
+                        "ProcAes": "Enabled",
+                        "ProcHyperthreading": "Enabled",
+                        "ProcTurbo": "Enabled",
+                        "ProcVirtualization": "Enabled",
+                        "ProcX2Apic": "Enabled",
+                        "ProcessorConfigTDPLevel": "Normal",
+                        "ProcessorJitterControl": "Disabled",
+                        "ProcessorJitterControlFrequency": 0,
+                        "ProcessorJitterControlOptimization": "ZeroLatency",
+                        "ProductId": "iLOPID4CE046OD0G",
+                        "RemovableFlashBootSeq": "ExternalKeysFirst",
+                        "RestoreDefaults": "No",
+                        "RestoreManufacturingDefaults": "No",
+                        "RomSelection": "CurrentRom",
+                        "SataSecureErase": "Disabled",
+                        "SaveUserDefaults": "No",
+                        "SecStartBackupImage": "Disabled",
+                        "SecureBootStatus": "Disabled",
+                        "SerialConsoleBaudRate": "BaudRate115200",
+                        "SerialConsoleEmulation": "Vt100Plus",
+                        "SerialConsolePort": "Auto",
+                        "SerialNumber": "iLOSNoBV546A6B6C",
+                        "ServerAssetTag": "",
+                        "ServerConfigLockStatus": "Disabled",
+                        "ServerName": "AnupAuto",
+                        "ServerOtherInfo": "",
+                        "ServerPrimaryOs": "",
+                        "ServiceEmail": "",
+                        "ServiceName": "",
+                        "ServiceOtherInfo": "",
+                        "ServicePhone": "",
+                        "SetupBrowserSelection": "Auto",
+                        "Slot1MctpBroadcastSupport": "Enabled",
+                        "Slot2MctpBroadcastSupport": "Enabled",
+                        "Slot3MctpBroadcastSupport": "Enabled",
+                        "Slot3NicBoot1": "NetworkBoot",
+                        "Slot3NicBoot2": "Disabled",
+                        "Sriov": "Enabled",
+                        "StaleAtoS": "Disabled",
+                        "SubNumaClustering": "Disabled",
+                        "ThermalConfig": "OptimalCooling",
+                        "ThermalShutdown": "Enabled",
+                        "TimeFormat": "Utc",
+                        "TimeZone": "Utc0",
+                        "TpmChipId": "None",
+                        "TpmFips": "NotSpecified",
+                        "TpmState": "NotPresent",
+                        "TpmType": "NoTpm",
+                        "UefiOptimizedBoot": "Disabled",
+                        "UefiSerialDebugLevel": "Disabled",
+                        "UefiShellBootOrder": "Disabled",
+                        "UefiShellScriptVerification": "Disabled",
+                        "UefiShellStartup": "Disabled",
+                        "UefiShellStartupLocation": "Auto",
+                        "UefiShellStartupUrl": "",
+                        "UefiShellStartupUrlFromDhcp": "Disabled",
+                        "UncoreFreqScaling": "Auto",
+                        "UrlBootFile": "",
+                        "UrlBootFile2": "",
+                        "UrlBootFile3": "",
+                        "UrlBootFile4": "",
+                        "UsbBoot": "Enabled",
+                        "UsbControl": "UsbEnabled",
+                        "UserDefaultsState": "Disabled",
+                        "UtilityLang": "English",
+                        "VirtualInstallDisk": "Disabled",
+                        "VirtualSerialPort": "Com1Irq4",
+                        "VlanControl": "Disabled",
+                        "VlanId": 0,
+                        "VlanPriority": 0,
+                        "WakeOnLan": "Disabled",
+                        "WorkloadProfile": "GeneralPowerEfficientCompute",
+                        "XptPrefetcher": "Auto",
+                        "iSCSIPolicy": "SoftwareInitiator"
+                    }
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getBootorder : Get device boot order] ***************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getBootorder/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662 `" && echo ansible-tmp-1620214163.3153074-101080928693662="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpdc9oenr4 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214163.3153074-101080928693662/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetBootOrder"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "boot_order": {
+            "entries": [],
+            "ret": false
+        }
+    }
+}
+
+TASK [getBootoverride : Get Boot Override information] ****************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getBootoverride/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612 `" && echo ansible-tmp-1620214175.1214056-236772951531612="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmps6c5lnjr TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214175.1214056-236772951531612/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetBootOverride"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "boot_override": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "BootSourceOverrideEnabled": "Disabled",
+                        "BootSourceOverrideMode": "Legacy",
+                        "BootSourceOverrideTarget": "None",
+                        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+                            "None",
+                            "Cd",
+                            "Hdd",
+                            "Usb",
+                            "Utilities",
+                            "Diags",
+                            "BiosSetup",
+                            "Pxe",
+                            "UefiShell"
+                        ]
+                    }
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [changAttrname : Set AdminEmail to ilorest@hpe.com] **************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/changAttrname/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957 `" && echo ansible-tmp-1620214184.807696-280965692016957="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_config.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpvxljaqvt TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957/AnsiballZ_redfish_config.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957/AnsiballZ_redfish_config.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957/AnsiballZ_redfish_config.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214184.807696-280965692016957/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "bios_attribute_name": "AdminEmail",
+            "bios_attribute_value": "ilorest@hpe.com",
+            "category": "Systems",
+            "command": [
+                "SetBiosAttributes"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Modified BIOS attribute"
+}
+
+TASK [rebootsys : Reboot system to apply new BIOS settings] ***********************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/rebootsys/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489 `" && echo ansible-tmp-1620214198.7612677-92262544759489="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpc42v4gxq TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214198.7612677-92262544759489/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Systems",
+            "command": [
+                "PowerReboot"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [setbiosdefault : Set BIOS default settings] *********************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/setbiosdefault/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364 `" && echo ansible-tmp-1620214207.922444-219213767687364="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_config.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpapuqgg82 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364/AnsiballZ_redfish_config.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364/AnsiballZ_redfish_config.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364/AnsiballZ_redfish_config.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214207.922444-219213767687364/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "bios_attribute_name": "null",
+            "bios_attribute_value": "null",
+            "category": "Systems",
+            "command": [
+                "SetBiosDefaultSettings"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Set BIOS to default settings"
+}
+
+TASK [getchassinven : Get chassis Inventory] **************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getchassinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518 `" && echo ansible-tmp-1620214219.9738526-83594322506518="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpeumoneoi TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214219.9738526-83594322506518/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Chassis"
+            ],
+            "command": [
+                "GetChassisInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "chassis": {
+            "entries": [
+                {
+                    "AssetTag": "                                ",
+                    "ChassisType": "Blade",
+                    "IndicatorLED": "Lit",
+                    "Manufacturer": "HPE",
+                    "Model": "Synergy 480 Gen10",
+                    "SerialNumber": "iLOSNoBV546A6B6C"
+                },
+                {
+                    "ChassisType": "Enclosure",
+                    "IndicatorLED": "Lit",
+                    "Manufacturer": "HPE",
+                    "SerialNumber": "SGH705X5YW"
+                }
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getchasspower : Get chassis power] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getchasspower/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799 `" && echo ansible-tmp-1620214228.8924513-105098956248799="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpd4xnq425 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214228.8924513-105098956248799/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Chassis"
+            ],
+            "command": [
+                "GetChassisPower"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "chassis_power": {
+            "msg": "Key Power not found.",
+            "ret": false
+        }
+    }
+}
+
+TASK [getchassistherm : Get chassis thermals] *************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getchassistherm/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781 `" && echo ansible-tmp-1620214240.0865889-252928816854781="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpwlg_0orl TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214240.0865889-252928816854781/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Chassis"
+            ],
+            "command": [
+                "GetChassisThermals"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "thermals": {
+            "entries": [
+                {
+                    "Name": "01-Inlet Ambient",
+                    "PhysicalContext": "Intake",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 1,
+                    "UpperThresholdCritical": 42,
+                    "UpperThresholdFatal": 47
+                },
+                {
+                    "Name": "02-CPU 1",
+                    "PhysicalContext": "CPU",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 2,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "03-CPU 2",
+                    "PhysicalContext": "CPU",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 3,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "04-P1 DIMM 1-6",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 4,
+                    "UpperThresholdCritical": 90
+                },
+                {
+                    "Name": "05-PMM 1-6",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 5,
+                    "UpperThresholdCritical": 83
+                },
+                {
+                    "Name": "06-P1 DIMM 7-12",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 6,
+                    "UpperThresholdCritical": 90
+                },
+                {
+                    "Name": "07-PMM 7-12",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 7,
+                    "UpperThresholdCritical": 83
+                },
+                {
+                    "Name": "08-P2 DIMM 1-6",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 8,
+                    "UpperThresholdCritical": 90
+                },
+                {
+                    "Name": "09-PMM 1-6",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 9,
+                    "UpperThresholdCritical": 83
+                },
+                {
+                    "Name": "10-P2 DIMM 7-12",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 10,
+                    "UpperThresholdCritical": 90
+                },
+                {
+                    "Name": "11-PMM 7-12",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 11,
+                    "UpperThresholdCritical": 83
+                },
+                {
+                    "Name": "12-P1 Mem Zone 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 12,
+                    "UpperThresholdCritical": 95,
+                    "UpperThresholdFatal": 100
+                },
+                {
+                    "Name": "13-P1 Mem Zone 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 13,
+                    "UpperThresholdCritical": 95,
+                    "UpperThresholdFatal": 100
+                },
+                {
+                    "Name": "14-HD Max",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 14,
+                    "UpperThresholdCritical": 60
+                },
+                {
+                    "Name": "16-Chipset",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 15,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "17-VR P1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 16,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "18-VR P2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 17,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "19-VR P1 Mem 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 18,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "20-VR P1 Mem 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 19,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "21-VR P2 Mem 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 20,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "22-VR P2 Mem 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 21,
+                    "UpperThresholdCritical": 115,
+                    "UpperThresholdFatal": 120
+                },
+                {
+                    "Name": "23-Stor Batt 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 22,
+                    "UpperThresholdCritical": 60
+                },
+                {
+                    "Name": "24-BMC",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 23,
+                    "UpperThresholdCritical": 110,
+                    "UpperThresholdFatal": 115
+                },
+                {
+                    "Name": "25-HD Controller",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 24,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "26-HD Cntlr Zone",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 25,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "27-Mezz 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 26,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "28-Mezz 1 Inlet",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 27,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "29-Mezz 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 28,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "30-Mezz 2 Inlet",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 29,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "31-Mezz 3",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 30,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "32-Mezz 3 Inlet",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 31,
+                    "UpperThresholdCritical": 70
+                },
+                {
+                    "Name": "33-I/O Zone 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 32,
+                    "UpperThresholdCritical": 90,
+                    "UpperThresholdFatal": 95
+                },
+                {
+                    "Name": "34-I/O Zone 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 33,
+                    "UpperThresholdCritical": 90,
+                    "UpperThresholdFatal": 95
+                },
+                {
+                    "Name": "35-I/O Zone 3",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 34,
+                    "UpperThresholdCritical": 90,
+                    "UpperThresholdFatal": 95
+                },
+                {
+                    "Name": "36-E-Fuse",
+                    "PhysicalContext": "PowerSupply",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 35,
+                    "UpperThresholdCritical": 100
+                },
+                {
+                    "Name": "37-Sys Exhaust 1",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 36,
+                    "UpperThresholdCritical": 80,
+                    "UpperThresholdFatal": 85
+                },
+                {
+                    "Name": "38-Sys Exhaust 2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 37,
+                    "UpperThresholdCritical": 80,
+                    "UpperThresholdFatal": 85
+                },
+                {
+                    "Name": "75-M2",
+                    "PhysicalContext": "SystemBoard",
+                    "ReadingCelsius": 0,
+                    "SensorNumber": 38,
+                    "UpperThresholdCritical": 80,
+                    "UpperThresholdFatal": 85
+                }
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getfaninven : Get fans statistics] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getfaninven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800 `" && echo ansible-tmp-1620214251.4684646-166027624482800="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpi0_dfdmo TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214251.4684646-166027624482800/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Chassis"
+            ],
+            "command": [
+                "GetFanInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "fan": {
+            "entries": [
+                {
+                    "Reading": 0,
+                    "ReadingUnits": "Percent",
+                    "Status": {
+                        "Health": null,
+                        "State": "UnavailableOffline"
+                    }
+                }
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [ledoff : Turn LED off] ******************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/ledoff/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397 `" && echo ansible-tmp-1620214263.3639913-7237416136397="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpwfac_0ym TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214263.3639913-7237416136397/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Chassis",
+            "command": [
+                "IndicatorLedOff"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [ledon : Turn LED on] ********************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/ledon/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403 `" && echo ansible-tmp-1620214280.351395-31824167246403="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpzmkynfia TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214280.351395-31824167246403/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Chassis",
+            "command": [
+                "IndicatorLedOn"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [getcpuinven : Get CPU Inventory] ********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getcpuinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802 `" && echo ansible-tmp-1620214297.746406-281183611044802="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmphj5nnnm9 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214297.746406-281183611044802/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetCpuInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "cpu": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "Id": "1",
+                            "Manufacturer": "Intel(R) Corporation",
+                            "MaxSpeedMHz": 4000,
+                            "Model": "Genuine Intel(R) CPU 0000%@",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            },
+                            "TotalCores": 24,
+                            "TotalThreads": 48
+                        },
+                        {
+                            "Id": "2",
+                            "Manufacturer": "",
+                            "MaxSpeedMHz": 4000,
+                            "Model": "",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Absent"
+                            },
+                            "TotalCores": 0,
+                            "TotalThreads": 0
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getDiskinven : Get disk inventory] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getDiskinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139 `" && echo ansible-tmp-1620214310.9318764-147009184407139="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpzcp14a7l TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214310.9318764-147009184407139/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetDiskInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "disk": {
+            "entries": [],
+            "ret": false
+        }
+    }
+}
+
+TASK [getfirminven : Get Firmware Inventory] **************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getfirminven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528 `" && echo ansible-tmp-1620214319.9112775-162965139070528="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpcxasplcr TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214319.9112775-162965139070528/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Update"
+            ],
+            "command": [
+                "GetFirmwareInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "firmware": {
+            "msg": "URL Error on GET request to 'https://15.146.46.124/redfish/v1/UpdateService/FirmwareInventory/2/': 'timed out'",
+            "ret": false
+        }
+    }
+}
+
+TASK [getfirmupdate : Get Firmware Update Capabilities] ***************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getfirmupdate/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489 `" && echo ansible-tmp-1620214339.1051426-58013541180489="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpnan3hqpp TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214339.1051426-58013541180489/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Update"
+            ],
+            "command": [
+                "GetFirmwareUpdateCapabilities"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "firmware_update_capabilities": {
+            "entries": {
+                "#UpdateService.SimpleUpdate": [
+                    "HTTP",
+                    "HTTPS"
+                ]
+            },
+            "ret": true
+        }
+    }
+}
+
+TASK [getmeminven : Get memory inventory] *****************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getmeminven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954 `" && echo ansible-tmp-1620214348.1775854-76525022059954="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp9hpcm_gs TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214348.1775854-76525022059954/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetMemoryInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "memory": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "CapacityMiB": 8192,
+                            "MemoryDeviceType": "DDR4",
+                            "MemoryLocation": {
+                                "Channel": 6,
+                                "MemoryController": 2,
+                                "Slot": 1,
+                                "Socket": 1
+                            },
+                            "Name": "proc1dimm1",
+                            "OperatingMemoryModes": [
+                                "Volatile"
+                            ],
+                            "RankCount": 1,
+                            "SerialNumber": "715E66F8",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getnicinven : Get NIC Information] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getnicinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766 `" && echo ansible-tmp-1620214414.4528704-176208618798766="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpmy_93i__ TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214414.4528704-176208618798766/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetNicInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "nic": {
+            "entries": [
+                [
+                    {
+                        "resource_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "IPv4Addresses": [],
+                            "IPv6Addresses": [],
+                            "MACAddress": "70:10:6f:cd:54:b0",
+                            "NameServers": [],
+                            "SpeedMbps": null,
+                            "Status": {
+                                "Health": null,
+                                "State": null
+                            }
+                        },
+                        {
+                            "IPv4Addresses": [],
+                            "IPv6Addresses": [],
+                            "MACAddress": "70:10:6f:cd:54:b8",
+                            "NameServers": [],
+                            "SpeedMbps": null,
+                            "Status": {
+                                "Health": null,
+                                "State": null
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getpsuinven : Get PSU Inventory] ********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getpsuinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399 `" && echo ansible-tmp-1620214428.8604076-64944452962399="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp_3lk_kym TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214428.8604076-64944452962399/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Chassis"
+            ],
+            "command": [
+                "GetPsuInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "psu": {
+            "msg": "Key PowerSupplies not found",
+            "ret": false
+        }
+    }
+}
+
+TASK [getsessions : Get sessions] *************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getsessions/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436 `" && echo ansible-tmp-1620214437.5210412-10753688408436="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmppit225z9 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214437.5210412-10753688408436/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Sessions"
+            ],
+            "command": [
+                "GetSessions"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "session": {
+            "entries": "HPE servers will not release session data",
+            "ret": true
+        }
+    }
+}
+
+TASK [getSCinven : Get storage controller inventory] ******************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getSCinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324 `" && echo ansible-tmp-1620214444.136309-29005312074324="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpcaqz2l3u TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214444.136309-29005312074324/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetStorageControllerInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "storage_controller": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "FirmwareVersion": null,
+                            "Location": {
+                                "PartLocation": {
+                                    "LocationOrdinalValue": 2,
+                                    "LocationType": "Slot",
+                                    "ServiceLabel": "Slot 2"
+                                }
+                            },
+                            "Model": "",
+                            "SerialNumber": "",
+                            "Status": {
+                                "Health": null,
+                                "State": "Enabled"
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getall : Get Inventory] *****************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getall/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914 `" && echo ansible-tmp-1620214455.16828-21823687004914="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpkh1js7ct TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214455.16828-21823687004914/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "all"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "bios_attribute": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "AcpiHpet": "Enabled",
+                        "AcpiRootBridgePxm": "Enabled",
+                        "AcpiSlit": "Enabled",
+                        "AdjSecPrefetch": "Enabled",
+                        "AdminEmail": "",
+                        "AdminName": "",
+                        "AdminOtherInfo": "",
+                        "AdminPhone": "",
+                        "AdvCrashDumpMode": "Disabled",
+                        "AdvancedMemProtection": "AdvancedEcc",
+                        "AsrStatus": "Enabled",
+                        "AsrTimeoutMinutes": "Timeout10",
+                        "AssetTagProtection": "Unlocked",
+                        "AutoPowerOn": "AlwaysPowerOn",
+                        "BootMode": "LegacyBios",
+                        "BootOrderPolicy": "RetryIndefinitely",
+                        "ChannelInterleaving": "Enabled",
+                        "CollabPowerControl": "Enabled",
+                        "ConsistentDevNaming": "LomsAndSlots",
+                        "CustomPostMessage": "",
+                        "DaylightSavingsTime": "Disabled",
+                        "DcuIpPrefetcher": "Enabled",
+                        "DcuStreamPrefetcher": "Enabled",
+                        "Dhcpv4": "Enabled",
+                        "EmbSas1Aspm": "Disabled",
+                        "EmbSas1Boot": "TwentyFourTargets",
+                        "EmbSas1Enable": "Auto",
+                        "EmbSas1LinkSpeed": "Auto",
+                        "EmbSas1PcieOptionROM": "Enabled",
+                        "EmbVideoConnection": "Auto",
+                        "EmbeddedDiagnostics": "Enabled",
+                        "EmbeddedSata": "Ahci",
+                        "EmbeddedSerialPort": "Com2Irq3",
+                        "EmbeddedUefiShell": "Enabled",
+                        "EmsConsole": "Virtual",
+                        "EnabledCoresPerProc": 0,
+                        "EnergyEfficientTurbo": "Enabled",
+                        "EnergyPerfBias": "BalancedPerf",
+                        "EnhancedProcPerf": "Disabled",
+                        "EraseUserDefaults": "No",
+                        "ExtendedAmbientTemp": "Disabled",
+                        "ExtendedMemTest": "Disabled",
+                        "F11BootMenu": "Enabled",
+                        "FCScanPolicy": "CardConfig",
+                        "FlexLom1Aspm": "Disabled",
+                        "HttpSupport": "Auto",
+                        "HwPrefetcher": "Enabled",
+                        "IODCConfiguration": "Auto",
+                        "IntelDmiLinkFreq": "Auto",
+                        "IntelNicDmaChannels": "Enabled",
+                        "IntelPerfMonitoring": "Disabled",
+                        "IntelProcVtd": "Enabled",
+                        "IntelligentProvisioning": "Enabled",
+                        "InternalSDCardSlot": "Enabled",
+                        "IoNonPostedPrefetching": "Enabled",
+                        "Ipv4Address": "0.0.0.0",
+                        "Ipv4Gateway": "0.0.0.0",
+                        "Ipv4PrimaryDNS": "0.0.0.0",
+                        "Ipv4SecondaryDNS": "0.0.0.0",
+                        "Ipv4SubnetMask": "0.0.0.0",
+                        "Ipv6Address": "::",
+                        "Ipv6ConfigPolicy": "Automatic",
+                        "Ipv6Duid": "Auto",
+                        "Ipv6Gateway": "::",
+                        "Ipv6PrimaryDNS": "::",
+                        "Ipv6SecondaryDNS": "::",
+                        "LLCDeadLineAllocation": "Enabled",
+                        "LlcPrefetch": "Disabled",
+                        "LocalRemoteThreshold": "Auto",
+                        "MaxMemBusFreqMHz": "Auto",
+                        "MaxPcieSpeed": "PerPortCtrl",
+                        "MemClearWarmReset": "Disabled",
+                        "MemFastTraining": "Enabled",
+                        "MemMirrorMode": "Full",
+                        "MemPatrolScrubbing": "Enabled",
+                        "MemRefreshRate": "Refreshx1",
+                        "MemoryControllerInterleaving": "Auto",
+                        "MemoryRemap": "NoAction",
+                        "MinProcIdlePkgState": "C6Retention",
+                        "MinProcIdlePower": "C6",
+                        "NetworkBootRetry": "Enabled",
+                        "NetworkBootRetryCount": 20,
+                        "NodeInterleaving": "Disabled",
+                        "NumaGroupSizeOpt": "Flat",
+                        "NvmeOptionRom": "Enabled",
+                        "OpportunisticSelfRefresh": "Disabled",
+                        "PciPeerToPeerSerialization": "Disabled",
+                        "PciResourcePadding": "Normal",
+                        "PciSlot3Aspm": "Disabled",
+                        "PciSlot3Enable": "Auto",
+                        "PciSlot3LinkSpeed": "Auto",
+                        "PciSlot3OptionROM": "Enabled",
+                        "PersistentMemBackupPowerPolicy": "WaitForBackupPower",
+                        "PostBootProgress": "Disabled",
+                        "PostDiscoveryMode": "Auto",
+                        "PostF1Prompt": "Delayed20Sec",
+                        "PostVideoSupport": "DisplayAll",
+                        "PowerButton": "Enabled",
+                        "PowerRegulator": "DynamicPowerSavings",
+                        "PreBootNetwork": "Auto",
+                        "PrebootNetworkEnvPolicy": "Auto",
+                        "PrebootNetworkProxy": "",
+                        "ProcAes": "Enabled",
+                        "ProcHyperthreading": "Enabled",
+                        "ProcTurbo": "Enabled",
+                        "ProcVirtualization": "Enabled",
+                        "ProcX2Apic": "Enabled",
+                        "ProcessorConfigTDPLevel": "Normal",
+                        "ProcessorJitterControl": "Disabled",
+                        "ProcessorJitterControlFrequency": 0,
+                        "ProcessorJitterControlOptimization": "ZeroLatency",
+                        "ProductId": "iLOPID4CE046OD0G",
+                        "RemovableFlashBootSeq": "ExternalKeysFirst",
+                        "RestoreDefaults": "No",
+                        "RestoreManufacturingDefaults": "No",
+                        "RomSelection": "CurrentRom",
+                        "SataSecureErase": "Disabled",
+                        "SaveUserDefaults": "No",
+                        "SecStartBackupImage": "Disabled",
+                        "SecureBootStatus": "Disabled",
+                        "SerialConsoleBaudRate": "BaudRate115200",
+                        "SerialConsoleEmulation": "Vt100Plus",
+                        "SerialConsolePort": "Auto",
+                        "SerialNumber": "iLOSNoBV546A6B6C",
+                        "ServerAssetTag": "",
+                        "ServerConfigLockStatus": "Disabled",
+                        "ServerName": "AnupAuto",
+                        "ServerOtherInfo": "",
+                        "ServerPrimaryOs": "",
+                        "ServiceEmail": "",
+                        "ServiceName": "",
+                        "ServiceOtherInfo": "",
+                        "ServicePhone": "",
+                        "SetupBrowserSelection": "Auto",
+                        "Slot1MctpBroadcastSupport": "Enabled",
+                        "Slot2MctpBroadcastSupport": "Enabled",
+                        "Slot3MctpBroadcastSupport": "Enabled",
+                        "Slot3NicBoot1": "NetworkBoot",
+                        "Slot3NicBoot2": "Disabled",
+                        "Sriov": "Enabled",
+                        "StaleAtoS": "Disabled",
+                        "SubNumaClustering": "Disabled",
+                        "ThermalConfig": "OptimalCooling",
+                        "ThermalShutdown": "Enabled",
+                        "TimeFormat": "Utc",
+                        "TimeZone": "Utc0",
+                        "TpmChipId": "None",
+                        "TpmFips": "NotSpecified",
+                        "TpmState": "NotPresent",
+                        "TpmType": "NoTpm",
+                        "UefiOptimizedBoot": "Disabled",
+                        "UefiSerialDebugLevel": "Disabled",
+                        "UefiShellBootOrder": "Disabled",
+                        "UefiShellScriptVerification": "Disabled",
+                        "UefiShellStartup": "Disabled",
+                        "UefiShellStartupLocation": "Auto",
+                        "UefiShellStartupUrl": "",
+                        "UefiShellStartupUrlFromDhcp": "Disabled",
+                        "UncoreFreqScaling": "Auto",
+                        "UrlBootFile": "",
+                        "UrlBootFile2": "",
+                        "UrlBootFile3": "",
+                        "UrlBootFile4": "",
+                        "UsbBoot": "Enabled",
+                        "UsbControl": "UsbEnabled",
+                        "UserDefaultsState": "Disabled",
+                        "UtilityLang": "English",
+                        "VirtualInstallDisk": "Disabled",
+                        "VirtualSerialPort": "Com1Irq4",
+                        "VlanControl": "Disabled",
+                        "VlanId": 0,
+                        "VlanPriority": 0,
+                        "WakeOnLan": "Disabled",
+                        "WorkloadProfile": "GeneralPowerEfficientCompute",
+                        "XptPrefetcher": "Auto",
+                        "iSCSIPolicy": "SoftwareInitiator"
+                    }
+                ]
+            ],
+            "ret": true
+        },
+        "boot_order": {
+            "entries": [],
+            "ret": false
+        },
+        "boot_override": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "BootSourceOverrideEnabled": "Disabled",
+                        "BootSourceOverrideMode": "Legacy",
+                        "BootSourceOverrideTarget": "None",
+                        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+                            "None",
+                            "Cd",
+                            "Hdd",
+                            "Usb",
+                            "Utilities",
+                            "Diags",
+                            "BiosSetup",
+                            "Pxe",
+                            "UefiShell"
+                        ]
+                    }
+                ]
+            ],
+            "ret": true
+        },
+        "cpu": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "Id": "1",
+                            "Manufacturer": "Intel(R) Corporation",
+                            "MaxSpeedMHz": 4000,
+                            "Model": "Genuine Intel(R) CPU 0000%@",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            },
+                            "TotalCores": 24,
+                            "TotalThreads": 48
+                        },
+                        {
+                            "Id": "2",
+                            "Manufacturer": "",
+                            "MaxSpeedMHz": 4000,
+                            "Model": "",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Absent"
+                            },
+                            "TotalCores": 0,
+                            "TotalThreads": 0
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        },
+        "disk": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        [
+                            {
+                                "Id": "DA000000",
+                                "MediaType": "SSD",
+                                "Model": "",
+                                "Name": "Secondary Storage Device",
+                                "Protocol": "NVMe",
+                                "Revision": "",
+                                "SerialNumber": "",
+                                "Status": {
+                                    "Health": null
+                                }
+                            }
+                        ]
+                    ]
+                ]
+            ],
+            "ret": true
+        },
+        "memory": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "CapacityMiB": 8192,
+                            "MemoryDeviceType": "DDR4",
+                            "MemoryLocation": {
+                                "Channel": 6,
+                                "MemoryController": 2,
+                                "Slot": 1,
+                                "Socket": 1
+                            },
+                            "Name": "proc1dimm1",
+                            "OperatingMemoryModes": [
+                                "Volatile"
+                            ],
+                            "RankCount": 1,
+                            "SerialNumber": "715E66F8",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        },
+        "nic": {
+            "entries": [
+                [
+                    {
+                        "resource_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "IPv4Addresses": [],
+                            "IPv6Addresses": [],
+                            "MACAddress": "70:10:6f:cd:54:b0",
+                            "NameServers": [],
+                            "SpeedMbps": null,
+                            "Status": {
+                                "Health": null,
+                                "State": null
+                            }
+                        },
+                        {
+                            "IPv4Addresses": [],
+                            "IPv6Addresses": [],
+                            "MACAddress": "70:10:6f:cd:54:b8",
+                            "NameServers": [],
+                            "SpeedMbps": null,
+                            "Status": {
+                                "Health": null,
+                                "State": null
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        },
+        "storage_controller": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        {
+                            "FirmwareVersion": null,
+                            "Location": {
+                                "PartLocation": {
+                                    "LocationOrdinalValue": 2,
+                                    "LocationType": "Slot",
+                                    "ServiceLabel": "Slot 2"
+                                }
+                            },
+                            "Model": "",
+                            "SerialNumber": "",
+                            "Status": {
+                                "Health": null,
+                                "State": "Enabled"
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        },
+        "system": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "AssetTag": "",
+                        "BiosVersion": "I42 v2.34 (04/08/2020)",
+                        "HostName": "AnupAuto",
+                        "Manufacturer": "HPE",
+                        "MemorySummary": {
+                            "Status": {
+                                "HealthRollup": "OK"
+                            },
+                            "TotalSystemMemoryGiB": 8,
+                            "TotalSystemPersistentMemoryGiB": 0
+                        },
+                        "Model": "Synergy 480 Gen10",
+                        "PowerState": "On",
+                        "ProcessorSummary": {
+                            "Count": 1,
+                            "Model": "Genuine Intel(R) CPU 0000%@",
+                            "Status": {
+                                "HealthRollup": "OK"
+                            }
+                        },
+                        "SKU": "                ",
+                        "SerialNumber": "                ",
+                        "Status": {
+                            "Health": "OK",
+                            "HealthRollup": "OK",
+                            "State": "Enabled"
+                        },
+                        "SystemType": "Physical",
+                        "TrustedModules": [
+                            {
+                                "Oem": {
+                                    "Hpe": {
+                                        "@odata.context": "/redfish/v1/$metadata#HpeTrustedModuleExt.HpeTrustedModuleExt",
+                                        "@odata.type": "#HpeTrustedModuleExt.v2_0_0.HpeTrustedModuleExt"
+                                    }
+                                },
+                                "Status": {
+                                    "State": "Absent"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            ],
+            "ret": true
+        },
+        "volume": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        []
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [systemdefault : Get Inventory] **********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/systemdefault/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371 `" && echo ansible-tmp-1620214566.4090724-231932418732371="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp272aj7tx TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214566.4090724-231932418732371/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "system": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "AssetTag": "",
+                        "BiosVersion": "I42 v2.34 (04/08/2020)",
+                        "HostName": "AnupAuto",
+                        "Manufacturer": "HPE",
+                        "MemorySummary": {
+                            "Status": {
+                                "HealthRollup": "OK"
+                            },
+                            "TotalSystemMemoryGiB": 8,
+                            "TotalSystemPersistentMemoryGiB": 0
+                        },
+                        "Model": "Synergy 480 Gen10",
+                        "PowerState": "On",
+                        "ProcessorSummary": {
+                            "Count": 1,
+                            "Model": "Genuine Intel(R) CPU 0000%@",
+                            "Status": {
+                                "HealthRollup": "OK"
+                            }
+                        },
+                        "SKU": "                ",
+                        "SerialNumber": "                ",
+                        "Status": {
+                            "Health": "OK",
+                            "HealthRollup": "OK",
+                            "State": "Enabled"
+                        },
+                        "SystemType": "Physical",
+                        "TrustedModules": [
+                            {
+                                "Oem": {
+                                    "Hpe": {
+                                        "@odata.context": "/redfish/v1/$metadata#HpeTrustedModuleExt.HpeTrustedModuleExt",
+                                        "@odata.type": "#HpeTrustedModuleExt.v2_0_0.HpeTrustedModuleExt"
+                                    }
+                                },
+                                "Status": {
+                                    "State": "Absent"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [systeminven : Getting system inventory] *************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/systeminven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511 `" && echo ansible-tmp-1620214573.1967707-212397783987511="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpbud4bsdo TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214573.1967707-212397783987511/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetSystemInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "system": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    {
+                        "AssetTag": "",
+                        "BiosVersion": "I42 v2.34 (04/08/2020)",
+                        "HostName": "AnupAuto",
+                        "Manufacturer": "HPE",
+                        "MemorySummary": {
+                            "Status": {
+                                "HealthRollup": "OK"
+                            },
+                            "TotalSystemMemoryGiB": 8,
+                            "TotalSystemPersistentMemoryGiB": 0
+                        },
+                        "Model": "Synergy 480 Gen10",
+                        "PowerState": "On",
+                        "ProcessorSummary": {
+                            "Count": 1,
+                            "Model": "Genuine Intel(R) CPU 0000%@",
+                            "Status": {
+                                "HealthRollup": "OK"
+                            }
+                        },
+                        "SKU": "                ",
+                        "SerialNumber": "                ",
+                        "Status": {
+                            "Health": "OK",
+                            "HealthRollup": "OK",
+                            "State": "Enabled"
+                        },
+                        "SystemType": "Physical",
+                        "TrustedModules": [
+                            {
+                                "Oem": {
+                                    "Hpe": {
+                                        "@odata.context": "/redfish/v1/$metadata#HpeTrustedModuleExt.HpeTrustedModuleExt",
+                                        "@odata.type": "#HpeTrustedModuleExt.v2_0_0.HpeTrustedModuleExt"
+                                    }
+                                },
+                                "Status": {
+                                    "State": "Absent"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [virtualmedia : Get Virtual Media information] *******************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/virtualmedia/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735 `" && echo ansible-tmp-1620214579.8877313-4955062705735="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpna5pjwv1 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214579.8877313-4955062705735/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Manager"
+            ],
+            "command": [
+                "GetVirtualMedia"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "virtual_media": {
+            "entries": [
+                [
+                    {
+                        "resource_uri": "/redfish/v1/Managers/1/"
+                    },
+                    [
+                        {
+                            "ConnectedVia": "NotConnected",
+                            "Description": "Virtual Removable Media",
+                            "Id": "1",
+                            "Image": "",
+                            "MediaTypes": [
+                                "Floppy",
+                                "USBStick"
+                            ],
+                            "Name": "VirtualMedia",
+                            "WriteProtected": true
+                        },
+                        {
+                            "ConnectedVia": "NotConnected",
+                            "Description": "Virtual Removable Media",
+                            "Id": "2",
+                            "Image": "",
+                            "MediaTypes": [
+                                "CD",
+                                "DVD"
+                            ],
+                            "Name": "VirtualMedia",
+                            "WriteProtected": true
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getvolumeinven : Get Volume Inventory] **************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getvolumeinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677 `" && echo ansible-tmp-1620214592.859197-194723570100677="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpnzqor0zm TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214592.859197-194723570100677/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Systems"
+            ],
+            "command": [
+                "GetVolumeInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "volume": {
+            "entries": [
+                [
+                    {
+                        "systems_uri": "/redfish/v1/Systems/1/"
+                    },
+                    [
+                        []
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [clearlogs : Clear Logs] *****************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/clearlogs/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256 `" && echo ansible-tmp-1620214603.504826-218542067066256="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp0g3jbbrj TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214603.504826-218542067066256/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Manager",
+            "command": [
+                "ClearLogs"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [getlogs : Get Manager Logs] *************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getlogs/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444 `" && echo ansible-tmp-1620214617.2113333-4632120932444="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpe4n6ps2a TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214617.2113333-4632120932444/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Manager"
+            ],
+            "command": [
+                "GetLogs"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "log": {
+            "entries": [
+                {
+                    "": [
+                        {
+                            "Created": "2021-05-06T11:35:50Z",
+                            "Message": "Event log cleared by: admin.",
+                            "Name": "iLO Event Log",
+                            "Severity": "OK"
+                        },
+                        {
+                            "Created": "2021-05-06T11:35:50Z",
+                            "Message": "Browser logout: admin - 16.168.169.108(DNS name not found).",
+                            "Name": "iLO Event Log",
+                            "Severity": "OK"
+                        },
+                        {
+                            "Created": "2021-05-06T11:35:52Z",
+                            "Message": "Browser login: admin - 16.168.169.108(DNS name not found).",
+                            "Name": "iLO Event Log",
+                            "Severity": "OK"
+                        },
+                        {
+                            "Created": "2021-05-06T11:36:00Z",
+                            "Message": "Browser logout: admin - 16.168.169.108(DNS name not found).",
+                            "Name": "iLO Event Log",
+                            "Severity": "OK"
+                        },
+                        {
+                            "Created": "2021-05-06T11:36:02Z",
+                            "Message": "Browser login: admin - 16.168.169.108(DNS name not found).",
+                            "Name": "iLO Event Log",
+                            "Severity": "OK"
+                        }
+                    ],
+                    "Description": "iLO Event Logs view"
+                }
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [getmnicinven : Get Manager NIC inventory] ***********************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/getmnicinven/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925 `" && echo ansible-tmp-1620214629.797774-163505795473925="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp8dule1ot TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925/AnsiballZ_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925/AnsiballZ_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214629.797774-163505795473925/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Manager"
+            ],
+            "command": [
+                "GetManagerNicInventory"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "manager_nics": {
+            "entries": [
+                [
+                    {
+                        "resource_uri": "/redfish/v1/Managers/1/"
+                    },
+                    [
+                        {
+                            "AutoNeg": true,
+                            "Description": "Configuration of this Manager Network Interface",
+                            "FQDN": "iLOHostname123.iloqa.com",
+                            "IPv4Addresses": [
+                                {
+                                    "Address": "15.146.46.124",
+                                    "AddressOrigin": "Static",
+                                    "Gateway": "15.146.44.1",
+                                    "SubnetMask": "255.255.252.0"
+                                }
+                            ],
+                            "IPv6Addresses": [
+                                {
+                                    "Address": "FE80::1602:ECFF:FE02:6204",
+                                    "AddressOrigin": "SLAAC",
+                                    "AddressState": "Preferred",
+                                    "PrefixLength": 64
+                                }
+                            ],
+                            "MACAddress": "14:02:EC:02:62:04",
+                            "NameServers": [
+                                "15.146.46.151"
+                            ],
+                            "PermanentMACAddress": "14:02:EC:02:62:04",
+                            "SpeedMbps": 1000,
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            }
+                        },
+                        {
+                            "Description": "Configuration of this Manager USB Ethernet Interface available for access from Host.",
+                            "IPv4Addresses": [
+                                {
+                                    "Address": "16.1.15.1",
+                                    "AddressOrigin": "DHCP",
+                                    "SubnetMask": "255.255.255.252"
+                                }
+                            ],
+                            "IPv6Addresses": [],
+                            "MACAddress": "0A:CA:FE:F0:0D:04",
+                            "NameServers": [],
+                            "PermanentMACAddress": "0A:CA:FE:F0:0D:04",
+                            "Status": {
+                                "Health": "OK",
+                                "State": "Enabled"
+                            }
+                        }
+                    ]
+                ]
+            ],
+            "ret": true
+        }
+    }
+}
+
+TASK [powerforceoff : Turn system power off] **************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/powerforceoff/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831 `" && echo ansible-tmp-1620214642.2448816-163249776615831="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp1bpvpa64 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214642.2448816-163249776615831/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Systems",
+            "command": [
+                "PowerForceOff"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [powerreboot : Restart system power gracefully] ******************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/powerreboot/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932 `" && echo ansible-tmp-1620214651.247045-101569188293932="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpxyervg4o TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214651.247045-101569188293932/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Systems",
+            "command": [
+                "PowerReboot"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [powergracefullshutdown : Shutdown system power gracefully] ******************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/powergracefullshutdown/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201 `" && echo ansible-tmp-1620214659.932996-86668573027201="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp74x2if_9 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214659.932996-86668573027201/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Systems",
+            "command": [
+                "PowerGracefulShutdown"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [poweron : Turn system power on] *********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/poweron/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102 `" && echo ansible-tmp-1620214666.446836-217729330313102="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/remote_management/redfish/redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp210yia60 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102/AnsiballZ_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102/AnsiballZ_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214666.446836-217729330313102/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "boot_next": null,
+            "bootdevice": null,
+            "category": "Systems",
+            "command": [
+                "PowerOn"
+            ],
+            "id": null,
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "uefi_target": null,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [addiLOuseracc : Add user bhavyatest1] ***************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/addiLOuseracc/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348 `" && echo ansible-tmp-1620214673.417857-89695290549348="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348 `" ) && sleep 0'
+Using module file /home/bhavya/Documents/Github/ansible-ilorest-role/library/iLO_redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpb5v76o3n TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348/AnsiballZ_iLO_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214673.417857-89695290549348/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": "Accounts",
+            "command": [
+                "AddiLOuser"
+            ],
+            "loginname": null,
+            "new_password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "new_username": "bhavyatest1",
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": "Administrator",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [UpdatePass : Update user password] ******************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/UpdatePass/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719 `" && echo ansible-tmp-1620214699.5799387-273904932666719="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719 `" ) && sleep 0'
+Using module file /home/bhavya/Documents/Github/ansible-ilorest-role/library/iLO_redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp_al7_s2z TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719/AnsiballZ_iLO_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214699.5799387-273904932666719/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": "Accounts",
+            "command": [
+                "UpdateiLOpassword"
+            ],
+            "loginname": "bhavyatest1",
+            "new_password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [UpdateRole : Update user role] **********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/UpdateRole/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767 `" && echo ansible-tmp-1620214714.0186698-2434114153767="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767 `" ) && sleep 0'
+Using module file /home/bhavya/Documents/Github/ansible-ilorest-role/library/iLO_redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpn65bvgie TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767/AnsiballZ_iLO_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214714.0186698-2434114153767/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": "Accounts",
+            "command": [
+                "UpdateiLOUserRole"
+            ],
+            "loginname": "bhavyatest1",
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": "ReadOnly",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [Deluser : Delete user] ******************************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/Deluser/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743 `" && echo ansible-tmp-1620214729.3447275-22818043239743="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743 `" ) && sleep 0'
+Using module file /home/bhavya/Documents/Github/ansible-ilorest-role/library/iLO_redfish_command.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmpl_2k2u4q TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743/AnsiballZ_iLO_redfish_command.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743/AnsiballZ_iLO_redfish_command.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214729.3447275-22818043239743/ > /dev/null 2>&1 && sleep 0'
+changed: [hpe1] => {
+    "changed": true,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": "Accounts",
+            "command": [
+                "DeliLOuser"
+            ],
+            "loginname": "bhavyatest1",
+            "new_password": null,
+            "new_username": null,
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "roleid": null,
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "msg": "Action was successful"
+}
+
+TASK [listAllusers : List all users] **********************************************************************************************************************************************************************
+task path: /home/bhavya/Documents/Github/ansible-ilorest-role/roles/listAllusers/tasks/main.yml:3
+<hpe1> ESTABLISH LOCAL CONNECTION FOR USER: bhavya
+<hpe1> EXEC /bin/sh -c 'echo ~bhavya && sleep 0'
+<hpe1> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910 `" && echo ansible-tmp-1620214741.9176435-152624319167910="` echo /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910 `" ) && sleep 0'
+Using module file /home/bhavya/Documents/Github/ansible-ilorest-role/library/iLO_redfish_info.py
+<hpe1> PUT /home/bhavya/.ansible/tmp/ansible-local-4279lzgpesfs/tmp1g59zg68 TO /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910/AnsiballZ_iLO_redfish_info.py
+<hpe1> EXEC /bin/sh -c 'chmod u+x /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910/ /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910/AnsiballZ_iLO_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c '/usr/bin/python3.8 /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910/AnsiballZ_iLO_redfish_info.py && sleep 0'
+<hpe1> EXEC /bin/sh -c 'rm -f -r /home/bhavya/.ansible/tmp/ansible-tmp-1620214741.9176435-152624319167910/ > /dev/null 2>&1 && sleep 0'
+ok: [hpe1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "baseuri": "15.146.46.124",
+            "category": [
+                "Accounts"
+            ],
+            "command": [
+                "ListiLOUsers"
+            ],
+            "password": "VALUE_SPECIFIED_IN_NO_LOG_PARAMETER",
+            "timeout": 10,
+            "username": "admin"
+        }
+    },
+    "redfish_facts": {
+        "entries": [
+            {
+                "Id": "1",
+                "Name": "User Account",
+                "RoleId": "Administrator",
+                "UserName": "Administrator"
+            },
+            {
+                "Id": "1100",
+                "Name": "User Account",
+                "RoleId": "Administrator",
+                "UserName": "test1"
+            },
+            {
+                "Id": "951",
+                "Name": "User Account",
+                "RoleId": "Operator",
+                "UserName": "operator"
+            },
+            {
+                "Id": "950",
+                "Name": "User Account",
+                "RoleId": "ReadOnly",
+                "UserName": "user"
+            },
+            {
+                "Id": "949",
+                "Name": "User Account",
+                "RoleId": "",
+                "UserName": "_TempOneView"
+            },
+            {
+                "Id": "1099",
+                "Name": "User Account",
+                "RoleId": "Administrator",
+                "UserName": "C9x8gYqlavqGjbCI1zeu"
+            },
+            {
+                "Id": "942",
+                "Name": "User Account",
+                "RoleId": "Administrator",
+                "UserName": "_HPOneViewAdmin"
+            },
+            {
+                "Id": "846",
+                "Name": "User Account",
+                "RoleId": "Administrator",
+                "UserName": "admin"
+            }
+        ]
+    }
+}
+META: ran handlers
+META: ran handlers
+
+PLAY RECAP ************************************************************************************************************************************************************************************************
+hpe1                       : ok=38   changed=12   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

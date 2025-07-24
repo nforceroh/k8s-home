@@ -1,0 +1,11 @@
+---
+- name: Install runc
+  ansible.builtin.package:
+    name: runc
+    state: present
+
+- name: Ensure runc is enabled
+  ansible.builtin.systemd:  
+    name: runc
+    enabled: true
+

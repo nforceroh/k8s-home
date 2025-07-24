@@ -1,0 +1,9 @@
+---
+# tasks file for cleariellogs
+- name: Clear Logs
+  community.general.redfish_command:
+    category: Manager
+    command: ClearLogs
+    baseuri: "{{ baseuri }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
