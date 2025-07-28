@@ -26,4 +26,4 @@ gpu-operator:
   dcgm:
     enabled: false
   dcgmExporter:
-    enabled: true
+    enabled: false
