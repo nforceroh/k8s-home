@@ -22,3 +22,8 @@ gpu-operator:
 
   toolkit:
     enabled: false
+
+  dcgm:
+    enabled: false
+  dcgmExporter:
+    enabled: true

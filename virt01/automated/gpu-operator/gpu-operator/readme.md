@@ -4,6 +4,8 @@ https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/gpu-sharing.
 
 https://www.redhat.com/en/blog/sharing-caring-how-make-most-your-gpus-part-1-time-slicing
 
+https://github.com/NVIDIA/gpu-operator/blob/main/deployments/gpu-operator/values.yaml
+
 
 ```bash
 helm upgrade --install -n gpu-operator --create-namespace gpu-operator .
