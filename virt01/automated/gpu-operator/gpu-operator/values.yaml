@@ -7,8 +7,9 @@ gpu-operator:
     enabled: true
 
   devicePlugin:
-    enabled: false
+    enabled: true
     config:
+      create: false
       name: time-slicing-config-all
 
   driver:
