@@ -26,6 +26,7 @@ spec:
           command: [ "python3", "/root/TTS/server/server.py" ]
           args: ["--use_cuda", "true", "--model_name", "tts_models/en/vctk/vits"]
           imagePullPolicy: Always
+          resources: {}
           ports:
             - name: coqui-port
               containerPort: 5002
