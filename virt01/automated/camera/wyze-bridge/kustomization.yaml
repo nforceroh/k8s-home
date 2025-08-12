@@ -14,3 +14,10 @@ resources:
   - ingress.yaml
   - wbridge-config-sealed.yaml
 
+configMapGenerator:
+- name: wbridge-env
+  envs:
+  - resources/env.txt
+
+generatorOptions:
+  disableNameSuffixHash: true

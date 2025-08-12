@@ -24,7 +24,7 @@ spec:
       serviceAccountName: wbridge-sa
       containers:
         - name: wbridge
-          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest
+          image: harbor.nf.lab/proxy.docker.io/mrlt8/wyze-bridge:latest-hw
           imagePullPolicy: Always
           env:
             - name: TZ
@@ -32,6 +32,8 @@ spec:
           envFrom:
             - secretRef:
                 name: wbridge-config
+            - configMapRef:
+                name: wbridge-env
           ports:
             - containerPort: 8554
               name: rtsp-port
@@ -51,10 +53,7 @@ spec:
             - containerPort: 5000
               name: webui-port
               protocol: TCP
-          resources:
-            requests:
-              cpu: "10m"
-              memory: "128Mi"
+          resources: {}
           readinessProbe:
             tcpSocket:
               port: webui-port
