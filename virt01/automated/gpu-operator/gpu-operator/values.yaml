@@ -26,6 +26,8 @@ gpu-operator:
 
   dcgm:
     enabled: false
-    
+
   dcgmExporter:
     enabled: true
+    serviceMonitor:
+      enabled: true
