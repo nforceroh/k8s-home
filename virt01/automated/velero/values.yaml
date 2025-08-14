@@ -36,7 +36,7 @@ velero:
 
   configuration:
     features: EnableCSI,EnableAPIGroupVersions
-    logLevel: debug
+    logLevel: info
     backupStorageLocation:
     - name: default
       defaultVolumesToFsBackup: false
