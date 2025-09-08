@@ -1,7 +1,7 @@
 apiVersion: v2
 name: reloader
-version: 1.0.3
+version: 1.0.4
 dependencies:
 - name: reloader
   repository: https://stakater.github.io/stakater-charts
-  version: 2.2.0
+  version: 2.2.2
