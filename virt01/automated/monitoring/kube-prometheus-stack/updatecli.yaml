@@ -5,14 +5,14 @@ sources:
     spec:
       url: "https://prometheus-community.github.io/helm-charts"
       name: "kube-prometheus-stack"
-      version: "75.*.*"
+      version: "77.*.*"
 conditions: {}
 targets:
   chart:
     name: Bump Chart dependencies
     kind: helmchart
     spec:
-      Name: "/home/runner/work/k8s-home/k8s-home/virt01/automated/monitoring/kube-prometheus-stack"
+      Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/monitoring/kube-prometheus-stack"
       file: "Chart.yaml"
       key: "$.dependencies[0].version"
       versionIncrement: "patch"

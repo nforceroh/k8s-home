@@ -1,3 +1,5 @@
+#!/usr/bin/python3 
+
 """
 Simple python script that is used in github actions to
 automatically bump chart dependencies using the updatecli CLI tool.
@@ -5,14 +7,15 @@ From: https://blog.promaton.com/how-to-set-up-automated-helm-chart-upgrades-e292
 https://gist.github.com/nielstenboom/8b1116f7fd00a98aace28d826518e86f#file-chart_bumper-py
 """
 
-from pathlib import Path, PosixPath
+from pathlib import Path
 import subprocess
 import os
 import logging
 from typing import Any
 import argparse
-import yaml
 import re
+import yaml
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -89,7 +92,7 @@ def update_chart(path_chart: Path, apply: bool = False) -> None:
     Given a path to a helm chart. Bump the version of the dependencies of this chart
     if any newer versions exist.
     """
-    path_to_chart = PosixPath(Path(path_chart).parent)
+    path_to_chart = Path(path_chart).parent
     with open(path_chart, encoding="utf-8") as f:
         text = f.read()
 
@@ -115,28 +118,26 @@ def update_chart(path_chart: Path, apply: bool = False) -> None:
         )
         try:
             output = subprocess.check_output(
-              ["updatecli", mode, "--config", updatecli_yaml_file],
-              cwd=path_to_chart,
-              stderr=subprocess.STDOUT,
+                ["updatecli", mode, "--config", updatecli_yaml_file],
+                cwd=path_to_chart,
+                stderr=subprocess.STDOUT,
             )
             # Regex to match the updatecli output line for version bump
             pattern = re.compile(
-              r'\*\skey "\$\.dependencies\[(\d+)\]\.version" should be updated from "([^"]+)" to "([^"]+)", in file "([^"]+)"'
+                r'\*\skey "\$\.dependencies\[(\d+)\]\.version" should be updated from "([^"]+)" to "([^"]+)", in file "([^"]+)"'
             )
             matches = pattern.findall(output.decode())
             for match in matches:
-              dep_index, current_version, next_version, chart_file = match
-              logging.info(
-                "Dependency at index %s in %s: version will be bumped from %s to %s",
-                dep_index,
-                chart_file,
-                current_version,
-                next_version,
-              )
+                dep_index, current_version, next_version, chart_file = match
+                logging.info(
+                    "Dependency at index %s in %s: version will be bumped from %s to %s",
+                    dep_index,
+                    chart_file,
+                    current_version,
+                    next_version,
+                )
             logging.info(
-              "Successfully ran updatecli %s for %s.\n\n",
-              mode,
-              dependency["name"]
+                "Successfully ran updatecli %s for %s.\n\n", mode, dependency["name"]
             )
         except subprocess.CalledProcessError as e:
             logging.error(
@@ -169,16 +170,40 @@ def main():
         help="Apply the updates to the charts. If not set, only show the diff.",
     )
 
+    parser.add_argument(
+        "--log-level",
+        type=str,
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level (default: INFO).",
+    )
+
     args = parser.parse_args()
 
-    charts = find_files(args.charts_root, "Chart.yaml")
+    logging.basicConfig(level=args.log_level)
+    logging.info("Starting chart dependency bump process")
+    logging.debug("Arguments: %s", args)
+    logging.info("Searching for Helm charts in %s", args.charts_root)
+
+    charts = [
+        chart
+        for chart in find_files(args.charts_root, ".yaml")
+        if chart.name == "Chart.yaml"
+    ]
+    logging.info("Found %d Chart.yaml files", len(charts))
+    if not charts:
+        logging.warning("No Chart.yaml files found in %s", args.charts_root)
+
     for chart in charts:
-        logging.info("Processing %s", chart)
+        logging.info("Processing chart: %s", chart)
         try:
             update_chart(chart, apply=args.apply)
+            logging.info("Finished processing chart: %s", chart)
         except (OSError, RuntimeError, yaml.YAMLError) as e:
-            print(f"Failed processing chart {chart}: {e}")
-            logging.exception("Exception occurred")
+            logging.error("Failed processing chart %s: %s", chart, e)
+            logging.exception("Exception occurred during chart processing")
+
+    logging.info("Chart dependency bump process completed")
 
 
 if __name__ == "__main__":
