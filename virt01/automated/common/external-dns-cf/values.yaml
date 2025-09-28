@@ -16,7 +16,7 @@ external-dns:
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
   logLevel: info
-  policy: upsert-only
+  policy: sync
 
  ## use google as the dns provider
   provider: 
@@ -24,7 +24,7 @@ external-dns:
   extraArgs:
     - --cloudflare-proxied
     - --cloudflare-dns-records-per-page=5000
-    - --default-targets="ipv4.nforcer.com,ipv6.nforcer.com"
+#    - --default-targets="ipv4.nforcer.com,ipv6.nforcer.com"
   env:
     - name: CF_API_TOKEN
       valueFrom:
