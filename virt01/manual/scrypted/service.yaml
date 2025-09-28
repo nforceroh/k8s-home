@@ -1,44 +1,18 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: wyze-api-svc
-  labels:
-    app: scrypted
-  annotations:
-    metallb.io/address-pool: vlan1000-apps
-    external-dns.alpha.kubernetes.io/hostname: scrypted-api.k3s.nf.lab
-spec:
-  type: LoadBalancer
-  externalTrafficPolicy: Cluster
-  ports:
-    - port: 1935
-      protocol: TCP
-      name: rtmp-svc-port
-    - port: 8554
-      protocol: TCP
-      name: rtsp-svc-port
-    - port: 8888
-      protocol: TCP
-      name: hls-svc-port
-    - port: 8889
-      protocol: TCP
-      name: webrtc-svc-port
-    - port: 8189
-      protocol: UDP
-      name: webrtc-ice-svc-port
-  selector:
-    app: scrypted
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: wyze-ui-svc
+  name: scrypted-svc
   labels:
     app: scrypted
+  annotations:    
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    external-dns.alpha.kubernetes.io/hostname: scrypted.nforcer.com
+    external-dns.alpha.kubernetes.io/ttl: "120"    
 spec:
   ports:
-    - port: 5000
+    - port: 10443
       protocol: TCP
-      name: webui-svc-port
+      name: https
   selector:
     app: scrypted

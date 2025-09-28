@@ -29,44 +29,17 @@ spec:
           env:
             - name: TZ
               value: "America/New_York"
-          envFrom:
-            - secretRef:
-                name: scrypted-config
-            - configMapRef:
-                name: scrypted-env
+          # envFrom:
+          #   - secretRef:
+          #       name: scrypted-config
+          #   - configMapRef:
+          #       name: scrypted-env
           ports:
-            - containerPort: 8554
-              name: rtsp-port
+            - name: https
+              containerPort: 10443
               protocol: TCP
-            - containerPort: 1935
-              name: rtmp-port
-              protocol: TCP
-            - containerPort: 8888
-              name: hls-port
-              protocol: TCP
-            - containerPort: 8889
-              name: webrtc-port
-              protocol: TCP
-            - containerPort: 8189
-              name: webrtc-ice-port
-              protocol: UDP
-            - containerPort: 5000
-              name: webui-port
+            - name: http
+              containerPort: 11080
               protocol: TCP
           resources: {}
-          readinessProbe:
-            tcpSocket:
-              port: webui-port
-            failureThreshold: 3
-            initialDelaySeconds: 30
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 1
-          livenessProbe:
-            tcpSocket:
-              port: webui-port
-            initialDelaySeconds: 30
-            failureThreshold: 3
-            periodSeconds: 30
-            successThreshold: 1
-            timeoutSeconds: 1
+

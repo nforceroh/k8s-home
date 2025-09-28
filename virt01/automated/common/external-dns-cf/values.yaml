@@ -1,4 +1,4 @@
-# https://github.com/bitnami/charts/blob/main/bitnami/external-dns/values.yaml
+# https://github.com/kubernetes-sigs/external-dns/blob/master/charts/external-dns/values.yaml
 
 external-dns:
   serviceMonitor:
@@ -21,6 +21,10 @@ external-dns:
  ## use google as the dns provider
   provider: 
     name: cloudflare
+  extraArgs:
+    - --cloudflare-proxied
+    - --cloudflare-dns-records-per-page=5000
+    - --default-targets="ipv4.nforcer.com,ipv6.nforcer.com"
   env:
     - name: CF_API_TOKEN
       valueFrom:

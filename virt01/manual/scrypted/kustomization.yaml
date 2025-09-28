@@ -12,12 +12,12 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - scrypted-config-sealed.yaml
+#  - scrypted-config-sealed.yaml
 
-configMapGenerator:
-- name: scrypted-env
-  envs:
-  - resources/env.txt
+# configMapGenerator:
+# - name: scrypted-env
+#   envs:
+#   - resources/env.txt
 
 generatorOptions:
   disableNameSuffixHash: true
