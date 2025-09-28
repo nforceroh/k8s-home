@@ -5,8 +5,8 @@ external-dns:
     enabled: true
   ## Watch these resources for new DNS records
   sources:
-    - crd
-    - ingress
+#    - crd
+#    - ingress
     - service
     
    ## List of domains that can be managed. 
