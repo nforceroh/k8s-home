@@ -25,7 +25,7 @@ external-dns:
   extraArgs:
     - --cloudflare-proxied
     - --cloudflare-dns-records-per-page=5000
-#    - --default-targets="ipv4.nforcer.com,ipv6.nforcer.com"
+    - --default-targets="b9d74614-bf1b-46e2-8b36-f47937a66525"
   env:
     - name: CF_API_TOKEN
       valueFrom:

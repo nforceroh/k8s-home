@@ -4,10 +4,9 @@ metadata:
   name: jellyseerr-svc
   labels:
     app: jellyseerr
-  annotations:    
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-    external-dns.alpha.kubernetes.io/hostname: "jellytest.nforcer.com"
-#    external-dns.alpha.kubernetes.io/target: "dual.nforcer.com"
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: jellytest.nforcer.com
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true" # This enables Cloudflare proxying
 spec:
   ports:
     - port: 5055
@@ -15,3 +14,4 @@ spec:
       name: jellyseerr-svc-port
   selector:
     app: jellyseerr
+
