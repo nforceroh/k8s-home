@@ -5,18 +5,19 @@ external-dns:
     enabled: true
   ## Watch these resources for new DNS records
   sources:
-    - crd
-    - ingress
+#    - crd
+#    - ingress
     - service
     
    ## List of domains that can be managed. 
   domainFilters: ["nforcer.com"]
+  excludeDomains: ["nf.lab","k3s.nf.lab"]
   # These help tell which records are owned by external-dns.
   registry: "txt"
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
-  logLevel: info
-  policy: upsert-only
+  logLevel: debug
+  policy: sync
 
  ## use google as the dns provider
   provider: 
@@ -24,7 +25,7 @@ external-dns:
   extraArgs:
     - --cloudflare-proxied
     - --cloudflare-dns-records-per-page=5000
-    - --default-targets="ipv4.nforcer.com,ipv6.nforcer.com"
+    - --default-targets="b9d74614-bf1b-46e2-8b36-f47937a66525"
   env:
     - name: CF_API_TOKEN
       valueFrom:
