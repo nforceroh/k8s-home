@@ -29,7 +29,23 @@ spec:
   selector:
     app: scrypted
   ports:
-    - name: rtsp
+    - name: rtsp-front-porch
       protocol: TCP
       port: 37047
       targetPort: 37047
+    - name: rtsp-bun-cam
+      protocol: TCP
+      port: 38279
+      targetPort: 38279
+    - name: rtsp-kitchen
+      protocol: TCP
+      port: 33759
+      targetPort: 33759
+    - name: rtsp-living-room
+      protocol: TCP
+      port: 42075
+      targetPort: 42075
+    - name: rtsp-sitting-room
+      protocol: TCP
+      port: 40123
+      targetPort: 40123
