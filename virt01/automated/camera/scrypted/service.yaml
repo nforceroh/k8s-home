@@ -1,0 +1,35 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scrypted-web-svc
+  labels:
+    app: scrypted
+spec:
+  selector:
+    app: scrypted
+  ports:
+    - name: http-web
+      protocol: TCP
+      port: 11080
+      targetPort: 11080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scrypted-rtsp-svc
+  labels:
+    app: scrypted
+  annotations:
+    metallb.io/address-pool: vlan1000-apps
+    external-dns.alpha.kubernetes.io/hostname: rtsp.k3s.nf.lab
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Cluster
+  selector:
+    app: scrypted
+  ports:
+    - name: rtsp
+      protocol: TCP
+      port: 37047
+      targetPort: 37047

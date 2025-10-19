@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: scrypted-ingress
+  name: scrypted-web-ingress
   annotations:
     ingressClassName: traefik
     cert-manager.io/cluster-issuer: nf-lab
@@ -16,9 +16,9 @@ spec:
       paths:
       - backend:
           service:
-            name: scrypted-svc
+            name: scrypted-web-svc
             port:
-              number: 10443
+              number: 11080
         path: /
         pathType: Prefix
   tls:

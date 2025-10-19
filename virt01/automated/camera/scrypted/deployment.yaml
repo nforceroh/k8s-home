@@ -41,5 +41,14 @@ spec:
             - name: http
               containerPort: 11080
               protocol: TCP
+            - name: rtsp
+              containerPort: 37047
+              protocol: TCP
           resources: {}
-
+          volumeMounts:
+            - name: scrypted-pv
+              mountPath: /server/volume
+      volumes:
+        - name: scrypted-pv
+          persistentVolumeClaim:
+            claimName: scrypted-pvc
