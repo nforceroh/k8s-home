@@ -16,7 +16,7 @@ gpu-operator:
     enabled: false
     nvidiaDriverCRD:
       enabled: false
-    version: "575.57.08"
+    version: "580.95.05"
 
   migManager:
     enabled: false

@@ -60,6 +60,42 @@ frigate:
       # Optional: interval in seconds for publishing stats (default: shown below)
       stats_interval: 60
 
+    go2rtc:
+      ffmpeg:
+        bin: ffmpeg
+        volume: "-af \"volume=30dB\"" 
+      streams:
+        #Wyze
+        LivingRoom:
+          - rtsp://10.40.1.42:8554/1080p?mp4
+          - ffmpeg:LivingRoom#audio=opus
+        LivingRoom_sub:
+          - rtsp://10.40.1.42:8554/360p?mp4
+          - ffmpeg:LivingRoom#audio=opus
+        FrontPorch:
+          - rtsp://10.40.1.22:8554/1080p?mp4
+          - ffmpeg:FrontPorch#audio=opus
+        FrontPorch_sub:
+          - rtsp://10.40.1.22:8554/360p?mp4
+          - ffmpeg:FrontPorch#audio=opus
+        BunCam:
+          - rtsp://10.40.1.19:8554/1080p?mp4
+          - ffmpeg:BunCam#audio=opus
+        BunCam_sub:
+          - rtsp://10.40.1.19:8554/360p?mp4
+          - ffmpeg:BunCam#audio=opus
+        Kitchen:
+          - rtsp://scrypted-rtsp-svc:33759/75e57ba83105f666
+          - ffmpeg:Kitchen#audio=opus
+        Kitchen_sub:
+          - rtsp://scrypted-rtsp-svc:33759/31e5716887d9312a
+          - ffmpeg:Kitchen#audio=opus
+        SittingRoom:
+          - rtsp://scrypted-rtsp-svc:40123/0646b22eadf4d50a
+          - ffmpeg:SittingRoom#audio=opus
+        SittingRoom_sub:
+          - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
+          - ffmpeg:SittingRoom#audio=opus
     snapshots:
       enabled: true 
 
@@ -89,24 +125,91 @@ frigate:
 
     cameras:
       # Name of your camera
-      front_porch:
+      LivingRoom:
         enabled: True
         ffmpeg:
           inputs:
-            - path: rtsp://scrypted-rtsp-svc:37047/ba2a319a4fd172ba
+            - path: rtsp://127.0.0.1:8554/LivingRoom
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/LivingRoom_sub
               input_args: preset-rtsp-restream
               roles:
                 - detect
-                - rtmp
-        detect:
-          width: 1280
+        mqtt:
+          enabled: true
+          timestamp: false
+          bounding_box: false
+          crop: true
           height: 720
-          fps: 5
-        objects:
-          track:
-            - person
-            - car
-            - motorcycle
-            - bicycle
-            - dog
-            - bird
+          quality: 70
+      FrontPorch:
+        enabled: True
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/FrontPorch
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/FrontPorch_sub
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+      BunCam:
+        enabled: True
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/BunCam
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/BunCam_sub
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+      Kitchen:
+        enabled: True
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/Kitchen
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/Kitchen_sub
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+      SittingRoom:
+        enabled: True
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/SittingRoom
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/SittingRoom_sub
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+
+    telemetry:
+      # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
+      network_interfaces:
+        - eth
+        - enp
+        - eno
+        - ens
+        - wl
+        - lo
+      # Optional: Configure system stats
+      stats:
+        network_bandwidth: true
+      # Optional: Enable the latest version outbound check (default: shown below)
+      # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
+      version_check: True              

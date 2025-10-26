@@ -4,6 +4,12 @@ Reference:
 <https://www.jimangel.io/posts/nvidia-rtx-gpu-kubernetes-setup/>
 
 
+## List installed nvidia packages
+
+```bash
+dpkg -l | grep nvidia
+```
+
 ## Delete all the old drivers
 
 ```bash
@@ -31,10 +37,14 @@ https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-575-57-08/index.htm
 
 Confirmed 575 supports P40 as of 7/24/2025
 
+https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-580-95-05/index.html#hardware-software-support
+580.95.05 as od 10/26/2025
+
 ```bash
-sudo ubuntu-drivers install nvidia:575-server
-sudo apt install nvidia-utils-575-server
-sudo apt-get install -y nvidia-container-toolkit nvidia-container-toolkit-base libnvidia-container-tools libnvidia-container1
+sudo ubuntu-drivers install nvidia:580-server
+sudo apt install -y nvidia-utils-580-server 
+sudo apt install -y nvidia-container-toolkit nvidia-container-toolkit-base libnvidia-container-tools libnvidia-container1 nvidia-settings nvidia-prime
+sudo apt autoremove -y 
 sudo reboot
 ```
 
