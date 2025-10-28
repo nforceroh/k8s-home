@@ -96,6 +96,13 @@ frigate:
         SittingRoom_sub:
           - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
           - ffmpeg:SittingRoom#audio=opus
+        # reolink
+        rlc_520a_main_garage:
+          - rtsp://admin:webcam11@10.40.1.149:554/h264Preview_01_main
+        rlc_520a_sub_garage:
+          - rtsp://admin:webcam11@10.40.1.149:554/h264Preview_01_sub
+
+          
     snapshots:
       enabled: true 
 
@@ -197,7 +204,29 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
-
+      # Reolink Rlc 520a
+      rlc_520a_garage:
+        enabled: true
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/rlc_520a_sub_garage
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+        review:
+          alerts:
+            labels: []
+        # From the sub stream we have a resolution: 640x360, fps: 7, bitrate: 512
+        detect:
+          fps: 7
+          enabled: true
+          width: 640
+          height: 360
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
       network_interfaces:
