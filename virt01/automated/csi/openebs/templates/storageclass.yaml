@@ -15,6 +15,22 @@ parameters:
   poolname: "ssd01/k8s"
 provisioner: zfs.csi.openebs.io
 ---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-zfspv-hdd01-lz4
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "false"
+allowVolumeExpansion: true
+parameters:
+  recordsize: "128k"
+  compression: "lz4"
+  dedup: "off"
+  fstype: "zfs"
+  thinprovision: "yes"
+  poolname: "hdd01/k8s"
+provisioner: zfs.csi.openebs.io
+---
 kind: VolumeSnapshotClass
 apiVersion: snapshot.storage.k8s.io/v1
 metadata:
