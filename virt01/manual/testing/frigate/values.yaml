@@ -3,8 +3,10 @@ frigate:
   image:
     # -- Docker registry/repository to pull the image from
     repository: ghcr.io/blakeblackshear/frigate
-    # -- Overrides the default tag (appVersion) used in Chart.yaml ([Docker Hub](https://hub.docker.com/r/blakeblackshear/frigate/tags?page=1))
     tag: stable-tensorrt
+
+  envFromSecrets:
+    - frigate-config
   gpu:
     nvidia:
       # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
@@ -24,21 +26,20 @@ frigate:
         paths:
           - path: '/'
             portName: http
-
     tls:
       - secretName: "frigate-tls"
         hosts:
           - "frigate.k3s.nf.lab"
 
+  persistence:
     config:
-      # -- Enables persistence for the config directory
       enabled: true        
       skipuninstall: false
+      size: 10Gi
     media:
-      # -- Enables persistence for the media directory
       enabled: true        
       skipuninstall: false    
-      size: 10Gi
+      size: 50Gi
   config: |
     mqtt:
       # Required: host name
@@ -61,9 +62,6 @@ frigate:
       stats_interval: 60
 
     go2rtc:
-      ffmpeg:
-        bin: ffmpeg
-        volume: "-af \"volume=30dB\"" 
       streams:
         #Wyze
         LivingRoom:
@@ -98,42 +96,144 @@ frigate:
           - ffmpeg:SittingRoom#audio=opus
         # reolink
         rlc_520a_main_garage:
-          - rtsp://admin:webcam11@10.40.1.149:554/h264Preview_01_main
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h264Preview_01_main
         rlc_520a_sub_garage:
-          - rtsp://admin:webcam11@10.40.1.149:554/h264Preview_01_sub
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h264Preview_01_sub
 
-          
+
     snapshots:
-      enabled: true 
+      enabled: true
 
-    live:
-      quality: 2
+    # live:
+    #   # Optional: Set the streams configured in go2rtc
+    #   # that should be used for live view in frigate WebUI. (default: name of camera)
+    #   # NOTE: In most cases this should be set at the camera level only.
+    #   streams:
+    #     main_stream: main_stream_name
+    #     sub_stream: sub_stream_name
+    #   # Optional: Set the height of the jsmpeg stream. (default: 720)
+    #   # This must be less than or equal to the height of the detect stream. Lower resolutions
+    #   # reduce bandwidth required for viewing the jsmpeg stream. Width is computed to match known aspect ratio.
+    #   height: 720
+    #   # Optional: Set the encode quality of the jsmpeg stream (default: shown below)
+    #   # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
+    #   quality: 8
 
     birdseye:
       enabled: false
 
-    objects:
-      track:
-      - person
-      - car
+    # objects:
+    #   track:
+    #     - person
+    #     - car
 
-    # model:
-    #   model_type: yolonas
-    #   width: 1280 # <--- should match whatever was set in notebook
-    #   height: 720 # <--- should match whatever was set in notebook
-    #   input_pixel_format: bgr
-    #   input_tensor: nchw
-    #   path: /config/yolo_nas_s.onnx
-    #   labelmap_path: /labelmap/coco-80.txt
+    ffmpeg:
+      global_args: -hide_banner -loglevel warning -threads 2
+      hwaccel_args: preset-nvidia
+      input_args: preset-rtsp-generic
+      output_args:
+        detect: -threads 2 -f rawvideo -pix_fmt yuv420p
+        record: preset-record-generic
+      retry_interval: 10
 
     # detectors:
-    #   onnx_0:
+    #   onnx:
     #     type: onnx
+
+    # model:
+    #   model_type: yolox
+    #   width: 640
+    #   height: 640
+    #   input_tensor: nchw
+    #   input_dtype: float_denorm
+    #   path: /config/model_cache/yolox_l.onnx
+    #   labelmap_path: /labelmap/coco-80.txt
+    #   labelmap:
+    #     2: vehicle
+    #   # Optional: Map of object labels to their attribute labels (default: depends on model)
+    #   attributes_map:
+    #     person:
+    #       - amazon
+    #       - face
+    #     car:
+    #       - amazon
+    #       - fedex
+    #       - license_plate
+    #       - ups
+
+    # # NOTE: Can be overridden at the camera level
+    # audio:
+    #   # Optional: Enable audio events (default: shown below)
+    #   enabled: False
+    #   # Optional: Configure the amount of seconds without detected audio to end the event (default: shown below)
+    #   max_not_heard: 30
+    #   # Optional: Configure the min rms volume required to run audio detection (default: shown below)
+    #   # As a rule of thumb:
+    #   #  - 200 - high sensitivity
+    #   #  - 500 - medium sensitivity
+    #   #  - 1000 - low sensitivity
+    #   min_volume: 500
+    #   # Optional: Types of audio to listen for (default: shown below)
+    #   listen:
+    #     - bark
+    #     - fire_alarm
+    #     - scream
+    #     - speech
+    #     - yell
+    #   # Optional: Filters to configure detection.
+    #   filters:
+    #     # Label that matches label in listen config.
+    #     speech:
+    #       # Minimum score that triggers an audio event (default: shown below)
+    #       threshold: 0.8
+
+    # review:
+    #   # Optional: alerts configuration
+    #   alerts:
+    #     # Optional: enables alerts for the camera (default: shown below)
+    #     enabled: True
+    #     # Optional: labels that qualify as an alert (default: shown below)
+    #     labels:
+    #       - car
+    #       - person
+    #     # Optional: required zones for an object to be marked as an alert (default: none)
+    #     # NOTE: when settings required zones globally, this zone must exist on all cameras
+    #     #       or the config will be considered invalid. In that case the required_zones
+    #     #       should be configured at the camera level.
+    #     #required_zones:
+    #     #  - driveway
+    #   # Optional: detections configuration
+    #   detections:
+    #     # Optional: enables detections for the camera (default: shown below)
+    #     enabled: True
+    #     # Optional: labels that qualify as a detection (default: all labels that are tracked / listened to)
+    #     labels:
+    #       - car
+    #       - person
+
+
+    # genai:
+    #   # Optional: Enable AI description generation (default: shown below)
+    #   enabled: false
+    #   # Required if enabled: Provider must be one of ollama, gemini, or openai
+    #   provider: ollama
+    #   model: llama3.2-vision:latest
+    #   # Required if provider is ollama. May also be used for an OpenAI API compatible backend with the openai provider.
+    #   base_url: http://ollama.ai.svc.cluster.local:11434
+    #   # Required if gemini or openai
+    #   api_key: ""
+    #   # Optional: The default prompt for generating descriptions. Can use replacement
+    #   # variables like "label", "sub_label", "camera" to make more dynamic. (default: shown below)
+    #   prompt: "Describe the {label} in the sequence of images with as much detail as possible. Do not describe the background."
+    #   # Optional: Object specific prompts to customize description results
+    #   # Format: {label}: {prompt}
+    #   object_prompts:
+    #     person: "My special person prompt."
 
     cameras:
       # Name of your camera
       LivingRoom:
-        enabled: True
+        enabled: true
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/LivingRoom
@@ -153,7 +253,7 @@ frigate:
           height: 720
           quality: 70
       FrontPorch:
-        enabled: True
+        enabled: true
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/FrontPorch
@@ -166,7 +266,7 @@ frigate:
               roles:
                 - detect
       BunCam:
-        enabled: True
+        enabled: true
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam
@@ -179,7 +279,7 @@ frigate:
               roles:
                 - detect
       Kitchen:
-        enabled: True
+        enabled: true
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/Kitchen
@@ -192,7 +292,7 @@ frigate:
               roles:
                 - detect
       SittingRoom:
-        enabled: True
+        enabled: true
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/SittingRoom
@@ -241,4 +341,7 @@ frigate:
         network_bandwidth: true
       # Optional: Enable the latest version outbound check (default: shown below)
       # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
-      version_check: True              
+      version_check: true
+    detect:
+      enabled: true
+    version: 0.16-0    

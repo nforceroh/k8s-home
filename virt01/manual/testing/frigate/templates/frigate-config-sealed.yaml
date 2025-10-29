@@ -1,0 +1,20 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: frigate-config
+  namespace: camera
+spec:
+  encryptedData:
+    FRIGATE_RTSP_PASSWORD: AgBUtoW5+xZKo14DJH1++axELZqaPzfiJ2qsIM1cGX8KSwLTNQp3I2SLWBAh+J5JuVcKOOWs9glnWIQPusqjlkQeg7gUL+xYrDUrWRaX3YMqK4QeylQx+Vy0i+RycoQQSxuoBInPt7KF8E0VRxnrJu3byRXTW2Sl+JbXLfW1UvsbduEvfIx+63lwursYoWwK+pVQzg2VJaRG+Qf5uLcugikRBZDSGFw2oDaUMkfP7X6MO+IdnFUyBdiwKABfsAKluAJBFMZl1+ggv+z8n2/tXjpF9s4Y8XVUH0hY5lcEp7TtTbN/lIRQP6QsqkoYz0VoTPAF49iEQ+uBIWTagfy+sV/7e3fEKVU7KE4gjEGMKgifRf4VFIs3ozG+pQyyHgFP812g5L07IDokCco9A+17WmdyoxF7lIe0xMf5qwr9nZUZmKQq4/KLeDDu9hiNNXkoXxwcbeWWmaeNqdE23wOviZer3TaeAg8QCqj950X2UbUxfvOieiSHVteLN4BJPsvpP5pTlWwLvxVF7KKoAajYjgpoxmxGOP5+kbvm442dO6vl2hNhjWj1E61Xg9ZXhurakShkdEGS7BKBAdhCMgPGtMmQqskMFyeUWgOXiqBotuc8YpgbinACGpJp35X0YD8xeR3M3qYsCXgKLhSD3Ndt/pH6u6jTV/RhWo0jjCcTSdFih+QsmoEl6GDLgbgX0k7uXfB8pFi9qAkzQg==
+    FRIGATE_RTSP_USERNAME: AgBdJqgDO0eJeLEHzG/o2cNhXmk5MD7/A9NqQdJwD5E2fSwHqNjMuhioYuFwDkzxIoWpwwoUABo9T0bupWfQSJ93JVZDVHz1MaNlDoiWp4OAzLKt9vekpiZPwIBXZhOXnqJ+GJbPZBmUlKNzsAVcgjapPIMUeInHLUPgjvqejybtX5Gwgg//mZvPIVw/TOSMNnVZtyJR33qV5KKeR0kjzL5A8MVRCCZFXinaqfie3e7or/GNd5t8uKGvJLY11GuoDz4SwJqmqSj+1w4DPYOoQAXoLi3aNDQaD4IRDsEvOop2Ty0T5Fhw6DgUON/owGr8ssptYHoF9z604lFXPQoJBRtG6egUWIW9fMPr427uPbJp4YjETjOUnxPEDRs01CFnmnN1c/fne+OCxawNbLtbUJvgpnZPE7q8iUlyoCMBNfhnZqynSR8wN37rAvXXwZLrTAoLkfdz+hVpqDlW2JYCePk9VqNNbqIlFKJiHI0VhBKUNUuGaPNlRei+9/TvaXAmUO3yxXVKXw4Fsu+UxEyliUd1i+aA2vRKzZD5JMOnkhkAS+5P/jZ9WVx12BjxcpXccSqsFYgba1IitMaEajw46DmiCkzv5KmknbM4M3DQH/l3gK/64EWDeYjnPhIKOn1oOkYiLDKvkJjpAS4N+rbTjVKIDW0//j+e1IkVeU1auf84X0ZtF+cGr07rznnDYSrbgfgFZ9eKKA==
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: frigate-config
+      namespace: camera
