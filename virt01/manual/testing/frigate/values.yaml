@@ -114,19 +114,35 @@ frigate:
       # Optional: Set the height of the jsmpeg stream. (default: 720)
       # This must be less than or equal to the height of the detect stream. Lower resolutions
       # reduce bandwidth required for viewing the jsmpeg stream. Width is computed to match known aspect ratio.
-      height: 720
+      height: 640
       # Optional: Set the encode quality of the jsmpeg stream (default: shown below)
       # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
       quality: 8
 
     birdseye:
-      enabled: false
+      enabled: true
+      mode: continuous
 
     # objects:
     #   track:
     #     - person
     #     - car
 
+    detect:
+      enabled: true
+      width: 640
+      height: 480
+      fps: 5
+      min_initialized: 2
+      max_disappeared: 25
+      stationary:
+        # Optional: Frequency for confirming stationary objects (default: same as threshold)
+        # When set to 1, object detection will run to confirm the object still exists on every frame.
+        # If set to 10, object detection will run to confirm the object still exists on every 10th frame.
+        interval: 50
+        # Optional: Number of frames without a position change for an object to be considered stationary (default: 10x the frame rate or 10s)
+        threshold: 50
+            
     ffmpeg:
       global_args: -hide_banner -loglevel warning -threads 2
       hwaccel_args: preset-nvidia
@@ -141,26 +157,41 @@ frigate:
         type: onnx
 
     model:
-      model_type: yolox
-      width: 640
-      height: 640
+      # model_type: yolox
+      # width: 640
+      # height: 640
+      # input_tensor: nchw
+      # input_dtype: float_denorm
+      # path: /config/model_cache/yolox_l.onnx
+      model_type: yolonas
+      width: 320 # <--- should match whatever was set in notebook
+      height: 320 # <--- should match whatever was set in notebook
+      input_pixel_format: bgr
       input_tensor: nchw
-      input_dtype: float_denorm
-      path: /config/model_cache/yolox_l.onnx
+      path: /config/model_cache/yolo_nas_s.onnx
       labelmap_path: /labelmap/coco-80.txt
-      labelmap:
-        2: vehicle
-      # Optional: Map of object labels to their attribute labels (default: depends on model)
-      attributes_map:
-        person:
-          - amazon
-          - face
-        car:
-          - amazon
-          - fedex
-          - license_plate
-          - ups
 
+    objects:
+      track:
+        - person
+        - car
+        - dog
+        - cat
+
+      filters:
+        dog:
+          min_score: .7
+          threshold: .9
+        cat:
+          min_score: .65
+          threshold: .8
+        person:
+          min_score: .65
+          threshold: .85
+        car:
+          min_score: .65
+          threshold: .85
+          
     # # NOTE: Can be overridden at the camera level
     # audio:
     #   # Optional: Enable audio events (default: shown below)
@@ -234,6 +265,8 @@ frigate:
       # Name of your camera
       LivingRoom:
         enabled: true
+        detect:
+          enabled: false
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/LivingRoom
@@ -245,6 +278,9 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+        motion:
+          mask: 
+            - 0.396,0,0.393,0.119,0.624,0.162,0.621,0   
         mqtt:
           enabled: true
           timestamp: false
@@ -254,6 +290,8 @@ frigate:
           quality: 70
       FrontPorch:
         enabled: true
+        detect:
+          enabled: false
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/FrontPorch
@@ -267,6 +305,8 @@ frigate:
                 - detect
       BunCam:
         enabled: true
+        detect:
+          enabled: false
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam
@@ -280,6 +320,8 @@ frigate:
                 - detect
       Kitchen:
         enabled: true
+        detect:
+          enabled: false
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/Kitchen
@@ -293,6 +335,8 @@ frigate:
                 - detect
       SittingRoom:
         enabled: true
+        detect:
+          enabled: false
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/SittingRoom
@@ -305,8 +349,12 @@ frigate:
               roles:
                 - detect
       # Reolink Rlc 520a
-      rlc_520a_garage:
+      garage_front:
         enabled: true
+        live:
+          streams:
+            main_stream: rlc_520a_main_garage
+            sub_stream: rlc_520a_sub_garage
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
@@ -318,6 +366,13 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+        motion:
+          mask: 
+            - 0.478,0.223,0.444,0.329,0.492,0.354,0.548,0.331,0.55,0.272,0.523,0.215,0.5,0.185
+            - 0.038,0.353,0.106,0.46,0.052,0.483,0.004,0.487,0.002,0.358
+            - 0.124,0.136,0.132,0.299,0.008,0.313,0.002,0.263
+            - 0.201,0.116,0.189,0.239,0.262,0.245,0.319,0.215,0.311,0.171,0.347,0.18,0.432,0.235,0.509,0.171,0.626,0.164,0.64,0.23,0.745,0.219,0.737,0.159,0.772,0.136,0.875,0.146,0.89,0.194,0.941,0.214,0.957,0.251,0.999,0.265,1,0.128,0.885,0.093,0.674,0.037,0.504,0.032,0.351,0.119,0.312,0.11,0.264,0.074
+            - 0.012,0.95,0.011,0.981,0.344,0.983,0.344,0.951
         review:
           alerts:
             labels: []
@@ -330,13 +385,16 @@ frigate:
         objects:
           track:
             - person
-            - bicycle
+            - face
             - car
-            - motorcycle
-            - cat
+            - license_plate
             - dog
-            - suitcase
-            - skateboard
+            - cat
+            - deer
+            - ups
+            - fedex
+            - amazon
+            - package
         record:
           enabled: False
           retain:
@@ -366,6 +424,5 @@ frigate:
       # Optional: Enable the latest version outbound check (default: shown below)
       # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
       version_check: true
-    detect:
-      enabled: true
+
     version: 0.16-0    
