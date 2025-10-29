@@ -139,10 +139,16 @@ frigate:
         # Optional: Frequency for confirming stationary objects (default: same as threshold)
         # When set to 1, object detection will run to confirm the object still exists on every frame.
         # If set to 10, object detection will run to confirm the object still exists on every 10th frame.
-        interval: 50
+        interval: 100
         # Optional: Number of frames without a position change for an object to be considered stationary (default: 10x the frame rate or 10s)
-        threshold: 50
-            
+        threshold: 100
+        max_frames:
+          # Optional: Default for all object types (default: not set, track forever)
+          default: 3000
+          # Optional: Object specific values
+          objects:
+            person: 1000
+
     ffmpeg:
       global_args: -hide_banner -loglevel warning -threads 2
       hwaccel_args: preset-nvidia
