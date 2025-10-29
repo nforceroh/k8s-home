@@ -31,7 +31,7 @@ spec:
             - name: IDRAC_HOST
               value: "192.168.101.200"
             - name: FAN_SPEED
-              value: "15"
+              value: "25"
             - name: CHECK_INTERVAL
               value: "30"
             - name: DISABLE_THIRD_PARTY_PCIE_CARD_DELL_DEFAULT_COOLING_RESPONSE
