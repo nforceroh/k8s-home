@@ -5,6 +5,8 @@ frigate:
     repository: ghcr.io/blakeblackshear/frigate
     tag: stable-tensorrt
 
+  env:
+    TZ: America/New_York
   envFromSecrets:
     - frigate-config
   gpu:
