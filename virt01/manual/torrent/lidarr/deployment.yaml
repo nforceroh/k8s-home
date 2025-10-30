@@ -60,11 +60,11 @@ spec:
           hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/ssd01/Music
+            path: /mnt/hdd01/Music
 #            server: 10.0.0.100
         - name: torrent
           hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/ssd01/torrent
+            path: /mnt/hdd01/torrent
 #            server: 10.0.0.100     

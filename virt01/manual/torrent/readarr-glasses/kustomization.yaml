@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+labels:
+  - pairs:
+      app: readarr
+
+namespace: torrent
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - serviceaccount.yaml
+#  - backup-schedule.yaml
+

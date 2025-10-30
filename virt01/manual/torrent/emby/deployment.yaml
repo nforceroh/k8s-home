@@ -57,11 +57,11 @@ spec:
           hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/ssd01/emby/Movies
+            path: /mnt/hdd01/emby/Movies
 #            server: 10.0.0.100
         - name: tvshows
           hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/ssd01/emby/TVShows
+            path: /mnt/hdd01/emby/TVShows
 #            server: 10.0.0.100     

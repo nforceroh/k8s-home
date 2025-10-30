@@ -22,7 +22,7 @@ spec:
       serviceAccountName: readarr-sa
       containers:
         - name: readarr
-          image: harbor.nf.lab/proxy.docker.io/linuxserver/readarr:develop
+          image: blampe/rreading-glasses:latest
           imagePullPolicy: Always
           env:
             - name: PUID
@@ -33,12 +33,8 @@ spec:
               value: "000"
             - name: TZ
               value: "America/New_York"
-            - name: DOCKER_MODS
-              value: "ghcr.io/themepark-dev/theme.park:readarr"
-            - name: TP_THEME
-              value: dark
           ports:
-            - containerPort: 8787
+            - containerPort: 8788
               name: readarr-port
               protocol: TCP
           resources:
@@ -59,13 +55,13 @@ spec:
         - name: books
 #          nfs:
           hostPath:
-            path: /mnt/ssd01/Books
+            path: /mnt/hdd01/Books
             type: Directory
 #            server: 10.0.0.100
         - name: torrent
 #          nfs:
           hostPath:
 #          nfs:
-            path: /mnt/ssd01/torrent
+            path: /mnt/hdd01/torrent
             type: Directory
 #            server: 10.0.0.100

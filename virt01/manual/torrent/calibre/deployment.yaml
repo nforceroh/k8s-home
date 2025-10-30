@@ -52,5 +52,5 @@ spec:
         - name: library
           hostPath:
             type: Directory
-            path: /mnt/ssd01/Books
+            path: /mnt/hdd01/Books
      
