@@ -5,7 +5,7 @@ labels:
   - pairs:
       app: postgresql
 
-namespace: databses
+namespace: databases
 
 resources:
   - cluster.yaml
