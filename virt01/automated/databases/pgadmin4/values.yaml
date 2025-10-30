@@ -15,7 +15,7 @@ pgadmin4:
           - path: /
             pathType: Prefix
     tls: 
-      - secretName:pgadmin-tls
+      - secretName: pgadmin-tls
         hosts:
           - pgadmin.k3s.nf.lab
 
