@@ -2,8 +2,8 @@ apiVersion: v2
 name: pgadmin4
 version: 1.0.0
 dependencies:
-- name: runix/pgadmin4
-  repository: https://helm.runix.net
+- name: pgadmin4
+  repository: https://helm.runix.net/runix
   version: 1.50.0
 sources:
   - https://github.com/rowanruseler/helm-charts
