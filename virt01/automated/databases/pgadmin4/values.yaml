@@ -1,6 +1,9 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/phpmyadmin/values.yaml
 
 pgadmin4:
+  strategy:
+    type: Recreate
+
   ingress:
     enabled: true
     ingressClassName: traefik
