@@ -1,0 +1,49 @@
+# https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
+# domain names are overridden due to derivation from Values.global.domain
+
+crds:
+  install: true
+global:
+  domain: argo.k3s.nf.lab
+configs:
+  params:
+    server.insecure: true
+  cm:
+    kustomize.buildOptions: --enable-helm
+    url: 'https://argo.k3s.nf.lab'
+    admin.enabled: true
+  secret:
+    argocdServerAdminPassword: "$2a$10$s2Ibc1ThAoM4pRBsGG6TMu.i5ptXZw.nIMNyFY2//awGak23UggGi"
+    argocdServerAdminPasswordMtime: "2020-09-01T10:11:12Z"
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    extraTls:
+      - hosts:
+          - argo.k3s.nf.lab
+        secretName: argocd-server-tls
+
+notifications:
+  argocdUrl: 'https://argo.k3s.nf.lab'
+
+applicationSet:
+  certificate:
+    domain: argo.k3s.nf.lab
+
+controller:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      interval: 30s
+  rules:
+    enabled: true
+    namespace: monitoring

@@ -1,11 +1,14 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
 ---
 open-webui:
   ollama:
     enabled: false
+
   ollamaUrls:
     - http://ollama.ai.svc.cluster.local:11434
 #  podAnnotations:
 #    backup.velero.io/backup-volumes: data
+
   ingress:
     enabled: true
     class: traefik
@@ -17,13 +20,16 @@ open-webui:
     host: open-webui.k3s.nf.lab
     tls: true
     existingSecret: open-webui-tls
+
   serviceAccount:
     enable: true
     name: open-webui-sa
+
   persistence:
     enabled: true
     existingClaim: open-webui
     size: 2Gi
+
   websocket:
     # -- Enables websocket support in Open WebUI with env `ENABLE_WEBSOCKET_SUPPORT`
     enabled: true
@@ -31,3 +37,8 @@ open-webui:
     manager: redis
     # -- Specifies the URL of the Redis instance for websocket communication. Template with `redis://[:<password>@]<hostname>:<port>/<db>`
     url: redis://redis-headless.databases.svc.cluster.local:6379/5
+
+  pipelines:
+    enabled: true
+    extraEnvVars: 
+      strategy: Recreate
