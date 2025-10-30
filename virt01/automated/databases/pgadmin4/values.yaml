@@ -6,35 +6,3 @@ pgadmin4:
     existingSecret: pgadmin-auth
     passwordKey: password
 
-  # ingress:
-  #   enabled: true
-  #   ingressClassName: traefik
-  #   annotations:
-  #     cert-manager.io/cluster-issuer: nf-lab
-  #     cert-manager.io/private-key-rotation-policy: Always
-  #     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-  #     external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-  #   hostname: pgadmin.k3s.nf.lab
-  #   tls: 
-  #     - secretName: pgadmin-tls
-  #       hosts:
-  #         - pgadmin.k3s.nf.lab
-
-  # env:
-  #   email: chart@domain.com
-  #   password: SuperSecret1
-  # existingSecret: pgadmin-auth
-  # secretKeys:
-  #   pgadminPasswordKey: password
-
-          # env:
-          #   - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
-          #     value: 'False'
-          #   - name: PGADMIN_DEFAULT_EMAIL
-          #     value: chart@domain.com
-          #   - name: PGADMIN_DEFAULT_PASSWORD
-          #     valueFrom:
-          #       secretKeyRef:
-          #         name: pgadmin4
-          #         key: password
-          # resources: {}

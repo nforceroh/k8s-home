@@ -3,8 +3,8 @@ sources:
   lastMinorRelease:
     kind: helmchart
     spec:
-      url: "https://helm.runix.net"
-      name: "runix/phpmyadmin"
+      url: "oci://docker.io/dpage"
+      name: "pgadmin4-helm"
       version: "*.*.*"
 conditions: {}
 targets:
