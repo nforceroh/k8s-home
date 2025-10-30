@@ -1,0 +1,21 @@
+---
+
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg-db
+spec:
+  # The database will consist of a single instance.
+  instances: 1 
+  
+  # Specify the Postgres version and image
+  # It is a best practice to use a specific tag instead of 'latest'
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.2
+  
+  # Define the storage for the PersistentVolumeClaim
+  storage:
+    size: 10Gi
+  
+  # Enable access from other applications in the same namespace
+  # This automatically creates the required services
+  enableSuperuserAccess: true
