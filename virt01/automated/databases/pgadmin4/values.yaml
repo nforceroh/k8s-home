@@ -26,8 +26,8 @@ pgadmin4:
           - pgadmin.k3s.nf.lab
 
   env:
-    email: pgadmin
-    password: password
+    email: chart@domain.com
+    password: SuperSecret1
   # existingSecret: pgadmin-auth
   # secretKeys:
   #   pgadminPasswordKey: password
