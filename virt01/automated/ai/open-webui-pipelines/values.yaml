@@ -1,0 +1,7 @@
+# https://github.com/open-webui/helm-charts/blob/main/charts/open-webui/values.yaml
+---
+pipelines:
+  strategy: 
+    type: Recreate
+
+

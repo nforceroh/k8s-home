@@ -1,0 +1,7 @@
+apiVersion: v2
+name: pipelines
+version: 1.0.0
+dependencies:
+- name: pipelines
+  repository: https://helm.openwebui.com/
+  version: 0.10.0

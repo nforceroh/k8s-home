@@ -39,7 +39,5 @@ open-webui:
     url: redis://redis-headless.databases.svc.cluster.local:6379/5
 
   pipelines:
-    enabled: true
-    extraEnvVars: 
-      strategy: 
-        - type: Recreate
+    enabled: false
+
