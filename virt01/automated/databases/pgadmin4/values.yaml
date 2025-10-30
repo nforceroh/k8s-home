@@ -20,10 +20,4 @@ pgadmin4:
           - pgadmin.k3s.nf.lab
 
   envVarsFromSecrets:
-    - name: POSTGRES_USERNAME
-      secretName: pgadmin-auth
-      secretKey: username
-    - name: PGADMIN_PASSWORD
-      secretName: ppgadmin-auth
-      secretKey: password
-
+    - pgadmin-env
