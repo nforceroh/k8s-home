@@ -25,3 +25,5 @@ pgadmin4:
   existingSecret: pgadmin-auth
   env:
     email: pgadmin4@nf.lab
+  secretKeys:
+    password: password
