@@ -41,4 +41,5 @@ open-webui:
   pipelines:
     enabled: true
     extraEnvVars: 
-      strategy: Recreate
+      strategy: 
+        - type: Recreate
