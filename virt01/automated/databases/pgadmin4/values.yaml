@@ -22,8 +22,21 @@ pgadmin4:
         hosts:
           - pgadmin.k3s.nf.lab
 
-  # existingSecret: pgadmin-auth
-  # env:
-  #   email: pgadmin4@nf.lab
-  # secretKeys:
-  #   password: password
+  env:
+    # can be email or nickname
+    email: pgadmin
+  existingSecret: pgadmin-auth
+  secretKeys:
+    pgadminPasswordKey: password
+
+          # env:
+          #   - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
+          #     value: 'False'
+          #   - name: PGADMIN_DEFAULT_EMAIL
+          #     value: chart@domain.com
+          #   - name: PGADMIN_DEFAULT_PASSWORD
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: pgadmin4
+          #         key: password
+          # resources: {}
