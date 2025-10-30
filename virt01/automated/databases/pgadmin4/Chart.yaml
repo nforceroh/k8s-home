@@ -3,7 +3,7 @@ name: pgadmin4
 version: 1.0.0
 dependencies:
 - name: pgadmin4
-  repository: https://helm.runix.net/runix
+  repository: https://helm.runix.net
   version: 1.50.0
 sources:
   - https://github.com/rowanruseler/helm-charts
