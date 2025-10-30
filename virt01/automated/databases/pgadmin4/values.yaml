@@ -21,4 +21,4 @@ pgadmin4:
 
   existingSecret: pgadmin-auth
   env:
-    email: admin
+    email: pgadmin4
