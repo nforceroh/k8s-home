@@ -23,11 +23,11 @@ pgadmin4:
           - pgadmin.k3s.nf.lab
 
   env:
-    # can be email or nickname
     email: pgadmin
-  existingSecret: pgadmin-auth
-  secretKeys:
-    pgadminPasswordKey: password
+    password: password
+  # existingSecret: pgadmin-auth
+  # secretKeys:
+  #   pgadminPasswordKey: password
 
           # env:
           #   - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
