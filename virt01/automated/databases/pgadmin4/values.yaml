@@ -4,9 +4,9 @@ pgadmin4:
   strategy:
     type: Recreate
 
-image:
-  tag: latest
-  
+  image:
+    tag: latest
+
   ingress:
     enabled: true
     ingressClassName: traefik
