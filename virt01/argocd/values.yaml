@@ -10,7 +10,7 @@ configs:
     server.insecure: true
   cm:
     kustomize.buildOptions: --enable-helm
-    url: 'https://argo.k3s.nf.lab'
+#    url: 'https://argo.k3s.nf.lab'
     admin.enabled: true
   secret:
     argocdServerAdminPassword: "$2a$10$s2Ibc1ThAoM4pRBsGG6TMu.i5ptXZw.nIMNyFY2//awGak23UggGi"
@@ -19,16 +19,18 @@ configs:
 server:
   ingress:
     enabled: true
+    hostname: argo.k3s.nf.lab
     ingressClassName: traefik
     annotations:
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-    extraTls:
-      - hosts:
-          - argo.k3s.nf.lab
-        secretName: argocd-server-tls
+    tls: true
+    # extraTls:
+    #   - hosts:
+    #       - argo.k3s.nf.lab
+    #     secretName: argocd-server-tls
 
 notifications:
   argocdUrl: 'https://argo.k3s.nf.lab'
