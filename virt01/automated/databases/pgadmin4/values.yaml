@@ -19,5 +19,6 @@ pgadmin4:
         hosts:
           - pgadmin.k3s.nf.lab
 
-  envVarsFromSecrets:
-    - pgadmin-env
+  existingSecret: pgadmin-auth
+  env:
+    email: admin

@@ -1,0 +1,19 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: pgadmin-auth
+  namespace: databases
+spec:
+  encryptedData:
+    password: AgCZymvULy2h2gIkg1oAjcKf7Ag9G2PXEY9000HWlJBrMOvSiv7VTrI93ct7rZTEpGbZtnbvJ7TH2mefQw03OAkn4QNtnYiRSQ4u6ccOXDcu1cRTCccVbueBCAyYLnhGTUY4SDUaK/BsJuqi+yLyDQVUHDv5LFVyYTm04Y2Jo61INHv+ca1yRtZsHCzcf43JmQRPhfV7IplyVe74GG4RSHviVgXMBidSz/bWD23zZM6GEBvsCEQgzNIFJG4ML5YtG2msL9ocy2oC/uuqxkBs1N+7DIQd0lsHftuoUzykoUmRZYVs+i44N1XbZO19K63XL5Jy57PHMYJXv9kJdHElvmMw80d4IN013NhG3AfNnugl3RkIzVMTdvbsBWt86MQeyfDJ/N5DPj67rUWPgFREV6hJOXCF8UQW1ndHp0s8PmlyzUkqKmYWmJEBPJgUyTEzLeTOtHmKpbCKVxKAtVBAdURWsB2F5K8Y/WABh/WfoCJHlEV648SmmoepXF0GtC2oNUh2LCXy5wP4fqhiT0VBzf3gt5n7lKiMw6KvpnAYMMwwWnd4w4GrLPOxSWTriwZ8gXjJMr24lsNMuqk1N/ViBT8bC98GlZRF1UifWNCL4/KCCzz0MLdVepYt66CBeIK5EynRnJhJe2FzYbz4g1zR9p8czo5/XoCLjpOzO8D9JjAU6jNy2fYm8zAMNZfQBwivgNbVkLudEjePK6I=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: pgadmin-auth
+      namespace: databases
