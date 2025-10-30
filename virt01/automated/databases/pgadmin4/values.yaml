@@ -24,6 +24,6 @@ pgadmin4:
       secretName: pgadmin-auth
       secretKey: username
     - name: PGADMIN_PASSWORD
-      secretName: pgadmin-auth
+      secretName: ppgadmin-auth
       secretKey: password
 
