@@ -1,0 +1,18 @@
+
+sources:
+  lastMinorRelease:
+    kind: helmchart
+    spec:
+      url: "https://helm.runix.net"
+      name: "runix/phpmyadmin"
+      version: "*.*.*"
+conditions: {}
+targets:
+  chart:
+    name: Bump Chart dependencies
+    kind: helmchart
+    spec:
+      Name: "/home/runner/work/k8s-home/k8s-home/virt01/automated/databases/pgadmin4"
+      file: "Chart.yaml"
+      key: "$.dependencies[0].version"
+      versionIncrement: "patch"
