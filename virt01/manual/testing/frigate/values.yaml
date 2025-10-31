@@ -198,7 +198,7 @@ frigate:
           threshold: .85
 
     record:
-      enabled: True
+      enabled: true
       retain:
         days: 14
         mode: all
@@ -209,8 +209,8 @@ frigate:
       detections:
         retain:
           days: 30
-          mode: motion     
-               
+          mode: motion
+
     # # NOTE: Can be overridden at the camera level
     # audio:
     #   # Optional: Enable audio events (default: shown below)
@@ -298,8 +298,8 @@ frigate:
               roles:
                 - detect
         motion:
-          mask: 
-            - 0.396,0,0.393,0.119,0.624,0.162,0.621,0   
+          mask:
+            - 0.396,0,0.393,0.119,0.624,0.162,0.621,0
         mqtt:
           enabled: true
           timestamp: false
@@ -369,13 +369,7 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
-        motion:
-          mask: 
-            - 0.478,0.223,0.444,0.329,0.492,0.354,0.548,0.331,0.55,0.272,0.523,0.215,0.5,0.185
-            - 0.038,0.353,0.106,0.46,0.052,0.483,0.004,0.487,0.002,0.358
-            - 0.124,0.136,0.132,0.299,0.008,0.313,0.002,0.263
-            - 0.201,0.116,0.189,0.239,0.262,0.245,0.319,0.215,0.311,0.171,0.347,0.18,0.432,0.235,0.509,0.171,0.626,0.164,0.64,0.23,0.745,0.219,0.737,0.159,0.772,0.136,0.875,0.146,0.89,0.194,0.941,0.214,0.957,0.251,0.999,0.265,1,0.128,0.885,0.093,0.674,0.037,0.504,0.032,0.351,0.119,0.312,0.11,0.264,0.074
-            - 0.012,0.95,0.011,0.981,0.344,0.983,0.344,0.951
+        motion: {}
         review:
           alerts:
             labels: []
@@ -390,7 +384,34 @@ frigate:
             - person
             - car
             - dog
-            - cat
+
+        zones:
+          Front_Yard:
+            coordinates: 
+              0.234,0.745,0.95,0.429,0.725,0.391,0.48,0.38,0.299,0.384,0.18,0.387,0.054,0.421
+            loitering_time: 0
+            objects:
+              - person
+              - dog
+            inertia: 3
+          Driveway:
+            coordinates: 0.042,0.829,0.087,0.997,1,1,1,0.811,1,0.447,0.958,0.436
+            loitering_time: 0
+            objects:
+              - car
+              - person
+            inertia: 3
+          walkway:
+            coordinates: 
+              0.225,0.745,0.135,0.575,0.003,0.599,0.012,0.666,0.078,0.648,0.132,0.787
+            loitering_time: 0
+            objects:
+              - dog
+              - person
+          Ignore:
+            coordinates: 
+              0.002,0.431,0.179,0.384,0.486,0.374,0.757,0.391,0.96,0.431,1,0.442,1,0,0,0
+            loitering_time: 0
       FrontPorch:
         enabled: true
         live:
@@ -424,8 +445,34 @@ frigate:
             - person
             - car
             - dog
-            - cat
 
+        zones:
+          Porch:
+            coordinates: 
+              0.935,0.476,0.975,0.277,0.8,0.222,0.782,0.365,0.044,0.994,0.808,0.994
+            loitering_time: 0
+            objects:
+              - person
+              - dog
+          Driveway:
+            coordinates: 
+              0.674,0.436,0.75,0.377,0.762,0.255,0.66,0.225,0.226,0.16,0.113,0.203,0.481,0.276,0.49,0.397
+            loitering_time: 0
+            objects:
+              - car
+              - person
+          Front_Yard:
+            coordinates: 0.474,0.406,0.476,0.285,0.064,0.206,0.001,0.235,0.001,0.696
+            loitering_time: 0
+            objects: person
+          Front_Side_Yard:
+            coordinates: 
+              0.234,0.156,0.359,0.128,0.647,0.183,0.721,0.205,0.765,0.22,0.759,0.256,0.675,0.23
+            loitering_time: 0
+            objects: person
+        motion:
+          mask: 
+            0,0.233,0.187,0.157,0.354,0.119,0.41,0.113,0.659,0.139,0.665,0.002,0.001,0.002
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
       network_interfaces:
@@ -442,4 +489,15 @@ frigate:
       # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
       version_check: true
 
-    version: 0.16-0    
+    version: 0.16-0
+    semantic_search:
+      enabled: false
+      model_size: small
+    face_recognition:
+      enabled: false
+      model_size: small
+    lpr:
+      enabled: false
+    classification:
+      bird:
+        enabled: false
