@@ -105,7 +105,10 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
         rlc_520a_sub_front_porch:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_sub
-
+        rlc_520a_main_back_door:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_main
+        rlc_520a_sub_back_door:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_sub
     snapshots:
       enabled: true
 
@@ -119,7 +122,7 @@ frigate:
       # Optional: Set the height of the jsmpeg stream. (default: 720)
       # This must be less than or equal to the height of the detect stream. Lower resolutions
       # reduce bandwidth required for viewing the jsmpeg stream. Width is computed to match known aspect ratio.
-      height: 640
+      #height: 640
       # Optional: Set the encode quality of the jsmpeg stream (default: shown below)
       # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
       quality: 8
@@ -127,6 +130,8 @@ frigate:
     birdseye:
       enabled: true
       mode: continuous
+      width: 1280
+      height: 480
 
     detect:
       enabled: true
@@ -307,6 +312,8 @@ frigate:
           crop: true
           height: 720
           quality: 70
+        objects:
+          mask: 0.982,0.981,0.982,0.936,0.719,0.935,0.719,0.981
       BunCam:
         enabled: true
         detect:
@@ -322,6 +329,8 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+        objects:
+          mask: 0.981,0.981,0.981,0.938,0.713,0.936,0.713,0.982
       Kitchen:
         enabled: true
         detect:
@@ -337,6 +346,8 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+        objects:
+          mask: 0.719,0.937,0.718,0.979,0.981,0.98,0.978,0.939
       SittingRoom:
         enabled: true
         detect:
@@ -352,6 +363,8 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+        objects:
+          mask: 0.966,0.981,0.967,0.931,0.673,0.93,0.675,0.979
       GarageFront:
         enabled: true
         live:
@@ -385,6 +398,9 @@ frigate:
             - car
             - dog
 
+          mask:
+            - 0.984,0.982,0.983,0.948,0.647,0.946,0.649,0.983
+            - 0.164,0.986,0.164,0.953,0.006,0.95,0.006,0.987
         zones:
           Front_Yard:
             coordinates: 
@@ -446,6 +462,10 @@ frigate:
             - car
             - dog
 
+          mask:
+            - 0.318,0.011,0.285,0.128,0.35,0.13
+            - 0.511,0.341,0.371,0.365,0.263,0.451,0.197,0.573,0.001,0.706,0,0.994,0.145,0.909,0.673,0.458,0.512,0.414
+            - 0.646,0.946,0.646,0.988,0.984,0.989,0.984,0.944
         zones:
           Porch:
             coordinates: 
@@ -473,6 +493,47 @@ frigate:
         motion:
           mask: 
             0,0.233,0.187,0.157,0.354,0.119,0.41,0.113,0.659,0.139,0.665,0.002,0.001,0.002
+
+      BackDoor:
+        enabled: true
+        live:
+          streams:
+            main_stream: rlc_520a_main_back_door
+            sub_stream: rlc_520a_sub_back_door
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/rlc_520a_sub_back_door
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+        # motion:
+        #   mask: 
+        review:
+          alerts:
+            labels: []
+        # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
+        detect:
+          enabled: true
+          fps: 7
+          width: 640
+          height: 480
+        objects:
+          track:
+            - person
+            - dog
+
+          mask:
+            - 0.986,0.985,0.984,0.948,0.646,0.946,0.646,0.988
+            - 0.008,0.947,0.009,0.984,0.123,0.984,0.124,0.946
+        zones:
+          Back_porch:
+            coordinates: 0.651,0.601,0.408,0.453,0.54,0,0.866,0
+            loitering_time: 0
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
       network_interfaces:
@@ -501,3 +562,21 @@ frigate:
     classification:
       bird:
         enabled: false
+    camera_groups:
+      Outside:
+        order: 1
+        icon: LuHousePlus
+        cameras:
+          - birdseye
+          - BackDoor
+          - FrontPorch
+          - GarageFront
+      Inside:
+        order: 2
+        icon: LuArchiveRestore
+        cameras:
+          - LivingRoom
+          - BunCam
+          - Kitchen
+          - SittingRoom
+          - birdseye
