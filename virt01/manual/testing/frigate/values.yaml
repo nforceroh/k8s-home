@@ -532,8 +532,18 @@ frigate:
             - 0.008,0.947,0.009,0.984,0.123,0.984,0.124,0.946
         zones:
           Back_porch:
-            coordinates: 0.651,0.601,0.408,0.453,0.54,0,0.866,0
+            coordinates: 
+              0.904,0.986,0.638,0.846,0.852,0.122,1,0.154,0.994,0.494,0.995,0.606
             loitering_time: 0
+            inertia: 3
+          Backyard:
+            coordinates: 
+              0.363,0.998,0.901,1,0.629,0.836,0.807,0.263,0.071,0.29,0,0.344,0.002,0.995
+            loitering_time: 0
+        motion:
+          threshold: 62
+          contour_area: 23
+          improve_contrast: true
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
       network_interfaces:
@@ -567,7 +577,6 @@ frigate:
         order: 1
         icon: LuHousePlus
         cameras:
-          - birdseye
           - BackDoor
           - FrontPorch
           - GarageFront
@@ -579,4 +588,3 @@ frigate:
           - BunCam
           - Kitchen
           - SittingRoom
-          - birdseye
