@@ -41,7 +41,7 @@ frigate:
     media:
       enabled: true        
       skipuninstall: false    
-      size: 50Gi
+      existingClaim: frigate-media
   config: |
     mqtt:
       # Required: host name
@@ -72,9 +72,9 @@ frigate:
         LivingRoom_sub:
           - rtsp://10.40.1.42:8554/360p?mp4
           - ffmpeg:LivingRoom#audio=opus
-        FrontPorch:
-          - rtsp://10.40.1.22:8554/1080p?mp4
-          - ffmpeg:FrontPorch#audio=opus
+        # FrontPorch:
+        #   - rtsp://10.40.1.22:8554/1080p?mp4
+        #   - ffmpeg:FrontPorch#audio=opus
         FrontPorch_sub:
           - rtsp://10.40.1.22:8554/360p?mp4
           - ffmpeg:FrontPorch#audio=opus
@@ -101,7 +101,10 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_main
         rlc_520a_sub_garage:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_sub
-
+        rlc_520a_main_front_porch:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
+        rlc_520a_sub_front_porch:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_sub
 
     snapshots:
       enabled: true
@@ -124,11 +127,6 @@ frigate:
     birdseye:
       enabled: true
       mode: continuous
-
-    # objects:
-    #   track:
-    #     - person
-    #     - car
 
     detect:
       enabled: true
@@ -185,7 +183,6 @@ frigate:
         - car
         - dog
         - cat
-
       filters:
         dog:
           min_score: .7
@@ -199,7 +196,21 @@ frigate:
         car:
           min_score: .65
           threshold: .85
-          
+
+    record:
+      enabled: True
+      retain:
+        days: 14
+        mode: all
+      alerts:
+        retain:
+          days: 30
+          mode: motion
+      detections:
+        retain:
+          days: 30
+          mode: motion     
+               
     # # NOTE: Can be overridden at the camera level
     # audio:
     #   # Optional: Enable audio events (default: shown below)
@@ -296,21 +307,6 @@ frigate:
           crop: true
           height: 720
           quality: 70
-      FrontPorch:
-        enabled: true
-        detect:
-          enabled: false
-        ffmpeg:
-          inputs:
-            - path: rtsp://127.0.0.1:8554/FrontPorch
-              input_args: preset-rtsp-restream
-              roles:
-                - audio
-                - record
-            - path: rtsp://127.0.0.1:8554/FrontPorch_sub
-              input_args: preset-rtsp-restream
-              roles:
-                - detect
       BunCam:
         enabled: true
         detect:
@@ -356,8 +352,7 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
-      # Reolink Rlc 520a
-      garage_front:
+      GarageFront:
         enabled: true
         live:
           streams:
@@ -384,6 +379,40 @@ frigate:
         review:
           alerts:
             labels: []
+        # From the sub stream we have a resolution: 640x480, fps: 7
+        detect:
+          enabled: true
+          fps: 7
+          width: 640
+          height: 480
+        objects:
+          track:
+            - person
+            - car
+            - dog
+            - cat
+      FrontPorch:
+        enabled: true
+        live:
+          streams:
+            main_stream: rlc_520a_main_front_porch
+            sub_stream: rlc_520a_sub_front_porch
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+                - record
+            - path: rtsp://127.0.0.1:8554/rlc_520a_sub_front_porch
+              input_args: preset-rtsp-restream
+              roles:
+                - detect
+        # motion:
+        #   mask: 
+        review:
+          alerts:
+            labels: []
         # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
@@ -393,29 +422,9 @@ frigate:
         objects:
           track:
             - person
-            - face
             - car
-            - license_plate
             - dog
             - cat
-            - deer
-            - ups
-            - fedex
-            - amazon
-            - package
-        record:
-          enabled: False
-          retain:
-            days: 7
-            mode: motion
-          alerts:
-            retain:
-              days: 14
-              mode: active_objects
-          detections:
-            retain:
-              days: 14
-              mode: active_objects
 
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
