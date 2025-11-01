@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://prometheus-community.github.io/helm-charts"
       name: "kube-prometheus-stack"
-      version: "77.*.*"
+      version: "*.*.*"
 conditions: {}
 targets:
   chart:
