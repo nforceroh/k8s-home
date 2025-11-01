@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://vmware-tanzu.github.io/helm-charts"
       name: "velero"
-      version: "10.*.*"
+      version: "11.*.*"
 conditions: {}
 targets:
   chart:
