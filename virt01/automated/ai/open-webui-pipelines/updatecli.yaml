@@ -4,8 +4,8 @@ sources:
     kind: helmchart
     spec:
       url: "https://helm.openwebui.com/"
-      name: "open-webui/pipelines"
-      version: "*.*.*"
+      name: "pipelines"
+      version: "0.*.*"
 conditions: {}
 targets:
   chart:
