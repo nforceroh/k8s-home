@@ -14,9 +14,9 @@ cloudflare-tunnel:
       - hostname: jelly.nforcer.com
         service: http://jellyseerr-svc.torrent.svc.cluster.local:5055
       - hostname: frigate.nforcer.com
-        service: http://frigate-svc.torrent.svc.cluster.local:5000
+        service: http://frigate-svc.camera.svc.cluster.local:5000
       - hostname: scrypted.nforcer.com
-        service: http://scrypted-web-svc.torrent.svc.cluster.local:11080
+        service: http://scrypted-web-svc.camera.svc.cluster.local:11080
   podSecurityContext: 
     sysctls:
       - name: net.ipv4.ping_group_range
