@@ -386,7 +386,11 @@ frigate:
         review:
           alerts:
             labels: []
-        # From the sub stream we have a resolution: 640x480, fps: 7
+          detections:
+            required_zones:
+              - walkway
+              - Driveway
+              - Front_Yard
         detect:
           enabled: true
           fps: 7
@@ -424,10 +428,6 @@ frigate:
             objects:
               - dog
               - person
-          Ignore:
-            coordinates: 
-              0.002,0.431,0.179,0.384,0.486,0.374,0.757,0.391,0.96,0.431,1,0.442,1,0,0,0
-            loitering_time: 0
       FrontPorch:
         enabled: true
         live:
@@ -450,6 +450,12 @@ frigate:
         review:
           alerts:
             labels: []
+          detections:
+            required_zones:
+              - Porch
+              - Driveway
+              - Front_Yard
+              - Front_Side_Yard
         # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
@@ -490,10 +496,7 @@ frigate:
               0.234,0.156,0.359,0.128,0.647,0.183,0.721,0.205,0.765,0.22,0.759,0.256,0.675,0.23
             loitering_time: 0
             objects: person
-        motion:
-          mask: 
-            0,0.233,0.187,0.157,0.354,0.119,0.41,0.113,0.659,0.139,0.665,0.002,0.001,0.002
-
+        motion: {}
       BackDoor:
         enabled: true
         live:
@@ -516,6 +519,8 @@ frigate:
         review:
           alerts:
             labels: []
+          detections:
+            required_zones: Back_porch
         # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
