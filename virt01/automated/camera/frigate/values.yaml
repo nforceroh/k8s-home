@@ -33,6 +33,12 @@ frigate:
         hosts:
           - "frigate.k3s.nf.lab"
 
+  service:
+    type: LoadBalancer
+    annotations:
+      metallb.io/address-pool: vlan1400
+      external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
+
   persistence:
     config:
       enabled: true        
@@ -144,15 +150,15 @@ frigate:
         # Optional: Frequency for confirming stationary objects (default: same as threshold)
         # When set to 1, object detection will run to confirm the object still exists on every frame.
         # If set to 10, object detection will run to confirm the object still exists on every 10th frame.
-        interval: 100
+        interval: 50
         # Optional: Number of frames without a position change for an object to be considered stationary (default: 10x the frame rate or 10s)
-        threshold: 100
+        threshold: 50
         max_frames:
           # Optional: Default for all object types (default: not set, track forever)
-          default: 3000
+          default: 100
           # Optional: Object specific values
           objects:
-            person: 1000
+            person: 100
 
     ffmpeg:
       global_args: -hide_banner -loglevel warning -threads 2
@@ -212,9 +218,12 @@ frigate:
           days: 30
           mode: motion
       detections:
+        pre_capture: 5
+        post_capture: 5
         retain:
           days: 30
           mode: motion
+
 
     # # NOTE: Can be overridden at the camera level
     # audio:
@@ -367,10 +376,10 @@ frigate:
           mask: 0.966,0.981,0.967,0.931,0.673,0.93,0.675,0.979
       GarageFront:
         enabled: true
-        live:
-          streams:
-            main_stream: rlc_520a_main_garage
-            sub_stream: rlc_520a_sub_garage
+        # live:
+        #   streams:
+        #     main_stream: rlc_520a_main_garage
+        #     sub_stream: rlc_520a_sub_garage
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
@@ -388,9 +397,9 @@ frigate:
             labels: []
           detections:
             required_zones:
-              - walkway
-              - Driveway
-              - Front_Yard
+              - Walkway_zone
+              - Driveway_zone
+              - Front_Yard_zone
         detect:
           enabled: true
           fps: 7
@@ -406,7 +415,7 @@ frigate:
             - 0.984,0.982,0.983,0.948,0.647,0.946,0.649,0.983
             - 0.164,0.986,0.164,0.953,0.006,0.95,0.006,0.987
         zones:
-          Front_Yard:
+          Front_Yard_zone:
             coordinates: 
               0.234,0.745,0.95,0.429,0.725,0.391,0.48,0.38,0.299,0.384,0.18,0.387,0.054,0.421
             loitering_time: 0
@@ -414,14 +423,14 @@ frigate:
               - person
               - dog
             inertia: 3
-          Driveway:
+          Driveway_zone:
             coordinates: 0.042,0.829,0.087,0.997,1,1,1,0.811,1,0.447,0.958,0.436
             loitering_time: 0
             objects:
               - car
               - person
             inertia: 3
-          walkway:
+          Walkway_zone:
             coordinates: 
               0.225,0.745,0.135,0.575,0.003,0.599,0.012,0.666,0.078,0.648,0.132,0.787
             loitering_time: 0
@@ -430,10 +439,10 @@ frigate:
               - person
       FrontPorch:
         enabled: true
-        live:
-          streams:
-            main_stream: rlc_520a_main_front_porch
-            sub_stream: rlc_520a_sub_front_porch
+        # live:
+        #   streams:
+        #     main_stream: rlc_520a_main_front_porch
+        #     sub_stream: rlc_520a_sub_front_porch
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
@@ -452,10 +461,10 @@ frigate:
             labels: []
           detections:
             required_zones:
-              - Porch
-              - Driveway
-              - Front_Yard
-              - Front_Side_Yard
+              - Porch_zone
+              - Driveway_zone
+              - Front_Yard_zone
+              - Front_Side_Yard_zone
         # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
@@ -473,25 +482,25 @@ frigate:
             - 0.511,0.341,0.371,0.365,0.263,0.451,0.197,0.573,0.001,0.706,0,0.994,0.145,0.909,0.673,0.458,0.512,0.414
             - 0.646,0.946,0.646,0.988,0.984,0.989,0.984,0.944
         zones:
-          Porch:
+          Porch_zone:
             coordinates: 
               0.935,0.476,0.975,0.277,0.8,0.222,0.782,0.365,0.044,0.994,0.808,0.994
             loitering_time: 0
             objects:
               - person
               - dog
-          Driveway:
+          Driveway_zone:
             coordinates: 
               0.674,0.436,0.75,0.377,0.762,0.255,0.66,0.225,0.226,0.16,0.113,0.203,0.481,0.276,0.49,0.397
             loitering_time: 0
             objects:
               - car
               - person
-          Front_Yard:
+          Front_Yard_zone:
             coordinates: 0.474,0.406,0.476,0.285,0.064,0.206,0.001,0.235,0.001,0.696
             loitering_time: 0
             objects: person
-          Front_Side_Yard:
+          Front_Side_Yard_zone:
             coordinates: 
               0.234,0.156,0.359,0.128,0.647,0.183,0.721,0.205,0.765,0.22,0.759,0.256,0.675,0.23
             loitering_time: 0
@@ -499,10 +508,10 @@ frigate:
         motion: {}
       BackDoor:
         enabled: true
-        live:
-          streams:
-            main_stream: rlc_520a_main_back_door
-            sub_stream: rlc_520a_sub_back_door
+        # live:
+        #   streams:
+        #     main_stream: rlc_520a_main_back_door
+        #     sub_stream: rlc_520a_sub_back_door
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
@@ -520,7 +529,7 @@ frigate:
           alerts:
             labels: []
           detections:
-            required_zones: Back_porch
+            required_zones: Back_porch_zone
         # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
@@ -536,12 +545,12 @@ frigate:
             - 0.986,0.985,0.984,0.948,0.646,0.946,0.646,0.988
             - 0.008,0.947,0.009,0.984,0.123,0.984,0.124,0.946
         zones:
-          Back_porch:
+          Back_porch_zone:
             coordinates: 
               0.904,0.986,0.638,0.846,0.852,0.122,1,0.154,0.994,0.494,0.995,0.606
             loitering_time: 0
             inertia: 3
-          Backyard:
+          Backyard_zone:
             coordinates: 
               0.363,0.998,0.901,1,0.629,0.836,0.807,0.263,0.071,0.29,0,0.344,0.002,0.995
             loitering_time: 0
