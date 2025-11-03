@@ -514,7 +514,10 @@ frigate:
               0.234,0.156,0.359,0.128,0.647,0.183,0.721,0.205,0.765,0.22,0.759,0.256,0.675,0.23
             loitering_time: 0
             objects: person
-        motion: {}
+        motion:
+          threshold: 50
+          contour_area: 50
+          improve_contrast: true
       BackDoor:
         enabled: true
         # live:
