@@ -405,11 +405,6 @@ frigate:
           fps: 7
           width: 640
           height: 480
-        objects:
-          track:
-            - person
-            - car
-            - dog
 
           mask:
             - 0.984,0.982,0.983,0.948,0.647,0.946,0.649,0.983
@@ -471,11 +466,6 @@ frigate:
           fps: 7
           width: 640
           height: 480
-        objects:
-          track:
-            - person
-            - car
-            - dog
 
           mask:
             - 0.318,0.011,0.285,0.128,0.35,0.13
@@ -536,10 +526,6 @@ frigate:
           fps: 7
           width: 640
           height: 480
-        objects:
-          track:
-            - person
-            - dog
 
           mask:
             - 0.986,0.985,0.984,0.948,0.646,0.946,0.646,0.988
@@ -549,11 +535,13 @@ frigate:
             coordinates: 
               0.904,0.986,0.638,0.846,0.852,0.122,1,0.154,0.994,0.494,0.995,0.606
             loitering_time: 0
+            objects: person
             inertia: 3
           Backyard_zone:
             coordinates: 
               0.363,0.998,0.901,1,0.629,0.836,0.807,0.263,0.071,0.29,0,0.344,0.002,0.995
             loitering_time: 0
+            objects: person
         motion:
           threshold: 62
           contour_area: 23
