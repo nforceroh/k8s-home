@@ -391,7 +391,10 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
-        motion: {}
+        motion:
+          threshold: 50
+          contour_area: 50
+          improve_contrast: true
         review:
           alerts:
             labels: []
