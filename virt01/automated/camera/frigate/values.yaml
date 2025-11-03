@@ -405,6 +405,9 @@ frigate:
           fps: 7
           width: 640
           height: 480
+          stationary:
+            interval: 50
+            threshold: 50
         objects:
           track:
             - person
@@ -471,6 +474,9 @@ frigate:
           fps: 7
           width: 640
           height: 480
+          stationary:
+            interval: 50
+            threshold: 50
         objects:
           track:
             - person
@@ -536,6 +542,9 @@ frigate:
           fps: 7
           width: 640
           height: 480
+          stationary:
+            interval: 50
+            threshold: 50
         objects:
           track:
             - person
