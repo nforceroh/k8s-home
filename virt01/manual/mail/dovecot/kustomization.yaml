@@ -13,4 +13,6 @@ resources:
   - serviceaccount.yaml
   - certificate.yaml
   - secrets.yaml
+  - DNSEndpoint.yaml
   - backup-schedule.yaml
+

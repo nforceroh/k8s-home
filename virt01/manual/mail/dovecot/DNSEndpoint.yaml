@@ -2,11 +2,11 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
- name: frigate-cname-record
- namespace: camera
+ name: imap-cname-record
+ namespace: mail
 spec:
  endpoints:
- - dnsName: "frigate.nforcer.com"
+ - dnsName: "imap.nforcer.com"
    recordType: CNAME
    targets:
      - "dual.nforcer.com"
