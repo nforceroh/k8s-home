@@ -5,18 +5,18 @@ external-dns:
     enabled: true
   ## Watch these resources for new DNS records
   sources:
-#    - crd
-#    - ingress
+    - crd
+    - ingress
     - service
     
    ## List of domains that can be managed. 
   domainFilters: ["nforcer.com"]
-  excludeDomains: ["nf.lab","k3s.nf.lab"]
+  # excludeDomains: ["nf.lab","k3s.nf.lab"]
   # These help tell which records are owned by external-dns.
   registry: "txt"
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
-  logLevel: debug
+  logLevel: info
   policy: sync
 
  ## use google as the dns provider

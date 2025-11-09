@@ -17,7 +17,7 @@ external-dns:
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
   logLevel: info
-  policy: upsert-only
+  policy: sync
 
   provider: 
     name: pdns
