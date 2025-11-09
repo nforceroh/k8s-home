@@ -6,7 +6,7 @@ metadata:
  namespace: camera
 spec:
  endpoints:
- - dnsName: frigate.nforcer.com
+ - dnsName: "frigate.nforcer.com"
    recordType: CNAME
    targets:
-     - dual.nforcer.com
+     - "dual.nforcer.com"
