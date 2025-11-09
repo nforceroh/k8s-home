@@ -72,31 +72,27 @@ frigate:
     go2rtc:
       streams:
         #Wyze
-        LivingRoom:
+        LivingRoom_main:
           - rtsp://10.40.1.42:8554/1080p?mp4
           - ffmpeg:LivingRoom#audio=opus
         LivingRoom_sub:
           - rtsp://10.40.1.42:8554/360p?mp4
           - ffmpeg:LivingRoom#audio=opus
-        # FrontPorch:
-        #   - rtsp://10.40.1.22:8554/1080p?mp4
-        #   - ffmpeg:FrontPorch#audio=opus
-        FrontPorch_sub:
-          - rtsp://10.40.1.22:8554/360p?mp4
-          - ffmpeg:FrontPorch#audio=opus
-        BunCam:
+        BunCam_main:
           - rtsp://10.40.1.19:8554/1080p?mp4
           - ffmpeg:BunCam#audio=opus
         BunCam_sub:
           - rtsp://10.40.1.19:8554/360p?mp4
           - ffmpeg:BunCam#audio=opus
-        Kitchen:
+
+        # Passed thru scrypted
+        Kitchen_main:
           - rtsp://scrypted-rtsp-svc:33759/75e57ba83105f666
           - ffmpeg:Kitchen#audio=opus
         Kitchen_sub:
           - rtsp://scrypted-rtsp-svc:33759/31e5716887d9312a
           - ffmpeg:Kitchen#audio=opus
-        SittingRoom:
+        SittingRoom_main:
           - rtsp://scrypted-rtsp-svc:40123/0646b22eadf4d50a
           - ffmpeg:SittingRoom#audio=opus
         SittingRoom_sub:
@@ -304,7 +300,7 @@ frigate:
           enabled: false
         ffmpeg:
           inputs:
-            - path: rtsp://127.0.0.1:8554/LivingRoom
+            - path: rtsp://127.0.0.1:8554/LivingRoom_main
               input_args: preset-rtsp-restream
               roles:
                 - audio
@@ -331,7 +327,7 @@ frigate:
           enabled: false
         ffmpeg:
           inputs:
-            - path: rtsp://127.0.0.1:8554/BunCam
+            - path: rtsp://127.0.0.1:8554/BunCam_main
               input_args: preset-rtsp-restream
               roles:
                 - audio
@@ -348,7 +344,7 @@ frigate:
           enabled: false
         ffmpeg:
           inputs:
-            - path: rtsp://127.0.0.1:8554/Kitchen
+            - path: rtsp://127.0.0.1:8554/Kitchen_main
               input_args: preset-rtsp-restream
               roles:
                 - audio
@@ -365,7 +361,7 @@ frigate:
           enabled: false
         ffmpeg:
           inputs:
-            - path: rtsp://127.0.0.1:8554/SittingRoom
+            - path: rtsp://127.0.0.1:8554/SittingRoom_main
               input_args: preset-rtsp-restream
               roles:
                 - audio
@@ -376,17 +372,6 @@ frigate:
                 - detect
         objects:
           mask: 0.966,0.981,0.967,0.931,0.673,0.93,0.675,0.979
-      TestCam:
-        enabled: true
-        live:
-          streams:
-            main_stream: rlc_520a_test
-        ffmpeg:
-          inputs:
-            - path: rtsp://127.0.0.1:8554/rlc_520a_test
-              input_args: preset-rtsp-restream
-              roles:
-                - audio
       GarageFront:
         enabled: true
         live:
