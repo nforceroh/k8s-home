@@ -1,0 +1,12 @@
+---
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+ name: frigate-cname-record
+ namespace: camera
+spec:
+ endpoints:
+ - dnsName: frigate.nforcer.com
+   recordType: CNAME
+   targets:
+     - dual.nforcer.com

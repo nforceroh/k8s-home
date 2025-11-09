@@ -5,6 +5,9 @@ frigate:
     repository: ghcr.io/blakeblackshear/frigate
     tag: stable-tensorrt
 
+  tmpfs:
+    enabled: true
+    sizeLimit: 1Gi
   env:
     TZ: America/New_York
   envFromSecrets:
