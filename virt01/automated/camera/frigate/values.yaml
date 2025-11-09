@@ -17,6 +17,29 @@ frigate:
       # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
       enabled: true
       runtimeClassName: nvidia
+
+  # -- declare extra volumes to use for Frigate
+  extraVolumes:
+    - name: frigate-ext-tls-volume
+      secret:
+        secretName: frigate-ext-tls
+        # Optionally, you can ensure the correct permissions
+        defaultMode: 420 # rw-r--r-- permissions (octal 0644)
+
+  # -- declare additional volume mounts
+  extraVolumeMounts:
+    # Mount the certificate file
+    - name: frigate-ext-tls-volume
+      mountPath: /etc/letsencrypt/live/frigate/fullchain.pem
+      subPath: tls.crt # Maps the 'tls.crt' key from the secret to this file path
+      readOnly: true
+    
+    # Mount the private key file
+    - name: frigate-ext-tls-volume
+      mountPath: /etc/letsencrypt/live/frigate/privkey.pem
+      subPath: tls.key # Maps the 'tls.key' key from the secret to this file path
+      readOnly: true
+
   ingress:
     # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
     enabled: true    
