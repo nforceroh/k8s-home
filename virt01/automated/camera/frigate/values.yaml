@@ -95,6 +95,10 @@ frigate:
       # Optional: interval in seconds for publishing stats (default: shown below)
       stats_interval: 60
 
+    tls:
+      # Optional: Enable TLS for port 8971 (default: shown below)
+      enabled: false
+
     go2rtc:
       streams:
         #Wyze
