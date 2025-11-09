@@ -103,6 +103,8 @@ frigate:
           - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
           - ffmpeg:SittingRoom#audio=opus
         # reolink
+        rlc_520a_test:
+          - "ffmpeg:http://10.40.1.149/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=webcam11"
         rlc_520a_main_garage:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_main
         rlc_520a_sub_garage:
@@ -374,12 +376,23 @@ frigate:
                 - detect
         objects:
           mask: 0.966,0.981,0.967,0.931,0.673,0.93,0.675,0.979
-      GarageFront:
+      TestCam:
+        enabled: false
+        live:
+          streams:
+            main_stream: rlc_520a_test
+        ffmpeg:
+          inputs:
+            - path: rtsp://127.0.0.1:8554/rlc_520a_test
+              input_args: preset-rtsp-restream
+              roles:
+                - audio
+      GarageFront: 
         enabled: true
-        # live:
-        #   streams:
-        #     main_stream: rlc_520a_main_garage
-        #     sub_stream: rlc_520a_sub_garage
+        live:
+          streams:
+            main_stream: rlc_520a_main_garage
+            sub_stream: rlc_520a_sub_garage
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
@@ -445,10 +458,10 @@ frigate:
               - person
       FrontPorch:
         enabled: true
-        # live:
-        #   streams:
-        #     main_stream: rlc_520a_main_front_porch
-        #     sub_stream: rlc_520a_sub_front_porch
+        live:
+          streams:
+            main_stream: rlc_520a_main_front_porch
+            sub_stream: rlc_520a_sub_front_porch
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
@@ -521,10 +534,10 @@ frigate:
           improve_contrast: true
       BackDoor:
         enabled: true
-        # live:
-        #   streams:
-        #     main_stream: rlc_520a_main_back_door
-        #     sub_stream: rlc_520a_sub_back_door
+        live:
+          streams:
+            main_stream: rlc_520a_main_back_door
+            sub_stream: rlc_520a_sub_back_door
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
@@ -574,6 +587,7 @@ frigate:
           threshold: 62
           contour_area: 23
           improve_contrast: true
+
     telemetry:
       # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
       network_interfaces:
@@ -602,6 +616,7 @@ frigate:
     classification:
       bird:
         enabled: false
+
     camera_groups:
       Outside:
         order: 1
