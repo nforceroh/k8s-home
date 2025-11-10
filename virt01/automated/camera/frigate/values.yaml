@@ -143,9 +143,10 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_main
         rlc_520a_sub_back_door:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_sub
-    webrtc:
-      candidates:
-        - stun:8555
+      webrtc:
+        candidates:
+          - stun:8555
+          
     snapshots:
       enabled: true
 
@@ -165,16 +166,14 @@ frigate:
       quality: 8
 
     birdseye:
-      enabled: true
+      enabled: True
       mode: continuous
       width: 1280
       height: 480
-      restream:
-        enabled: true
-        # Optional: Set the go2rtc stream to use for the birdseye restream (default: birdseye)
-        # stream: birdseye_stream_name
-        # Optional: Set the jsmpeg quality for the birdseye restream (default: shown below)
-        quality: 8
+      restream: True
+      quality: 8
+      layout:
+        max_cameras: 4
 
     detect:
       enabled: true
