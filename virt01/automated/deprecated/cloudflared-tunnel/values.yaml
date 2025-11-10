@@ -11,12 +11,12 @@ cloudflare-tunnel:
         service: http://ha-ui.home-assistant.svc.cluster.local:8123
       - hostname: ollama-api.nforcer.com
         service: http://ollama.ai.svc.cluster.local:11434
-      - hostname: jelly.nforcer.com
-        service: http://jellyseerr-svc.torrent.svc.cluster.local:5055
-      - hostname: frigate.nforcer.com
-        service: https://frigate.camera.svc.cluster.local:8971
-      - hostname: scrypted.nforcer.com
-        service: http://scrypted-web-svc.camera.svc.cluster.local:11080
+      # - hostname: jelly.nforcer.com
+      #   service: http://jellyseerr-svc.torrent.svc.cluster.local:5055
+      # - hostname: frigate.nforcer.com
+      #   service: https://frigate.camera.svc.cluster.local:8971
+      # - hostname: scrypted.nforcer.com
+      #   service: http://scrypted-web-svc.camera.svc.cluster.local:11080
   podSecurityContext: 
     sysctls:
       - name: net.ipv4.ping_group_range

@@ -29,6 +29,33 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: ha-ext
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - ha.nforcer.com
+      secretName: ha-ext-tls
+  rules:
+    - host: ha.nforcer.com
+      http:
+        paths:
+        - backend:
+            service:
+              name: ha-ui
+              port:
+                number: 8123
+          path: /
+          pathType: Prefix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
   name: hacode-ingress
   annotations:
     cert-manager.io/cluster-issuer: nf-lab
