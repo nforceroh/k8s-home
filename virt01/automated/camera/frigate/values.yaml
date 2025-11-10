@@ -143,6 +143,9 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_main
         rlc_520a_sub_back_door:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_sub
+    webrtc:
+      candidates:
+        - stun:8555
     snapshots:
       enabled: true
 
@@ -156,7 +159,7 @@ frigate:
       # Optional: Set the height of the jsmpeg stream. (default: 720)
       # This must be less than or equal to the height of the detect stream. Lower resolutions
       # reduce bandwidth required for viewing the jsmpeg stream. Width is computed to match known aspect ratio.
-      #height: 640
+      height: 640
       # Optional: Set the encode quality of the jsmpeg stream (default: shown below)
       # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
       quality: 8
@@ -166,6 +169,12 @@ frigate:
       mode: continuous
       width: 1280
       height: 480
+      restream:
+        enabled: true
+        # Optional: Set the go2rtc stream to use for the birdseye restream (default: birdseye)
+        # stream: birdseye_stream_name
+        # Optional: Set the jsmpeg quality for the birdseye restream (default: shown below)
+        quality: 8
 
     detect:
       enabled: true
@@ -328,6 +337,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
+        webui_url: "http://10.40.1.42"
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/LivingRoom_main
@@ -355,6 +365,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
+        webui_url: "http://10.40.1.19"
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam_main
@@ -406,8 +417,9 @@ frigate:
         enabled: true
         live:
           streams:
-            main_stream: rlc_520a_main_garage
             sub_stream: rlc_520a_sub_garage
+            main_stream: rlc_520a_main_garage
+        webui_url: "http://10.40.1.149"
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
@@ -479,8 +491,9 @@ frigate:
         enabled: true
         live:
           streams:
-            main_stream: rlc_520a_main_front_porch
             sub_stream: rlc_520a_sub_front_porch
+            main_stream: rlc_520a_main_front_porch
+        webui_url: "http://10.40.1.148"
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
@@ -559,8 +572,9 @@ frigate:
         enabled: true
         live:
           streams:
-            main_stream: rlc_520a_main_back_door
             sub_stream: rlc_520a_sub_back_door
+            main_stream: rlc_520a_main_back_door
+        webui_url: "http://10.40.1.151"
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
