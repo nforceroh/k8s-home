@@ -146,7 +146,7 @@ frigate:
       webrtc:
         candidates:
           - stun:8555
-          
+
     snapshots:
       enabled: true
 
@@ -166,11 +166,11 @@ frigate:
       quality: 8
 
     birdseye:
-      enabled: True
+      enabled: true
       mode: continuous
       width: 1280
       height: 480
-      restream: True
+      restream: true
       quality: 8
       layout:
         max_cameras: 4
@@ -336,7 +336,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
-        webui_url: "http://10.40.1.42"
+        webui_url: http://10.40.1.42
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/LivingRoom_main
@@ -364,7 +364,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
-        webui_url: "http://10.40.1.19"
+        webui_url: http://10.40.1.19
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam_main
@@ -418,7 +418,7 @@ frigate:
           streams:
             sub_stream: rlc_520a_sub_garage
             main_stream: rlc_520a_main_garage
-        webui_url: "http://10.40.1.149"
+        webui_url: http://10.40.1.149
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
@@ -492,7 +492,7 @@ frigate:
           streams:
             sub_stream: rlc_520a_sub_front_porch
             main_stream: rlc_520a_main_front_porch
-        webui_url: "http://10.40.1.148"
+        webui_url: http://10.40.1.148
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
@@ -531,10 +531,9 @@ frigate:
             - dog
 
           mask:
-            - 0.318,0.011,0.285,0.128,0.35,0.13
             - 0.511,0.341,0.371,0.365,0.263,0.451,0.197,0.573,0.001,0.706,0,0.994,0.145,0.909,0.673,0.458,0.512,0.414
             - 0.646,0.946,0.646,0.988,0.984,0.989,0.984,0.944
-            - 0.555,0.019,0.567,0.184,0.597,0.188,0.61,0.024
+            - 0.717,0,0.7,0.239,0.639,0.248,0.239,0.171,0.238,0.132,0.319,0
         zones:
           Porch_zone:
             coordinates: 
@@ -560,20 +559,16 @@ frigate:
             loitering_time: 0
             objects: person
         motion:
-          threshold: 50
-          contour_area: 50
+          threshold: 80
+          contour_area: 100
           improve_contrast: true
-          mask:
-            - 0,1,0.003,0.697,0.203,0.571,0.273,0.432,0.357,0.357,0.491,0.321,0.494,0.4,0.68,0.442
-            - 0.283,0.127,0.363,0.132,0.319,0.006
-            - 0.56,0.184,0.614,0.193,0.612,0.021,0.548,0.015
       BackDoor:
         enabled: true
         live:
           streams:
             sub_stream: rlc_520a_sub_back_door
             main_stream: rlc_520a_main_back_door
-        webui_url: "http://10.40.1.151"
+        webui_url: http://10.40.1.151
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
@@ -642,16 +637,16 @@ frigate:
 
     version: 0.16-0
     semantic_search:
-      enabled: false
-      model_size: small
+      enabled: true
+      model_size: large
     face_recognition:
-      enabled: false
-      model_size: small
+      enabled: true
+      model_size: large
     lpr:
-      enabled: false
+      enabled: true
     classification:
       bird:
-        enabled: false
+        enabled: true
 
     camera_groups:
       Outside:
