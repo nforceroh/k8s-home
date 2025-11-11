@@ -562,6 +562,9 @@ frigate:
           threshold: 80
           contour_area: 100
           improve_contrast: true
+          mask:
+            - 0,1,0.679,0.447,0.515,0.412,0.498,0.342,0.383,0.35,0,0.699
+            - 0.701,0.24,0.641,0.251,0.239,0.173,0.238,0.129,0.316,0,0.719,0
       BackDoor:
         enabled: true
         live:
