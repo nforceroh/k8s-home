@@ -559,8 +559,8 @@ frigate:
             loitering_time: 0
             objects: person
         motion:
-          threshold: 80
-          contour_area: 100
+          threshold: 50
+          contour_area: 30
           improve_contrast: true
           mask:
             - 0,1,0.679,0.447,0.515,0.412,0.498,0.342,0.383,0.35,0,0.699
