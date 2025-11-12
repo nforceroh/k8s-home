@@ -509,13 +509,17 @@ frigate:
         review:
           alerts:
             labels: []
+            required_zones:
+              - Porch_zone
+              - Driveway_zone
+              - Front_Yard_zone
+              - Front_Side_Yard_zone
           detections:
             required_zones:
               - Porch_zone
               - Driveway_zone
               - Front_Yard_zone
               - Front_Side_Yard_zone
-        # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
         detect:
           enabled: true
           fps: 7
