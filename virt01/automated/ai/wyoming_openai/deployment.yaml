@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wyoming-openai
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wyoming-openai
+  template:
+    metadata:
+      labels:
+        app: wyoming-openai
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: wyoming-openai
+        image: ghcr.io/roryeckel/wyoming_openai:latest
+        ports:
+        - containerPort: 10300
+        env:
+        - name: WYOMING_URI
+          value: tcp://0.0.0.0:10300
+        - name: WYOMING_LOG_LEVEL
+          value: INFO
+        - name: WYOMING_LANGUAGES
+          value: en
+        - name: STT_OPENAI_URL
+          value: http://speaches.ai.svc.cluster.local:8000/v1
+        - name: STT_MODELS
+          value: "Systran/faster-distil-whisper-large-v3"
+        - name: STT_BACKEND
+          value: "SPEACHES"
+        # - name: TTS_OPENAI_URL
+        #   value: http://speaches.ai.svc.cluster.local:8000/v1
+        # - name: TTS_MODELS
+        #   value: "speaches-ai/Kokoro-82M-v1.0-ONNX"
+        # - name: TTS_BACKEND
+        #   value: "SPEACHES"
+        - name: TTS_OPENAI_URL
+          value: http://kokoro.ai.svc.cluster.local:8880/v1
+        - name: TTS_MODELS
+          value: "kokoro"
+        - name: TTS_BACKEND
+          value: "KOKORO_FASTAPI"
+        resources: {}
+
+
+

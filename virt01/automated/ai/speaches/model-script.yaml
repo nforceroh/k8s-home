@@ -1,0 +1,32 @@
+# downloader/model-script.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: model-downloader-script
+data:
+  download-models.sh: |
+    #!/bin/bash
+    
+    SPEACHES_BASE_URL="http://speaches:8000"
+    
+    echo "Waiting for speaches service to be ready..."
+    # A simple wait loop to ensure the service endpoint is reachable
+    until ccurl --silent --fail "${SPEACHES_BASE_URL}/health" > /dev/null; do
+      echo "Speaches service not available yet, sleeping..."
+      sleep 10
+    done
+    echo "Speaches service is up. Starting model download requests."
+
+    # Perform the POST requests to cache the models
+    echo "-----------------------------------"
+    curl "${SPEACHES_BASE_URL}/v1/models/Systran/faster-distil-whisper-small.en" -X POST
+    echo "Requested faster-distil-whisper-small.en"
+    echo "-----------------------------------"
+    curl "${SPEACHES_BASE_URL}/v1/models/speaches-ai/Kokoro-82M-v1.0-ONNX" -X POST
+    echo "Requested speaches-ai/Kokoro-82M-v1.0-ONNX"
+    echo "-----------------------------------"
+    curl "${SPEACHES_BASE_URL}/v1/models/Systran/faster-whisper-large-v3" -X POST
+    echo "Requested faster-whisper-large-v3"
+    echo "-----------------------------------"
+
+    echo "Model download requests submitted."

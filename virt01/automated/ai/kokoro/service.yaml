@@ -1,0 +1,12 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kokoro
+spec:
+  ports:
+    - name: kokoro-svc-port
+      port: 8880
+      targetPort: 8880
+  selector:
+    app: kokoro

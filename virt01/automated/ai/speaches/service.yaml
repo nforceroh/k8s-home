@@ -1,0 +1,12 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: speaches
+spec:
+  ports:
+    - name: speaches-svc-port
+      port: 8000
+      targetPort: 8000
+  selector:
+    app: speaches

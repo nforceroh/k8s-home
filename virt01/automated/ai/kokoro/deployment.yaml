@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kokoro
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: kokoro
+  template:
+    metadata:
+      labels:
+        app: kokoro
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: kokoro
+        image: ghcr.io/remsky/kokoro-fastapi-gpu:latest
+        ports:
+        - containerPort: 8880
+        env:
+        - name: USE_GPU
+          value: "true"
+        resources: {}
+        readinessProbe:
+          httpGet:
+            path: /v1/test
+            port: 8880
+          initialDelaySeconds: 40 # Corresponds to start_period
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /v1/test
+            port: 8880
+          initialDelaySeconds: 40
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3  
+

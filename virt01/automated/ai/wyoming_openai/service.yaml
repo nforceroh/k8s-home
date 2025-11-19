@@ -1,0 +1,12 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: wyoming-openai-svc
+spec:
+  ports:
+    - name: wyoming-openai-svc-port
+      port: 10300
+      targetPort: 10300
+  selector:
+    app: wyoming-openai

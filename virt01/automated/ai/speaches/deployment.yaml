@@ -1,0 +1,62 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: speaches
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: speaches
+  template:
+    metadata:
+      labels:
+        app: speaches
+    spec:
+      runtimeClassName: nvidia
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: speaches
+          image: ghcr.io/speaches-ai/speaches:latest-cuda
+          imagePullPolicy: Always
+          env:
+            - name: enable_ui
+              value: "true"
+            - name: log_level
+              value: debug
+            - name: WHISPER__MODEL
+              value: Systran/faster-distil-whisper-large-v3
+            - name: WHISPER__COMPUTE_TYPE
+              value: int8
+          ports:
+            - name: speaches-port
+              containerPort: 8000
+          volumeMounts:
+            - name: huggingface-cache
+              mountPath: /home/ubuntu/.cache/huggingface/hub
+          resources: {}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 40 # Corresponds to start_period
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3     
+      volumes:
+        - name: huggingface-cache
+          persistentVolumeClaim:
+            claimName: speaches-pvc
+       

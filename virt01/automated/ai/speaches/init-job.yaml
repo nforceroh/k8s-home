@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: init-speaches-models-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl-downloader
+        image: curlimages/curl:latest
+        command: ["/bin/ash", "/scripts/download-models.sh"] # Execute the mounted script
+        volumeMounts:
+        - name: script-volume
+          mountPath: /scripts
+      volumes:
+        - name: script-volume
+          configMap:
+            name: model-downloader-script
+            defaultMode: 0744
+      restartPolicy: OnFailure
