@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: wyoming-openai-svc
+  name: wyoming-openai
 spec:
   ports:
     - name: wyoming-openai-svc-port
