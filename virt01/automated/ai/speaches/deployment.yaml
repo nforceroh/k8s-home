@@ -32,6 +32,8 @@ spec:
               value: Systran/faster-distil-whisper-large-v3
             - name: WHISPER__COMPUTE_TYPE
               value: int8
+            - name: loopback_host_url
+              value: https://speaches.k3s.nf.lab
           ports:
             - name: speaches-port
               containerPort: 8000
