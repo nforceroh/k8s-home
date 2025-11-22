@@ -11,7 +11,7 @@ data:
     
     echo "Waiting for speaches service to be ready..."
     # A simple wait loop to ensure the service endpoint is reachable
-    until ccurl --silent --fail "${SPEACHES_BASE_URL}/health" > /dev/null; do
+    until curl --silent --fail "${SPEACHES_BASE_URL}/health" > /dev/null; do
       echo "Speaches service not available yet, sleeping..."
       sleep 10
     done
