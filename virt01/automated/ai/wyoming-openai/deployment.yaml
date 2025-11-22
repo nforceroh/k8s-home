@@ -30,7 +30,7 @@ spec:
         - name: STT_OPENAI_URL
           value: "http://speaches:8000/v1"
         - name: STT_MODELS
-          value: "Systran/faster-distil-whisper-small.en"
+          value: "Systran/faster-distil-whisper-large-v3"
         - name: STT_BACKEND
           value: "SPEACHES"
         # - name: TTS_OPENAI_URL
