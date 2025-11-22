@@ -28,5 +28,7 @@ data:
     curl "${SPEACHES_BASE_URL}/v1/models/Systran/faster-whisper-large-v3" -X POST
     echo "Requested faster-whisper-large-v3"
     echo "-----------------------------------"
+    curl "${SPEACHES_BASE_URL}/v1/models/Systran/faster-distil-whisper-large-v3" -X POST
+    echo "Requested faster-distil-whisper-large-v3"
 
     echo "Model download requests submitted."
