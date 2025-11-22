@@ -33,7 +33,7 @@ spec:
             - name: WHISPER__COMPUTE_TYPE
               value: int8
             - name: loopback_host_url
-              value: https://speaches.k3s.nf.lab
+              value: http://speaches.ai.svc.cluster.local:8000
           ports:
             - name: speaches-port
               containerPort: 8000
