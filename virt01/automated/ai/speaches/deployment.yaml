@@ -27,13 +27,13 @@ spec:
             - name: enable_ui
               value: "true"
             - name: log_level
-              value: debug
+              value: "debug"
             - name: WHISPER__MODEL
-              value: Systran/faster-distil-whisper-large-v3
+              value: "Systran/faster-distil-whisper-large-v3"
             - name: WHISPER__COMPUTE_TYPE
-              value: int8
+              value: "int8"
             - name: loopback_host_url
-              value: http://speaches.ai.svc.cluster.local:8000
+              value: "http://speaches:8000"
           ports:
             - name: speaches-port
               containerPort: 8000

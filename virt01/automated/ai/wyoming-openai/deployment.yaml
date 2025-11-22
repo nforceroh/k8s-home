@@ -22,13 +22,13 @@ spec:
         - containerPort: 10300
         env:
         - name: WYOMING_URI
-          value: tcp://0.0.0.0:10300
+          value: "tcp://0.0.0.0:10300"
         - name: WYOMING_LOG_LEVEL
-          value: INFO
+          value: "DEBUG"
         - name: WYOMING_LANGUAGES
-          value: en
+          value: "en"
         - name: STT_OPENAI_URL
-          value: http://speaches.ai.svc.cluster.local:8000/v1
+          value: "http://speaches:8000/v1"
         - name: STT_MODELS
           value: "Systran/faster-distil-whisper-large-v3"
         - name: STT_BACKEND
@@ -40,7 +40,7 @@ spec:
         # - name: TTS_BACKEND
         #   value: "SPEACHES"
         - name: TTS_OPENAI_URL
-          value: http://kokoro.ai.svc.cluster.local:8880/v1
+          value: "http://kokoro:8880/v1"
         - name: TTS_MODELS
           value: "kokoro"
         - name: TTS_BACKEND
