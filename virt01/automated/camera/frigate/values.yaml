@@ -129,8 +129,6 @@ frigate:
           - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
           - ffmpeg:SittingRoom#audio=opus
         # reolink
-        rlc_520a_test:
-          - ffmpeg:http://10.40.1.149/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USERNAME}&password={FRIGATE_RTSP_PASSWORD}
         rlc_520a_main_garage:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_main
         rlc_520a_sub_garage:
@@ -202,7 +200,7 @@ frigate:
       input_args: preset-rtsp-generic
       output_args:
         detect: -threads 2 -f rawvideo -pix_fmt yuv420p
-        record: preset-record-generic
+        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
       retry_interval: 10
 
     detectors:
@@ -331,7 +329,6 @@ frigate:
     #     person: "My special person prompt."
 
     cameras:
-      # Name of your camera
       LivingRoom:
         enabled: true
         detect:
@@ -645,10 +642,10 @@ frigate:
     version: 0.16-0
     semantic_search:
       enabled: true
-      model_size: large
+      model_size: small
     face_recognition:
       enabled: true
-      model_size: large
+      model_size: small
     lpr:
       enabled: true
     classification:
@@ -671,3 +668,4 @@ frigate:
           - BunCam
           - Kitchen
           - SittingRoom
+
