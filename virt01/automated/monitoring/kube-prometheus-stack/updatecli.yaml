@@ -3,9 +3,9 @@ sources:
   lastMinorRelease:
     kind: helmchart
     spec:
-      url: "https://prometheus-community.github.io/helm-charts"
+      url: "oci://ghcr.io/prometheus-community/charts"
       name: "kube-prometheus-stack"
-      version: "*.*.*"
+      version: "79.*.*"
 conditions: {}
 targets:
   chart:
