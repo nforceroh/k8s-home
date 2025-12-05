@@ -147,5 +147,5 @@ spec:
             claimName: ma-data-pvc
         - name: ma-library
           hostPath:
-            path: /mnt/ssd01/Music
+            path: /mnt/hdd01/Music
             type: Directory
