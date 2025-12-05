@@ -28,6 +28,8 @@ spec:
           volumeMounts:
           - name: ha-config-pv
             mountPath: /config
+          - mountPath: /esphome
+            name: esphome-config-pv
           securityContext:
             privileged: true
           livenessProbe:
@@ -51,6 +53,7 @@ spec:
             tcpSocket:
               port: 8123
             timeoutSeconds: 1
+          resources: {}
 
         - name: music-assistant-server
           image: ghcr.io/music-assistant/server:latest
@@ -70,6 +73,7 @@ spec:
             mountPath: /media
           securityContext:
             privileged: true
+          resources: {}
 
         - name: code-server
           image: linuxserver/code-server
@@ -94,6 +98,7 @@ spec:
             mountPath: /ha/config
           securityContext:
             privileged: true
+          resources: {}
 
         - name: esphome
           image: esphome/esphome
@@ -117,6 +122,8 @@ spec:
             name: esphome-config-pv
           - mountPath: /cache
             name: esphome-cache-pv
+          resources: {}
+          
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       volumes:
