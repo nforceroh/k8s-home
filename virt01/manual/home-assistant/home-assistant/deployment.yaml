@@ -28,8 +28,6 @@ spec:
           volumeMounts:
           - name: ha-config-pv
             mountPath: /config
-          - mountPath: /esphome
-            name: esphome-config-pv
           securityContext:
             privileged: true
           livenessProbe:
@@ -96,6 +94,8 @@ spec:
             mountPath: /data
           - name: ha-config-pv
             mountPath: /ha/config
+          - name: esphome-config-pv
+            mountPath: /esphome-config
           securityContext:
             privileged: true
           resources: {}
