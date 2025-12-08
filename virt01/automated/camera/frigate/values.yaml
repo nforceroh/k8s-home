@@ -131,8 +131,10 @@ frigate:
         # reolink
         reo_dual_main_garage:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/h265Preview_01_main
+          - ffmpeg:reo_dual_main_garage#video=h265#audio=aac
         reo_dual_sub_garage:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/h265Preview_01_sub
+          - ffmpeg:reo_dual_sub_garage#video=h265#audio=aac
         rlc_520a_main_front_porch:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
         rlc_520a_sub_front_porch:
@@ -444,7 +446,7 @@ frigate:
               - Driveway_zone
               - Front_Yard_zone
         detect:
-          enabled: true
+          enabled: false
           fps: 7
           width: 1920
           height: 576
