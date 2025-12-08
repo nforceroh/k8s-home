@@ -467,31 +467,20 @@ frigate:
             coordinates: 
               0.215,0.627,0.252,0.735,0.538,0.199,0.456,0.197,0.324,0.255,0.197,0.346,0.127,0.443,0.134,0.493,0.17,0.453
             loitering_time: 0
-            objects:
-              - person
-              - dog
             inertia: 3
           Driveway_zone:
             coordinates: 0.172,0.863,0.195,1,0.547,1,0.622,0.207,0.542,0.178
             loitering_time: 0
-            objects:
-              - car
-              - person
             inertia: 3
           Walkway_zone:
             coordinates: 
               0.246,0.729,0.179,0.496,0.132,0.547,0.153,0.711,0.189,0.689,0.203,0.803
             loitering_time: 0
-            objects:
-              - dog
-              - person
             inertia: 3
           FrontSideYard:
             coordinates: 0.552,0.993,0.619,0.24,0.696,0.272,0.879,0.998
             loitering_time: 0
-            objects:
-              - person
-              - dog
+
       FrontPorch:
         enabled: true
         live:
