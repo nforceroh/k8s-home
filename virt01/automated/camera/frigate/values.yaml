@@ -458,7 +458,7 @@ frigate:
               - Driveway_zone
               - Front_Yard_zone
         detect:
-          enabled: false
+          enabled: true
           fps: 7
           width: 1920
           height: 576
@@ -470,7 +470,6 @@ frigate:
             - person
             - car
             - dog
-
         zones:
           Front_Yard_zone:
             coordinates: 
