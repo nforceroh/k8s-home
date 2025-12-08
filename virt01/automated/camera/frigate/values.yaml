@@ -200,7 +200,8 @@ frigate:
       input_args: preset-rtsp-generic
       output_args:
         detect: -threads 2 -f rawvideo -pix_fmt yuv420p
-        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
+        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment 
+          -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
       retry_interval: 10
 
     detectors:
@@ -432,10 +433,9 @@ frigate:
           contour_area: 50
           improve_contrast: true
           mask:
-            - 0.211,0.357,0.284,0.312,0.43,0.297,0.617,0.304,0.69,0.323,1,0.388,1,0,0,0,0,0.388
-            - 0.496,0.421,0.53,0.387,0.55,0.314,0.548,0.221,0.499,0.128,0.436,0.216,0.432,0.321,0.477,0.35
-            - 0.099,0.478,0,0.487,0,0.386,0.047,0.383
-            - 0.983,0.985,0.982,0.946,0.64,0.945,0.64,0.984
+            - 0.744,0.265,0.862,0.547,0.89,0.269,0.837,0.224
+            - 0.002,0.925,0.002,0.995,0.092,0.991,0.092,0.923
+            - 0.79,0.921,0.789,1,0.996,1,0.995,0.923
         review:
           alerts:
             labels: []
@@ -458,17 +458,21 @@ frigate:
             - car
             - dog
 
+          filters:
+            car:
+              mask: 
+                0.404,0.726,0.559,0.853,0.62,0.247,0.612,0.195,0.57,0.172,0.522,0.215,0.447,0.323
         zones:
           Front_Yard_zone:
             coordinates: 
-              0.234,0.745,0.95,0.429,0.725,0.391,0.48,0.38,0.299,0.384,0.18,0.387,0.054,0.421
+              0.215,0.627,0.252,0.735,0.538,0.199,0.456,0.197,0.324,0.255,0.197,0.346,0.127,0.443,0.134,0.493,0.17,0.453
             loitering_time: 0
             objects:
               - person
               - dog
             inertia: 3
           Driveway_zone:
-            coordinates: 0.042,0.829,0.087,0.997,1,1,1,0.811,1,0.447,0.958,0.436
+            coordinates: 0.172,0.863,0.195,1,0.547,1,0.622,0.207,0.542,0.178
             loitering_time: 0
             objects:
               - car
@@ -476,11 +480,18 @@ frigate:
             inertia: 3
           Walkway_zone:
             coordinates: 
-              0.225,0.745,0.135,0.575,0.003,0.599,0.012,0.666,0.078,0.648,0.132,0.787
+              0.246,0.729,0.179,0.496,0.132,0.547,0.153,0.711,0.189,0.689,0.203,0.803
             loitering_time: 0
             objects:
               - dog
               - person
+            inertia: 3
+          FrontSideYard:
+            coordinates: 0.552,0.993,0.619,0.24,0.696,0.272,0.879,0.998
+            loitering_time: 0
+            objects:
+              - person
+              - dog
       FrontPorch:
         enabled: true
         live:
@@ -536,136 +547,135 @@ frigate:
             coordinates: 
               0.935,0.476,0.975,0.277,0.8,0.222,0.782,0.365,0.044,0.994,0.808,0.994
             loitering_time: 0
-            objects:
-              - person
-              - dog
-          Driveway_zone:
-            coordinates: 
-              0.674,0.436,0.75,0.377,0.762,0.255,0.66,0.225,0.226,0.16,0.113,0.203,0.481,0.276,0.49,0.397
-            loitering_time: 0
-            objects:
-              - car
-              - person
-            inertia: 3
-          Front_Yard_zone:
-            coordinates: 0.474,0.406,0.476,0.285,0.064,0.206,0.001,0.235,0.001,0.696
-            loitering_time: 0
-            objects: person
-          Front_Side_Yard_zone:
-            coordinates: 
-              0.234,0.156,0.358,0.122,0.66,0.159,0.661,0.121,0.772,0.14,0.763,0.254,0.675,0.23
-            loitering_time: 0
-            objects: person
-            inertia: 3
-        motion:
-          threshold: 30
-          contour_area: 10
-          improve_contrast: false
-          mask:
-            - 0,1,0.03,1,0.679,0.447,0.515,0.412,0.517,0.323,0.36,0.356,0.34,0.409,0,0.656
-            - 0.983,0.984,0.982,0.945,0.642,0.945,0.641,0.984
-            - 0.274,0,0.287,0.141,0.354,0.136,0.357,0
-            - 0.54,0.198,0.614,0.197,0.62,0.02,0.544,0.009
-      BackDoor:
-        enabled: true
-        live:
-          streams:
-            sub_stream: rlc_520a_sub_back_door
-            main_stream: rlc_520a_main_back_door
-        webui_url: http://10.40.1.151
-        ffmpeg:
-          inputs:
-            - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
-              input_args: preset-rtsp-restream
-              roles:
-                - audio
-                - record
-            - path: rtsp://127.0.0.1:8554/rlc_520a_sub_back_door
-              input_args: preset-rtsp-restream
-              roles:
-                - detect
-        # motion:
-        #   mask: 
-        review:
-          alerts:
-            labels: []
-          detections:
-            required_zones: Back_porch_zone
-        # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
-        detect:
-          enabled: true
-          fps: 7
-          width: 640
-          height: 480
-          stationary:
-            interval: 50
-            threshold: 50
         objects:
-          track:
-            - person
-            - dog
-
-          mask:
-            - 0.986,0.985,0.984,0.948,0.646,0.946,0.646,0.988
-            - 0.008,0.947,0.009,0.984,0.123,0.984,0.124,0.946
-        zones:
-          Back_porch_zone:
-            coordinates: 
-              0.904,0.986,0.638,0.846,0.852,0.122,1,0.154,0.994,0.494,0.995,0.606
-            loitering_time: 0
-            inertia: 3
-          Backyard_zone:
-            coordinates: 
-              0.363,0.998,0.901,1,0.629,0.836,0.807,0.263,0.071,0.29,0,0.344,0.002,0.995
-            loitering_time: 0
-        motion:
-          threshold: 62
-          contour_area: 23
-          improve_contrast: true
-
-    telemetry:
-      # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
-      network_interfaces:
-        - eth
-        - enp
-        - eno
-        - ens
-        - wl
-        - lo
-      # Optional: Configure system stats
-      stats:
-        network_bandwidth: true
-      # Optional: Enable the latest version outbound check (default: shown below)
-      # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
-      version_check: true
-
-    version: 0.16-0
-    semantic_search:
+          - person
+          - dog
+      Driveway_zone:
+        coordinates: 
+          0.674,0.436,0.75,0.377,0.762,0.255,0.66,0.225,0.226,0.16,0.113,0.203,0.481,0.276,0.49,0.397
+        loitering_time: 0
+        objects:
+          - car
+          - person
+        inertia: 3
+      Front_Yard_zone:
+        coordinates: 0.474,0.406,0.476,0.285,0.064,0.206,0.001,0.235,0.001,0.696
+        loitering_time: 0
+        objects: person
+      Front_Side_Yard_zone:
+        coordinates: 
+          0.234,0.156,0.358,0.122,0.66,0.159,0.661,0.121,0.772,0.14,0.763,0.254,0.675,0.23
+        loitering_time: 0
+        objects: person
+        inertia: 3
+    motion:
+      threshold: 30
+      contour_area: 10
+      improve_contrast: false
+      mask:
+        - 0,1,0.03,1,0.679,0.447,0.515,0.412,0.517,0.323,0.36,0.356,0.34,0.409,0,0.656
+        - 0.983,0.984,0.982,0.945,0.642,0.945,0.641,0.984
+        - 0.274,0,0.287,0.141,0.354,0.136,0.357,0
+        - 0.54,0.198,0.614,0.197,0.62,0.02,0.544,0.009
+  BackDoor:
+    enabled: true
+    live:
+      streams:
+        sub_stream: rlc_520a_sub_back_door
+        main_stream: rlc_520a_main_back_door
+    webui_url: http://10.40.1.151
+    ffmpeg:
+      inputs:
+        - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
+          input_args: preset-rtsp-restream
+          roles:
+            - audio
+            - record
+        - path: rtsp://127.0.0.1:8554/rlc_520a_sub_back_door
+          input_args: preset-rtsp-restream
+          roles:
+            - detect
+    # motion:
+    #   mask: 
+    review:
+      alerts:
+        labels: []
+      detections:
+        required_zones: Back_porch_zone
+    # From the sub stream we have a resolution: 640x480, fps: 7, bitrate: 512
+    detect:
       enabled: true
-      model_size: small
-    face_recognition:
-      enabled: true
-      model_size: small
-    lpr:
-      enabled: true
-    classification:
-      bird:
-        enabled: true
+      fps: 7
+      width: 640
+      height: 480
+      stationary:
+        interval: 50
+        threshold: 50
+    objects:
+      track:
+        - person
+        - dog
 
-    camera_groups:
-      Outside:
-        order: 1
-        icon: LuHousePlus
-        cameras:
-          - BackDoor
-          - FrontPorch
-          - GarageFront
-      Inside:
-        order: 2
-        icon: LuArchiveRestore
-        cameras:
-          - LivingRoom
-          - BunCam
-          - Kitchen
-          - SittingRoom
+      mask:
+        - 0.986,0.985,0.984,0.948,0.646,0.946,0.646,0.988
+        - 0.008,0.947,0.009,0.984,0.123,0.984,0.124,0.946
+    zones:
+      Back_porch_zone:
+        coordinates: 
+          0.904,0.986,0.638,0.846,0.852,0.122,1,0.154,0.994,0.494,0.995,0.606
+        loitering_time: 0
+        inertia: 3
+      Backyard_zone:
+        coordinates: 
+          0.363,0.998,0.901,1,0.629,0.836,0.807,0.263,0.071,0.29,0,0.344,0.002,0.995
+        loitering_time: 0
+    motion:
+      threshold: 62
+      contour_area: 23
+      improve_contrast: true
 
+telemetry:
+  # Optional: Enabled network interfaces for bandwidth stats monitoring (default: empty list, let nethogs search all)
+  network_interfaces:
+    - eth
+    - enp
+    - eno
+    - ens
+    - wl
+    - lo
+  # Optional: Configure system stats
+  stats:
+    network_bandwidth: true
+  # Optional: Enable the latest version outbound check (default: shown below)
+  # NOTE: If you use the Home Assistant integration, disabling this will prevent it from reporting new versions
+  version_check: true
+
+version: 0.16-0
+semantic_search:
+  enabled: true
+  model_size: small
+face_recognition:
+  enabled: true
+  model_size: small
+lpr:
+  enabled: true
+classification:
+  bird:
+    enabled: true
+
+camera_groups:
+  Outside:
+    order: 1
+    icon: LuHousePlus
+    cameras:
+      - BackDoor
+      - FrontPorch
+      - GarageFront
+  Inside:
+    order: 2
+    icon: LuArchiveRestore
+    cameras:
+      - LivingRoom
+      - BunCam
+      - Kitchen
+      - SittingRoom
