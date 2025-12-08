@@ -452,12 +452,6 @@ frigate:
           stationary:
             interval: 50
             threshold: 50
-        objects:
-          track:
-            - person
-            - car
-            - dog
-
           filters:
             car:
               mask: 
