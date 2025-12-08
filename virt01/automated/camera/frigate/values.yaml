@@ -200,7 +200,8 @@ frigate:
       input_args: preset-rtsp-generic
       output_args:
         detect: -threads 2 -f rawvideo -pix_fmt yuv420p
-        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
+        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment 
+          -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
       retry_interval: 10
 
     detectors:
@@ -432,10 +433,8 @@ frigate:
           contour_area: 50
           improve_contrast: true
           mask:
-            - 0.211,0.357,0.284,0.312,0.43,0.297,0.617,0.304,0.69,0.323,1,0.388,1,0,0,0,0,0.388
-            - 0.496,0.421,0.53,0.387,0.55,0.314,0.548,0.221,0.499,0.128,0.436,0.216,0.432,0.321,0.477,0.35
-            - 0.099,0.478,0,0.487,0,0.386,0.047,0.383
-            - 0.983,0.985,0.982,0.946,0.64,0.945,0.64,0.984
+            - 0.127,0.438,0.274,0.28,0.439,0.193,0.618,0.218,0.746,0.271,0.867,0.515,0.89,0.229,0.959,0.176,0.969,0,0.169,0,0.106,0.311
+            - 0.993,0.983,0.992,0.93,0.788,0.922,0.788,0.979
         review:
           alerts:
             labels: []
@@ -461,26 +460,30 @@ frigate:
         zones:
           Front_Yard_zone:
             coordinates: 
-              0.234,0.745,0.95,0.429,0.725,0.391,0.48,0.38,0.299,0.384,0.18,0.387,0.054,0.421
+              0.253,0.738,0.531,0.201,0.405,0.208,0.274,0.29,0.125,0.445,0.136,0.536,0.189,0.489
             loitering_time: 0
             objects:
               - person
               - dog
             inertia: 3
           Driveway_zone:
-            coordinates: 0.042,0.829,0.087,0.997,1,1,1,0.811,1,0.447,0.958,0.436
+            coordinates: 0.173,0.868,0.192,1,0.545,1,0.617,0.21,0.532,0.185
             loitering_time: 0
             objects:
               - car
               - person
             inertia: 3
           Walkway_zone:
-            coordinates: 
-              0.225,0.745,0.135,0.575,0.003,0.599,0.012,0.666,0.078,0.648,0.132,0.787
+            coordinates: 0.252,0.738,0.195,0.541,0.14,0.595,0.175,0.857
             loitering_time: 0
             objects:
               - dog
               - person
+            inertia: 3
+          FrontSideYard:
+            coordinates: 0.549,0.993,0.619,0.226,0.699,0.251,0.921,1
+            loitering_time: 0
+            inertia: 3
       FrontPorch:
         enabled: true
         live:
@@ -668,4 +671,3 @@ frigate:
           - BunCam
           - Kitchen
           - SittingRoom
-
