@@ -206,14 +206,14 @@ frigate:
     #       objects:
     #         person: 100
 
-    ffmpeg:
-      # path: '5.0'
-      global_args: -hide_banner -loglevel warning -threads 2
-      hwaccel_args: preset-nvidia
-      input_args: preset-rtsp-generic
-      output_args:
-        record: preset-record-generic-audio-aac
-      retry_interval: 10
+    # ffmpeg:
+    #   # path: '5.0'
+    #   global_args: -hide_banner -loglevel warning -threads 2
+    #   hwaccel_args: preset-nvidia
+    #   input_args: preset-rtsp-generic
+    #   output_args:
+    #     record: preset-record-generic-audio-aac
+    #   retry_interval: 10
 
     detectors:
       onnx:
@@ -506,6 +506,7 @@ frigate:
             main_stream: rlc_520a_main_front_porch
         webui_url: http://10.40.1.148
         ffmpeg:
+          hwaccel_args: preset-nvidia-h265
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_front_porch
               input_args: preset-rtsp-restream
@@ -516,6 +517,8 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+          output_args:
+            record: preset-record-generic-audio-aac
         # motion:
         #   mask: 
         review:
@@ -591,6 +594,7 @@ frigate:
             main_stream: rlc_520a_main_back_door
         webui_url: http://10.40.1.151
         ffmpeg:
+          hwaccel_args: preset-nvidia-h265
           inputs:
             - path: rtsp://127.0.0.1:8554/rlc_520a_main_back_door
               input_args: preset-rtsp-restream
@@ -601,6 +605,8 @@ frigate:
               input_args: preset-rtsp-restream
               roles:
                 - detect
+          output_args:
+            record: preset-record-generic-audio-aac
         # motion:
         #   mask: 
         review:
