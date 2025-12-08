@@ -1,81 +1,4 @@
-
-frigate:
-  image:
-    # -- Docker registry/repository to pull the image from
-    repository: ghcr.io/blakeblackshear/frigate
-    tag: stable-tensorrt
-
-  tmpfs:
-    enabled: true
-    sizeLimit: 1Gi
-  env:
-    TZ: America/New_York
-  envFromSecrets:
-    - frigate-config
-  gpu:
-    nvidia:
-      # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
-      enabled: true
-      runtimeClassName: nvidia
-
-  # -- declare extra volumes to use for Frigate
-  extraVolumes:
-    - name: frigate-ext-tls-volume
-      secret:
-        secretName: frigate-ext-tls
-        # Optionally, you can ensure the correct permissions
-        defaultMode: 420 # rw-r--r-- permissions (octal 0644)
-
-  # -- declare additional volume mounts
-  extraVolumeMounts:
-    # Mount the certificate file
-    - name: frigate-ext-tls-volume
-      mountPath: /etc/letsencrypt/live/frigate/fullchain.pem
-      subPath: tls.crt # Maps the 'tls.crt' key from the secret to this file path
-      readOnly: true
-    
-    # Mount the private key file
-    - name: frigate-ext-tls-volume
-      mountPath: /etc/letsencrypt/live/frigate/privkey.pem
-      subPath: tls.key # Maps the 'tls.key' key from the secret to this file path
-      readOnly: true
-
-  ingress:
-    # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
-    enabled: true    
-    ingressClassName: "traefik"
-    annotations:
-      cert-manager.io/cluster-issuer: "nf-lab"
-      cert-manager.io/private-key-rotation-policy: "Always"
-      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      external-dns.alpha.kubernetes.io/target: "traefik.k3s.nf.lab"
-    hosts:
-      - host: "frigate.k3s.nf.lab"
-        paths:
-          - path: '/'
-            portName: http
-    tls:
-      - secretName: "frigate-tls"
-        hosts:
-          - "frigate.k3s.nf.lab"
-
-  service:
-    type: LoadBalancer
-    annotations:
-      metallb.io/address-pool: vlan1400
-      external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
-
-  persistence:
-    config:
-      enabled: true        
-      skipuninstall: false
-      size: 10Gi
-    media:
-      enabled: true        
-      skipuninstall: false    
-      existingClaim: frigate-media
-  config: |
-    mqtt:
+mqtt:
       # Required: host name
       host: mqtt.k3s.nf.lab
       # Optional: port (default: shown below)
@@ -536,10 +459,16 @@ frigate:
             coordinates: 
               0.935,0.476,0.975,0.277,0.8,0.222,0.782,0.365,0.044,0.994,0.808,0.994
             loitering_time: 0
+        objects:
+          - person
+          - dog
       Driveway_zone:
         coordinates: 
           0.674,0.436,0.75,0.377,0.762,0.255,0.66,0.225,0.226,0.16,0.113,0.203,0.481,0.276,0.49,0.397
         loitering_time: 0
+        objects:
+          - car
+          - person
         inertia: 3
       Front_Yard_zone:
         coordinates: 0.474,0.406,0.476,0.285,0.064,0.206,0.001,0.235,0.001,0.696
