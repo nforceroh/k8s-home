@@ -129,10 +129,10 @@ frigate:
           - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
           - ffmpeg:SittingRoom#audio=opus
         # reolink
-        rlc_520a_main_garage:
-          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_main
-        rlc_520a_sub_garage:
-          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.149:554/h265Preview_01_sub
+        reo_dual_main_garage:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/h265Preview_01_main
+        reo_dual_sub_garage:
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/h265Preview_01_sub
         rlc_520a_main_front_porch:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
         rlc_520a_sub_front_porch:
@@ -413,17 +413,17 @@ frigate:
         enabled: true
         live:
           streams:
-            sub_stream: rlc_520a_sub_garage
-            main_stream: rlc_520a_main_garage
-        webui_url: http://10.40.1.149
+            sub_stream: reo_dual_sub_garage
+            main_stream: reo_dual_main_garage
+        webui_url: http://10.40.1.162
         ffmpeg:
           inputs:
-            - path: rtsp://127.0.0.1:8554/rlc_520a_main_garage
+            - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
               input_args: preset-rtsp-restream
               roles:
                 - audio
                 - record
-            - path: rtsp://127.0.0.1:8554/rlc_520a_sub_garage
+            - path: rtsp://127.0.0.1:8554/reo_dual_sub_garage
               input_args: preset-rtsp-restream
               roles:
                 - detect
@@ -447,8 +447,8 @@ frigate:
         detect:
           enabled: true
           fps: 7
-          width: 640
-          height: 480
+          width: 1920
+          height: 576
           stationary:
             interval: 50
             threshold: 50
