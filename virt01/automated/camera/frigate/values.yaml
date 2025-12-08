@@ -200,10 +200,6 @@ frigate:
       global_args: -hide_banner -loglevel warning -threads 2
       hwaccel_args: preset-nvidia
       input_args: preset-rtsp-generic
-      output_args:
-        detect: -threads 2 -f rawvideo -pix_fmt yuv420p
-        record: -c:v h264_nvenc -preset p2 -tune hq -pix_fmt yuv420p -f segment 
-          -segment_time 10 -segment_format mp4 -reset_timestamps 1 -strftime 1 -an
       retry_interval: 10
 
     detectors:
