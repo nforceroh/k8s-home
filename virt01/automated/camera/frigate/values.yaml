@@ -215,7 +215,7 @@ frigate:
       hwaccel_args: preset-nvidia
       input_args: preset-rtsp-generic
       output_args:
-        record: preset-record-generic-audio-copy
+        record: preset-record-generic-audio-aac
       retry_interval: 10
 
     detectors:
