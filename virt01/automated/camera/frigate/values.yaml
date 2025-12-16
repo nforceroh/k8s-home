@@ -109,7 +109,7 @@ frigate:
         LivingRoom_sub:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 640x360, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
           - rtsp://10.40.1.42:8554/360p?mp4
-          - ffmpeg:LivingRoom_main#audio=opus
+          - ffmpeg:LivingRoom_sub#audio=opus
         BunCam_main:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 1920x1080, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
           - rtsp://10.40.1.19:8554/1080p?mp4
@@ -117,47 +117,41 @@ frigate:
         BunCam_sub:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 640x360, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
           - rtsp://10.40.1.19:8554/360p?mp4
-          - ffmpeg:BunCam_main#audio=opus
-
+          - ffmpeg:BunCam_sub#audio=opus
+          
         # Passed thru scrypted
         Kitchen_main:
           - rtsp://scrypted-rtsp-svc:33759/75e57ba83105f666
           - ffmpeg:Kitchen_main#audio=opus
         Kitchen_sub:
           - rtsp://scrypted-rtsp-svc:33759/31e5716887d9312a
-          - ffmpeg:Kitchen_main#audio=opus
+          - ffmpeg:Kitchen_sub#audio=opus
         SittingRoom_main:
           - rtsp://scrypted-rtsp-svc:40123/0646b22eadf4d50a
           - ffmpeg:SittingRoom_main#audio=opus
         SittingRoom_sub:
           - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
-          - ffmpeg:SittingRoom_main#audio=opus
+          - ffmpeg:SittingRoom_sub#audio=opus
 
         # reolink
         reo_dual_main_garage:
           # Video: hevc (Main), yuv420p(tv), 5120x1552, 20 fps, 20 tbr, 90k tbn #0:1: Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_main
-          - ffmpeg:reo_dual_main_garage#audio=opus
         reo_dual_sub_garage:
           # Video: h264 (High), yuv420p(progressive), 1920x576, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_sub
-          - ffmpeg:reo_dual_main_garage#audio=opus
         rlc_520a_main_front_porch:
           # Video: hevc (Main), yuv420p(tv), 2560x1920, 20 fps, 30 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
-          - ffmpeg:rlc_520a_main_front_porch#audio=opus
         rlc_520a_sub_front_porch:
           # Video: h264 (High), yuv420p(progressive), 640x480, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h264Preview_01_sub
-          - ffmpeg:rlc_520a_main_front_porch#audio=opus
         rlc_520a_main_back_door:
           # Video: hevc (Main), yuv420p(tv), 2560x1920, 20 fps, 20 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h265Preview_01_main
-          - ffmpeg:rlc_520a_main_back_door#audio=opus
         rlc_520a_sub_back_door:
           # Video: h264 (High), yuv420p(progressive), 640x480, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h264Preview_01_sub
-          - ffmpeg:rlc_520a_main_back_door#audio=opus
       webrtc:
         candidates:
           - stun:8555
@@ -435,6 +429,8 @@ frigate:
         webui_url: http://10.40.1.162
         ffmpeg:
           hwaccel_args: preset-nvidia
+          output_args:
+            record: preset-record-generic-audio-copy
           inputs:
             - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
               input_args: preset-rtsp-restream
