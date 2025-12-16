@@ -418,7 +418,7 @@ frigate:
             main_stream: reo_dual_main_garage
         webui_url: http://10.40.1.162
         ffmpeg:
-          # hwaccel_args: preset-nvidia
+          hwaccel_args: preset-nvidia
           output_args:
             record: preset-record-generic-audio-copy
           inputs:
@@ -494,7 +494,7 @@ frigate:
             main_stream: rlc_520a_main_front_porch
         webui_url: http://10.40.1.148
         ffmpeg:
-          # hwaccel_args: preset-nvidia-h265
+          hwaccel_args: preset-nvidia-h265
           output_args:
             record: preset-record-generic-audio-copy
           inputs:
@@ -582,7 +582,7 @@ frigate:
             main_stream: rlc_520a_main_back_door
         webui_url: http://10.40.1.151
         ffmpeg:
-          # hwaccel_args: preset-nvidia-h265
+          hwaccel_args: preset-nvidia-h265
           output_args:
             record: preset-record-generic-audio-copy
           inputs:
