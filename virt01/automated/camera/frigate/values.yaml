@@ -279,10 +279,10 @@ frigate:
 
       streams:
         # Thingino
-        test_cam:
-          - rtsp://thingino:thingino@10.40.1.166/ch0
-        test_cam_sub:
-          - rtsp://thingino:thingino@10.40.1.166/ch1
+        #test_cam:
+        #  - rtsp://thingino:thingino@10.40.1.166/ch0
+        #test_cam_sub:
+        #  - rtsp://thingino:thingino@10.40.1.166/ch1
 
         #Wyze
         LivingRoom_main:
@@ -338,7 +338,7 @@ frigate:
 
     cameras:
       test_cam:
-        enabled: true
+        enabled: false
         ffmpeg:
           output_args:
             record: preset-record-generic-audio-aac
