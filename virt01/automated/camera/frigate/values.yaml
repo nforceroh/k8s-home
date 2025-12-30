@@ -280,9 +280,9 @@ frigate:
       streams:
         # Thingino
         test_cam:
-          - rtsp://thingino:thingino@10.40.1.166/ch0#timeout=30
+          - rtsp://thingino:thingino@10.40.1.166/ch0
         test_cam_sub:
-          - rtsp://thingino:thingino@10.40.1.166/ch1#timeout=30
+          - rtsp://thingino:thingino@10.40.1.166/ch1
 
         #Wyze
         LivingRoom_main:
