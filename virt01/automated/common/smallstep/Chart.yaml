@@ -1,7 +1,7 @@
 apiVersion: v2
 name: step-certificates
-version: 1.0.1
+version: 1.0.2
 dependencies:
 - name: step-certificates
   repository: https://smallstep.github.io/helm-charts
-  version: 1.28.4
+  version: 1.29.0

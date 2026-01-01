@@ -5,7 +5,7 @@ sources:
     spec:
       url: "oci://registry-1.docker.io/bitnamicharts"
       name: "mariadb"
-      version: "22.*.*"
+      version: "24.*.*"
 conditions: {}
 targets:
   chart:
