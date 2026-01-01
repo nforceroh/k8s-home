@@ -1,9 +1,9 @@
 apiVersion: v2
 name: pgadmin4
-version: 1.0.1
+version: 1.0.2
 dependencies:
 - name: pgadmin4-helm
   repository: oci://docker.io/dpage
-  version: 9.10.0
+  version: 9.11.0
 sources:
   - https://github.com/pgadmin-org/pgadmin4/blob/master/pkg/helm/README.md

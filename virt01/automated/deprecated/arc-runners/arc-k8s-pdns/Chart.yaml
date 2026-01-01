@@ -1,7 +1,7 @@
 apiVersion: v2
 name: arc-k8s-pdns
-version: 1.0.3
+version: 1.0.4
 dependencies:
 - name: gha-runner-scale-set
   repository: oci://ghcr.io/actions/actions-runner-controller-charts
-  version: 0.13.0
+  version: 0.13.1

@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://itzg.github.io/minecraft-server-charts"
       name: "minecraft"
-      version: "4.*.*"
+      version: "5.*.*"
 conditions: {}
 targets:
   chart:
