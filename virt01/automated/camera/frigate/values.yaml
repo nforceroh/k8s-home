@@ -322,7 +322,7 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.0.249:554/Preview_01_main
         reo_dual_sub_garage:
           # Video: h264 (High), yuv420p(progressive), 1920x576, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
-          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_sub
+          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.0.249:554/Preview_01_sub
         rlc_520a_main_front_porch:
           # Video: Video: hevc (Main), yuv420p(tv), 2560x1920, 20 fps, 20 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.0.128:554/h265Preview_01_main
