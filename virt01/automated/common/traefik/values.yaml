@@ -1,111 +1,112 @@
-# Updated for Traefik Helm Chart v39.0.0
-image:
-  registry: harbor.nf.lab/proxy.docker.io
-  # repository and tag remain standard
+traefik:
+  # Updated for Traefik Helm Chart v39.0.0
+  image:
+    registry: harbor.nf.lab/proxy.docker.io
+    # repository and tag remain standard
 
-logs:
-  general:
-    level: INFO
-  access:
+  logs:
+    general:
+      level: INFO
+    access:
+      enabled: true
+
+  ingressClass:
     enabled: true
+    isDefaultClass: true
+    name: traefik
 
-ingressClass:
-  enabled: true
-  isDefaultClass: true
-  name: traefik
-
-service:
-  enabled: true
-  annotations:
-    metallb.io/address-pool: vlan1000-infra
-    external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab
-    external-dns.alpha.kubernetes.io/access: public
-  type: LoadBalancer
-  spec:
-    externalTrafficPolicy: Local
-
-ingressRoute:
-  dashboard:
+  service:
     enabled: true
-    matchRule: Host(`traefik.k3s.nf.lab`)
-    entryPoints: ["websecure", "traefik"]
-    tls:
-      secretName: traefik-tls
+    annotations:
+      metallb.io/address-pool: vlan1000-infra
+      external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab
+      external-dns.alpha.kubernetes.io/access: public
+    type: LoadBalancer
+    spec:
+      externalTrafficPolicy: Local
 
-providers:
-  kubernetesIngress:
-    publishedService:
+  ingressRoute:
+    dashboard:
       enabled: true
-  kubernetesCRD:
-    enabled: true
-    allowCrossNamespace: true
-  kubernetesGateway:
-    enabled: false
+      matchRule: Host(`traefik.k3s.nf.lab`)
+      entryPoints: ["websecure", "traefik"]
+      tls:
+        secretName: traefik-tls
 
-ports:
-  traefik:
-    expose:
-      default: true
-  web:
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-          permanent: true
-  websecure:
-    expose:
-      default: true
+  providers:
+    kubernetesIngress:
+      publishedService:
+        enabled: true
+    kubernetesCRD:
+      enabled: true
+      allowCrossNamespace: true
+    kubernetesGateway:
+      enabled: false
 
-tlsOptions:
-  default:
-    minVersion: VersionTLS12
-    cipherSuites:
-      - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-      - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-      - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
-      - TLS_AES_128_GCM_SHA256
-      - TLS_AES_256_GCM_SHA384
-      - TLS_CHACHA20_POLY1305_SHA256
-    curvePreferences:
-      - CurveP521
-      - CurveP384
+  ports:
+    traefik:
+      expose:
+        default: true
+    web:
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    websecure:
+      expose:
+        default: true
 
-metrics:
-  prometheus:
-    service:
-      enabled: true
-    disableAPICheck: false
-    serviceMonitor:
-      enabled: true
-      metricRelabelings:
-        - sourceLabels: [__name__]
-          separator: ";"
-          regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
-          replacement: $1
-          action: drop
-      relabelings:
-        - sourceLabels: [__meta_kubernetes_pod_node_name]
-          separator: ";"
-          regex: ^(.*)$
-          targetLabel: nodename
-          replacement: $1
-          action: replace
-      jobLabel: traefik
-      interval: 30s
-      honorLabels: true
-    headerLabels:
-      user_id: X-User-Id
-      tenant: X-Tenant
-    prometheusRule:
-      enabled: true
-      rules:
-        - alert: TraefikDown
-          expr: up{job="traefik"} == 0
-          for: 5m
-          labels:
-            context: traefik
-            severity: warning
-          annotations:
-            summary: "Traefik Down"
-            description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
+  tlsOptions:
+    default:
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+        - TLS_AES_128_GCM_SHA256
+        - TLS_AES_256_GCM_SHA384
+        - TLS_CHACHA20_POLY1305_SHA256
+      curvePreferences:
+        - CurveP521
+        - CurveP384
+
+  metrics:
+    prometheus:
+      service:
+        enabled: true
+      disableAPICheck: false
+      serviceMonitor:
+        enabled: true
+        metricRelabelings:
+          - sourceLabels: [__name__]
+            separator: ";"
+            regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
+            replacement: $1
+            action: drop
+        relabelings:
+          - sourceLabels: [__meta_kubernetes_pod_node_name]
+            separator: ";"
+            regex: ^(.*)$
+            targetLabel: nodename
+            replacement: $1
+            action: replace
+        jobLabel: traefik
+        interval: 30s
+        honorLabels: true
+      headerLabels:
+        user_id: X-User-Id
+        tenant: X-Tenant
+      prometheusRule:
+        enabled: true
+        rules:
+          - alert: TraefikDown
+            expr: up{job="traefik"} == 0
+            for: 5m
+            labels:
+              context: traefik
+              severity: warning
+            annotations:
+              summary: "Traefik Down"
+              description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
