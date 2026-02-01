@@ -47,7 +47,6 @@ ports:
     expose:
       default: true
   web:
-    # v39.0.0 Change: Redirections must be under the 'http' key
     http:
       redirections:
         entryPoint:
