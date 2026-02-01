@@ -5,7 +5,7 @@ sources:
     spec:
       url: "oci://ghcr.io/prometheus-community/charts"
       name: "kube-prometheus-stack"
-      version: "79.*.*"
+      version: "80.*.*"
 conditions: {}
 targets:
   chart:
