@@ -1,120 +1,112 @@
-# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
+# Updated for Traefik Helm Chart v39.0.0
+image:
+  registry: harbor.nf.lab/proxy.docker.io
+  # repository and tag remain standard
 
-traefik:
-  image:  # @schema additionalProperties: false
-    # -- Traefik image host registry
-    registry: harbor.nf.lab/proxy.docker.io
-  logs:
-    general:
-      level: INFO
-    access:
-      enabled: true
-
-  ingressClass:  # @schema additionalProperties: false
+logs:
+  general:
+    level: INFO
+  access:
     enabled: true
-    isDefaultClass: true
-    name: traefik
 
-  service:
+ingressClass:
+  enabled: true
+  isDefaultClass: true
+  name: traefik
+
+service:
+  enabled: true
+  annotations:
+    metallb.io/address-pool: vlan1000-infra
+    external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab
+    external-dns.alpha.kubernetes.io/access: public
+  type: LoadBalancer
+  spec:
+    externalTrafficPolicy: Local
+
+ingressRoute:
+  dashboard:
     enabled: true
-    annotations:
-      metallb.io/address-pool: vlan1000-infra
-      external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab
-      external-dns.alpha.kubernetes.io/access: public
-    type: LoadBalancer
-    spec:
-      externalTrafficPolicy: Local
+    matchRule: Host(`traefik.k3s.nf.lab`)
+    entryPoints: ["websecure", "traefik"]
+    tls:
+      secretName: traefik-tls
 
-  ingressRoute:
-    dashboard:
+providers:
+  kubernetesIngress:
+    publishedService:
       enabled: true
-      # Custom match rule with host domain
-      matchRule: Host(`traefik.k3s.nf.lab`)
-      entryPoints: ["websecure", "traefik"]
-      # Add custom middlewares : authentication and redirection
-      tls:
-        secretName: traefik-tls
+  kubernetesCRD:
+    enabled: true
+    allowCrossNamespace: true
+  kubernetesGateway:
+    enabled: false
 
-  # Stops ArgoCD from thinking that ingresses never complete successfully
-  # https://github.com/argoproj/argo-cd/issues/968#issuecomment-451082913
-  providers:
-    kubernetesIngress:
-      publishedService:
-        enabled: true
-    kubernetesCRD:
-      ingressClass: traefik
+ports:
+  traefik:
+    expose:
+      default: true
+  web:
+    # v39.0.0 Change: Redirections must be under the 'http' key
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    expose:
+      default: true
+
+tlsOptions:
+  default:
+    minVersion: VersionTLS12
+    cipherSuites:
+      - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+      - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+      - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
+      - TLS_AES_128_GCM_SHA256
+      - TLS_AES_256_GCM_SHA384
+      - TLS_CHACHA20_POLY1305_SHA256
+    curvePreferences:
+      - CurveP521
+      - CurveP384
+
+metrics:
+  prometheus:
+    service:
       enabled: true
-      allowCrossNamespace: true
-    kubernetesGateway:
-      # -- Enable Traefik Gateway provider for Gateway API
-      enabled: false
-
-  # Allow the Gateway to expose HTTPRoute from all namespaces
-#  gateway:
-#    namespacePolicy: All
-
-  ports:
-    traefik:
-      expose:
-        default: true
-  web:        
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
-
-  # https://doc.traefik.io/traefik/https/tls/#tls-options
-  tlsOptions:
-    default:
-      minVersion: VersionTLS12
-      cipherSuites:
-        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305
-        - TLS_AES_128_GCM_SHA256
-        - TLS_AES_256_GCM_SHA384
-        - TLS_CHACHA20_POLY1305_SHA256
-      curvePreferences:
-        - CurveP521
-        - CurveP384
-
-  metrics:
-    prometheus:
-      service:
-        enabled: true
-      disableAPICheck: false
-      serviceMonitor:
-        enabled: true
-        metricRelabelings:
-          - sourceLabels: [__name__]
-            separator: ;
-            regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
-            replacement: $1
-            action: drop
-        relabelings:
-          - sourceLabels: [__meta_kubernetes_pod_node_name]
-            separator: ;
-            regex: ^(.*)$
-            targetLabel: nodename
-            replacement: $1
-            action: replace
-        jobLabel: traefik
-        interval: 30s
-        honorLabels: true
-      headerLabels:
-        user_id: X-User-Id
-        tenant: X-Tenant
-      prometheusRule:
-        enabled: true
-        rules:
-          - alert: TraefikDown
-            expr: up{job="traefik"} == 0
-            for: 5m
-            labels:
-              context: traefik
-              severity: warning
-            annotations:
-              summary: "Traefik Down"
-              description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
-        
+    disableAPICheck: false
+    serviceMonitor:
+      enabled: true
+      metricRelabelings:
+        - sourceLabels: [__name__]
+          separator: ";"
+          regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
+          replacement: $1
+          action: drop
+      relabelings:
+        - sourceLabels: [__meta_kubernetes_pod_node_name]
+          separator: ";"
+          regex: ^(.*)$
+          targetLabel: nodename
+          replacement: $1
+          action: replace
+      jobLabel: traefik
+      interval: 30s
+      honorLabels: true
+    headerLabels:
+      user_id: X-User-Id
+      tenant: X-Tenant
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: TraefikDown
+          expr: up{job="traefik"} == 0
+          for: 5m
+          labels:
+            context: traefik
+            severity: warning
+          annotations:
+            summary: "Traefik Down"
+            description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
