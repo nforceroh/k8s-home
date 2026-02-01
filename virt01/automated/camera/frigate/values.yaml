@@ -384,7 +384,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
-        webui_url: http://10.40.1.19
+        webui_url: http://10.40.1.42
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam_main
