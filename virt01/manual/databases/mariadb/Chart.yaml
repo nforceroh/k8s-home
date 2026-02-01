@@ -1,9 +1,9 @@
 name: mariadb
 apiVersion: v2
-version: 1.0.8
+version: 1.0.9
 dependencies:
 - name: mariadb
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 24.0.2
+  version: 24.0.3
 sources:
 - https://github.com/bitnami/charts/tree/main/bitnami/mariadb
