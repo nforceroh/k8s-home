@@ -18,7 +18,7 @@ spec:
             name: kokoro
             port:
               number: 8880
-        path: /web
+        path: /
         pathType: Prefix
   tls:
   - hosts:
