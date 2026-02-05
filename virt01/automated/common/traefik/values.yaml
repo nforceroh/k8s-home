@@ -1,16 +1,16 @@
-# https://github.com/traefik/traefik-helm-chart/blob/master/traefik/values.yaml
-
 traefik:
-  image:  # @schema additionalProperties: false
-    # -- Traefik image host registry
+  # Updated for Traefik Helm Chart v39.0.0
+  image:
     registry: harbor.nf.lab/proxy.docker.io
+    # repository and tag remain standard
+
   logs:
     general:
       level: INFO
     access:
       enabled: true
 
-  ingressClass:  # @schema additionalProperties: false
+  ingressClass:
     enabled: true
     isDefaultClass: true
     name: traefik
@@ -28,43 +28,36 @@ traefik:
   ingressRoute:
     dashboard:
       enabled: true
-      # Custom match rule with host domain
       matchRule: Host(`traefik.k3s.nf.lab`)
       entryPoints: ["websecure", "traefik"]
-      # Add custom middlewares : authentication and redirection
       tls:
         secretName: traefik-tls
 
-  # Stops ArgoCD from thinking that ingresses never complete successfully
-  # https://github.com/argoproj/argo-cd/issues/968#issuecomment-451082913
   providers:
     kubernetesIngress:
       publishedService:
         enabled: true
     kubernetesCRD:
-      ingressClass: traefik
       enabled: true
       allowCrossNamespace: true
     kubernetesGateway:
-      # -- Enable Traefik Gateway provider for Gateway API
       enabled: false
-
-  # Allow the Gateway to expose HTTPRoute from all namespaces
-#  gateway:
-#    namespacePolicy: All
 
   ports:
     traefik:
       expose:
         default: true
-  web:        
-    redirections:
-      entryPoint:
-        to: websecure
-        scheme: https
-        permanent: true
+    web:
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    websecure:
+      expose:
+        default: true
 
-  # https://doc.traefik.io/traefik/https/tls/#tls-options
   tlsOptions:
     default:
       minVersion: VersionTLS12
@@ -88,13 +81,13 @@ traefik:
         enabled: true
         metricRelabelings:
           - sourceLabels: [__name__]
-            separator: ;
+            separator: ";"
             regex: ^fluentd_output_status_buffer_(oldest|newest)_.+
             replacement: $1
             action: drop
         relabelings:
           - sourceLabels: [__meta_kubernetes_pod_node_name]
-            separator: ;
+            separator: ";"
             regex: ^(.*)$
             targetLabel: nodename
             replacement: $1
@@ -117,4 +110,3 @@ traefik:
             annotations:
               summary: "Traefik Down"
               description: "{{ $labels.pod }} on {{ $labels.nodename }} is down"
-        
