@@ -11,8 +11,8 @@ gpu-operator:
     config:
       create: false
       name: time-slicing-config-all
-      default: ""
-      
+      default: "time-slicing-config-all" 
+
   driver:
     enabled: false
     nvidiaDriverCRD:
