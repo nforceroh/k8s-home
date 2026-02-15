@@ -12,7 +12,7 @@ targets:
     name: Bump Chart dependencies
     kind: helmchart
     spec:
-      Name: "/home/runner/work/k8s-home/k8s-home/virt01/manual/databases/mariadb"
+      Name: "/home/sylvain/gitdev/k8s-home/virt01/manual/databases/mariadb"
       file: "Chart.yaml"
       key: "$.dependencies[0].version"
       versionIncrement: "patch"
