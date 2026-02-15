@@ -21,6 +21,10 @@ gpu-operator:
 
   migManager:
     enabled: false
+    config:
+      create: false
+      default: all-disabled
+      name: default-mig-parted-config
 
   toolkit:
     enabled: false
