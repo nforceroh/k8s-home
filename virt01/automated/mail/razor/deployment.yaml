@@ -19,7 +19,7 @@ spec:
       serviceAccountName: razor-sa
       containers:
         - name: razor
-          image: ghcr.io/nforceroh/k8s-rspamd:20260217171839
+          image: ghcr.io/nforceroh/k8s-razor:latest
           imagePullPolicy: Always
           ports:
             - name: razor
