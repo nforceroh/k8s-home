@@ -20,7 +20,7 @@ spec:
       containers:
         - name: rspamd
 #          image: harbor.nf.lab/homelab/rspamd:latest
-          image: ghcr.io/nforceroh/k8s-rspamd:latest
+          image: ghcr.io/nforceroh/k8s-rspamd:20260217172755
           imagePullPolicy: Always
           envFrom:
           - configMapRef:
