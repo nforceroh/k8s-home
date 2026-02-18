@@ -17,22 +17,17 @@ spec:
         app: rspamd
     spec:
       serviceAccountName: rspamd-sa
-      
-      # 1. KILL IPV6: Forces the Pod to use IPv4 only (fixes Bus errors & AAAA lookups)
       initContainers:
         - name: disable-ipv6
           image: busybox:latest
           command: ["sh", "-c", "sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1"]
           securityContext:
             privileged: true
-
       containers:
-        # 2. MAIN RSPAMD: Configured to use the local Unbound sidecar for mail scanning
         - name: rspamd
           image: ghcr.io/nforceroh/k8s-rspamd:latest
           imagePullPolicy: Always
           env:
-            # Force Rspamd engine to use the sidecar at 127.0.0.1 for blocklists
             - name: RSPAMD_DNS_SERVERS
               value: "127.0.0.1"
           envFrom:
@@ -50,8 +45,8 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: "1"
-              memory: "2Gi"
+              cpu: "2"
+              memory: "6Gi"
             requests:
               cpu: "10m"
               memory: "128Mi"
@@ -60,8 +55,6 @@ spec:
               mountPath: /var/lib/rspamd
             - name: rspamd-local-pv
               mountPath: /etc/rspamd/local.d
-
-        # 3. UNBOUND SIDECAR: Bypasses public DNS (1.1.1.1) to fix "DNS Spoofing" errors
         - name: unbound
           image: mvance/unbound:latest
           ports:
@@ -70,15 +63,12 @@ spec:
               protocol: UDP
           resources:
             limits:
-              memory: 256Mi
+              memory: 1Gi
               cpu: 200m
           securityContext:
             capabilities:
               add: ["NET_BIND_SERVICE"]
-
-      # 4. CLUSTER DNS: Allows Rspamd to find "redis-master.databases.svc.cluster.local"
       dnsPolicy: "ClusterFirst"
-
       volumes:
         - name: rspamd-pv
           persistentVolumeClaim:
