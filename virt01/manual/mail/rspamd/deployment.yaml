@@ -44,12 +44,9 @@ spec:
               name: web-port
               protocol: TCP
           resources:
-            limits:
-              cpu: "2"
-              memory: "6Gi"
             requests:
               cpu: "10m"
-              memory: "128Mi"
+              memory: "1Gi"
           volumeMounts:
             - name: rspamd-pv
               mountPath: /var/lib/rspamd

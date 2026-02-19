@@ -68,7 +68,7 @@ spec:
               protocol: TCP
           resources:
             requests:
-              memory: 10Mi
+              memory: 1Gi
               cpu: 25m
           volumeMounts:
             - name: deluge-pv
