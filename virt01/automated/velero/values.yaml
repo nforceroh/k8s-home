@@ -68,11 +68,7 @@ velero:
 
   kubectl:
     image:
-      repository: alpine/k8s
-      tag: "1.35.0"
-
-  upgradeCRDsJob:
-    shellCmd: /bin/sh
+      repository: public.ecr.aws/bitnami/kubectl
 
   metrics:
     serviceMonitor:
