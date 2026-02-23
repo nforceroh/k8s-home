@@ -68,7 +68,8 @@ velero:
 
   kubectl:
     image:
-      repository: bitnamisecure/kubectl
+      repository: alpine/k8s
+      tag: "1.35.0"
 
   metrics:
     serviceMonitor:
