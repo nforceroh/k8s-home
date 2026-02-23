@@ -29,7 +29,7 @@ velero:
 
   initContainers:
   - name: velero-plugin-for-aws
-    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.13.2
+#    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.13.2
     volumeMounts:
       - mountPath: /target
         name: plugins
@@ -66,9 +66,9 @@ velero:
   
   deployNodeAgent: true
 
-  kubectl:
-    image:
-      repository: harbor.nf.lab/proxy.docker.io/bitnamilegacy/kubectl
+  # kubectl:
+  #   image:
+  #     repository: harbor.nf.lab/proxy.docker.io/bitnamilegacy/kubectl
 
   metrics:
     serviceMonitor:
