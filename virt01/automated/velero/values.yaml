@@ -66,9 +66,9 @@ velero:
   
   deployNodeAgent: true
 
-  # kubectl:
-  #   image:
-  #     repository: harbor.nf.lab/proxy.docker.io/bitnamilegacy/kubectl
+  kubectl:
+    image:
+      repository: bitnamisecure/kubectl
 
   metrics:
     serviceMonitor:
