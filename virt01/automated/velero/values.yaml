@@ -1,20 +1,20 @@
 # https://github.com/vmware-tanzu/helm-charts/blob/main/charts/velero/values.yaml
 
 velero:
-  # namespace:
-  #   labels:
-  #   - key: pod-security.kubernetes.io/enforce
-  #     value: privileged
-  #   - key: pod-security.kubernetes.io/enforce-version
-  #     value: latest
-  #   - key: pod-security.kubernetes.io/audit
-  #     value: privileged
-  #   - key: pod-security.kubernetes.io/audit-version
-  #     value: latest
-  #   - key: pod-security.kubernetes.io/warn
-  #     value: privileged
-  #   - key: pod-security.kubernetes.io/warn-version
-  #     value: latest
+  namespace:
+    labels:
+    - key: pod-security.kubernetes.io/enforce
+      value: privileged
+    - key: pod-security.kubernetes.io/enforce-version
+      value: latest
+    - key: pod-security.kubernetes.io/audit
+      value: privileged
+    - key: pod-security.kubernetes.io/audit-version
+      value: latest
+    - key: pod-security.kubernetes.io/warn
+      value: privileged
+    - key: pod-security.kubernetes.io/warn-version
+      value: latest
 
   image:
     repository: harbor.nf.lab/proxy.docker.io/velero/velero
@@ -29,7 +29,7 @@ velero:
 
   initContainers:
   - name: velero-plugin-for-aws
-    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.13.2
+    image: harbor.nf.lab/proxy.docker.io/velero/velero-plugin-for-aws:v1.13.0
     volumeMounts:
       - mountPath: /target
         name: plugins
@@ -68,7 +68,7 @@ velero:
 
   kubectl:
     image:
-      repository: public.ecr.aws/bitnami/kubectl
+      repository: harbor.nf.lab/proxy.docker.io/bitnamilegacy/kubectl
 
   metrics:
     serviceMonitor:
