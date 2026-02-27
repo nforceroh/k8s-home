@@ -1,7 +1,0 @@
-name: prometheus-community
-apiVersion: v2
-version: 1.0.0
-dependencies:
-- name: prometheus-community
-  repository: https://prometheus-community.github.io/helm-charts
-  version: v0.77.2

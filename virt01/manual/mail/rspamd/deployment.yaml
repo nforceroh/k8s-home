@@ -17,11 +17,19 @@ spec:
         app: rspamd
     spec:
       serviceAccountName: rspamd-sa
+      initContainers:
+        - name: disable-ipv6
+          image: busybox:latest
+          command: ["sh", "-c", "sysctl -w net.ipv6.conf.all.disable_ipv6=1 && sysctl -w net.ipv6.conf.default.disable_ipv6=1"]
+          securityContext:
+            privileged: true
       containers:
         - name: rspamd
-#          image: harbor.nf.lab/homelab/rspamd:latest
           image: ghcr.io/nforceroh/k8s-rspamd:latest
           imagePullPolicy: Always
+          env:
+            - name: RSPAMD_DNS_SERVERS
+              value: "127.0.0.1"
           envFrom:
           - configMapRef:
               name: rspamd-env
@@ -36,22 +44,28 @@ spec:
               name: web-port
               protocol: TCP
           resources:
-            limits:
-              cpu: "1"
-              memory: "2Gi"
             requests:
               cpu: "10m"
-              memory: "128Mi"
+              memory: "1Gi"
           volumeMounts:
             - name: rspamd-pv
               mountPath: /var/lib/rspamd
             - name: rspamd-local-pv
               mountPath: /etc/rspamd/local.d
+        - name: unbound
+          image: mvance/unbound:latest
+          ports:
+            - containerPort: 53
+              name: dns-udp
+              protocol: UDP
+          resources:
+            limits:
+              memory: 1Gi
+              cpu: 200m
+          securityContext:
+            capabilities:
+              add: ["NET_BIND_SERVICE"]
       dnsPolicy: "ClusterFirst"
-      dnsConfig:
-        nameservers:
-          - 1.1.1.1
-          - 8.8.8.8
       volumes:
         - name: rspamd-pv
           persistentVolumeClaim:

@@ -11,15 +11,20 @@ gpu-operator:
     config:
       create: false
       name: time-slicing-config-all
+      default: "time-slicing-config-all" 
 
   driver:
     enabled: false
     nvidiaDriverCRD:
       enabled: false
-    version: "580.95.05"
+    version: "580.126.09"
 
   migManager:
     enabled: false
+    config:
+      create: false
+      default: all-disabled
+      name: default-mig-parted-config
 
   toolkit:
     enabled: false

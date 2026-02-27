@@ -1,3 +1,0 @@
-nvidia-gpu-exporter:
-  serviceMonitor:
-    enabled: true

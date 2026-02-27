@@ -1,7 +1,7 @@
 apiVersion: v2
 name: traefik
-version: 1.0.8
+version: 1.0.9
 dependencies:
 - name: traefik
   repository: https://helm.traefik.io/traefik
-  version: 39.0.0
+  version: 39.0.1
