@@ -36,6 +36,8 @@ velero:
 
   configuration:
     features: EnableCSI,EnableAPIGroupVersions
+    dataMoverPrepareTimeout: 3h
+    defaultItemOperationTimeout: 6h
     logLevel: info
     backupStorageLocation:
     - name: default
