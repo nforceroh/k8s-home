@@ -12,7 +12,7 @@ targets:
     name: Bump Chart dependencies
     kind: helmchart
     spec:
-      Name: "/home/sylvain/gitdev/k8s-home/virt01/automated/deprecated/arc-runners/arc-k8s-pyzor"
+      Name: "/home/runner/work/k8s-home/k8s-home/virt01/automated/deprecated/arc-runners/arc-k8s-pyzor"
       file: "Chart.yaml"
       key: "$.dependencies[0].version"
       versionIncrement: "patch"
