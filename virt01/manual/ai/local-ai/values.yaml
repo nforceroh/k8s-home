@@ -1,0 +1,61 @@
+
+local-ai:
+  replicaCount: 1
+
+  deployment:
+    runtimeClassName : "nvidia"
+    image:
+      repository: quay.io/go-skynet/local-ai
+      tag: master-gpu-nvidia-cuda-13
+    env:
+      threads: 4
+      context_size: 512
+    modelsPath: "/models"
+
+  # Models to download at runtime
+  models:
+    # Whether to force download models even if they already exist
+    forceDownload: false
+
+    # The list of URLs to download models from
+    # Note: the name of the file will be the name of the loaded model
+    list:
+      - url: "https://gpt4all.io/models/ggml-gpt4all-j.bin"
+      - url: "https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/blob/main/Qwen3.5-2B-Q4_K_M.gguf"
+        # basicAuth: base64EncodedCredentials
+
+  persistence:
+    pvc:
+      enabled: true
+      size: 50Gi
+      accessModes:
+        - ReadWriteOnce
+
+  service:
+    type: LoadBalancer
+    annotations:
+      metallb.io/address-pool: vlan1400
+      external-dns.alpha.kubernetes.io/hostname: localai-api.k3s.nf.lab
+    port: 80
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure  
+      kubernetes.io/ingress.class: traefik
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    hosts:
+    - host: localai.k3s.nf.lab
+      paths:
+        - path: /
+          pathType: Prefix
+    tls:
+    - hosts:
+      - localai.k3s.nf.lab
+      secretName: localai-tls
+
+  resources:
+    limits:
+      nvidia.com/gpu: 1
