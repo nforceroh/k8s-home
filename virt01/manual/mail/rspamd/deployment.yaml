@@ -52,6 +52,8 @@ spec:
               mountPath: /var/lib/rspamd
             - name: rspamd-local-pv
               mountPath: /etc/rspamd/local.d
+            - mountPath: /dev/shm
+              name: dshm
         - name: unbound
           image: mvance/unbound:latest
           ports:
@@ -73,3 +75,8 @@ spec:
         - name: rspamd-local-pv
           persistentVolumeClaim:
             claimName: rspamd-local-pvc
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: "512Mi" # Increase this based on your map sizes
+
