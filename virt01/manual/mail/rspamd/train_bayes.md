@@ -1,5 +1,7 @@
 # Update Bayes classifier using https://untroubled.org/spam/
 
+kubectl port-forward svc/rspamd-svc 11334:11334 -n mail
+
 ```bash
 #!/bin/bash
 
