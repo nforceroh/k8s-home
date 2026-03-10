@@ -19,6 +19,10 @@ seerr:
       tcpSocket:
         port: http
 
+  config:
+    persistence:
+      existingClaim: 'jellyseerr-pvc'
+
   ingress:
     enabled: true
     annotations:
@@ -36,7 +40,3 @@ seerr:
     - hosts:
       - seerr.k3s.nf.lab
       secretName: seerr-tls
-
-  metrics:
-    serviceMonitor:
-      enabled: true

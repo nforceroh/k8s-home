@@ -21,7 +21,7 @@ spec:
       serviceAccountName: jellyseerr-sa
       containers:
         - name: jellyseerr
-          image: harbor.nf.lab/proxy.docker.io/fallenbagel/jellyseerr
+          image: ghcr.io/seerr-team/seerr:latest
           imagePullPolicy: Always
           env:
             - name: PUID
