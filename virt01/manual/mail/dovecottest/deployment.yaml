@@ -3,25 +3,25 @@ apiVersion: apps/v1
 metadata:
   name: dovecot
   labels:
-    app: dovecot
+    app: dovecot-test
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: dovecot
+      app: dovecot-test
   template:
     metadata:
       labels:
-        app: dovecot
+        app: dovecot-test
       annotations:
         backup.velero.io/backup-volumes: dovecot-pv
     spec:
       serviceAccountName: dovecot-sa
       containers:
         - name: dovecot
-          #image: harbor.nf.lab/homelab/dovecot:latest
+          # image: harbor.nf.lab/homelab/dovecot:latest
           image: ghcr.io/nforceroh/k8s-dovecot:latest
           imagePullPolicy: Always
           envFrom:
@@ -101,7 +101,7 @@ spec:
       volumes:
         - name: dovecot-pv
           persistentVolumeClaim:
-            claimName: dovecot-pvc
+            claimName: dovecot-pvc-test
         - name: dhparam
           secret:
             secretName: dovecot-dhparam
