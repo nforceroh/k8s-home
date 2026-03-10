@@ -32,11 +32,11 @@ seerr-chart:
       kubernetes.io/ingress.class: traefik
       external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
     hosts:
-      - host: seerr.k3s.nf.lab
+      - host: jellyseerr.k3s.nf.lab
         paths:
           - path: /
             pathType: ImplementationSpecific
     tls:
     - hosts:
-      - seerr.k3s.nf.lab
-      secretName: seerr-tls
+      - jellyseerr.k3s.nf.lab
+      secretName: jellyseerr-tls
