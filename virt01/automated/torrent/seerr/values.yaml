@@ -1,6 +1,6 @@
 # https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
 
-seerr:
+seerr-chart:
   probes:
     livenessProbe:
       initialDelaySeconds: 60
