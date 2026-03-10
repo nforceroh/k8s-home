@@ -1,0 +1,42 @@
+# https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
+
+seerr:
+  probes:
+    livenessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 30
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+
+    readinessProbe:
+      initialDelaySeconds: 60
+      periodSeconds: 30
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+    startupProbe:
+      tcpSocket:
+        port: http
+
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: nf-lab
+      cert-manager.io/private-key-rotation-policy: Always
+      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure  
+      kubernetes.io/ingress.class: traefik
+      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    hosts:
+      - host: seerr.k3s.nf.lab
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls:
+    - hosts:
+      - seerr.k3s.nf.lab
+      secretName: seerr-tls
+
+  metrics:
+    serviceMonitor:
+      enabled: true

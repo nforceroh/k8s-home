@@ -5,6 +5,8 @@ metadata:
   labels:
     app: deluge
 spec:
+  restartPolicy: OnFailure  # or Never, depending on your preference
+  activeDeadlineSeconds: 3600  # Pod dies after 1 hour of failures
   replicas: 1
   strategy:
     type: Recreate
@@ -44,6 +46,24 @@ spec:
               value: "60"
             - name: CLUSTER_SUBNET
               value: "10.0.0.0/23"
+            - name: WG_MAX_HANDSHAKE_AGE
+              value: "180"  # Fail healthcheck if handshake older than 3 min
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 36  # ~3 minutes total before pod fails
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 3
+            failureThreshold: 3
           resources:
             requests:
               memory: 10Mi
