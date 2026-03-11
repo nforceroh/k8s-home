@@ -20,8 +20,8 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: postfix
-          image: harbor.nf.lab/homelab/postfix:latest
-#          image: ghcr.io/nforceroh/k8s-postfix:latest
+          #image: harbor.nf.lab/homelab/postfix:latest
+          image: ghcr.io/nforceroh/k8s-postfix:latest
           imagePullPolicy: Always
           envFrom:
           - configMapRef:

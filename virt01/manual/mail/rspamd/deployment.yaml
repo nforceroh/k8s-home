@@ -70,10 +70,8 @@ spec:
           volumeMounts:
             - name: rspamd-pv
               mountPath: /var/lib/rspamd
-            # - name: rspamd-local-pv
-            #   mountPath: /etc/rspamd/local.d
-            - mountPath: /dev/shm
-              name: dshm
+            - name: dshm
+              mountPath: /dev/shm
         - name: unbound
           image: mvance/unbound:latest
           ports:
@@ -92,9 +90,6 @@ spec:
         - name: rspamd-pv
           persistentVolumeClaim:
             claimName: rspamd-pvc
-        # - name: rspamd-local-pv
-        #   persistentVolumeClaim:
-        #     claimName: rspamd-local-pvc
         - name: dshm
           emptyDir:
             medium: Memory
