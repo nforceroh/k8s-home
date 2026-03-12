@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "seerr.fullname" . }}-jelly-external
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - jelly.nforcer.com
+      secretName: jelly-ext-cert-tls
+  rules:
+    - host: jelly.nforcer.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "seerr.fullname" . }}
+                port:
+                  number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "seerr.fullname" . }}-seerr-external
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  tls:
+  - hosts:
+    - seerr.nforcer.com
+    secretName: seerr-external-tls
+  rules:
+  - host: seerr.nforcer.com
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ include "seerr.fullname" . }}
+            port:
+              number: 80

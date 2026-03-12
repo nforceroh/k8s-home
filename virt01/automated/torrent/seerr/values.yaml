@@ -1,6 +1,6 @@
-# https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
+# https://github.com/seerr-team/seerr/blob/develop/charts/seerr-chart/values.yaml
 
-seerr-chart:
+seerr:
   probes:
     livenessProbe:
       initialDelaySeconds: 60
@@ -24,19 +24,5 @@ seerr-chart:
       existingClaim: 'jellyseerr-pvc'
 
   ingress:
-    enabled: true
-    annotations:
-      cert-manager.io/cluster-issuer: nf-lab
-      cert-manager.io/private-key-rotation-policy: Always
-      traefik.ingress.kubernetes.io/router.entrypoints: web,websecure  
-      kubernetes.io/ingress.class: traefik
-      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-    hosts:
-      - host: jellyseerr.k3s.nf.lab
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls:
-    - hosts:
-      - jellyseerr.k3s.nf.lab
-      secretName: jellyseerr-tls
+    enabled: false
+
