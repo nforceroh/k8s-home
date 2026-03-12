@@ -66,3 +66,8 @@ This chart is configured to support two separate Ingress resources to handle dif
 - External URL: Uses `letsencrypt-production` (or your chosen provider) for `seerr.nforcer.com`.
 
 Important: Ensure `seerr.ingress.enabled` is set to `false` in your `values.yaml` if you are using custom Ingress templates in the `templates/` directory to avoid resource conflicts.
+
+## 5. ArgoCD Sync
+  Commit your changes to the Git repository monitored by ArgoCD. The application will automatically sync and deploy the updated Seerr chart with your custom values.
+
+You can monitor or trigger the deployment by going to the ArgoCD UI <https://argo.k3s.nf.lab>
