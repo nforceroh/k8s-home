@@ -412,6 +412,8 @@ frigate:
         detect:
           enabled: false
         ffmpeg:
+          output_args:
+            record: preset-record-generic-audio-aac
           inputs:
             - path: rtsp://127.0.0.1:8554/Kitchen_main
               input_args: preset-rtsp-restream
@@ -429,6 +431,8 @@ frigate:
         detect:
           enabled: false
         ffmpeg:
+          output_args:
+            record: preset-record-generic-audio-aac
           inputs:
             - path: rtsp://127.0.0.1:8554/SittingRoom_main
               input_args: preset-rtsp-restream
@@ -451,7 +455,7 @@ frigate:
         ffmpeg:
           hwaccel_args: preset-nvidia
           output_args:
-            record: preset-record-generic-audio-aac
+            record: preset-record-generic-audio-copy
           inputs:
           #   - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
           #     input_args: preset-rtsp-restream
@@ -463,12 +467,10 @@ frigate:
           #     roles:
           #       - detect
             - path: rtsp://127.0.0.1:8554/reo_dual_sub_garage?video=copy&audio=aac
-              input_args: preset-rtsp-restream
               roles:
                 - detect
                 - audio
             - path: rtsp://127.0.0.1:8554/reo_dual_main_garage?video=copy&audio=aac
-              input_args: preset-rtsp-restream
               roles:
                 - record          
         motion:
