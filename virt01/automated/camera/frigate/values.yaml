@@ -321,13 +321,17 @@ frigate:
         # reolink
         reo_dual_main_garage:
           # Video: h264 (High), yuv420p(progressive), 4096x1248, 20 fps, 40 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
-          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_main
+          # - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_main
+          - http://10.40.1.162{FRIGATE_RTSP_USERNAME}&password={FRIGATE_RTSP_PASSWORD}
         reo_dual_sub_garage:
           # Video: h264 (High), yuv420p(progressive), 1920x576, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
+          # - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_sub
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.162:554/Preview_01_sub
         rlc_520a_main_front_porch:
           # Video: Video: hevc (Main), yuv420p(tv), 2560x1920, 20 fps, 20 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
-          - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
+          # - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h265Preview_01_main
+          # Use HTTP for HEVC/H.265 streams to prevent RTSP drops
+          - http://10.40.1.X/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_RTSP_USERNAME}&password={FRIGATE_RTSP_PASSWORD}          
         rlc_520a_sub_front_porch:
           # Video: h264 (High), yuv420p(progressive), 640x480, 7 fps, 14 tbr, 90k tbn Audio: aac (LC), 16000 Hz, mono, fltp
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.148:554/h264Preview_01_sub
@@ -339,21 +343,21 @@ frigate:
           - rtsp://{FRIGATE_RTSP_USERNAME}:{FRIGATE_RTSP_PASSWORD}@10.40.1.151:554/h264Preview_01_sub
 
     cameras:
-      test_cam:
-        enabled: false
-        ffmpeg:
-          output_args:
-            record: preset-record-generic-audio-aac
-          inputs:
-            - path: rtsp://127.0.0.1:8554/test_cam?timeout=30
-              input_args: preset-rtsp-restream-low-latency
-              roles:
-                - record
-            - path: rtsp://127.0.0.1:8554/test_cam_sub?timeout=30
-              input_args: preset-rtsp-restream-low-latency
-              roles:
-                - detect
-                - audio
+      # test_cam:
+      #   enabled: false
+      #   ffmpeg:
+      #     output_args:
+      #       record: preset-record-generic-audio-aac
+      #     inputs:
+      #       - path: rtsp://127.0.0.1:8554/test_cam?timeout=30
+      #         input_args: preset-rtsp-restream-low-latency
+      #         roles:
+      #           - record
+      #       - path: rtsp://127.0.0.1:8554/test_cam_sub?timeout=30
+      #         input_args: preset-rtsp-restream-low-latency
+      #         roles:
+      #           - detect
+      #           - audio
       LivingRoom:
         enabled: true
         detect:
@@ -446,15 +450,23 @@ frigate:
           output_args:
             record: preset-record-generic-audio-copy
           inputs:
-            - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
-              input_args: preset-rtsp-restream
-              roles:
-                - audio
-                - record
+          #   - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
+          #     input_args: preset-rtsp-restream
+          #     roles:
+          #       - audio
+          #       - record
+          #   - path: rtsp://127.0.0.1:8554/reo_dual_sub_garage
+          #     input_args: preset-rtsp-restream
+          #     roles:
+          #       - detect
             - path: rtsp://127.0.0.1:8554/reo_dual_sub_garage
               input_args: preset-rtsp-restream
               roles:
                 - detect
+            - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
+              input_args: preset-rtsp-restream
+              roles:
+                - record          
         motion:
           threshold: 50
           contour_area: 50
@@ -471,13 +483,17 @@ frigate:
               - Driveway_zone
               - Front_Yard_zone
         detect:
-          enabled: true
-          fps: 7
-          width: 1920
+          width: 1920 # Match the Duo sub-stream exactly
           height: 576
-          stationary:
-            interval: 50
-            threshold: 50
+          fps: 7 # Match the camera's sub-stream FPS
+        # detect:
+        #   enabled: true
+        #   fps: 7
+        #   width: 1920
+        #   height: 576
+        #   stationary:
+        #     interval: 50
+        #     threshold: 50
         objects:
           track:
             - person
