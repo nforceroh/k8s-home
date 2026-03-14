@@ -20,11 +20,14 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: postfix
-          image: harbor.nf.lab/homelab/postfix:latest
+          #image: harbor.nf.lab/homelab/postfix:latest
+          image: ghcr.io/nforceroh/k8s-postfix:latest
           imagePullPolicy: Always
           envFrom:
           - configMapRef:
               name: postfix-env
+          - secretRef:
+              name: postfix-secrets
           ports:
             - containerPort: 25
               name: smtp-port

@@ -13,6 +13,7 @@ resources:
   - serviceaccount.yaml
   - certificate.yaml
   - backup-schedule.yaml
+  - postfix-secrets-sealed.yaml
 
 configMapGenerator:
 - name: postfix-dhparam

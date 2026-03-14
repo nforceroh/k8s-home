@@ -21,36 +21,14 @@ spec:
       serviceAccountName: dovecot-sa
       containers:
         - name: dovecot
-          image: harbor.nf.lab/homelab/dovecot:latest
-          #          image: default-route-openshift-image-registry.apps.ocp.nf.lab/mail/ocp-dovecot:latest
+          #image: harbor.nf.lab/homelab/dovecot:latest
+          image: ghcr.io/nforceroh/k8s-dovecot:latest
           imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-            - name: POSTMASTER
-              value: "sylvain@nforcer.com"
-            - name: HOSTNAME
-              value: "imap.nforcer.com"
-            - name: DB_HOST
-              value: "mariadb-svc.databases.svc.cluster.local"
-            - name: DB_USER
-              value: "mailro"
-            - name: DB_PASS
-              value: "UlbzOogXAlp0OAJ1"
-            - name: DB_NAME
-              value: "mail"
-            - name: FQDN
-              value: "imap.nforcer.com"
-            - name: RSPAMD_HOST
-              value: "rspamd-svc.mail.svc.cluster.local:11334"
-            - name: SSL_CRT_FILENAME
-              value: "/etc/dovecot/certs/tls.crt"
-            - name: SSL_KEY_FILENAME
-              value: "/etc/dovecot/certs/tls.key"
-            - name: DH_FILENAME
-              value: "/etc/dovecot/dh4096.pem"
-            - name: DEBUG
-              value: "1"
+          envFrom:
+            - configMapRef:
+                name: dovecot-env
+            - secretRef:
+                name: dovecot-secrets                
           ports:
             - containerPort: 24
               name: ltmp-port

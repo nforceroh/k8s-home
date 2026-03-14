@@ -19,7 +19,7 @@ spec:
       serviceAccountName: dcc-sa
       containers:
         - name: dcc
-          image: harbor.nf.lab/homelab/dcc:latest
+          image: ghcr.io/nforceroh/k8s-dcc:latest
           imagePullPolicy: Always
           resources:
             limits:

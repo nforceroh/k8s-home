@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: coqui-svc
+  labels:
+    app: coqui
+spec:
+  ports:
+    - name: coqui-svc-port
+      port: 5002
+  selector:
+    app: coqui

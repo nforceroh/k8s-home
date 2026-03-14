@@ -1,0 +1,52 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "seerr.fullname" . }}-jelly-internal
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab # Internal Issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  tls:
+  - hosts:
+    - jellyseerr.k3s.nf.lab
+    secretName: jellyseerr-internal-tls
+  rules:
+  - host: jellyseerr.k3s.nf.lab
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ include "seerr.fullname" . }}
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "seerr.fullname" . }}-seerr-internal
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab # Internal Issuer
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: traefik
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  tls:
+  - hosts:
+    - seerr.k3s.nf.lab
+    secretName: seerr-internal-tls
+  rules:
+  - host: seerr.k3s.nf.lab
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: {{ include "seerr.fullname" . }}
+            port:
+              number: 80

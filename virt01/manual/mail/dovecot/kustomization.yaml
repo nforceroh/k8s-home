@@ -15,4 +15,13 @@ resources:
   - secrets.yaml
   - DNSEndpoint.yaml
   - backup-schedule.yaml
+  - dovecot-secrets-sealed.yaml
+
+configMapGenerator:
+  - name: dovecot-env
+    envs:
+      - maps/env.txt
+
+generatorOptions:
+  disableNameSuffixHash: true
 
