@@ -1,4 +1,4 @@
-
+#https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
 frigate:
   image:
     # -- Docker registry/repository to pull the image from
@@ -7,7 +7,7 @@ frigate:
 
   tmpfs:
     enabled: true
-    sizeLimit: 1Gi
+    sizeLimit: 4Gi
   env:
     TZ: America/New_York
   envFromSecrets:

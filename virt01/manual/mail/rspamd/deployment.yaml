@@ -43,6 +43,9 @@ spec:
             - containerPort: 11334
               name: web-port
               protocol: TCP
+            - containerPort: 11335
+              name: fuzzy-port
+              protocol: TCP
           resources:
             requests:
               cpu: "10m"
