@@ -6,9 +6,9 @@ frigate:
     tag: stable-tensorrt
 
   shmSize: 1Gi
-#  tmpfs:
-#    enabled: true
-#    sizeLimit: 4Gi
+  tmpfs:
+    enabled: true
+    sizeLimit: 4Gi
 
   env:
     TZ: America/New_York
@@ -145,7 +145,7 @@ frigate:
       hwaccel_args: preset-nvidia
       input_args: preset-rtsp-generic
       output_args:
-        record: preset-record-generic-audio-aac
+        record: preset-record-generic-audio-copy
       retry_interval: 10
 
     detectors:
