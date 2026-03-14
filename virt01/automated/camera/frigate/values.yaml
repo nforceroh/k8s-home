@@ -450,7 +450,7 @@ frigate:
         live:
           streams:
             sub_stream: reo_dual_sub_garage
-#            main_stream: reo_dual_main_garage
+          #  main_stream: reo_dual_main_garage
         webui_url: http://10.40.1.162
         ffmpeg:
           hwaccel_args: preset-nvidia
