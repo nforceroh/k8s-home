@@ -3,7 +3,7 @@ frigate:
   image:
     # -- Docker registry/repository to pull the image from
     repository: ghcr.io/blakeblackshear/frigate
-    tag: stable-tensorrt
+    tag: 0.17.0-tensorrt
 
   shmSize: 1Gi
   tmpfs:
