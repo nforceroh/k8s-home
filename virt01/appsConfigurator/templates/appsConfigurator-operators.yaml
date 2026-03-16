@@ -32,8 +32,6 @@ spec:
                   targetNamespace: traefik
                 - appName: metallb
                   targetNamespace: metallb-system
-                - appName: sealed-secrets
-                  targetNamespace: sealed-secrets
   template:
     metadata:
       name: "{{`{{appName}}`}}"
