@@ -93,6 +93,10 @@ frigate:
     snapshots:
       enabled: true
 
+    logger:
+      logs:
+        frigate.record.maintainer: debug
+        
     live:
       # Optional: Set the streams configured in go2rtc
       # that should be used for live view in frigate WebUI. (default: name of camera)
