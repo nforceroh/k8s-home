@@ -14,10 +14,12 @@ gpu-operator:
       default: "time-slicing-config-all" 
 
   driver:
-    enabled: false
+    enabled: true 
+    version: "590.48.01" 
     nvidiaDriverCRD:
       enabled: false
-    version: "580.126.09"
+    kernelModuleConfig:
+      name: "nvidia-params"
 
   migManager:
     enabled: false
@@ -27,10 +29,10 @@ gpu-operator:
       name: default-mig-parted-config
 
   toolkit:
-    enabled: false
+    enabled: true # Must be true for containers to actually use the GPU
 
   dcgm:
-    enabled: false
+    enabled: true # Enable for health monitoring
 
   dcgmExporter:
     enabled: true
