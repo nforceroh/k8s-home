@@ -24,8 +24,6 @@ spec:
                   targetNamespace: cert-manager
                 - appName: multus-cni
                   targetNamespace: multus-cni
-                - appName: smallstep
-                  targetNamespace: smallstep
                 - appName: traefik
                   targetNamespace: traefik
                 - appName: metallb
@@ -41,7 +39,6 @@ spec:
                 - gpu-operator
                 - cert-manager
                 - multus-cni
-                - smallstep
                 - traefik
                 - metallb
                 - sealed-secrets
