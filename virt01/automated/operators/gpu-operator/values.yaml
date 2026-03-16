@@ -14,8 +14,9 @@ gpu-operator:
       default: "time-slicing-config-all" 
 
   driver:
-    enabled: true 
-    version: "590.48.01" 
+    enabled: true
+    usePrecompiled: true
+    version: "580.126.16" 
     nvidiaDriverCRD:
       enabled: false
     kernelModuleConfig:
