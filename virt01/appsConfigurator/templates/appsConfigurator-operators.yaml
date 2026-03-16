@@ -1,60 +1,149 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata: 
-  name: operator-bundle
+kind: Application
+metadata:
+  name: cert-manager
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "1" # Install first
 spec:
-  generators:
-    - matrix:
-        generators:
-          - git:
-              repoURL: 'https://github.com/nforceroh/k8s-home.git'
-              revision: main
-              directories:
-                - path: virt01/automated/operators/*
-          - list:
-              elements:
-                - appName: cnpg-operator
-                  targetNamespace: cnpg-system
-                - appName: gpu-operator
-                  targetNamespace: gpu-operator
-                - appName: cert-manager
-                  targetNamespace: cert-manager
-                - appName: multus-cni
-                  targetNamespace: multus-cni
-                - appName: traefik
-                  targetNamespace: traefik
-                - appName: metallb
-                  targetNamespace: metallb-system
-        selector:
-          matchExpressions:
-            - key: path.basename
-              operator: In
-              values:
-                - cnpg-operator
-                - gpu-operator
-                - cert-manager
-                - multus-cni
-                - traefik
-                - metallb
-  template:
-    metadata:
-      name: "{{`{{appName}}`}}"
-    spec:
-      project: argocd-virt01
-      source:
-        repoURL: 'https://github.com/nforceroh/k8s-home.git'
-        targetRevision: main
-        path: "{{`{{path}}`}}"
-      destination:
-        server: 'https://kubernetes.default.svc'
-        namespace: "{{`{{targetNamespace}}`}}"
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-          - ServerSideApply=true
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/cert-manager
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gpu-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2" # Install after cert-manager
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/gpu-operator
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: gpu-operator
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cnpg-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/cnpg-operator
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: cnpg-system
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: multus-cni
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/multus-cni
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: multus-cni
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/traefik
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: traefik
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/metallb
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: metallb-system
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]        
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metallb
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/metallb
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: metallb-system
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]        
