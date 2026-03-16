@@ -6,7 +6,6 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: "true"
   creationTimestamp: null
   name: tsig
-  namespace: common
 spec:
   encryptedData:
     tsig-key: AgB0TfjBPbI/+8CKnKO9DKdWew+1ePAX8xjSm84GBQHQnVbTYXnyvHDGsxDssuvYuu1Rr5DpeO+hFfFG2v48fYiixfpmum/SS1S8wFSAPRIFHhLXkE6alMZQEf5raMP9IP7SjWWYV4AClVlbzz0q2QwTjqfeaa3jBSNlxslnJfRhodg4MV44h9dn3BSUbYH5JKg4QvXltEv+upR1tXRJ+eSVvoulOM9QJqC9NmHYIGuPT0FK0mJ7xOV8s9eJj9MZ+ciggLnI674OmQCjxjGf6tOd4N9p11N1XpAgxArORkxT/juTEVWSKxdsu86Z3X5gqLC8/4/a38CvLpnRrC8pJi3zo/z7aAiES8GoIt0nodeLSjXBkDLP0UYgsUAf/Vue6ND4XGC2cUTDvIYk4jIALRb8fLiaaIWrxbDZSVYcChhXdAAA6pnOChDt4smzfr8nd0yxLP73pr5mozggR2dBNTnNRnDCHlnWoL6EkcDqhGrk2HV5WdnOc1qXV8E13lNm3Quloax2MMN0VkA4qTxS/LW9l9397wqjoo/pveTQwenw5TA9CKse6sNRnYtE1eSn/Nm6rU23yLclQu0ErfK7/uu40rbs4uyz4WvUod5Vz2tnJHZp6X/o+C8Mjf5c5bkJiII0x/ABxzDPmVM1+OrNEy29SKeblQPcKj7CQSoQyY7XWhLfz2S2P+9Yd6m3oXtTEauorApgBrNYCmf6/X69fnf45qW9Ud+X610=
@@ -16,7 +15,6 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: "true"
       creationTimestamp: null
       name: tsig
-      namespace: common
 ---
 apiVersion: bitnami.com/v1alpha1
 kind: SealedSecret
@@ -25,7 +23,6 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: "true"
   creationTimestamp: null
   name: cloudflare-api-token
-  namespace: common
 spec:
   encryptedData:
     api-token: AgCkmJRh9XomRg5NtrVTYEFYUAdkpp8S5XkiiXDE6Dp9+/4zYensR/xfLVGlu7RkmGTMmMLfXL5lQqEOlO9F6xmFb9Gzk7cbro8dpgRc72YWDM6K3zXhu8SotydzLGSkTTbqjTd2E4Y10EEo+iN20W6pfBumOQeLFuSQx2KTH5Y0VJOrmEGGaCh8SQwX/3nzQ1V+EuzPC7rPt0FZiuvTkelZ8qxKqvZ6HysYL1yLW9qnfQ0OKwyQRB94jweuEmtsqMMaJJhAh1QMd1bQkPYBuqZtTlf5RJoxbEwC+wUaMsDIlc1Ns07WnRGCB4ZgWm3uxYhGFOn3TTxcPr4fvyzO/FPB/RmbSAPFLAO63jq63Gous95DFBS0CT+9ll3UWLLV66ebdJ60SdlVNp7/yryPvnObs4sauAiM5YHWvexPDuq7dMCS7pwbkENv1eJLB3fXqimjesZaRmi6wdx8EtEdjVk1AN/avz4QZgGyz4kjiVN2vsCiUih509I4na7hCYkHCAolhQ/1v87i0b0b7bMmg4js4bPWAbK/DQPo/mssgX1QxxfqZQq31pIl76gK3FAgkXGbvthDVEvDQN0FKUMpnOKbM3oHNEdjoPwLIufPXh56dphcHum8GxBL4uh9YngP6O8TVtruXn35cL/aqpe7Kz9xfElL7Ty9zwg5xgPSDzTBdKRDXsr3vMlpR4dWbgd3WOSFZiovVWhEjoD0IOOB9TSrIwuMm0D+ythr6ZkEQSekM3TbYS4tPx15
@@ -35,5 +32,4 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: "true"
       creationTimestamp: null
       name: cloudflare-api-token
-      namespace: common
     type: Opaque

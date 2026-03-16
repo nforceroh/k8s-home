@@ -1,33 +1,67 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata: 
-  name: operators
+  name: operator-bundle
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
   generators:
-  - git:
-      repoURL: 'https://github.com/nforceroh/k8s-home.git'
-      revision: main
-      directories:
-        - path: virt01/automated/operators/*
+    - matrix:
+        generators:
+          - git:
+              repoURL: 'https://github.com/nforceroh/k8s-home.git'
+              revision: main
+              directories:
+                - path: virt01/automated/operators/*
+          - list:
+              elements:
+                - appName: cnpg-operator
+                  targetNamespace: cnpg-system
+                - appName: gpu-operator
+                  targetNamespace: gpu-operator
+                - appName: cert-manager
+                  targetNamespace: cert-manager
+                - appName: multus-cni
+                  targetNamespace: multus-cni
+                - appName: smallstep
+                  targetNamespace: smallstep
+                - appName: traefik
+                  targetNamespace: traefik
+                - appName: metallb
+                  targetNamespace: metallb
+                - appName: sealed-secrets
+                  targetNamespace: sealed-secrets
+        selector:
+          matchExpressions:
+            - key: path.basename
+              operator: In
+              values:
+                - cnpg-operator
+                - gpu-operator
+                - cert-manager
+                - multus-cni
+                - smallstep
+                - traefik
+                - metallb
+                - sealed-secrets
+
   template:
     metadata:
-      name:  "{{`{{ path.basename }}`}}"
+      name: "{{`{{appName}}`}}"
     spec:
       project: argocd-virt01
       source:
         repoURL: 'https://github.com/nforceroh/k8s-home.git'
         targetRevision: main
-        path:  "{{`{{ path }}`}}"
+        path: "{{`{{path}}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: operators
+        namespace: "{{`{{targetNamespace}}`}}"
       syncPolicy:
-        syncOptions:
-        - ServerSideApply=true
-        - CreateNamespace=true
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true

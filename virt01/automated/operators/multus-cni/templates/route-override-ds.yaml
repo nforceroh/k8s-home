@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: route-override
-  namespace: common
   labels:
     tier: node
     app: route-override

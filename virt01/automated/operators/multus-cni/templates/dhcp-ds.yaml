@@ -3,7 +3,6 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: kube-dhcp-ds-amd64
-  namespace: common
   labels:
     tier: node
     app: dhcp

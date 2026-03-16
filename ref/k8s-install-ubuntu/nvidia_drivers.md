@@ -3,7 +3,6 @@
 Reference:
 <https://www.jimangel.io/posts/nvidia-rtx-gpu-kubernetes-setup/>
 
-
 ## List installed nvidia packages
 
 ```bash
