@@ -22,8 +22,8 @@ spec:
                   targetNamespace: gpu-operator
                 - appName: cert-manager
                   targetNamespace: cert-manager
-#                - appName: multus-cni
-#                  targetNamespace: multus-cni
+                - appName: multus-cni
+                  targetNamespace: multus-cni
                 - appName: traefik
                   targetNamespace: traefik
                 - appName: metallb
@@ -38,11 +38,10 @@ spec:
                 - cnpg-operator
                 - gpu-operator
                 - cert-manager
-#                - multus-cni
+                - multus-cni
                 - traefik
                 - metallb
                 - sealed-secrets
-
   template:
     metadata:
       name: "{{`{{appName}}`}}"
