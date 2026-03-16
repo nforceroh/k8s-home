@@ -16,6 +16,8 @@ spec:
               revision: main
               directories:
                 - path: virt01/automated/operators/*
+              exclude:
+                - path: virt01/automated/operators
               values:
                 appName: "{{`{{path.basename}}`}}"                
           - list:
