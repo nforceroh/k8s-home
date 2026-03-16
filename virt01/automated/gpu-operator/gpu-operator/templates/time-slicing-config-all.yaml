@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: time-slicing-config-all
-  namespace: operators
+  namespace: gpu-operator
 data:
   Tesla-P40: |-
     version: v1
