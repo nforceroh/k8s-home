@@ -34,7 +34,7 @@ spec:
         path:  "{{`{{ path }}`}}"
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace:  metallb
+        namespace:  metallb-system
       syncPolicy:
         managedNamespaceMetadata:
           labels:

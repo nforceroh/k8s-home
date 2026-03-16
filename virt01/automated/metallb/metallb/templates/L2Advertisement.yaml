@@ -4,6 +4,8 @@ kind: L2Advertisement
 metadata:
   name: l2-ip
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   ipAddressPools:
     - vlan1000-apps
@@ -20,6 +22,8 @@ kind: L2Advertisement
 metadata:
   name: l2-vlan1400
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   ipAddressPools:
     - vlan1400

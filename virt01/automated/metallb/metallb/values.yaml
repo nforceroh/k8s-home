@@ -1,6 +1,11 @@
 # https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml
 
 metallb:
+  namespace:
+    labels:
+      pod-security.kubernetes.io/enforce: privileged
+      pod-security.kubernetes.io/audit: privileged
+      pod-security.kubernetes.io/warn: privileged
   speaker:
     # ignore the exclude-from-external-loadbalancer label
     ignoreExcludeLB: true

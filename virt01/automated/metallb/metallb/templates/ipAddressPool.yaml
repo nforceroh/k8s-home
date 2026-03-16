@@ -4,6 +4,8 @@ kind: IPAddressPool
 metadata:
   name: vlan1000-apps
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   autoAssign: true
   addresses:
@@ -14,6 +16,8 @@ kind: IPAddressPool
 metadata:
   name: vlan1000-infra
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   autoAssign: false
   addresses:
@@ -24,6 +28,8 @@ kind: IPAddressPool
 metadata:
   name: vlan1000-restricted
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   autoAssign: false
   addresses:
@@ -34,6 +40,8 @@ kind: IPAddressPool
 metadata:
   name: vlan1400
   namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install  
 spec:
   autoAssign: false
   addresses:

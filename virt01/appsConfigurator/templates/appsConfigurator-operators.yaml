@@ -27,7 +27,7 @@ spec:
                 - appName: traefik
                   targetNamespace: traefik
                 - appName: metallb
-                  targetNamespace: metallb
+                  targetNamespace: metallb-system
                 - appName: sealed-secrets
                   targetNamespace: sealed-secrets
         selector:
