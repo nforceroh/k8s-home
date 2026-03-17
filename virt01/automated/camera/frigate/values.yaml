@@ -371,8 +371,8 @@ frigate:
                 - record
             - path: rtsp://127.0.0.1:8554/LivingRoom_sub
               input_args: preset-rtsp-restream
-              #roles:
-              #  - detect
+              roles:
+                - detect
         motion:
           mask:
             - 0.396,0,0.393,0.119,0.624,0.162,0.621,0
@@ -399,8 +399,8 @@ frigate:
                 - record
             - path: rtsp://127.0.0.1:8554/BunCam_sub
               input_args: preset-rtsp-restream
-              #roles:
-              #  - detect
+              roles:
+                - detect
         objects:
           mask: 0.981,0.981,0.981,0.938,0.713,0.936,0.713,0.982
       Kitchen:
@@ -418,8 +418,8 @@ frigate:
                 - record
             - path: rtsp://127.0.0.1:8554/Kitchen_sub
               input_args: preset-rtsp-restream
-              #roles:
-              #  - detect
+              roles:
+                - detect
         objects:
           mask: 0.719,0.937,0.718,0.979,0.981,0.98,0.978,0.939
       SittingRoom:
@@ -437,8 +437,8 @@ frigate:
                 - record
             - path: rtsp://127.0.0.1:8554/SittingRoom_sub
               input_args: preset-rtsp-restream
-              #roles:
-              #  - detect
+              roles:
+                - detect
         objects:
           mask: 0.966,0.981,0.967,0.931,0.673,0.93,0.675,0.979
       GarageFront:
@@ -539,8 +539,8 @@ frigate:
                 - record
             - path: rtsp://127.0.0.1:8554/rlc_520a_sub_front_porch
               input_args: preset-rtsp-restream
-              #roles:
-              #  - detect
+              roles:
+                - detect
         # motion:
         #   mask: 
         review:
