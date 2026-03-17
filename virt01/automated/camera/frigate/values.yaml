@@ -548,8 +548,6 @@ frigate:
               - Driveway_zone
               - Front_Yard_zone
               - Front_Side_Yard_zone
-            filters:
-              car: {}
         objects:
           track:
             - person
