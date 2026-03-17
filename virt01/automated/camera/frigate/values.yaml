@@ -1,9 +1,8 @@
 #https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
 frigate:
   image:
-    # -- Docker registry/repository to pull the image from
     repository: ghcr.io/blakeblackshear/frigate
-    tag: 0.16.0-tensorrt
+    tag: 0.16.4-tensorrt
 
   shmSize: 1Gi
   tmpfs:
