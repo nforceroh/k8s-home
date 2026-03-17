@@ -10,6 +10,6 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: frigate
   endpoints:
-  - port: 5000 # The name of the port in your Service definition
+  - port: http # The name of the port in your Service definition
     path: /api/metrics
     interval: 30s
