@@ -1,9 +1,8 @@
 #https://github.com/blakeblackshear/blakeshome-charts/blob/master/charts/frigate/values.yaml
 frigate:
   image:
-    # -- Docker registry/repository to pull the image from
     repository: ghcr.io/blakeblackshear/frigate
-    tag: 0.17.0-tensorrt
+    tag: 0.16.4-tensorrt
 
   shmSize: 1Gi
   tmpfs:
@@ -16,7 +15,6 @@ frigate:
     - frigate-config
   gpu:
     nvidia:
-      # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
       enabled: true
       runtimeClassName: nvidia
 
@@ -70,11 +68,11 @@ frigate:
   persistence:
     config:
       enabled: true        
-      skipuninstall: false
+      skipuninstall: true
       size: 10Gi
     media:
       enabled: true        
-      skipuninstall: false    
+      skipuninstall: true    
       existingClaim: frigate-media
   config: |
     mqtt:

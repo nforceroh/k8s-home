@@ -6,7 +6,6 @@ metadata:
     sealedsecrets.bitnami.com/cluster-wide: "true"
   creationTimestamp: null
   name: cf-api-token
-  namespace: common
 spec:
   encryptedData:
     cloudflare_api_token: AgBe7+LSV3Kz+IUER/5y2OYc2DUKNqkSu+Sf7Mnkdab1OVXnr0sm4RpknufdZS739R8zfUQjc80xH+OS3oD+ayZy4YMtm+bhxzcH5Ceh3i3wzd3Rt09DOO2slxi3XRc/BeRGscq2IC6r3dcmQbqo7HJah1k4UxVfuxpsRVpOFyuwuAxZQhI11sbgvz78raG0LFhg6pdQi3Ojr5/rWdz9B2207ozJdXg5Lph+JiUSKNRoO1OWP3O3RuXmSsBs+Hs37jUghh5mednCNknU0puv+XqwKEyQPhGybRyQPn9b3eV60OoitlxAvJtxkN+OeFBee9tsc0f/KnS06MWADijujjH0M1gSQQPFRX+Z0/6IYCGf3lnC7c2u8YOgXUeaSsLENlQuzR7a2h3VL1suJOTfTZxaNCqWr7NeLjs0afHNlVL7CoWt//vOsopS5VT3taVwENBxkUj8xs+SQEWNONvmqXxwVothpfl4TA75dObfxPxwT9zBconV8+aupFhI4rCxOpXmA/52241xc7forEpkSBvDYC5Q5ejUbVba/bhQ4SZ4Fm2XiUTeRPl8iHRaEWuytyHFI0vsdmhjtCHGTBv99wCdB8usMluSGA+FPVJIDInQZxiaHnmwsra6SdE3Kimu6v6o070ku+P3B8ZLwzUQrXeFp2mDvswmneA9OyeUu4CTQVTQzdfUqMJD/s3ocacEBVYDKs5ejP+P6OlwjRBg6Hs7uAugSFBYMkyugWgUnUQEsiyuEjHz3TK9
@@ -16,5 +15,4 @@ spec:
         sealedsecrets.bitnami.com/cluster-wide: "true"
       creationTimestamp: null
       name: cf-api-token
-      namespace: common
     type: Opaque
