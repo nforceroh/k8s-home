@@ -1,15 +1,23 @@
-apiVersion: monitoring.coreos.com/v1
+apiVersion: ://monitoring.coreos.com
 kind: ServiceMonitor
 metadata:
   name: frigate-metrics
-  namespace: camera # Or the namespace where Frigate is installed
+  # Place this in the SAME namespace as your Prometheus instance
+  namespace: monitoring 
   labels:
-    app.kubernetes.io/name: prometheus
+    # Adding this just in case your Prometheus isn't truly set to {} 
+    # and requires a standard release label
+    release: prometheus 
 spec:
+  # This is the crucial part to find the Service in 'camera'
+  namespaceSelector:
+    matchNames:
+      - camera
   selector:
     matchLabels:
       app.kubernetes.io/instance: frigate
+      app.kubernetes.io/name: frigate
   endpoints:
-  - port: http # The name of the port in your Service definition
+  - port: http
     path: /api/metrics
     interval: 30s
