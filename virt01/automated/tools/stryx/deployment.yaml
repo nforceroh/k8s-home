@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strix
+  namespace: camera
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strix
+  template:
+    metadata:
+      labels:
+        app: strix
+    spec:
+      containers:
+      - name: strix
+        image: eduard256/strix:latest
+        ports:
+        - containerPort: 4567
+          name: http
+        volumeMounts:
+        - name: strix-data
+          mountPath: /app
+      volumes:
+      - name: strix-data
+        persistentVolumeClaim:
+          claimName: strix-pvc
