@@ -16,7 +16,6 @@ frigate:
     - frigate-config
   gpu:
     nvidia:
-      # -- Enables NVIDIA GPU compatibility. Must also use the "amd64nvidia" tagged image
       enabled: true
       runtimeClassName: nvidia
 
@@ -70,11 +69,11 @@ frigate:
   persistence:
     config:
       enabled: true        
-      skipuninstall: false
+      skipuninstall: true
       size: 10Gi
     media:
       enabled: true        
-      skipuninstall: false    
+      skipuninstall: true    
       existingClaim: frigate-media
   config: |
     mqtt:
