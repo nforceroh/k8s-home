@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localai
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: localai
+  template:
+    metadata:
+      labels:
+        app: localai
+    spec:
+      runtimeClassName: nvidia
+      containers:
+      - name: localai
+        image: localai/localai:latest-gpu-nvidia-cuda-12
+        env:
+        - name: DEBUG
+          value: "true"
+        - name: GGML_CUDA_NO_FLASH_ATTENTION
+          value: "1"
+        ports:
+        - containerPort: 8080
+        resources: {}
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 40 # Corresponds to start_period
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /readyz
+            port: 8080
+          initialDelaySeconds: 40
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3 
+        volumeMounts:
+        - name: models
+          mountPath: /models
+        - name: backends
+          mountPath: /backends
+        - name: config
+          mountPath: /configuration
+        - name: data
+          mountPath: /data
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: localai-models-pvc
+        - name: backends
+          persistentVolumeClaim:
+            claimName: localai-backends-pvc
+        - name: config
+          persistentVolumeClaim:
+            claimName: localai-config-pvc
+        - name: data
+          persistentVolumeClaim:
+            claimName: localai-data-pvc

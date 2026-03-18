@@ -1,0 +1,13 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: localai-service
+  namespace: ai
+spec:
+  ports:
+    - name: localai-svc-port
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: localai

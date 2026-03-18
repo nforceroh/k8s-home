@@ -1,7 +1,6 @@
 gpu-operator:
   cdi:
-    enabled: false
-    default: false
+    enabled: true 
 
   nfd:
     enabled: true
@@ -15,12 +14,6 @@ gpu-operator:
 
   driver:
     enabled: false
-    usePrecompiled: false
-    version: "580.126.16" 
-    nvidiaDriverCRD:
-      enabled: false
-    kernelModuleConfig:
-      name: "nvidia-params"
 
   migManager:
     enabled: false
