@@ -1,23 +1,24 @@
 ---
 ollama:
   image:
-    repository: harbor.nf.lab/proxy.docker.io/ollama/ollama
+    repository: ollama/ollama
   ollama:
     gpu:
       enabled: true
       type: 'nvidia'
     models:
       pull:
-        - mistral
-        - llama3.1
-        - llama3.2
-        - llama3.2-vision
-        - codellama
-        - deepseek-coder:6.7b
-        - nomic-embed-text:latest
-        - qwen2.5-coder:1.5b-base
-
+        - "llama3.1:8b"           # Balanced daily driver
+        - "qwen2.5-coder:7b"      # Massive upgrade over 1.5b for coding
+        - "mistral-nemo:12b"      # Fits perfectly in P40 VRAM (12.28B params)
+        - "deepseek-coder-v2:16b" # Great for complex logic
+        - "command-r:35b"   
   runtimeClassName: "nvidia"
+  extraEnv:
+    - name: OLLAMA_FLASH_ATTENTION
+      value: "0"  # Mandatory: Pascal GPUs like the P40 do not support Flash Attention
+    - name: OLLAMA_MAX_LOADED_MODELS
+      value: "5"  
   service:
     type: LoadBalancer
     annotations:
