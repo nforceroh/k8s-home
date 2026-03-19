@@ -1,0 +1,52 @@
+{
+  "watchdog_enabled": true,
+  "watchdog_idle_enabled": true,
+  "watchdog_busy_enabled": true,
+  "watchdog_idle_timeout": "15m0s",
+  "watchdog_busy_timeout": "5m0s",
+  "watchdog_interval": "500ms",
+  "single_backend": false,
+  "max_active_backends": 0,
+  "parallel_backend_requests": false,
+  "memory_reclaimer_enabled": false,
+  "memory_reclaimer_threshold": 0,
+  "force_eviction_when_busy": false,
+  "lru_eviction_max_retries": 30,
+  "lru_eviction_retry_interval": "1s",
+  "threads": 16,
+  "context_size": 0,
+  "f16": false,
+  "debug": false,
+  "enable_tracing": false,
+  "tracing_max_items": 1024,
+  "cors": false,
+  "csrf": false,
+  "cors_allow_origins": "",
+  "p2p_token": "",
+  "p2p_network_id": "",
+  "federated": false,
+  "galleries": [
+    {
+      "url": "github:mudler/LocalAI/gallery/index.yaml@master",
+      "name": "localai"
+    }
+  ],
+  "backend_galleries": [
+    {
+      "url": "github:mudler/LocalAI/backend/index.yaml@master",
+      "name": "localai"
+    }
+  ],
+  "autoload_galleries": true,
+  "autoload_backend_galleries": true,
+  "api_keys": null,
+  "agent_job_retention_days": 30,
+  "open_responses_store_ttl": "0",
+  "agent_pool_enabled": true,
+  "agent_pool_default_model": "",
+  "agent_pool_embedding_model": "granite-embedding-107m-multilingual",
+  "agent_pool_max_chunking_size": 400,
+  "agent_pool_chunk_overlap": 0,
+  "agent_pool_enable_logs": false,
+  "agent_pool_collection_db_path": ""
+}
