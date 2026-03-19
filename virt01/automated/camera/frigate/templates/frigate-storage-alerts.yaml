@@ -2,46 +2,46 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: frigate-storage-alerts
-  namespace: camera # Replace with your namespace
+  namespace: camera 
   labels:
-    role: alert-rules
-    # Match your Prometheus ruleSelector labels (e.g., release: kube-prometheus-stack)
+    app.kubernetes.io/instance: frigate
+    app.kubernetes.io/name: frigate
 spec:
   groups:
-  - name: frigate_storage_alerts
-    rules:
-    - alert: FrigateStorageFillingInfo
-      expr: |
-        abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
-        / 
-        (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.10
-      for: 10m
-      labels:
-        severity: info
-      annotations:
-        summary: "Frigate cache is filling up (Info)"
-        description: "Storage at {{ $labels.instance }} is filling at a rate of 10% per hour."
+    - name: frigate.storage.rules
+      rules:
+        - alert: FrigateStorageFillingInfo
+          expr: |
+            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
+            / 
+            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.10
+          for: 10m
+          labels:
+            severity: info
+          annotations:
+            summary: "Frigate cache is filling up (10%/hr)"
+            description: "Storage at {{ $labels.instance }} is filling at a rate of 10% per hour."
 
-    - alert: FrigateStorageFillingWarning
-      expr: |
-        abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
-        / 
-        (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.50
-      for: 5m
-      labels:
-        severity: warning
-      annotations:
-        summary: "Frigate cache is filling rapidly (Warning)"
-        description: "Storage at {{ $labels.instance }} is filling at a rate of 50% per hour."
+        - alert: FrigateStorageFillingWarning
+          expr: |
+            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
+            / 
+            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.50
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Frigate cache filling rapidly (50%/hr)"
+            description: "Storage at {{ $labels.instance }} is filling at a rate of 50% per hour."
 
-    - alert: FrigateStorageFillingCritical
-      expr: |
-        abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
-        / 
-        (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.90
-      for: 2m
-      labels:
-        severity: critical
-      annotations:
-        summary: "Frigate cache is filling critically (Critical)"
-        description: "Storage at {{ $labels.instance }} is filling at a rate of 90% per hour!"
+        - alert: FrigateStorageFillingCritical
+          expr: |
+            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
+            / 
+            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.90
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Frigate cache filling critically (90%/hr)"
+            description: "Storage at {{ $labels.instance }} is filling at a rate of 90% per hour!"
