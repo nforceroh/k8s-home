@@ -4,10 +4,10 @@ frigate:
     repository: ghcr.io/blakeblackshear/frigate
     tag: 0.16.4-tensorrt
 
-  shmSize: 1Gi
-  # tmpfs:
-  #   enabled: true
-  #   sizeLimit: 4Gi
+  shmSize: 2Gi
+  tmpfs:
+    enabled: true
+    sizeLimit: 1Gi
 
   env:
     TZ: America/New_York
@@ -25,9 +25,9 @@ frigate:
         secretName: frigate-ext-tls
         # Optionally, you can ensure the correct permissions
         defaultMode: 420 # rw-r--r-- permissions (octal 0644)
-    - name: model-cache
-      persistentVolumeClaim:
-        claimName: frigate-cache
+    # - name: model-cache
+    #   persistentVolumeClaim:
+    #     claimName: frigate-cache
 
   # -- declare additional volume mounts
   extraVolumeMounts:
@@ -41,10 +41,10 @@ frigate:
       mountPath: /etc/letsencrypt/live/frigate/privkey.pem
       subPath: tls.key # Maps the 'tls.key' key from the secret to this file path
       readOnly: true
-    # Mount the model cache volume
-    - name: model-cache
-      mountPath: /tmp/cache
-      readOnly: false
+    # # Mount the model cache volume
+    # - name: model-cache
+    #   mountPath: /tmp/cache
+    #   readOnly: false
 
   ingress:
     # -- Enables the use of an Ingress Controller to front the Service and can provide HTTPS
@@ -80,6 +80,7 @@ frigate:
       enabled: true        
       skipuninstall: true    
       existingClaim: frigate-media
+
   config: |
     mqtt:
       host: mqtt.k3s.nf.lab
