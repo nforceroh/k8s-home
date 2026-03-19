@@ -1,8 +1,8 @@
-apiVersion: monitoring.coreos.com/v1
+apiVersion: ://monitoring.coreos.com
 kind: PrometheusRule
 metadata:
   name: frigate-storage-alerts
-  namespace: camera 
+  namespace: {{ .Release.Namespace }}
   labels:
     app.kubernetes.io/instance: frigate
     app.kubernetes.io/name: frigate
@@ -20,7 +20,7 @@ spec:
             severity: info
           annotations:
             summary: "Frigate cache is filling up (10%/hr)"
-            description: "Storage at {{ $labels.instance }} is filling at a rate of 10% per hour."
+            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 10% per hour.'
 
         - alert: FrigateStorageFillingWarning
           expr: |
@@ -32,7 +32,7 @@ spec:
             severity: warning
           annotations:
             summary: "Frigate cache filling rapidly (50%/hr)"
-            description: "Storage at {{ $labels.instance }} is filling at a rate of 50% per hour."
+            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 50% per hour.'
 
         - alert: FrigateStorageFillingCritical
           expr: |
@@ -44,4 +44,4 @@ spec:
             severity: critical
           annotations:
             summary: "Frigate cache filling critically (90%/hr)"
-            description: "Storage at {{ $labels.instance }} is filling at a rate of 90% per hour!"
+            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 90% per hour!'
