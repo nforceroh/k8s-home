@@ -10,38 +10,28 @@ spec:
   groups:
     - name: frigate.storage.rules
       rules:
-        - alert: FrigateStorageFillingInfo
+        # WARNING: 50% of storage consumed
+        - alert: FrigateStorageUsageWarning
           expr: |
-            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
-            / 
-            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.10
-          for: 10m
-          labels:
-            severity: info
-          annotations:
-            summary: "Frigate cache is filling up (10%/hr)"
-            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 10% per hour.'
-
-        - alert: FrigateStorageFillingWarning
-          expr: |
-            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
+            ( (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) - frigate_storage_free_bytes{storage="/tmp/cache"} )
             / 
             (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.50
           for: 5m
           labels:
             severity: warning
           annotations:
-            summary: "Frigate cache filling rapidly (50%/hr)"
-            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 50% per hour.'
+            summary: "Frigate cache usage > 50%"
+            description: "Storage at {{"{{ $labels.instance }}"}} is {{ "{{" }} $value | humanizePercentage {{ "}}" }} full."
 
-        - alert: FrigateStorageFillingCritical
+        # CRITICAL: 90% of storage consumed
+        - alert: FrigateStorageUsageCritical
           expr: |
-            abs(deriv(frigate_storage_free_bytes{storage="/tmp/cache"}[30m])) * 3600 
+            ( (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) - frigate_storage_free_bytes{storage="/tmp/cache"} )
             / 
             (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.90
           for: 2m
           labels:
             severity: critical
           annotations:
-            summary: "Frigate cache filling critically (90%/hr)"
-            description: 'Storage at {{ "{{" }} $labels.instance {{ "}}" }} is filling at a rate of 90% per hour!'
+            summary: "Frigate cache usage > 90%"
+            description: "Storage at {{"{{ $labels.instance }}"}} is {{ "{{" }} $value | humanizePercentage {{ "}}" }} full."
