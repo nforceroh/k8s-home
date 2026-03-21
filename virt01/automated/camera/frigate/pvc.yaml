@@ -18,19 +18,6 @@ spec:
     requests:
       storage: "10Gi"
 ---
-# Source: frigate/templates/frigate-cache-pvc.yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: frigate-cache
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi # Adjust the size as needed for your application
-  storageClassName: openebs-zfspv-lz4
----
 # Source: frigate/templates/frigate-media-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
