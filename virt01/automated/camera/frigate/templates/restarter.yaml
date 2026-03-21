@@ -49,28 +49,26 @@ spec:
             - /bin/sh
             - -c
             - |
-              # 1. Get the pod name (ensure the label matches your deployment)
-              POD_NAME=$(kubectl get pods -l app.kubernetes.io/name=frigate -o name | head -n 1)
+              #!/bin/bash
+              NAMESPACE="camera"
+              THRESHOLD=500
+
+              # 1. Get the pod name specifically in your namespace
+              POD_NAME=$(kubectl get pods -n $NAMESPACE -l app.kubernetes.io/name=frigate -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
 
               if [ -z "$POD_NAME" ]; then
-                echo "No Frigate pod found. Exiting."
-                exit 0
+                echo "No Frigate pod found in namespace $NAMESPACE."
+                exit 1
               fi
 
-              # 2. Run du, specifying the container and silencing warnings
-              # We use 'cut' to ensure we only get the number
-              USAGE_MB=$(kubectl exec $POD_NAME -c frigate -- du -sm /tmp/cache 2>/dev/null | awk '{print $1}')
+              # 2. Get usage (numeric only)
+              USAGE_MB=$(kubectl exec -n $NAMESPACE $POD_NAME -c frigate -- du -sm /tmp/cache | awk '{print $1}')
 
-              # 3. Check if USAGE_MB is a valid number before comparing
-              if [ -n "$USAGE_MB" ] && [ "$USAGE_MB" -eq "$USAGE_MB" ] 2>/dev/null; then
-                if [ "$USAGE_MB" -gt 500 ]; then
-                  echo "Frigate cache is at ${USAGE_MB}MB. Deleting pod..."
-                  kubectl delete $POD_NAME
-                else
-                  echo "Frigate cache is at ${USAGE_MB}MB. Below threshold."
-                fi
+              # 3. Logic check
+              if [[ "$USAGE_MB" -gt "$THRESHOLD" ]]; then
+                echo "Cache is ${USAGE_MB}MB. Restarting..."
+                kubectl delete pod -n $NAMESPACE $POD_NAME
               else
-                echo "Error: Could not retrieve disk usage. (Value: '$USAGE_MB')"
+                echo "Cache is ${USAGE_MB}MB. All good."
               fi
-
           restartPolicy: OnFailure
