@@ -103,8 +103,8 @@ spec:
               name: media
             - name: dshm
               mountPath: /dev/shm
-            - name: tmp
-              mountPath: /tmp
+            - name: cache
+              mountPath: /tmp/cache
             - mountPath: /etc/letsencrypt/live/frigate/fullchain.pem
               name: frigate-ext-tls-volume
               readOnly: true
@@ -132,7 +132,7 @@ spec:
           emptyDir:
             medium: Memory
             sizeLimit: 2Gi
-        - name: tmp
+        - name: cache
           emptyDir:
             medium: Memory
             sizeLimit: 1Gi
