@@ -44,6 +44,25 @@ spec:
         - name: frigate
           image: "ghcr.io/blakeblackshear/frigate:stable-tensorrt"
           imagePullPolicy: IfNotPresent
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - "/bin/sh"
+                  - "-c"
+                  - |
+                    (
+                      while true; do
+                        # Measure /tmp/cache in Megabytes
+                        USAGE_MB=$(du -sm /tmp/cache | awk '{print $1}')
+                        if [ "$USAGE_MB" -gt 500 ]; then
+                          echo "Disk usage at ${USAGE_MB}MB. Killing Frigate..."
+                          # Inside the container, 'kill 1' always hits the main process
+                          kill 1
+                        fi
+                        sleep 60
+                      done
+                    ) &                             
           securityContext:
             {}
           ports:
