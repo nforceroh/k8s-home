@@ -7,15 +7,29 @@ metadata:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: pod-restarter-role
   namespace: camera
+  name: frigate-restarter-role
 rules:
-  - apiGroups: [""]
-    resources: ["pods", "pods/exec"]
-    verbs: ["get", "list", "delete"]
-  - apiGroups: ["apps"]
-    resources: ["deployments"]
-    verbs: ["get", "patch"]
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "delete"] # Allows finding and deleting the pod
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create"] # Required to run 'du' inside the container
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: camera
+  name: frigate-restarter-binding
+subjects:
+- kind: ServiceAccount
+  name: frigate-restarter
+  namespace: camera
+roleRef:
+  kind: Role
+  name: frigate-restarter-role
+  apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
