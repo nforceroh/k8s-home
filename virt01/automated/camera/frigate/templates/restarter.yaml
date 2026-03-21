@@ -31,19 +31,6 @@ roleRef:
   name: frigate-restarter-role
   apiGroup: rbac.authorization.k8s.io
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: frigate-restarter-binding
-  namespace: camera
-subjects:
-  - kind: ServiceAccount
-    name: frigate-restarter
-roleRef:
-  kind: Role
-  name: pod-restarter-role
-  apiGroup: rbac.authorization.k8s.io
----
 apiVersion: batch/v1
 kind: CronJob
 metadata:
