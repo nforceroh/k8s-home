@@ -1,0 +1,64 @@
+---
+# Source: frigate/templates/frigate-storage-alerts.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: frigate-storage-alerts
+  namespace: camera
+  labels:
+    app.kubernetes.io/instance: frigate
+    app.kubernetes.io/name: frigate
+spec:
+  groups:
+    - name: frigate.storage.rules
+      rules:
+        # WARNING: 50% of storage consumed
+        - alert: FrigateStorageUsageWarning
+          expr: |
+            ( (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) - frigate_storage_free_bytes{storage="/tmp/cache"} )
+            / 
+            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.50
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Frigate cache usage > 50%"
+            description: "Storage at {{ $labels.instance }} is {{ $value | humanizePercentage }} full."
+
+        # CRITICAL: 90% of storage consumed
+        - alert: FrigateStorageUsageCritical
+          expr: |
+            ( (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) - frigate_storage_free_bytes{storage="/tmp/cache"} )
+            / 
+            (frigate_storage_free_bytes{storage="/tmp/cache"} + frigate_storage_used_bytes{storage="/tmp/cache"}) > 0.90
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Frigate cache usage > 90%"
+            description: "Storage at {{ $labels.instance }} is {{ $value | humanizePercentage }} full."
+---
+# Source: frigate/templates/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: frigate-metrics
+  # Place this in the SAME namespace as your Prometheus instance
+  namespace: monitoring 
+  labels:
+    # Adding this just in case your Prometheus isn't truly set to {} 
+    # and requires a standard release label
+    release: prometheus 
+spec:
+  # This is the crucial part to find the Service in 'camera'
+  namespaceSelector:
+    matchNames:
+      - camera
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: frigate
+      app.kubernetes.io/name: frigate
+  endpoints:
+  - port: http
+    path: /api/metrics
+    interval: 30s

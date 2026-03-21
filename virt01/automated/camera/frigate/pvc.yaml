@@ -1,0 +1,45 @@
+---
+# Source: frigate/charts/frigate/templates/config-pvc.yaml
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: frigate-config
+  annotations:
+    "helm.sh/resource-policy": keep
+  labels:
+    app.kubernetes.io/name: frigate
+    helm.sh/chart: frigate-7.8.0
+    app.kubernetes.io/instance: frigate
+    app.kubernetes.io/managed-by: Helm
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: "10Gi"
+---
+# Source: frigate/templates/frigate-cache-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frigate-cache
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi # Adjust the size as needed for your application
+  storageClassName: openebs-zfspv-lz4
+---
+# Source: frigate/templates/frigate-media-pvc.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frigate-media
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi # Adjust the size as needed for your application
+  storageClassName: frigate-local-storage

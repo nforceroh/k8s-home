@@ -1,0 +1,63 @@
+---
+# Source: frigate/charts/frigate/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frigate
+  labels:
+    app.kubernetes.io/name: frigate
+    helm.sh/chart: frigate-7.8.0
+    app.kubernetes.io/instance: frigate
+    app.kubernetes.io/version: "0.14.1"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - "frigate.k3s.nf.lab"
+      secretName: frigate-tls
+  rules:
+    - host: "frigate.k3s.nf.lab"
+      http:
+        paths:
+          - path: /
+            pathType: "ImplementationSpecific"
+            backend:
+              service:
+                name: frigate
+                port:
+                  name: http
+---
+# Source: frigate/templates/external-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frigate-ext
+  namespace: camera
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+spec:
+  ingressClassName: traefik
+  tls:
+    - hosts:
+        - frigate.nforcer.com
+      secretName: frigate-ext-tls
+  rules:
+    - host: frigate.nforcer.com
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frigate
+                port:
+                  name: http-auth

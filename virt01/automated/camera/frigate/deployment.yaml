@@ -1,0 +1,142 @@
+---
+# Source: frigate/charts/frigate/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate
+  labels:
+    app.kubernetes.io/name: frigate
+    helm.sh/chart: frigate-7.8.0
+    app.kubernetes.io/instance: frigate
+    app.kubernetes.io/version: "0.14.1"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frigate
+      app.kubernetes.io/instance: frigate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: frigate
+        app.kubernetes.io/instance: frigate
+      annotations:
+        checksum/configmap: 9d7bdd763a9101327b58736b40e102f4f87239574a46f6557ae40774f4c6511f
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+        - name: copyconfig
+          image: "ghcr.io/blakeblackshear/frigate:stable-tensorrt"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /config.yml
+              subPath: config.yml
+              name: configmap
+            - mountPath: /config
+              name: config
+          command: [ "cp" ]
+          args: [ "-v", "/config.yml", "/config/config.yml" ]
+      containers:
+        - name: frigate
+          image: "ghcr.io/blakeblackshear/frigate:stable-tensorrt"
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            {}
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+            - name: http-auth
+              containerPort: 8971
+              protocol: TCP
+            - name: rtmp
+              containerPort: 1935
+              protocol: TCP
+            - name: rtsp
+              containerPort: 8554
+              protocol: TCP
+            - name: webrtc-udp
+              containerPort: 8555
+              protocol: UDP
+            - name: webrtc-tcp
+              containerPort: 8555
+              protocol: TCP
+            - name: go2rtc-admin
+              containerPort: 1984
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 30
+            failureThreshold: 5
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 30
+            failureThreshold: 5
+            timeoutSeconds: 10
+          env:
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: "all"
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: "all"
+            - name: TZ
+              value: "America/New_York"
+          envFrom:
+            - secretRef:
+                name: frigate-config
+          volumeMounts:
+            - mountPath: /config
+              name: config
+            - mountPath: /data
+              name: data
+            - mountPath: /media
+              name: media
+            - name: dshm
+              mountPath: /dev/shm
+            - name: tmp
+              mountPath: /tmp
+            - mountPath: /etc/letsencrypt/live/frigate/fullchain.pem
+              name: frigate-ext-tls-volume
+              readOnly: true
+              subPath: tls.crt
+            - mountPath: /etc/letsencrypt/live/frigate/privkey.pem
+              name: frigate-ext-tls-volume
+              readOnly: true
+              subPath: tls.key
+          resources:
+            limits:
+              nvidia.com/gpu: 1
+      volumes:
+        - name: configmap
+          configMap:
+            name: frigate
+        - name: config
+          persistentVolumeClaim:
+            claimName: frigate-config
+        - name: data
+          emptyDir: {}
+        - name: media
+          persistentVolumeClaim:
+            claimName: frigate-media
+        - name: dshm
+          emptyDir:
+            medium: Memory
+            sizeLimit: 2Gi
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Gi
+        - name: frigate-ext-tls-volume
+          secret:
+            defaultMode: 420
+            secretName: frigate-ext-tls

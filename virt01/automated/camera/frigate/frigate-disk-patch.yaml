@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frigate # Ensure this matches your deployment name
+spec:
+  template:
+    spec:
+      # Allows the sidecar to see and kill the Frigate process
+      shareProcessNamespace: true
+      containers:
+      - name: disk-watcher
+        image: busybox
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            while true; do
+              # Calculate usage in Megabytes
+              USAGE_MB=$(du -sm /tmp/cache | awk '{print $1}')
+              
+              if [ "$USAGE_MB" -gt 500 ]; then
+                echo "Disk usage at ${USAGE_MB}MB (Limit 500MB). Restarting Frigate..."
+                # Kills the main Frigate process to trigger a K8s restart
+                pkill -f python3 || kill 1
+              fi
+              sleep 60
+            done
+        volumeMounts:
+        - name: cache # Ensure this matches the volume name in your deployment
+          mountPath: /tmp/cache
