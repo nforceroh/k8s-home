@@ -77,6 +77,7 @@ frigate:
       enabled: true        
       skipuninstall: true
       size: 10Gi
+      existingClaim: frigate-config
     media:
       enabled: true        
       skipuninstall: true    
