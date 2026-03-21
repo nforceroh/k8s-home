@@ -7,11 +7,6 @@ metadata:
   namespace: camera
   annotations:
     "helm.sh/resource-policy": keep
-  labels:
-    app.kubernetes.io/name: frigate
-    helm.sh/chart: frigate-7.8.0
-    app.kubernetes.io/instance: frigate
-    app.kubernetes.io/managed-by: Helm
 spec:
   accessModes:
     - "ReadWriteOnce"
@@ -26,6 +21,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: frigate-media
   namespace: camera
+  annotations:
+    "helm.sh/resource-policy": keep
 spec:
   accessModes:
     - ReadWriteOnce
