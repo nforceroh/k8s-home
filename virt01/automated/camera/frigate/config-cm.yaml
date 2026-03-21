@@ -87,24 +87,24 @@ data:
         record: preset-record-generic-audio-copy
       retry_interval: 10
     
-    detectors:
-      onnx:
-        type: onnx
+    # detectors:
+    #   onnx:
+    #     type: onnx
     
-    model:
-      # model_type: yolox
-      # width: 640
-      # height: 640
-      # input_tensor: nchw
-      # input_dtype: float_denorm
-      # path: /config/model_cache/yolox_l.onnx
-      model_type: yolonas
-      width: 320 # <--- should match whatever was set in notebook
-      height: 320 # <--- should match whatever was set in notebook
-      input_pixel_format: bgr
-      input_tensor: nchw
-      path: /config/model_cache/yolo_nas_s.onnx
-      labelmap_path: /labelmap/coco-80.txt
+    # model:
+    #   # model_type: yolox
+    #   # width: 640
+    #   # height: 640
+    #   # input_tensor: nchw
+    #   # input_dtype: float_denorm
+    #   # path: /config/model_cache/yolox_l.onnx
+    #   model_type: yolonas
+    #   width: 320 # <--- should match whatever was set in notebook
+    #   height: 320 # <--- should match whatever was set in notebook
+    #   input_pixel_format: bgr
+    #   input_tensor: nchw
+    #   path: /config/model_cache/yolo_nas_s.onnx
+    #   labelmap_path: /labelmap/coco-80.txt
     
     objects:
       track:

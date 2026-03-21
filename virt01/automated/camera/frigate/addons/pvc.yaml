@@ -4,6 +4,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: frigate-config
+  namespace: camera
   annotations:
     "helm.sh/resource-policy": keep
   labels:
@@ -17,12 +18,14 @@ spec:
   resources:
     requests:
       storage: "10Gi"
+  storageClassName: openebs-zfspv-lz4
 ---
 # Source: frigate/templates/frigate-media-pvc.yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: frigate-media
+  namespace: camera
 spec:
   accessModes:
     - ReadWriteOnce
