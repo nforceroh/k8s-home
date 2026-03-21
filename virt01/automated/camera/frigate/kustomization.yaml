@@ -12,7 +12,6 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - sc.yaml
   - pvc.yaml
   - secrets.yaml
   - config-cm.yaml
