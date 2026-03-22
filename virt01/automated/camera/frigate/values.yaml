@@ -93,12 +93,12 @@ frigate:
       #password: password
       stats_interval: 60
 
-    auth:
+    # auth:
       # Optional: Enable authentication
-      enabled: True
+      # enabled: True
       # Optional: Reset the admin user password on startup (default: shown below)
       # New password is printed in the logs
-      reset_admin_password: true
+      # reset_admin_password: true
 
     tls:
       # Optional: Enable TLS for port 8971 (default: shown below)
