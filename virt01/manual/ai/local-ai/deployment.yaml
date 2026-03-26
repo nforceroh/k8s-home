@@ -24,7 +24,7 @@ spec:
         - name: GGML_CUDA_NO_FLASH_ATTENTION
           value: "1"
         - name: EXTERNAL_URL
-          value: "http://localhost:8080"
+          value: "https://localai.k3s.nf.lab"
         - name: LOCALAI_CONFIG_DIR
           value: "/configuration"
         - name: LOCALAI_MODELS_PATH
