@@ -28,6 +28,9 @@ gpu-operator:
   dcgm:
     enabled: true # Enable for health monitoring
 
+  vgpuDeviceManager:
+    enabled: false
+    
   dcgmExporter:
     enabled: true
     serviceMonitor:
