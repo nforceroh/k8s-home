@@ -1,6 +1,8 @@
 gpu-operator:
   cdi:
     enabled: true 
+  operator:
+    cleanupCRD: true
 
   nfd:
     enabled: true
@@ -10,7 +12,7 @@ gpu-operator:
     config:
       create: false
       name: time-slicing-config-all
-      default: "time-slicing-config-all" 
+      default: "Tesla-P40"
 
   driver:
     enabled: false
@@ -30,7 +32,7 @@ gpu-operator:
 
   vgpuDeviceManager:
     enabled: false
-    
+
   dcgmExporter:
     enabled: true
     serviceMonitor:
