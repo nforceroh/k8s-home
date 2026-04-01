@@ -1,7 +1,7 @@
 apiVersion: v2
 name: idrac-exporter
-version: 1.0.8
+version: 1.0.9
 dependencies:
 - name: idrac-exporter
   repository: https://mrlhansen.github.io/idrac_exporter
-  version: 2.4.1
+  version: 2.4.2
