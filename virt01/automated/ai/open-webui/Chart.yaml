@@ -1,7 +1,7 @@
 apiVersion: v2
 name: open-webui
-version: 1.0.16
+version: 1.0.17
 dependencies:
 - name: open-webui
   repository: https://helm.openwebui.com/
-  version: 12.11.0
+  version: 12.13.0

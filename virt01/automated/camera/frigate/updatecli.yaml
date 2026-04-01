@@ -16,4 +16,3 @@ targets:
       file: "Chart.yaml"
       key: "$.dependencies[0].version"
       versionIncrement: "patch"
-
