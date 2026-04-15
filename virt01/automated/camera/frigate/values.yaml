@@ -2,8 +2,8 @@
 frigate:
   image:
     repository: ghcr.io/blakeblackshear/frigate
-    tag: 0.16.4-tensorrt
-    # tag: stable-tensorrt
+    tag: stable-tensorrt
+    # tag: 0.16.4-tensorrt
 
   shmSize: 2Gi
   tmpfs:
