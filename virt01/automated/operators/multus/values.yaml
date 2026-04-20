@@ -83,14 +83,40 @@ config:
   cni_conf:
     name: multus-cni-network
     type: multus
-    kubeconfig: /etc/cni/net.d/multus.d/multus.kubeconfig
     cniVersion: 0.3.1
+    kubeconfig: /etc/cni/net.d/multus.d/multus.kubeconfig
     confDir: /etc/cni/net.d
     cniDir: /var/lib/cni/multus
     binDir: /opt/cni/bin
     logFile: /var/log/multus.log
-    logLevel: panic
+    logLevel: debug  # Changed from panic to debug for troubleshooting
     systemNamespaces: ["kube-system"]
+    # Add this section below:
+    delegates:
+      - name: k8s-pod-network
+        cniVersion: 0.3.1
+        plugins:
+          - type: calico
+            datastore_type: kubernetes
+            nodename_file_optional: false
+            log_level: Info
+            log_file_path: /var/log/calico/cni/cni.log
+            container_settings:
+              allow_ip_forwarding: false
+            policy:
+              type: k8s
+            kubernetes:
+              kubeconfig: /etc/cni/net.d/calico-kubeconfig
+              k8s_api_root: https://10.96.0.1:443
+            ipam:
+              type: calico-ipam
+              assign_ipv4: "true"
+              assign_ipv6: "false"
+          - type: portmap
+            snat: true
+            capabilities:
+              portMappings: true
+
 
 manifests:
   serviceAccount: true
