@@ -14,26 +14,29 @@ spec:
     spec:
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
-
       tolerations:
         - operator: "Exists"
-
       containers:
         - name: dhcp-daemon
           image: antrea/cni-dhcp-daemon:latest
           securityContext:
             privileged: true
-
           volumeMounts:
             - name: run-cni
               mountPath: /run/cni
-
+            # Add this mount:
+            - name: host-netns
+              mountPath: /var/run/netns
+              mountPropagation: HostToContainer 
           env:
             - name: LOG_LEVEL
               value: "debug"
-
       volumes:
         - name: run-cni
           hostPath:
             path: /run/cni
             type: DirectoryOrCreate
+        # Add this volume:
+        - name: host-netns
+          hostPath:
+            path: /var/run/netns
