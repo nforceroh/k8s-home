@@ -7,4 +7,4 @@ appVersion: "1.0"
 dependencies:
   - name: multus
     version: "*"
-    repository: https://k8snetworkplumbingwg.github.io/helm-charts
+#    repository: https://k8snetworkplumbingwg.github.io/helm-charts
