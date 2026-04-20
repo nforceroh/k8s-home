@@ -208,3 +208,23 @@ spec:
     kind: StatefulSet
     jsonPointers:
     - /spec/volumeClaimTemplates/metadata/creationTimestamp
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: silence-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/silence-operator
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: silence-operator
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]      
