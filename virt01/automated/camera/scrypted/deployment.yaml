@@ -17,8 +17,8 @@ spec:
     metadata:
       labels:
         app: scrypted
-      # annotations:
-      #   k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-camera" }]'
+      annotations:
+        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-camera" }]'
     spec:
       runtimeClassName: nvidia
       serviceAccountName: scrypted-sa
