@@ -61,7 +61,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: multus-cni
+  name: multus
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -69,11 +69,11 @@ spec:
   project: argocd-virt01
   source:
     repoURL: 'https://github.com/nforceroh/k8s-home.git'
-    path: virt01/automated/operators/multus-cni
+    path: virt01/automated/operators/multus
     targetRevision: main
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: multus-cni
+    namespace: multus
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: [CreateNamespace=true, ServerSideApply=true]
