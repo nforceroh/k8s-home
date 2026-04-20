@@ -32,7 +32,8 @@ spec:
       containers:
       - name: kube-dhcp
         # Based on: https://github.com/k8snetworkplumbingwg/reference-deployment/blob/master/multus-dhcp/Dockerfile
-        image: quay.io/aneeshkp/cni-dhcp-daemon:latest
+        # image: quay.io/aneeshkp/cni-dhcp-daemon:latest
+        image: mellanox/dhcp-cni:latest
         resources:
           requests:
             cpu: "100m"
