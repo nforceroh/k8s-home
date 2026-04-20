@@ -90,13 +90,6 @@ config:
     binDir: /opt/cni/bin
     logFile: /var/log/multus.log
     logLevel: panic
-    capabilities:
-      portMappings: true
-    readinessindicatorfile: ""
-    namespaceIsolation: false
-    delegates:
-      - name: calico
-        type: calico
     systemNamespaces: ["kube-system"]
 
 manifests:
