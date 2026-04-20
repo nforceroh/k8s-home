@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cni-dhcp-daemon
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: cni-dhcp-daemon
+  template:
+    metadata:
+      labels:
+        app: cni-dhcp-daemon
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+
+      tolerations:
+        - operator: "Exists"
+
+      containers:
+        - name: dhcp-daemon
+          image: antrea/cni-dhcp-daemon:latest
+          securityContext:
+            privileged: true
+
+          volumeMounts:
+            - name: run-cni
+              mountPath: /run/cni
+
+          env:
+            - name: LOG_LEVEL
+              value: "debug"
+
+      volumes:
+        - name: run-cni
+          hostPath:
+            path: /run/cni
+            type: DirectoryOrCreate

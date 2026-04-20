@@ -94,7 +94,7 @@ config:
       portMappings: true
     readinessindicatorfile: ""
     namespaceIsolation: false
-    clusterNetwork: k8s-pod-network
+    clusterNetwork: ""
     defaultNetwork: []
     delegates: []
     systemNamespaces: ["kube-system"]
