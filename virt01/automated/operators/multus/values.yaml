@@ -95,9 +95,7 @@ config:
     readinessindicatorfile: ""
     namespaceIsolation: false
     clusterNetwork: ""
-    defaultNetwork:
-      - name: calico
-        type: calico
+    defaultNetwork: k8s-pod-network
     delegates: []
     systemNamespaces: ["kube-system"]
 
