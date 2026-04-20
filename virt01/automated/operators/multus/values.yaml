@@ -94,9 +94,9 @@ config:
       portMappings: true
     readinessindicatorfile: ""
     namespaceIsolation: false
-    clusterNetwork: ""
-    defaultNetwork: k8s-pod-network
-    delegates: []
+    delegates:
+      - name: calico
+        type: calico
     systemNamespaces: ["kube-system"]
 
 manifests:
