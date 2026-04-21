@@ -1,35 +1,26 @@
-apiVersion: monitoring.rhobs.io/v1alpha1
+apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
-  name: grouped-single-node-silences
+  name: single-node-grouped-silence
   namespace: monitoring
 spec:
   matchers:
-    # GROUP 1: Etcd Quorum (2 alerts)
+    # Group 1: Etcd & Control Plane (7 instances)
     - name: alertname
-      value: (etcdMembersDown|etcdInsufficientMembers)
-      isRegex: true
+      value: (etcdMembersDown|etcdInsufficientMembers|KubeControllerManagerDown|KubeSchedulerDown|KubeProxyDown)
+      matchType: "=~"
 
-    # GROUP 2: Control Plane Availability (3 alerts)
-    - name: alertname
-      value: (KubeControllerManagerDown|KubeSchedulerDown|KubeProxyDown)
-      isRegex: true
-
-    # GROUP 3: Target Connectivity (5 alerts)
+    # Group 2: Connectivity (5 instances)
     - name: alertname
       value: "TargetDown"
-      isRegex: false
+      matchType: "="
 
-    # GROUP 4: Storage & CDI (2 alerts)
+    # Group 3: Monitoring Rules (4 instances)
     - name: alertname
-      value: (CDIDefaultStorageClassDegraded|CDIStorageProfilesIncomplete)
-      isRegex: true
+      value: "PrometheusRuleFailures"
+      matchType: "="
 
-    # GROUP 5: Monitoring & Infrastructure (5 alerts)
+    # Group 4: Storage & Infrastructure (1 instance)
     - name: alertname
-      value: (PrometheusRuleFailures|NodeFilesystemAlmostOutOfSpace)
-      isRegex: true
-
-  createdBy: "admin"
-  comment: "default alerts grouped by functional component for a single-node cluster"
-  duration: 8760h
+      value: (CDIDefaultStorageClassDegraded|CDIStorageProfilesIncomplete|NodeFilesystemAlmostOutOfSpace)
+      matchType: "=~"
