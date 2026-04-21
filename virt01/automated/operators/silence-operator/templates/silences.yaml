@@ -1,0 +1,35 @@
+apiVersion: monitoring.rhobs.io/v1alpha1
+kind: Silence
+metadata:
+  name: grouped-single-node-silences
+  namespace: monitoring
+spec:
+  matchers:
+    # GROUP 1: Etcd Quorum (2 alerts)
+    - name: alertname
+      value: (etcdMembersDown|etcdInsufficientMembers)
+      isRegex: true
+
+    # GROUP 2: Control Plane Availability (3 alerts)
+    - name: alertname
+      value: (KubeControllerManagerDown|KubeSchedulerDown|KubeProxyDown)
+      isRegex: true
+
+    # GROUP 3: Target Connectivity (5 alerts)
+    - name: alertname
+      value: "TargetDown"
+      isRegex: false
+
+    # GROUP 4: Storage & CDI (2 alerts)
+    - name: alertname
+      value: (CDIDefaultStorageClassDegraded|CDIStorageProfilesIncomplete)
+      isRegex: true
+
+    # GROUP 5: Monitoring & Infrastructure (5 alerts)
+    - name: alertname
+      value: (PrometheusRuleFailures|NodeFilesystemAlmostOutOfSpace)
+      isRegex: true
+
+  createdBy: "admin"
+  comment: "default alerts grouped by functional component for a single-node cluster"
+  duration: 8760h
