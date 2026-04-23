@@ -18,5 +18,5 @@ patches:
         path: /data/prometheus.conf
         value: |
           location /prometheus/ {
-              proxy_pass http://monitoring.svc;
+              proxy_pass http://kube-prometheus-stack-prometheus.monitoring.svc:9090;
           }
