@@ -25,7 +25,4 @@ spec:
             - name: byparr-port
               containerPort: 8191
               protocol: TCP
-          resources:
-            requests:
-              cpu: 20m
-              memory: 100Mi
+
