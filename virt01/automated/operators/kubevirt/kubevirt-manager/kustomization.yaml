@@ -7,3 +7,16 @@ resources:
   - https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/main/kubernetes/bundled.yaml
   - https://raw.githubusercontent.com/kubevirt-manager/kubevirt-manager/refs/heads/main/kubernetes/prometheus-config.yaml
   - ingress.yaml
+
+# Patch the ConfigMap to use your actual Prometheus service
+patches:
+  - target:
+      kind: ConfigMap
+      name: prometheus-config
+    patch: |-
+      - op: replace
+        path: /data/prometheus.conf
+        value: |
+          location /prometheus/ {
+              proxy_pass http://monitoring.svc;
+          }
