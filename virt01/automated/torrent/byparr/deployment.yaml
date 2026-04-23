@@ -1,0 +1,31 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: byparr
+  labels:
+    app: byparr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: byparr
+  template:
+    metadata:
+      labels:
+        app: byparr
+    spec:
+      serviceAccountName: byparr-sa
+      containers:
+        - name: byparr
+          image: ghcr.io/thephaseless/byparr:latest
+          imagePullPolicy: Always
+          ports:
+            - name: byparr-port
+              containerPort: 8191
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
