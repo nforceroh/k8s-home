@@ -1,26 +1,43 @@
 apiVersion: observability.giantswarm.io/v1alpha2
 kind: Silence
 metadata:
-  name: single-node-grouped-silence
+  name: silence-etcd-control-plane
   namespace: monitoring
 spec:
   matchers:
-    # Group 1: Etcd & Control Plane (7 instances)
     - name: alertname
       value: (etcdMembersDown|etcdInsufficientMembers|KubeControllerManagerDown|KubeSchedulerDown|KubeProxyDown)
       matchType: "=~"
-
-    # Group 2: Connectivity (5 instances)
+---
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: silence-targets
+  namespace: monitoring
+spec:
+  matchers:
     - name: alertname
-      value: "TargetDown"
+      value: TargetDown
       matchType: "="
-
-    # Group 3: Monitoring Rules (4 instances)
+---
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: silence-rules
+  namespace: monitoring
+spec:
+  matchers:
     - name: alertname
-      value: "PrometheusRuleFailures"
+      value: PrometheusRuleFailures
       matchType: "="
-
-    # Group 4: Storage & Infrastructure (1 instance)
+---
+apiVersion: observability.giantswarm.io/v1alpha2
+kind: Silence
+metadata:
+  name: silence-storage-node
+  namespace: monitoring
+spec:
+  matchers:
     - name: alertname
       value: (CDIDefaultStorageClassDegraded|CDIStorageProfilesIncomplete|NodeFilesystemAlmostOutOfSpace)
       matchType: "=~"
