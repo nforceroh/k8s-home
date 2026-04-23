@@ -5,8 +5,6 @@ metadata:
   labels:
     app: deluge
 spec:
-  restartPolicy: OnFailure  # or Never, depending on your preference
-  activeDeadlineSeconds: 3600  # Pod dies after 1 hour of failures
   replicas: 1
   strategy:
     type: Recreate
@@ -22,6 +20,7 @@ spec:
         backup.velero.io/backup-volumes: deluge-pv
     spec:
       serviceAccountName: deluge-sa
+      restartPolicy: Always 
       containers:
         - name: wireguard
 #          image: harbor.nf.lab/homelab/wireguard-go:latest
