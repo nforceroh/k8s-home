@@ -68,6 +68,9 @@ spec:
             requests:
               memory: 10Mi
               cpu: 25m
+            limits:
+              memory: "16Gi"
+              cpu: 500m
         - name: deluge
           image: lscr.io/linuxserver/deluge:2.2.0-r1-ls364
           imagePullPolicy: Always
