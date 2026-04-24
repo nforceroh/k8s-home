@@ -250,6 +250,9 @@ spec:
       name: cdis.cdi.kubevirt.io
       jqPathExpressions:
         - .spec.versions[].schema
+        - .spec.conversion.webhook.clientConfig.caBundle # <--- ADD THIS
+        - .spec.conversion.webhook.clientConfig.service.path # <--- ADD THIS
+
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions:
