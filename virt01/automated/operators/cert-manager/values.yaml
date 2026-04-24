@@ -5,6 +5,11 @@ cert-manager:
   crds:
     enabled: true
     keep: true
+
+  extraArgs:
+    - --dns01-recursive-nameservers-only
+    - --dns01-recursive-nameservers=10.0.0.2:53,10.0.0.3:53
+    
   podDnsPolicy: "None"
   podDnsConfig:
     nameservers:
