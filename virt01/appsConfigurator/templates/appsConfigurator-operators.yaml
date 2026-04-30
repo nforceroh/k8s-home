@@ -275,7 +275,5 @@ spec:
     server: https://kubernetes.default.svc
     namespace: mariadb-system
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-    createNamespace: true
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
