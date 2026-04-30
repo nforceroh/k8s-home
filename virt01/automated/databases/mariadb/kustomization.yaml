@@ -14,14 +14,3 @@ resources:
 generatorOptions:
   disableNameSuffixHash: true
 
-patches:
-  - target:
-      kind: PersistentVolumeClaim
-      name: data-mariadb-instance-0 # Follows pattern: data-<metadata.name>-0
-    patch: |-
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io~1sync-options
-        value: Delete=false
-      - op: add
-        path: /metadata/finalizers
-        value: ["kubernetes.io/pvc-protection"]

@@ -5,8 +5,8 @@ metadata:
   namespace: databases
 spec:
   rootPasswordSecretKeyRef:
-    name: mariadb-auth
-    key: password
+    name: mariadb-auth-test
+    key: mariadb-password
   
   storage:
     size: 20Gi
