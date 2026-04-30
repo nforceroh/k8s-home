@@ -30,7 +30,7 @@ spec:
             - name: VIMBADMIN_DB_PASSWORD
               value: "jJ6GcngdNAchAB8y"
             - name: VIMBADMIN_DB_HOST
-              value: "mariadb-svc.databases.svc.cluster.local"
+              value: "mariadb.databases.svc.cluster.local"
             - name: SMTP_HOST
               value: "smtp.nf.lab"
             - name: ADMIN_EMAIL
