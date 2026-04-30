@@ -19,3 +19,4 @@ phpmyadmin:
   db:
     port: 3306
     host: mariadb-svc.databases.svc.cluster.local
+    allowArbitraryServer: true
