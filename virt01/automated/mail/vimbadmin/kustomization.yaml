@@ -13,4 +13,5 @@ resources:
   - serviceaccount.yaml
   - ingress.yaml
   - configmap.yaml
+  - vimbadmin-secrets-sealed.yaml
 

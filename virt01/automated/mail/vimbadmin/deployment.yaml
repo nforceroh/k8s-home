@@ -19,24 +19,14 @@ spec:
       serviceAccountName: vimbadmin-sa
       containers:
         - name: vimbadmin
-#          image: harbor.nf.lab/homelab/vimbadmin:latest
           image: ghcr.io/nforceroh/k8s-vimbadmin:latest
           imagePullPolicy: Always
           env:
-            - name: VIMBADMIN_DB_NAME
-              value: "mail"
-            - name: VIMBADMIN_DB_USER
-              value: "vimbadmin"
-            - name: VIMBADMIN_DB_PASSWORD
-              value: "jJ6GcngdNAchAB8y"
-            - name: VIMBADMIN_DB_HOST
-              value: "mariadb.databases.svc.cluster.local"
-            - name: SMTP_HOST
-              value: "smtp.nf.lab"
-            - name: ADMIN_EMAIL
-              value: "sylvain@nforcer.com"
             - name: TZ
               value: "America/New_York"
+          envFrom:
+          - secretRef:
+              name: vimbadmin-secrets
           ports:
             - containerPort: 8080
               name: vimbadmin-port
