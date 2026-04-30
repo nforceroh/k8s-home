@@ -1,7 +1,8 @@
 mariadb-operator:
   # Installs the CRDs along with the operator
   # Vital for a clean ArgoCD sync
-  installCRDs: true
+  crds:
+    enabled: true
 
   # Optional: for a single node, you can reduce resource usage
   resources:
