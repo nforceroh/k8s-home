@@ -1,22 +1,33 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: MariaDB
 metadata:
-  name: mariadb-test
+  name: mariadb
   namespace: databases
 spec:
   rootPasswordSecretKeyRef:
-    name: mariadb-auth-test
+    name: mariadb-auth
     key: mariadb-password
   
   storage:
-    size: 20Gi
+    size: 10Gi
     storageClassName: openebs-zfspv-lz4
-    cleanup: false 
-
-  volumeClaimTemplate:
-    metadata:
-      annotations:
-        argocd.argoproj.io/sync-options: Delete=false
-        helm.sh/resource-policy: keep
 
   replicas: 1
+  metrics:
+    enabled: true
+
+  myCnf: |
+    [mariadb]
+    bind-address=*
+    default_storage_engine=InnoDB
+    binlog_format=row
+    innodb_autoinc_lock_mode=2
+    innodb_buffer_pool_size=800M
+    max_allowed_packet=256M
+
+  service:
+    type: LoadBalancer
+    metadata:
+      annotations:
+        metallb.io/address-pool: vlan1000-apps
+        external-dns.alpha.kubernetes.io/hostname: mariadb.k3s.nf.lab        
