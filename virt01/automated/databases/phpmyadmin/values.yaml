@@ -2,7 +2,7 @@
 
 phpmyadmin:
   phpmyadmin:
-    hosts: "mariadb-svc.databases.svc.cluster.local,mariadb-test.databases.svc.cluster.local"
+    hosts: "mariadb.databases.svc.cluster.local,mariadb-svc.databases.svc.cluster.local,mariadb-test.databases.svc.cluster.local"
   ingress:
     enabled: true
     hostname: db.k3s.nf.lab
