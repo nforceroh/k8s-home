@@ -10,7 +10,6 @@ namespace: databases
 resources:
   - mariadb-auth-sealed.yaml
   - database.yaml
-  - backup-schedule.yaml
 
 generatorOptions:
   disableNameSuffixHash: true
