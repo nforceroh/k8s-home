@@ -24,6 +24,8 @@ spec:
     innodb_autoinc_lock_mode=2
     innodb_buffer_pool_size=800M
     max_allowed_packet=256M
+    [client]
+    port=3306
 
   service:
     type: LoadBalancer
