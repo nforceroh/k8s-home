@@ -1,0 +1,22 @@
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: MariaDB
+metadata:
+  name: mariadb-test
+  namespace: databases
+spec:
+  rootPasswordSecretKeyRef:
+    name: mariadb-auth
+    key: password
+  
+  storage:
+    size: 20Gi
+    storageClassName: openebs-zfspv-lz4
+    cleanup: false 
+
+  volumeClaimTemplate:
+    metadata:
+      annotations:
+        argocd.argoproj.io/sync-options: Delete=false
+        helm.sh/resource-policy: keep
+
+  replicas: 1

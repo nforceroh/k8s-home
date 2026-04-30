@@ -9,6 +9,7 @@ namespace: databases
 
 resources:
   - cluster.yaml
+  - backup-schedule.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

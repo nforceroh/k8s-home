@@ -1,0 +1,9 @@
+apiVersion: v2
+name: mariadb-operator
+version: 1.0.0
+dependencies:
+- name: mariadb-operator
+  repository: https://helm.mariadb.com/mariadb-operator
+  version: 26.3.0
+sources:
+  - https://helm.mariadb.com/mariadb-operator

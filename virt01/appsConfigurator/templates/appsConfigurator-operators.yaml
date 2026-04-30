@@ -259,3 +259,23 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
       # - Replace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-operator
+  namespace: argocd
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/mariadb-operator
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: mariadb-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    createNamespace: true

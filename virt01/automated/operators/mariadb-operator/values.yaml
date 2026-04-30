@@ -1,0 +1,16 @@
+mariadb-operator:
+  # Installs the CRDs along with the operator
+  # Vital for a clean ArgoCD sync
+  installCRDs: true
+
+  # Optional: for a single node, you can reduce resource usage
+  resources:
+    limits:
+      cpu: 300m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+
+metrics:
+  enabled: true
