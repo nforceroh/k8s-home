@@ -1,10 +1,8 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/phpmyadmin/values.yaml
 
 phpmyadmin:
-  image:
-    registry: docker.io
-    repository: bitnami/phpmyadmin
-
+  phpmyadmin:
+    hosts: "mariadb-svc.databases.svc.cluster.local,mariadb-test.databases.svc.cluster.local"
   ingress:
     enabled: true
     hostname: db.k3s.nf.lab
@@ -14,9 +12,12 @@ phpmyadmin:
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
       external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
-    tls: true
-
-  db:
-    port: 3306
-    host: mariadb-svc.databases.svc.cluster.local
-    allowArbitraryServer: true
+    hosts:
+      - host: db.k3s.nf.lab
+        paths:
+          - path: /
+            pathType: Prefix
+    tls:
+      - secretName: phpmyadmin-tls
+        hosts:
+          - db.k3s.nf.lab

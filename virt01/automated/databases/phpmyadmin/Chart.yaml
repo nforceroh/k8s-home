@@ -1,9 +1,9 @@
 apiVersion: v2
 name: phpmyadmin
-version: 1.0.5
+version: 1.0.6
 dependencies:
 - name: phpmyadmin
-  repository: oci://registry-1.docker.io/bitnamicharts
-  version: 20.0.0
+  repository: https://repo.helmforge.dev/helmforge
+  version: 1.1.8
 sources:
-  - https://github.com/bitnami/charts/tree/main/bitnami/phpmyadmin
+  - https://github.com/helmforgedev/charts/blob/main/charts/phpmyadmin/README.md
