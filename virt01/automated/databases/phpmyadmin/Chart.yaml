@@ -2,8 +2,8 @@ apiVersion: v2
 name: phpmyadmin
 version: 1.0.6
 dependencies:
-- name: phpmyadmin
-  repository: https://repo.helmforge.dev/helmforge
+- name: helmforge/phpmyadmin
+  repository: https://repo.helmforge.dev
   version: 1.1.8
 sources:
   - https://github.com/helmforgedev/charts/blob/main/charts/phpmyadmin/README.md
