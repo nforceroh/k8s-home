@@ -71,7 +71,7 @@ spec:
               memory: "16Gi"
               cpu: 500m
         - name: deluge
-          image: lscr.io/linuxserver/deluge:2.2.0-r1-ls364
+          image: lscr.io/linuxserver/deluge:latest
           imagePullPolicy: Always
           env:
             - name: PUID
