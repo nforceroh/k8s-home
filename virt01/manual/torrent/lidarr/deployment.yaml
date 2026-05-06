@@ -22,7 +22,7 @@ spec:
       serviceAccountName: lidarr-sa
       containers:
         - name: lidarr
-          image: harbor.nf.lab/proxy.docker.io/linuxserver/lidarr:latest
+          image: linuxserver/lidarr:latest
           imagePullPolicy: Always
           env:
             - name: PUID
@@ -60,7 +60,7 @@ spec:
           hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/hdd01/Music
+            path: /mnt/ssd01/Music
 #            server: 10.0.0.100
         - name: torrent
           hostPath:
