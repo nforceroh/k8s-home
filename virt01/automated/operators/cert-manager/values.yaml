@@ -8,7 +8,7 @@ cert-manager:
 
   extraArgs:
     - --dns01-recursive-nameservers-only
-    - --dns01-recursive-nameservers=10.0.0.2:53,10.0.0.3:53
+    - --dns01-recursive-nameservers=10.0.0.1:53
 
   podDnsPolicy: "None"
   podDnsConfig:
