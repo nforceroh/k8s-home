@@ -1,0 +1,55 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome-int-ingress-https
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: music.k3s.nf.lab
+      http:
+        paths:
+          - backend:
+              service:
+                name: navidrome-svc
+                port:
+                  number: 4533
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - music.k3s.nf.lab
+      secretName: navidrome-int-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: navidrome-ext-ingress
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: music.nforcer.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: navidrome-svc
+                port:
+                  number: 4533
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - music.nforcer.com
+      secretName: navidrome-ext-cert-tls

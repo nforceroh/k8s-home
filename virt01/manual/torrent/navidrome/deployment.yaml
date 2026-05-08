@@ -1,0 +1,49 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: navidrome
+  labels:
+    app: navidrome
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: navidrome
+  template:
+    metadata:
+      labels:
+        app: navidrome
+    spec:
+      serviceAccountName: navidrome-sa
+      containers:
+        - name: navidrome
+          image: deluan/navidrome:latest
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+            - name: ND_BASEURL
+              value: ""
+          ports:
+            - containerPort: 4533
+              name: navidrome-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: navidrome-pv
+              mountPath: /data
+            - name: music
+              mountPath: /music
+      volumes:
+        - name: navidrome-pv
+          persistentVolumeClaim:
+            claimName: navidrome-pvc
+        - name: music
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: navidrome-svc
+  labels:
+    app: navidrome
+spec:
+  ports:
+    - port: 4533
+      protocol: TCP
+      targetPort: 4533
+      name: navidrome-svc-port
+  selector:
+    app: navidrome

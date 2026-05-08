@@ -8,12 +8,14 @@ cert-manager:
 
   extraArgs:
     - --dns01-recursive-nameservers-only
-    - --dns01-recursive-nameservers=10.0.0.1:53
+    - --dns01-recursive-nameservers=10.0.0.1:53,1.1.1.1:53,8.8.8.8:53
 
   podDnsPolicy: "None"
   podDnsConfig:
     nameservers:
       - "10.0.0.1"
+      - "1.1.1.1"
+      - "8.8.8.8"
 
   prometheus:
     enabled: true
