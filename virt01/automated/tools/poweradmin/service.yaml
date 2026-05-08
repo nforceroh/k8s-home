@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: poweradmin-svc
+  labels:
+    app: poweradmin
+spec:
+  ports:
+    - name: poweradmin-svc-port
+      port: 80
+  selector:
+    app: poweradmin

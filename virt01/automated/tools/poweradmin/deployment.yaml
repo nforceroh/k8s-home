@@ -1,0 +1,35 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: poweradmin
+  labels:
+    app: poweradmin
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: poweradmin
+  template:
+    metadata:
+      labels:
+        app: poweradmin
+    spec:
+      serviceAccountName: poweradmin-sa
+      containers:
+        - name: poweradmin
+          image: ghcr.io/poweradmin/poweradmin:latest
+          imagePullPolicy: Always
+          ports:
+            - name: poweradmin-port
+              containerPort: 80
+          envFrom:
+          - secretRef:
+              name: poweradmin-env
+          resources:
+            requests:
+              cpu: "10m"
+              memory: "128Mi"
