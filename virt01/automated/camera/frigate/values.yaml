@@ -110,7 +110,7 @@ frigate:
     logger:
       logs:
         frigate.record.maintainer: debug
-        
+
     live:
       # Optional: Set the streams configured in go2rtc
       # that should be used for live view in frigate WebUI. (default: name of camera)
@@ -207,9 +207,6 @@ frigate:
 
     record:
       enabled: true
-      retain:
-        days: 14
-        mode: all
       alerts:
         retain:
           days: 30
@@ -220,7 +217,10 @@ frigate:
         retain:
           days: 30
           mode: motion
-
+      continuous:
+        days: 14
+      motion:
+        days: 14
 
     # # NOTE: Can be overridden at the camera level
     # audio:
@@ -290,6 +290,7 @@ frigate:
     #   # Format: {label}: {prompt}
     #   object_prompts:
     #     person: "My special person prompt."
+
 
     go2rtc:
       webrtc:
@@ -467,7 +468,7 @@ frigate:
                 - detect
             - path: rtsp://127.0.0.1:8554/reo_dual_main_garage
               roles:
-                - record          
+                - record
         motion:
           threshold: 50
           contour_area: 50
@@ -572,8 +573,8 @@ frigate:
             - dog
           filters:
             car:
-              mask: 
-                - 0.76,0.277,0.19,0.175,0.192,0.142,0.263,0.12,0.266,0.008,0.783,0.002          
+              mask:
+                - 0.76,0.277,0.19,0.175,0.192,0.142,0.263,0.12,0.266,0.008,0.783,0.002
         record:
           enabled: true
         zones:
@@ -677,7 +678,7 @@ frigate:
         network_bandwidth: true
       version_check: true
 
-    version: 0.16-0
+    version: 0.17-0
     semantic_search:
       enabled: true
       model_size: small
