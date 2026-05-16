@@ -22,13 +22,13 @@ spec:
           image: ghcr.io/xpenno255/wyoming-whisper-cuda:latest
           args:
             - --model
-            - large-v3-turbo
+            - medium
             - --language
             - en
             - --beam-size
             - "1"
             - --compute-type
-            - int8_float16
+            - float32
             - --device
             - cuda
             - --uri

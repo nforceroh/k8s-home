@@ -4,8 +4,10 @@ kind: Kustomization
 namespace: home-assistant
 
 resources:
-  - deployment.yaml
-  - service.yaml
+- deployment.yaml
+- service.yaml
 
-commonLabels:
-  app: whisper
+labels:
+- includeSelectors: true
+  pairs:
+    app: whisper
