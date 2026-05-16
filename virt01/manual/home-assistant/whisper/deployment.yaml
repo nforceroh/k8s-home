@@ -19,8 +19,24 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: whisper
-          image: pedrogaldino/wyoming-whisper-cuda
-          args: [ "--model", "medium", "--language", "en", "--device", "cuda", "--debug" ]
+          image: ghcr.io/xpenno255/wyoming-whisper-cuda:latest
+          args:
+            - --model
+            - large-v3-turbo
+            - --language
+            - en
+            - --beam-size
+            - "1"
+            - --compute-type
+            - int8_float16
+            - --device
+            - cuda
+            - --uri
+            - tcp://0.0.0.0:10300
+            - --data-dir
+            - /data
+            - --download-dir
+            - /data
           imagePullPolicy: Always
           ports:
             - name: whisper-port
