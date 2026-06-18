@@ -1,0 +1,69 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: youtubarr
+  labels:
+    app: youtubarr
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: youtubarr
+  template:
+    metadata:
+      labels:
+        app: youtubarr
+    spec:
+      serviceAccountName: youtubarr-sa
+      containers:
+        - name: youtubarr
+          image: ghcr.io/diredirecrocs/youtubarr:main
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: UMASK
+              value: "000"            
+            - name: TZ
+              value: "America/New_York"
+            - name: MB_USER_AGENT
+              value: "YTM-Lidarr-List/1.0 (sylvain@nforcer.com)"
+            - name: ALLOWED_HOSTS
+              value: "localhost,127.0.0.1,youtubarr.k3s.nf.lab,youtubarr-svc.torrent.svc.cluster.local"
+            - name: CELERY_BROKER_URL
+              value: "redis://redis-master.databases.svc.cluster.local:6379/30"
+            - name: CELERY_RESULT_BACKEND
+              value: "redis://redis-master.databases.svc.cluster.local:6379/30"
+            - name: REFRESH_MINUTES
+              value: "60"
+            - name: YOUTUBE_QUOTA_SAFE_PAGE_SIZE
+              value: "50"
+            - name: DEBUG
+              value: "true"
+          envFrom:
+          - secretRef:
+              name: youtubarr-config
+          ports:
+            - name: http
+              containerPort: 80
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: youtubarr-pv
+              mountPath: /data
+            - name: oauth-secret-volume
+              mountPath: /data/oauth.json
+              subPath: oauth.json              
+      volumes:
+        - name: youtubarr-pv
+          persistentVolumeClaim:
+            claimName: youtubarr-pvc
+        - name: oauth-secret-volume
+          secret:
+            secretName: youtubarr-oauth

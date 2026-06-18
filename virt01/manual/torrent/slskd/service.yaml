@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: slskd-svc
+  labels:
+    app: slskd
+spec:
+  ports:
+    - name: http
+      port: 5030
+      targetPort: 5030
+    - name: slskd-listen
+      port: 50300
+      targetPort: 50300
+  selector:
+    app: slskd

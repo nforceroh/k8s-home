@@ -22,7 +22,7 @@ spec:
       serviceAccountName: lidarr-sa
       containers:
         - name: lidarr
-          image: linuxserver/lidarr:latest
+          image: lscr.io/linuxserver/lidarr:nightly
           imagePullPolicy: Always
           env:
             - name: PUID

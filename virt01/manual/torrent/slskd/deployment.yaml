@@ -1,0 +1,65 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: slskd
+  labels:
+    app: slskd
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: slskd
+  template:
+    metadata:
+      labels:
+        app: slskd
+    spec:
+      serviceAccountName: slskd-sa
+      securityContext:
+        runAsUser: 3000
+        runAsGroup: 3000
+        fsGroup: 3000      
+      containers:
+        - name: slskd
+          image: slskd/slskd:latest
+          imagePullPolicy: Always
+          env:
+            - name: SLSKD_REMOTE_CONFIGURATION
+              value: "true"
+            - name: SLSKD_DOWNLOADS_DIR
+              value: "/music/downloads"
+            - name: SLSKD_INCOMPLETE_DIR
+              value: "/music/incomplete"
+            - name: SLSKD_SHARED_DIR
+              value: "/music/Library"
+            - name: SLSKD_REMOTE_FILE_MANAGEMENT
+              value: "true"
+            - name: TZ
+              value: "America/New_York"
+          envFrom:
+          - secretRef:
+              name: slskd-config
+          ports:
+            - name: http
+              containerPort: 5030
+            - name: slskd-listen
+              containerPort: 50300
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: slskd-pv
+              mountPath: /app
+            - name: music
+              mountPath: /music
+      volumes:
+        - name: slskd-pv
+          persistentVolumeClaim:
+            claimName: slskd-pvc
+        - name: music
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music
