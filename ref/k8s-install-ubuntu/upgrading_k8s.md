@@ -49,6 +49,7 @@ TARGET_K8S_DEB_VERSION="${TARGET_K8S_VERSION}-1.1"
 kubectl get nodes -o wide
 kubectl version --client
 kubeadm version -o short
+kubectl get node "$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')" -o jsonpath='{.status.capacity.pods}{"\n"}'
 ```
 
 Notes:
@@ -56,6 +57,14 @@ Notes:
 - This runbook is for a single-node cluster: draining the only node is optional and causes a full workload outage during the upgrade.
 - Expect a short API/control-plane interruption while static pods are restarted.
 - For multi-node clusters, drain workloads from each node before upgrading that node.
+- kubeadm-managed kubelet config may reset `maxPods` to the default (`110`) unless you reapply your custom value.
+
+Optional variable for custom pod density:
+
+```bash
+# Set only if you want non-default max pods per node
+# TARGET_MAX_PODS="250"
+```
 
 ## 4. Pre-upgrade certificate and backup safety
 
@@ -196,6 +205,13 @@ sudo apt-mark hold kubelet kubectl
 
 ```bash
 sudo systemctl daemon-reload
+
+# Optional: reapply custom kubelet maxPods if set
+if [[ -n "${TARGET_MAX_PODS:-}" ]]; then
+	sudo sed -i '/^maxPods:/d' /var/lib/kubelet/config.yaml
+	echo "maxPods: ${TARGET_MAX_PODS}" | sudo tee -a /var/lib/kubelet/config.yaml >/dev/null
+fi
+
 sudo systemctl restart kubelet
 ```
 
@@ -206,6 +222,7 @@ kubectl get nodes -o wide
 kubectl get pods -A
 kubelet --version
 kubectl version --client
+kubectl get node "$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')" -o jsonpath='{.status.capacity.pods}{"\n"}'
 kubectl uncordon "${NODE_NAME:-$(kubectl get nodes -o jsonpath='{.items[0].metadata.name}')}"
 ```
 
@@ -216,6 +233,43 @@ If pods fail to recover, check:
 ```bash
 kubectl get events -A --sort-by=.lastTimestamp | tail -n 50
 journalctl -u kubelet -n 200 --no-pager
+```
+
+## 13. Optional containerd cleanup
+
+### 1. Check current usage
+
+```bash
+sudo du -sh /var/lib/containerd
+sudo crictl images | wc -l
+sudo crictl ps -a | wc -l
+```
+
+### 2. Remove exited containers and stale pod sandboxes
+
+```bash
+sudo crictl ps -a --state Exited -q | xargs -r sudo crictl rm
+sudo crictl pods --state NotReady -q | xargs -r sudo crictl rmp
+```
+
+### 3. Prune unused images
+
+```bash
+sudo crictl rmi --prune
+```
+
+### 4. Restart runtime services
+
+```bash
+sudo systemctl restart containerd
+sudo systemctl restart kubelet
+```
+
+### 5. Re-check space
+
+```bash
+sudo du -sh /var/lib/containerd
+kubectl get nodes -o wide
 ```
 
 
