@@ -153,6 +153,13 @@ sudo apt-get update
 ## 7. Upgrade kubeadm
 
 ```bash
+# If the exact target deb version is not available, pick the newest patch in the target minor.
+if ! apt-cache madison kubeadm | awk '{print $3}' | grep -qx "${TARGET_K8S_DEB_VERSION}"; then
+	TARGET_K8S_DEB_VERSION="$(apt-cache madison kubeadm | awk '{print $3}' | grep -E "^${TARGET_K8S_MINOR//./\\.}\\." | head -n 1)"
+	TARGET_K8S_VERSION="${TARGET_K8S_DEB_VERSION%-*}"
+	echo "Requested version not found in repo, using ${TARGET_K8S_VERSION} (${TARGET_K8S_DEB_VERSION})"
+fi
+
 sudo apt-mark unhold kubeadm
 sudo apt-get install -y "kubeadm=${TARGET_K8S_DEB_VERSION}"
 sudo apt-mark hold kubeadm
@@ -163,6 +170,7 @@ kubeadm version -o short
 Notes:
 - `kubeadm` must already be on the same target minor version as `TARGET_K8S_VERSION` before you run `kubeadm upgrade apply`.
 - Example: to upgrade the cluster to `1.36.2`, the installed `kubeadm` binary must first be `v1.36.2`.
+- If the exact package does not exist (for example `1.36.2-1.1`), this step automatically switches to the newest available `1.36.x` package and updates `TARGET_K8S_VERSION` accordingly.
 
 
 ## 8. Plan and apply control-plane upgrade
