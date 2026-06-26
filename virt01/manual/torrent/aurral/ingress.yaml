@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: youtubarr-int-ingress-https
+  name: aurral-ingress
   namespace: torrent
   annotations:
     cert-manager.io/cluster-issuer: nf-lab
@@ -11,17 +11,17 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: youtubarr.k3s.nf.lab
-      http:
-        paths:
-          - backend:
-              service:
-                name: youtubarr-svc
-                port:
-                  number: 80
-            path: /
-            pathType: Prefix
+  - host: aurral.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: aurral-svc
+            port:
+              number: 3001
+        path: /
+        pathType: Prefix
   tls:
-    - hosts:
-        - youtubarr.k3s.nf.lab
-      secretName: youtubarr-int-cert-tls
+  - hosts:
+    - aurral.k3s.nf.lab
+    secretName: aurral-cert-tls

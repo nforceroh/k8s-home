@@ -4,5 +4,10 @@ metadata:
   name: audiomuse-ai-config
   namespace: torrent
 data:
-  REDIS_URL: "redis://redis-master.databases.svc.cluster.local:6379/0"
+  REDIS_URL: "redis://redis-master.databases.svc.cluster.local:6379/10"
+  POSTGRES_USER: "app"
+  POSTGRES_PASSWORD: "D0bHjuLwCJ2fyYkda4LB0p11EbhIg1CIMGsZD1MoKJWxlbCPmZPU6xf0WnzNfHqr"
+  POSTGRES_DB: "app"
+  POSTGRES_HOST: "pg-db-rw.databases.svc.cluster.local"
+  POSTGRES_PORT: "5432"
   TZ: "UTC"

@@ -1,6 +1,6 @@
 gpu-operator:
   cdi:
-    enabled: true 
+    enabled: false 
   operator:
     cleanupCRD: true
 

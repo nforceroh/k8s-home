@@ -29,9 +29,9 @@ spec:
             - name: SLSKD_REMOTE_CONFIGURATION
               value: "true"
             - name: SLSKD_DOWNLOADS_DIR
-              value: "/music/downloads"
+              value: "/music/downloads/slskd/complete"
             - name: SLSKD_INCOMPLETE_DIR
-              value: "/music/incomplete"
+              value: "/music/downloads/slskd/incomplete"
             - name: SLSKD_SHARED_DIR
               value: "/music/Library"
             - name: SLSKD_REMOTE_FILE_MANAGEMENT

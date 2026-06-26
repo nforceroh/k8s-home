@@ -42,6 +42,8 @@ spec:
               value: "true"
             - name: ND_PLUGINS_LOGLEVEL
               value: "debug"
+            - name: ND_SCANNER_PURGEMISSING
+              value: "always"
           ports:
             - containerPort: 4533
               name: navidrome-port

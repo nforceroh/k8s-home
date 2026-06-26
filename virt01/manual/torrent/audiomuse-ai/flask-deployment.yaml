@@ -22,6 +22,10 @@ spec:
         runAsUser: 0
         runAsGroup: 0
         fsGroup: 0
+      tolerations:
+        - key: node.kubernetes.io/disk-pressure
+          operator: Exists
+          effect: NoSchedule
       containers:
         - name: flask-app
           image: ghcr.io/neptunehub/audiomuse-ai:latest
@@ -38,29 +42,29 @@ spec:
                   key: TZ
             - name: POSTGRES_USER
               valueFrom:
-                secretKeyRef:
-                  name: pg-db-app
-                  key: user
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: POSTGRES_USER
             - name: POSTGRES_PASSWORD
               valueFrom:
-                secretKeyRef:
-                  name: pg-db-app
-                  key: password
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: POSTGRES_PASSWORD
             - name: POSTGRES_DB
               valueFrom:
-                secretKeyRef:
-                  name: pg-db-app
-                  key: dbname
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: POSTGRES_DB
             - name: POSTGRES_HOST
               valueFrom:
-                secretKeyRef:
-                  name: pg-db-app
-                  key: host
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: POSTGRES_HOST
             - name: POSTGRES_PORT
               valueFrom:
-                secretKeyRef:
-                  name: pg-db-app
-                  key: port
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: POSTGRES_PORT
           envFrom:
             - configMapRef:
                 name: audiomuse-ai-config

@@ -1,0 +1,61 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: aurral
+  labels:
+    app: aurral
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: aurral
+  template:
+    metadata:
+      annotations:
+        backup.velero.io/backup-volumes-excludes: torrent,music
+        backup.velero.io/backup-volumes: aurral-pv        
+      labels:
+        app: aurral
+    spec:
+      serviceAccountName: aurral-sa
+      containers:
+        - name: aurral
+          image: ghcr.io/lklynet/aurral:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+            - name: DOWNLOAD_FOLDER
+              value: "/data/downloads/aurral"
+            - name: STORAGE
+              value: "/app/backend/data"
+          ports:
+            - containerPort: 3001
+              name: aurral-port
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: aurral-pv
+              mountPath: /app/backend/data
+            - name: music
+              mountPath: /data
+      volumes:
+        - name: aurral-pv
+          persistentVolumeClaim:
+            claimName: aurral-pvc
+        - name: music
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music
+

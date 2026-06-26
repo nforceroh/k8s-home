@@ -3,15 +3,13 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: youtubarr
+      app: aurral
 
 namespace: torrent
 
 resources:
-  - youtubarr-config-sealed.yaml
-  - youtubarr-oauth-sealed.yaml
   - deployment.yaml
   - service.yaml
-  - serviceaccount.yaml
-  - pvc.yaml
   - ingress.yaml
+  - serviceaccount.yaml
+  - backup-schedule.yaml

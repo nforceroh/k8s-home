@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aurral-svc
+  labels:
+    app: aurral
+spec:
+  ports:
+    - port: 3001
+      protocol: TCP
+      name: aurral-svc-port
+  selector:
+    app: aurral
+  sessionAffinity: None
