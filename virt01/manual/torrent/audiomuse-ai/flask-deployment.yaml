@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: audiomuse-ai-flask
+  namespace: torrent
+  labels:
+    app: audiomuse-ai
+    component: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: audiomuse-ai
+      component: flask
+  template:
+    metadata:
+      labels:
+        app: audiomuse-ai
+        component: flask
+    spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+      containers:
+        - name: flask-app
+          image: ghcr.io/neptunehub/audiomuse-ai:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SERVICE_TYPE
+              value: "flask"
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: audiomuse-ai-config
+                  key: TZ
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pg-db-app
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-db-app
+                  key: password
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: pg-db-app
+                  key: dbname
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pg-db-app
+                  key: host
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: pg-db-app
+                  key: port
+          envFrom:
+            - configMapRef:
+                name: audiomuse-ai-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: app-temp-audio
+              mountPath: /app/temp_audio
+      volumes:
+        - name: app-temp-audio
+          emptyDir: {}

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: audiomuse-ai-flask-service
+  namespace: torrent
+  labels:
+    app: audiomuse-ai
+    component: flask
+spec:
+  type: LoadBalancer
+  selector:
+    app: audiomuse-ai
+    component: flask
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000

@@ -9,4 +9,4 @@ spec:
  - dnsName: "imap.nforcer.com"
    recordType: CNAME
    targets:
-     - "dual.nforcer.com"
+     - "ipv4.nforcer.com"

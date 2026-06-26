@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audiomuse-ai-config
+  namespace: torrent
+data:
+  REDIS_URL: "redis://redis-master.databases.svc.cluster.local:6379/0"
+  TZ: "UTC"
