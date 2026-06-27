@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: beets-svc
+  labels:
+    app: beets
+spec:
+  ports:
+    - port: 8337
+      protocol: TCP
+      name: beets-svc-port
+  selector:
+    app: beets

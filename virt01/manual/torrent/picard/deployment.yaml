@@ -1,0 +1,51 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: picard
+  labels:
+    app: picard
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: picard
+  template:
+    metadata:
+      labels:
+        app: picard
+    spec:
+      serviceAccountName: picard-sa
+      containers:
+        - name: picard
+          image: jlesage/musicbrainz-picard:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5800
+          env:
+            - name: USER_ID
+              value: "3000"
+            - name: GROUP_ID
+              value: "3000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: storage
+              mountPath: /storage
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: picard-pvc
+        - name: storage
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music

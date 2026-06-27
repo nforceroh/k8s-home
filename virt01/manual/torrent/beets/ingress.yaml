@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: beets-ingress
+  namespace: torrent
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: beets.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: beets-svc
+            port:
+              number: 8337
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - beets.k3s.nf.lab
+    secretName: beets-cert-tls

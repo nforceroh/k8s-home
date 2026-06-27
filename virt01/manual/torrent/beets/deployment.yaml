@@ -1,0 +1,63 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: beets
+  labels:
+    app: beets
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: beets
+  template:
+    metadata:
+      labels:
+        app: beets
+    spec:
+      serviceAccountName: beets-sa
+      containers:
+        - name: beets
+          image: lscr.io/linuxserver/beets:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8337
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: UMASK
+              value: "000"
+            - name: TZ
+              value: "America/New_York"
+          resources:
+            requests:
+              cpu: 20m
+              memory: 100Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: music
+              mountPath: /music
+            - name: downloads
+              mountPath: /downloads
+            - name: beets-config-volume
+              mountPath: /config/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: beets-pvc
+        - name: music
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music
+        - name: downloads
+          hostPath:
+            type: Directory
+            path: /mnt/ssd01/Music/downloads/slskd/complete
+        - name: beets-config-volume
+          configMap:
+            name: beets-config

@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: beets-config
+  namespace: torrent
+data:
+  config.yaml: |
+    directory: /downloads
+    library: /config/musiclibrary.db
+
+    import:
+        move: no            # In-place tagging only
+        copy: no            
+        write: yes          # Inject MusicBrainz tags into file headers
+        link: no
+        resume: yes
+        incremental: yes    # Skip folders already processed
+
+    plugins: web info inline fetchart lyrics scrub fromfilename
+
+    # Strip custom/junk tags left behind by Soulseek
+    scrub:
+        auto: yes
+
+    # Lidarr & Metadata consistency preferences
+    va_name: "Various Artists"  # Keeps Various Artists named cleanly for Lidarr
+    original_date: yes          # Writes original year (1985) instead of remaster year (2020)
+
+    match:
+        strong_rec_thresh: 0.10      
+        medium_rec_thresh: 0.30
+        per_disc_numbering: yes      
+        max_rec_distance: 1.0  
+
+    # Permissions management for shared Kubernetes storage
+    permissions:
+        file: 664
+        dir: 775
+
+    web:
+        host: 0.0.0.0
+        port: 8337
+
+    musicbrainz:
+        user: nforcer
+        pass: blabla
+        useragent: myPrivateMediaClusterApp/1.0.0 ( sylvain@nforcer.com )
+        
