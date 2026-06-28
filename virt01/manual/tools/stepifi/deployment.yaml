@@ -1,0 +1,84 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: stepifi
+  labels:
+    app: stepifi
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: stepifi
+  template:
+    metadata:
+      labels:
+        app: stepifi
+      annotations:
+        backup.velero.io/backup-volumes: uploads,converted
+    spec:
+      serviceAccountName: stepifi-sa
+      containers:
+        - name: stepifi
+          image: voron69bit/stepifi:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+            - containerPort: 3001
+              name: bull-board
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: REDIS_HOST
+              value: redis-master.databases.svc.cluster.local
+            - name: REDIS_PORT
+              value: "6379"
+            - name: PORT
+              value: "3000"
+            - name: BULL_BOARD_PORT
+              value: "3001"
+            - name: MAX_FILE_SIZE
+              value: "104857600"
+            - name: JOB_TTL_HOURS
+              value: "24"
+            - name: CLEANUP_CRON
+              value: "*/15 * * * *"
+            - name: DEFAULT_TOLERANCE
+              value: "0.01"
+            - name: RATE_LIMIT_WINDOW_MS
+              value: "900000"
+            - name: RATE_LIMIT_MAX
+              value: "20"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 40
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            timeoutSeconds: 5
+            failureThreshold: 5
+          resources: {}
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+            - name: converted
+              mountPath: /app/converted
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: stepifi-uploads-pvc
+        - name: converted
+          persistentVolumeClaim:
+            claimName: stepifi-converted-pvc
