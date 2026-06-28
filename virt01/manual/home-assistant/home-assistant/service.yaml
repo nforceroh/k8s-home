@@ -40,3 +40,20 @@ spec:
       name: esphome-port
   selector:
     app: ha
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: js-ui-svc
+  labels:
+    app: ha
+spec:
+  ports:
+    - name: js-ui-http
+      port: 8091
+      protocol: TCP
+    - name: js-ui-websocket
+      port: 3000
+      targetPort: js-ui-websocket
+  selector:
+    app: ha

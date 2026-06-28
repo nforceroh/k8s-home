@@ -106,3 +106,30 @@ spec:
   - hosts:
     - esphome.k3s.nf.lab
     secretName: esphome-cert-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: js-ui-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: js-ui.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: js-ui-svc
+            port:
+              number: 8091
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - js-ui.k3s.nf.lab
+    secretName: js-ui-cert-tls    
