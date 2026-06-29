@@ -6,5 +6,7 @@ metadata:
   labels:
     grafana_dashboard: "1"
 data:
-  upsdash.json: |
-{{ .Files.Get "dashboards/upsdash.json" | indent 4 }}
+{{- range $path, $_ := .Files.Glob "dashboards/**/*.json" }}
+  {{ $path | replace "dashboards/" "" | replace "/" "__" }}: |
+{{ $.Files.Get $path | indent 4 }}
+{{- end }}
