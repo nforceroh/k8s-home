@@ -92,7 +92,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_load E5130_A"
+              "options": "ups.load E5130_A"
             },
             "properties": [
               {
@@ -120,7 +120,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_load E5130_B"
+              "options": "ups.load E5130_B"
             },
             "properties": [
               {
@@ -148,7 +148,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_realpower E5130_A"
+              "options": "ups.realpower E5130_A"
             },
             "properties": [
               {
@@ -194,7 +194,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_realpower E5130_B"
+              "options": "ups.realpower E5130_B"
             },
             "properties": [
               {
@@ -286,10 +286,10 @@
             }
           ],
           "hide": false,
-          "measurement": "ups_load",
+          "measurement": "ups.load",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_load\")\r\n  |> aggregateWindow(every: 1m , fn: mean, createEmpty: true)\r\n  |> yield()  ",
+          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> aggregateWindow(every: 1m , fn: mean, createEmpty: true)\r\n  |> yield()  ",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -336,10 +336,10 @@
             }
           ],
           "hide": false,
-          "measurement": "ups_realpower",
+          "measurement": "ups.realpower",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> aggregateWindow(every: 10m, fn: mean, createEmpty: true)\r\n  |> yield()",
+          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -24h)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: true)\r\n  |> aggregateWindow(every: 10m, fn: mean, createEmpty: true)\r\n  |> yield()",
           "rawQuery": false,
           "refId": "B",
           "resultFormat": "time_series",
@@ -403,7 +403,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "charge_percent E5130_A"
+              "options": "battery.charge E5130_A"
             },
             "properties": [
               {
@@ -419,7 +419,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "charge_percent E5130_B"
+              "options": "battery.charge E5130_B"
             },
             "properties": [
               {
@@ -464,7 +464,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"charge_percent\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.charge\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A"
         }
       ],
@@ -537,7 +537,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_voltage E5130_A"
+              "options": "input.voltage E5130_A"
             },
             "properties": [
               {
@@ -549,7 +549,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_voltage E5130_B"
+              "options": "input.voltage E5130_B"
             },
             "properties": [
               {
@@ -585,7 +585,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
+          "query": "from(bucket: \"${dynamicbucket}\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"input.voltage\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)\r\n  |> yield(name: \"mean\")  ",
           "refId": "A"
         }
       ],
@@ -626,7 +626,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_load E5130_A"
+              "options": "ups.load E5130_A"
             },
             "properties": [
               {
@@ -638,7 +638,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_load E5130_B"
+              "options": "ups.load E5130_B"
             },
             "properties": [
               {
@@ -694,10 +694,10 @@
             }
           ],
           "hide": false,
-          "measurement": "ups_load",
+          "measurement": "ups.load",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_load\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.load\")\r\n  |> yield(name: \"last\")",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -761,7 +761,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_realpower E5130_A"
+              "options": "ups.realpower E5130_A"
             },
             "properties": [
               {
@@ -773,7 +773,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "ups_realpower E5130_B"
+              "options": "ups.realpower E5130_B"
             },
             "properties": [
               {
@@ -829,10 +829,10 @@
             }
           ],
           "hide": false,
-          "measurement": "ups_realpower",
+          "measurement": "ups.realpower",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> yield(name: \"last\")",
           "rawQuery": false,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1025,7 +1025,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerUsage = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
+          "query": "PowerUsage = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
           "refId": "A"
         },
         {
@@ -1034,7 +1034,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerCost = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
+          "query": "PowerCost = from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
           "refId": "B"
         }
       ],
@@ -1102,7 +1102,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^ups_status E5130_A$/",
+          "fields": "/^ups.status E5130_A$/",
           "values": false
         },
         "text": {},
@@ -1131,10 +1131,10 @@
             }
           ],
           "limit": "1",
-          "measurement": "ups_status",
+          "measurement": "ups.status",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_status\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.status\")\r\n  |> yield(name: \"last\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1225,7 +1225,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^ups_status E5130_B$/",
+          "fields": "/^ups.status E5130_B$/",
           "values": false
         },
         "text": {},
@@ -1254,10 +1254,10 @@
             }
           ],
           "limit": "1",
-          "measurement": "ups_status",
+          "measurement": "ups.status",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_B\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_status\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_B\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.status\")\r\n  |> yield(name: \"last\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1317,7 +1317,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "battery_runtime E5130_A"
+              "options": "battery.runtime E5130_A"
             },
             "properties": [
               {
@@ -1329,7 +1329,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "battery_runtime E5130_B"
+              "options": "battery.runtime E5130_B"
             },
             "properties": [
               {
@@ -1384,10 +1384,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "battery_runtime",
+          "measurement": "battery.runtime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery_runtime\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m) \r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.runtime\")\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1449,7 +1449,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "charge_percent E5130_A"
+              "options": "battery.charge E5130_A"
             },
             "properties": [
               {
@@ -1461,7 +1461,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "charge_percent E5130_B"
+              "options": "battery.charge E5130_B"
             },
             "properties": [
               {
@@ -1518,10 +1518,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "charge_percent",
+          "measurement": "battery.charge",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"charge_percent\")\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"upsdata/autogen\")\r\n  |> range(start: -10m)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery.charge\")\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1714,7 +1714,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerUsage = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
+          "query": "PowerUsage = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0}))\r\n  |> yield(name: \"PowerUsage\")\r\n",
           "refId": "A"
         },
         {
@@ -1723,7 +1723,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerCost = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
+          "query": "PowerCost = from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1h, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value / 1000.0*${kwhprice}}))\r\n  |> yield(name: \"PowerCost\")",
           "refId": "B"
         }
       ],
@@ -1805,7 +1805,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
+          "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
           "refId": "A"
         }
       ],
@@ -1885,7 +1885,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
+          "query": "from(bucket: \"upsdata/day\")\r\n  |> range(start: -1d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
           "refId": "A"
         }
       ],
@@ -1965,7 +1965,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
+          "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0}))",
           "refId": "A"
         }
       ],
@@ -2045,7 +2045,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
+          "query": "from(bucket: \"upsdata/week\")\r\n  |> range(start: -7d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: false)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value * 24.0 / 1000.0*${kwhprice}}))\r\n",
           "refId": "A"
         }
       ],
@@ -2215,7 +2215,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0}))\r\n  |> yield(name: \"PowerUsage\")",
+          "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0}))\r\n  |> yield(name: \"PowerUsage\")",
           "refId": "A"
         },
         {
@@ -2224,7 +2224,7 @@
             "uid": "dfqjx64h8joqoa"
           },
           "hide": false,
-          "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0* ${kwhprice}}))\r\n  |> yield(name: \"PowerUsage\")",
+          "query": "PowerUsage = from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> filter(fn: (r) => r[\"ups\"] == \"E5130_A\" or r[\"ups\"] == \"E5130_B\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 /1000.0* ${kwhprice}}))\r\n  |> yield(name: \"PowerUsage\")",
           "refId": "B"
         }
       ],
@@ -2304,7 +2304,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
+          "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
           "refId": "A"
         }
       ],
@@ -2381,7 +2381,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0 *${kwhprice}}))\r\n",
+          "query": "from(bucket: \"upsdata/month\")\r\n  |> range(start: -30d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0 *${kwhprice}}))\r\n",
           "refId": "A"
         }
       ],
@@ -2458,7 +2458,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
+          "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0}))",
           "refId": "A"
         }
       ],
@@ -2531,7 +2531,7 @@
             "type": "influxdb",
             "uid": "dfqjx64h8joqoa"
           },
-          "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups_realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0*${kwhprice}}))\r\n",
+          "query": "from(bucket: \"upsdata/year\")\r\n  |> range(start: -365d)\r\n  |> filter(fn: (r) => r[\"_field\"] == \"ups.realpower\")\r\n  |> aggregateWindow(every: 1d, fn: mean, createEmpty: true)\r\n  |> drop(columns: [\"_start\", \"_stop\", \"ups\", \"_measurement\"])\r\n  |> aggregateWindow(every: 1d, fn: sum, createEmpty: true)\r\n  |> aggregateWindow(every: 365d, fn: sum, createEmpty: true)\r\n  |> map(fn: (r) => ({r with _value: r._value *24.0 / 1000.0*${kwhprice}}))\r\n",
           "refId": "A"
         }
       ],
