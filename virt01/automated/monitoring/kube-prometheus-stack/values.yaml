@@ -39,6 +39,12 @@ kube-prometheus-stack:
             - alertmanager.k3s.nf.lab
   grafana:
     enabled: true
+    dashboards:
+      default:
+        navidrome-observability:
+          gnetId: 24397
+          revision: 1
+          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: traefik

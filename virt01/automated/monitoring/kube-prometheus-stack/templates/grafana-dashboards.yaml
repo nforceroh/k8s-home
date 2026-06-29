@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-ups
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data:
+  upsdash.json: |
+{{ .Files.Get "dashboards/upsdash.json" | indent 4 }}
