@@ -1,13 +1,27 @@
 {{- range $path, $_ := .Files.Glob "dashboards/**/*.json" }}
+{{- $relPath := $path | replace "dashboards/" "" }}
+{{- $base := base $path }}
+{{- $folder := "General" }}
+{{- $parts := splitList "/" $relPath }}
+{{- if gt (len $parts) 1 }}
+{{- $folderSlug := first $parts }}
+{{- if eq $folderSlug "argocd" }}
+{{- $folder = "ArgoCD" }}
+{{- else }}
+{{- $folder = ($folderSlug | replace "-" " " | title) }}
+{{- end }}
+{{- end }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ printf "grafana-dashboard-%s" (sha256sum $path | trunc 12) }}
   namespace: monitoring
+  annotations:
+    grafana_folder: {{ $folder | quote }}
   labels:
     grafana_dashboard: "1"
 data:
-  {{ $path | replace "dashboards/" "" | replace "/" "__" }}: |
+  {{ $base }}: |
 {{ $.Files.Get $path | indent 4 }}
 ---
 {{- end }}
