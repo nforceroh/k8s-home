@@ -62,12 +62,6 @@ kube-prometheus-stack:
               defaultBucket: upsdata/autogen
             secureJsonData:
               token: ${INFLUXDB_UPSDATA_TOKEN}
-    dashboards:
-      applications:
-        navidrome-observability:
-          gnetId: 24397
-          revision: 1
-          datasource: Prometheus
     ingress:
       enabled: true
       ingressClassName: traefik
