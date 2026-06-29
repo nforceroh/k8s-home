@@ -43,7 +43,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -111,7 +111,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -129,7 +129,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -207,7 +207,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "up{instance=~\"$node\",job=~\"$job\"} and (up{instance=~\"$node\",job=~\"$job\"} or on() vector(0))",
@@ -223,7 +223,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "Total network traffic",
       "fieldConfig": {
@@ -319,7 +319,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -338,7 +338,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -423,7 +423,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -437,7 +437,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-(node_network_transmit_bytes_total{device=~\"^(home|br-lan)\",instance=~\"$node\",job=~\"$job\"})/1024/1024",
@@ -453,7 +453,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "System uptime",
       "fieldConfig": {
@@ -519,7 +519,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -538,7 +538,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "Busy state of all CPU cores together",
       "fieldConfig": {
@@ -609,7 +609,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "(count by (instance)(count by (cpu,instance)(node_cpu_seconds_total{instance=~\"$node\",job=~\"$job\"})) - avg by (instance)(sum by (mode,instance)(irate(node_cpu_seconds_total{mode='idle',instance=~\"$node\",job=~\"$job\"}[5m])))) / count by (instance)(count by (cpu,instance)(node_cpu_seconds_total{instance=~\"$node\",job=~\"$job\"})) * 100",
@@ -628,7 +628,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "Non available RAM memory",
       "fieldConfig": {
@@ -698,7 +698,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -719,7 +719,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -829,7 +829,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -843,7 +843,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-(node_network_transmit_bytes_total{device=\"home\",instance=~\"$node\",job=~\"$job\"})/1024/1024",
@@ -859,7 +859,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -944,7 +944,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -958,7 +958,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-(node_network_transmit_bytes_total{device=\"br-lan\",instance=~\"$node\",job=~\"$job\"})/1024/1024",
@@ -974,7 +974,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1026,7 +1026,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by(instance)(wifi_stations{instance=~\"$node\",job=~\"$job\"} or on() vector(0))",
@@ -1041,7 +1041,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1094,7 +1094,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1112,7 +1112,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1165,7 +1165,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1182,7 +1182,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1243,7 +1243,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "(sum by (instance)(irate(node_network_transmit_bytes_total{instance=~\"$node\",job=~\"$job\",device!~\"lo|bond[0-9]|cbr[0-9]|veth.*\"}[5m])) + sum by(instance)(irate(node_network_receive_bytes_total{instance=~\"$node\",job=~\"$job\",device!~\"lo|bond[0-9]|cbr[0-9]|veth.*\"}[5m]))) / 1024 / 1024",
@@ -1258,7 +1258,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "average Wifi quality",
       "fieldConfig": {
@@ -1331,7 +1331,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max by (instance)(wifi_network_quality{instance=~\"$node\",job=~\"$job\"})",
@@ -1350,7 +1350,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1403,7 +1403,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1434,7 +1434,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "Basic CPU info",
       "fieldConfig": {
@@ -1514,7 +1514,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=\"system\",instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
@@ -1529,7 +1529,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='user',instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
           "format": "time_series",
@@ -1542,7 +1542,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode='iowait',instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
           "format": "time_series",
@@ -1555,7 +1555,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "sum by (instance)(irate(node_cpu_seconds_total{mode=~\".*irq\",instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
           "format": "time_series",
@@ -1568,7 +1568,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "sum (irate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
           "format": "time_series",
@@ -1581,7 +1581,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "sum by (mode)(irate(node_cpu_seconds_total{mode='idle',instance=~\"$node\",job=~\"$job\"}[5m])) * 100",
           "format": "time_series",
@@ -1598,7 +1598,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "Basic memory usage",
       "fieldConfig": {
@@ -2048,7 +2048,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "node_memory_MemTotal_bytes{instance=~\"$node\",job=~\"$job\"}",
           "format": "time_series",
@@ -2061,7 +2061,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "node_memory_MemTotal_bytes{instance=~\"$node\",job=~\"$job\"} - node_memory_MemFree_bytes{instance=~\"$node\",job=~\"$job\"} - (node_memory_Cached_bytes{instance=~\"$node\",job=~\"$job\"} + node_memory_Buffers_bytes{instance=~\"$node\",job=~\"$job\"})",
           "format": "time_series",
@@ -2074,7 +2074,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "node_memory_Cached_bytes{instance=~\"$node\",job=~\"$job\"} + node_memory_Buffers_bytes{instance=~\"$node\",job=~\"$job\"}",
           "format": "time_series",
@@ -2086,7 +2086,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "node_memory_MemFree_bytes{instance=~\"$node\",job=~\"$job\"}",
           "format": "time_series",
@@ -2098,7 +2098,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "(node_memory_SwapTotal_bytes{instance=~\"$node\",job=~\"$job\"} - node_memory_SwapFree_bytes{instance=~\"$node\",job=~\"$job\"})",
           "format": "time_series",
@@ -2127,7 +2127,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2212,7 +2212,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "wifi_network_quality{instance=~\"$node\",job=~\"$job\"}",
           "legendFormat": "{{ifname}}",
@@ -2225,7 +2225,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "",
       "fieldConfig": {
@@ -2309,7 +2309,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "wifi_network_bitrate{instance=~\"$node\",job=~\"$job\"}/1024",
           "legendFormat": "{{ifname}}",
@@ -2322,7 +2322,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "description": "",
       "fieldConfig": {
@@ -2406,7 +2406,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "wifi_station_signal_dbm{instance=~\"$node\",job=~\"$job\"}",
           "legendFormat": "{{mac}} # {{ifname}}",
@@ -2419,7 +2419,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2500,7 +2500,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "wifi_network_noise_dbm{instance=~\"$node\",job=~\"$job\"}",
           "legendFormat": "",
@@ -2526,7 +2526,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2788,7 +2788,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "irate(node_network_receive_bytes_total{instance=~\"$node\",job=~\"$job\"}[5m])/1024",
           "format": "time_series",
@@ -2800,7 +2800,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "irate(node_network_transmit_bytes_total{instance=~\"$node\",job=~\"$job\"}[5m])/1024",
           "format": "time_series",
@@ -2816,7 +2816,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2899,7 +2899,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "node_network_receive_bytes_total{instance=~\"$node\",job=~\"$job\"}/1024/1024",
           "legendFormat": "{{device}}",
@@ -2912,7 +2912,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2997,7 +2997,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "-node_network_transmit_bytes_total{instance=~\"$node\",job=~\"$job\"}/1024/1024",
           "legendFormat": "{{device}}",
@@ -3010,7 +3010,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -3094,7 +3094,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "expr": "topk(15, node_nat_traffic{instance=~\"$node\",job=~\"$job\"}/1024/1024)",
           "hide": false,
@@ -3118,7 +3118,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(node_uname_info{job=\"openwrt\"},job)",
         "includeAll": false,
@@ -3139,7 +3139,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(node_uname_info{job=~\"$job\"}, nodename)",
         "includeAll": true,
@@ -3159,7 +3159,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(node_uname_info{job=~\"$job\",nodename=~\"$host\"}, instance)",
         "includeAll": true,

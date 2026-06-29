@@ -30,7 +30,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -111,7 +111,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_cpu_temperature_celsius{job=\"$job\",cpu=\"0\"}",
@@ -126,7 +126,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -193,7 +193,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_time_seconds{job=\"$job\"} - node_boot_time_seconds{job=\"$job\"}",
@@ -211,7 +211,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -277,7 +277,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(rate(node_cpu_seconds_total{job=\"$job\",mode=\"idle\"}[1m])) * 100 / scalar(count(node_cpu_seconds_total{job=\"$job\",mode=\"user\"}))",
@@ -296,7 +296,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -362,7 +362,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_free_bytes{job=\"$job\"} + node_memory_inactive_bytes{job=\"$job\"}",
@@ -381,7 +381,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -447,7 +447,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_swap_size_bytes{job=\"$job\"} - node_memory_swap_used_bytes{job=\"$job\"}",
@@ -465,7 +465,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -594,7 +594,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_load1{job=\"$job\"}",
@@ -608,7 +608,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_load5{job=\"$job\"}",
@@ -623,7 +623,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_load15{job=\"$job\"}",
@@ -642,7 +642,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -702,7 +702,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_exec_forks_total{job=\"$job\"}",
@@ -717,7 +717,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_exec_system_calls_total{job=\"$job\"}",
@@ -732,7 +732,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_exec_traps_total{job=\"$job\"}",
@@ -752,7 +752,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -850,7 +850,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": " irate(node_exec_device_interrupts_total{job=\"$job\"}[5m])",
@@ -869,7 +869,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -951,7 +951,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_exec_context_switches_total{job=\"$job\"}[$__rate_interval])",
@@ -966,7 +966,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1048,7 +1048,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1062,7 +1062,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-irate(node_network_transmit_bytes_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1081,7 +1081,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1163,7 +1163,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1177,7 +1177,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-irate(node_network_transmit_bytes_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1196,7 +1196,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1278,7 +1278,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1292,7 +1292,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-irate(node_network_transmit_bytes_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1311,7 +1311,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1393,7 +1393,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -1407,7 +1407,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-irate(node_network_transmit_bytes_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -1426,7 +1426,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1507,7 +1507,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_packets_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1521,7 +1521,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_multicast_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1536,7 +1536,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_drop_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1551,7 +1551,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_errs_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -1570,7 +1570,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1651,7 +1651,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_packets_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1665,7 +1665,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_multicast_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1680,7 +1680,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_drop_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1695,7 +1695,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_errs_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -1714,7 +1714,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1795,7 +1795,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_packets_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1809,7 +1809,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_multicast_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1824,7 +1824,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_drop_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1839,7 +1839,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_errs_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -1858,7 +1858,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1939,7 +1939,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_packets_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -1953,7 +1953,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_multicast_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -1968,7 +1968,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_drop_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -1983,7 +1983,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_errs_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -2002,7 +2002,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2083,7 +2083,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_packets_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -2097,7 +2097,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_multicast_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -2112,7 +2112,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_drop_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -2127,7 +2127,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_errs_total{job=\"$job\",device=\"$wan_interface_1\"}[1m])",
@@ -2146,7 +2146,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2227,7 +2227,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_packets_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -2241,7 +2241,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_multicast_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -2256,7 +2256,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_drop_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -2271,7 +2271,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_errs_total{job=\"$job\",device=\"$wan_interface_2\"}[1m])",
@@ -2290,7 +2290,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2371,7 +2371,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_packets_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -2385,7 +2385,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_multicast_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -2400,7 +2400,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_drop_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -2415,7 +2415,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_errs_total{job=\"$job\",device=\"$lan_interface_1\"}[1m])",
@@ -2434,7 +2434,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2515,7 +2515,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_packets_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -2529,7 +2529,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_multicast_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -2544,7 +2544,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_drop_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -2559,7 +2559,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_transmit_errs_total{job=\"$job\",device=\"$lan_interface_2\"}[1m])",
@@ -2578,7 +2578,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2696,7 +2696,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_active_bytes{job=\"$job\"}",
@@ -2710,7 +2710,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_buffer_bytes{job=\"$job\"}",
@@ -2724,7 +2724,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_cache_bytes{job=\"$job\"}",
@@ -2739,7 +2739,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_free_bytes{job=\"$job\"}",
@@ -2754,7 +2754,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_inactive_bytes{job=\"$job\"}",
@@ -2769,7 +2769,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_laundry_bytes{job=\"$job\"}",
@@ -2788,7 +2788,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2906,7 +2906,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_swap_in_bytes_total{job=\"$job\"}",
@@ -2920,7 +2920,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "node_memory_swap_size_bytes{job=\"$job\"} - node_memory_swap_in_bytes_total{job=\"$job\"}",
@@ -2938,7 +2938,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -3019,7 +3019,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "irate(node_network_receive_bytes_total{job=\"$job\",device=\"igc2\"}[1m])",
@@ -3033,7 +3033,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "-irate(node_network_transmit_bytes_total{job=\"$job\",device=\"igc2\"}[1m])",
@@ -3052,7 +3052,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -3140,7 +3140,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(rate(node_cpu_seconds_total{job=\"$job\"}[1m])) by (mode) * 100 / scalar(count(node_cpu_seconds_total{job=\"$job\",mode=\"user\"}))",
@@ -3166,7 +3166,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(node_uname_info{job=\"opnsense\"},job)",
         "includeAll": false,
@@ -3186,7 +3186,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(device)",
         "includeAll": false,
@@ -3206,7 +3206,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(device)",
         "includeAll": false,
@@ -3225,7 +3225,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(device)",
         "includeAll": false,
@@ -3245,7 +3245,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(device)",
         "includeAll": false,
@@ -3265,7 +3265,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values({fstype=\"zfs\"},fstype)",
         "includeAll": false,

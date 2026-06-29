@@ -25,7 +25,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -114,7 +114,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "avg(smartctl_device_temperature{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_name) smartctl_device{interface=~\"$type\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"}) by (instance,device,model_name)",
@@ -133,7 +133,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -182,7 +182,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -198,7 +198,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -282,7 +282,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -308,7 +308,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -392,7 +392,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -413,7 +413,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -470,7 +470,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "count((smartctl_device_smart_status{instance=~\"$node\",device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device) == 0)",
@@ -495,7 +495,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -603,7 +603,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "smartctl_device_critical_warning{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"$type\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"} > 0",
@@ -621,7 +621,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -678,7 +678,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -694,7 +694,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -925,7 +925,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(smartctl_device_power_on_seconds{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"$type\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"}) by (instance, device, model_name)",
@@ -939,7 +939,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(smartctl_device_power_cycle_count{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"$type\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"}) by (instance, device, model_name)",
@@ -965,7 +965,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1178,7 +1178,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(smartctl_device_bytes_written{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"$type\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"}) by (device, instance, model_name, serial_number)",
@@ -1192,7 +1192,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1263,7 +1263,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1322,7 +1322,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sort_desc(100 - smartctl_device_attribute{instance=~\"$node\", device=~\"$disk\", attribute_name=\"Wear_Leveling_Count\",attribute_value_type=\"value\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"sat\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"})",
@@ -1340,7 +1340,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "dem5v0bdwmsxsb"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1399,7 +1399,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "dem5v0bdwmsxsb"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sort_desc(smartctl_device_percentage_used{instance=~\"$node\", device=~\"$disk\"} * on(instance, device) group_left(interface,serial_number,model_family,model_name) smartctl_device{interface=~\"nvme\",serial_number=~\"$serial_number\",model_name=~\"$device_model\"})\n",
@@ -1428,7 +1428,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(smartctl_version,instance)",
         "includeAll": true,
@@ -1449,7 +1449,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(smartctl_device,device)",
         "includeAll": true,
@@ -1470,7 +1470,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(smartctl_device,interface)",
         "includeAll": true,
@@ -1491,7 +1491,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(smartctl_device,model_name)",
         "includeAll": true,
@@ -1512,7 +1512,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "dem5v0bdwmsxsb"
+          "uid": "prometheus"
         },
         "definition": "label_values(smartctl_device,serial_number)",
         "includeAll": true,
