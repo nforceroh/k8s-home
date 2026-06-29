@@ -61,6 +61,8 @@ spec:
           env:
             - name: TZ
               value: "America/New_York"
+            - name: TRUST_PROXY
+              value: "true"
           livenessProbe:
             failureThreshold: 10
             httpGet:

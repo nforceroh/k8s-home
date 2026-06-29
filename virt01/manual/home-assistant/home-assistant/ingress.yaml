@@ -37,10 +37,6 @@ metadata:
     external-dns.alpha.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
-  tls:
-    - hosts:
-        - ha.nforcer.com
-      secretName: ha-ext-tls
   rules:
     - host: ha.nforcer.com
       http:
@@ -52,20 +48,24 @@ spec:
                 number: 8123
           path: /
           pathType: Prefix
+  tls:
+    - hosts:
+        - ha.nforcer.com
+      secretName: ha-ext-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hacode-ingress
   annotations:
-    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
-  - host: hacode.k3s.nf.lab
+  - host: hacode.nforcer.com
     http:
       paths:
       - backend:
@@ -77,22 +77,22 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - hacode.k3s.nf.lab
-    secretName: hacode-cert-tls
+    - hacode.nforcer.com
+    secretName: hacode-ext-cert-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: esphome-ingress
   annotations:
-    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
-  - host: esphome.k3s.nf.lab
+  - host: esphome.nforcer.com
     http:
       paths:
       - backend:
@@ -104,22 +104,22 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - esphome.k3s.nf.lab
-    secretName: esphome-cert-tls
+    - esphome.nforcer.com
+    secretName: esphome-ext-cert-tls
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: js-ui-ingress
   annotations:
-    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
-  - host: js-ui.k3s.nf.lab
+  - host: js-ui.nforcer.com
     http:
       paths:
       - backend:
@@ -131,5 +131,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - js-ui.k3s.nf.lab
-    secretName: js-ui-cert-tls    
+    - js-ui.nforcer.com
+    secretName: js-ui-ext-cert-tls
