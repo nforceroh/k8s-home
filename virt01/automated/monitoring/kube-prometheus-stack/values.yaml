@@ -39,6 +39,25 @@ kube-prometheus-stack:
             - alertmanager.k3s.nf.lab
   grafana:
     enabled: true
+    envFromSecrets:
+      - name: grafana-influxdb-ups-token
+    datasources:
+      datasources.yaml:
+        apiVersion: 1
+        datasources:
+          - name: influxdb:upsdata
+            uid: dfqjx64h8joqoa
+            type: influxdb
+            access: proxy
+            url: http://influxdb-svc.databases.svc.cluster.local:8086
+            editable: true
+            isDefault: false
+            jsonData:
+              version: Flux
+              organization: nf
+              defaultBucket: upsdata/autogen
+            secureJsonData:
+              token: ${INFLUXDB_UPSDATA_TOKEN}
     dashboards:
       default:
         navidrome-observability:

@@ -1,0 +1,17 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  name: grafana-influxdb-ups-token
+  namespace: monitoring
+spec:
+  encryptedData:
+    INFLUXDB_UPSDATA_TOKEN: AgAMymI/RPXVwzg5qVnY/zGFx9dE+JU612I5mRlFt1xPc49JvdVDb0Oq9JKKfbFzpm5QIbss1FLbVYXGsaeamiI1EzUmqLr2AB02DCxzMTU8dSwZdrsjd7VATsdBUGaGDOc3qTjzGB21FQEFpl0j+ccds+WBIgUHYNDDi/5uv3zNFMX+QMvjTsiPHJb2e6BqTpD2hRKjUWzepe12vsQq1mrGiB3pK5J4xh3d2AtzNSfstJNo491VJEhiSanMGCG04n9EQzh43IrffxwY7NhsktgtrqfWWrsQKOQZzP+rcW0QSP8kfwmbm8U6TBh+cvVqJvrrQEyXRwFGopBjkllqNhG4D7ro0IF2yOzPaf9jfrVIgLBeX730DQ68UuJmtAKwJZ/rqm3Em2t3Pn9O5wUm4NOcOZCs6yqoI+fEUb8q4gzVDV8rfXrRZs1LoKi0hnH0yENRlI5YV7WzJAm3/dxlGdSTNtFTMpeC0DlqhNob12FeFap02zweLnrj1Ou1gS90uKhUKHgkytzPvgeUyBt3tRn15HnZi9U5AX0FdMtAzT6XOjl3vCxhh4lGl+0pgKQ81myg9z/PYvdb7xmKKbkMlI4z+0IMd/04N2J4o3sGT1bXXnCtP+7OqzYGKRepIWAQKdpj0B7gpaIBuoD1+OHtiDb4Gx4H4ijH2BU6ZUcU1TBwBlKmyK0xJsLCakLSzq+4Dg2pP5hEFS+YhIdd4JunRrvw9Ss5bJb5Xy0/TJ8Yd3HxQGBG/rfI0StMz9phCSy2ohc37rWW33TlGZ1x9fyvJPVk3NwmPn2Y2VHSFb/tRvGM6hACpvc2Utwq
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      name: grafana-influxdb-ups-token
+      namespace: monitoring
