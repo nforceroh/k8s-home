@@ -469,7 +469,9 @@ frigate:
       GarageFront:
         enabled: true
         live:
-          stream_name: reo_dual_main_garage_browser
+          streams:
+            main: reo_dual_main_garage_browser
+            sub: reo_dual_sub_garage
         webui_url: http://10.40.1.162
         ffmpeg:
           inputs:
@@ -545,7 +547,9 @@ frigate:
       FrontPorch:
         enabled: true
         live:
-          stream_name: rlc_520a_main_front_porch_browser
+          streams:
+            main: rlc_520a_main_front_porch_browser
+            sub: rlc_520a_sub_front_porch
         webui_url: http://10.40.1.148
         ffmpeg:
           inputs:
@@ -623,7 +627,9 @@ frigate:
       BackDoor:
         enabled: true
         live:
-          stream_name: rlc_520a_main_back_door_browser
+          streams:
+            main: rlc_520a_main_back_door_browser
+            sub: rlc_520a_sub_back_door
         webui_url: http://10.40.1.151
         ffmpeg:
           inputs:
