@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: navidrome
+  labels:
+    app: navidrome
+spec:
+  selector:
+    matchLabels:
+      app: navidrome
+  endpoints:
+    - port: navidrome-svc-port
+      path: /metrics
+      interval: 30s

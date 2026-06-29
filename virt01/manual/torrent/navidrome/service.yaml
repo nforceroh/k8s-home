@@ -4,6 +4,10 @@ metadata:
   name: navidrome-svc
   labels:
     app: navidrome
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "4533"
 spec:
   ports:
     - port: 4533

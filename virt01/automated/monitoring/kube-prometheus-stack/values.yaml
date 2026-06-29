@@ -38,7 +38,26 @@ kube-prometheus-stack:
           hosts:
             - alertmanager.k3s.nf.lab
   grafana:
-    enabled: false
+    enabled: true
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+      hosts:
+        - grafana-kps.k3s.nf.lab
+      tls:
+        - secretName: grafana-kps-general-tls
+          hosts:
+            - grafana-kps.k3s.nf.lab
+    sidecar:
+      dashboards:
+        enabled: true
+      datasources:
+        enabled: true
 
   prometheus:
     enabled: true

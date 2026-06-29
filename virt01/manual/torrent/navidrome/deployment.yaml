@@ -44,6 +44,10 @@ spec:
               value: "debug"
             - name: ND_SCANNER_PURGEMISSING
               value: "always"
+            - name: ND_ENABLESTARRATING
+              value: "true"
+            - name: ND_ENABLEFAVOURITES
+              value: "true"
           ports:
             - containerPort: 4533
               name: navidrome-port
