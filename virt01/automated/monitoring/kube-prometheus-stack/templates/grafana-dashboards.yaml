@@ -1,12 +1,13 @@
+{{- range $path, $_ := .Files.Glob "dashboards/**/*.json" }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-ups
+  name: {{ printf "grafana-dashboard-%s" (sha256sum $path | trunc 12) }}
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
 data:
-{{- range $path, $_ := .Files.Glob "dashboards/**/*.json" }}
   {{ $path | replace "dashboards/" "" | replace "/" "__" }}: |
 {{ $.Files.Get $path | indent 4 }}
+---
 {{- end }}
