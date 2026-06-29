@@ -63,7 +63,7 @@ kube-prometheus-stack:
             secureJsonData:
               token: ${INFLUXDB_UPSDATA_TOKEN}
     dashboards:
-      default:
+      applications:
         navidrome-observability:
           gnetId: 24397
           revision: 1
