@@ -55,8 +55,6 @@ frigate:
       cert-manager.io/cluster-issuer: "nf-lab"
       cert-manager.io/private-key-rotation-policy: "Always"
       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      traefik.ingress.kubernetes.io/router.timeout: "3600"
-      traefik.ingress.kubernetes.io/service.serverstransport: "insecureskipverify@internal"
       external-dns.alpha.kubernetes.io/target: "traefik.k3s.nf.lab"
     hosts:
       - host: "frigate.k3s.nf.lab"
