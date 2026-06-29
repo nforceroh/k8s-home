@@ -39,6 +39,10 @@ kube-prometheus-stack:
             - alertmanager.k3s.nf.lab
   grafana:
     enabled: true
+    admin:
+      existingSecret: grafana-admin-credentials
+      userKey: admin-user
+      passwordKey: admin-password
     envFromSecrets:
       - name: grafana-influxdb-ups-token
     datasources:
