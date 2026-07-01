@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://helm.traefik.io/traefik"
       name: "traefik"
-      version: "39.*.*"
+      version: "40.*.*"
 conditions: {}
 targets:
   chart:

@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://repo.helmforge.dev"
       name: "phpmyadmin"
-      version: "1.*.*"
+      version: "2.*.*"
 conditions: {}
 targets:
   chart:
