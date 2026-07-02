@@ -5,10 +5,7 @@ traefik:
     # repository and tag remain standard
 
   logs:
-    general:
-      level: INFO
-    access:
-      enabled: true
+    level: INFO
 
   ingressClass:
     enabled: true
