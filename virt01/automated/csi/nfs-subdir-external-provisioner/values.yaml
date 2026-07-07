@@ -10,7 +10,7 @@ nfs-subdir-external-provisioner:
     name: opnsense-nfs
     defaultClass: false
     reclaimPolicy: Delete
-    archiveOnDelete: true
+    archiveOnDelete: false
     allowVolumeExpansion: true
 
   nodeSelector:
