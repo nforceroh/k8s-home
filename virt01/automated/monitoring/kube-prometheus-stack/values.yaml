@@ -79,6 +79,8 @@ kube-prometheus-stack:
     sidecar:
       dashboards:
         enabled: true
+        annotations:
+          grafana_folder: Kubernetes
         folderAnnotation: grafana_folder
         provider:
           foldersFromFilesStructure: true
