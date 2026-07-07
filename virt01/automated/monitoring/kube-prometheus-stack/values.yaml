@@ -71,11 +71,11 @@ kube-prometheus-stack:
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
       hosts:
-        - grafana-kps.k3s.nf.lab
+        - grafana.k3s.nf.lab
       tls:
-        - secretName: grafana-kps-general-tls
+        - secretName: grafana-general-tls
           hosts:
-            - grafana-kps.k3s.nf.lab
+            - grafana.k3s.nf.lab
     sidecar:
       dashboards:
         enabled: true
