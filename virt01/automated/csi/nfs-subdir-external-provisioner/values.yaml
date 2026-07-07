@@ -1,0 +1,17 @@
+# https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner/tree/master/charts/nfs-subdir-external-provisioner
+
+nfs-subdir-external-provisioner:
+  nfs:
+    server: 10.0.0.1
+    path: /k8s-pool/k8s-volumes
+
+  storageClass:
+    create: true
+    name: opnsense-nfs
+    defaultClass: false
+    reclaimPolicy: Delete
+    archiveOnDelete: true
+    allowVolumeExpansion: true
+
+  nodeSelector:
+    kubernetes.io/os: linux
