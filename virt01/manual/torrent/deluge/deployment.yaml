@@ -23,7 +23,6 @@ spec:
       restartPolicy: Always 
       containers:
         - name: wireguard
-#          image: harbor.nf.lab/homelab/wireguard-go:latest
           image: ghcr.io/nforceroh/k8s-wireguard:latest
           imagePullPolicy: Always
           volumeMounts:
@@ -110,9 +109,7 @@ spec:
         - name: torrent
           hostPath:
             type: Directory
-#          nfs:
             path: /mnt/hdd01/torrent
-#            server: 10.0.0.100            
         - name: wg-config
           secret:
             secretName: wg-config
