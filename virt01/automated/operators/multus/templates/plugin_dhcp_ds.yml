@@ -13,6 +13,7 @@ spec:
         app: cni-dhcp-daemon
     spec:
       hostNetwork: true
+      hostPID: true
       dnsPolicy: ClusterFirstWithHostNet
       tolerations:
         - operator: "Exists"
