@@ -1,40 +1,73 @@
 #!/bin/bash
+set -e
 
-# Generate a random password for the ArgoCD admin user
-#adminpassword=$(< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};echo;)
+echo "=== Bootstrap ArgoCD on virt01 ==="
 
-# Check if helm is installed and install if missing
-if ! command -v helm &> /dev/null
-then
-    echo "Helm not found. Installing helm..."
+# Check helm
+if ! command -v helm &> /dev/null; then
+    echo "Installing helm..."
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 fi
 
-# Check if argocd helm repo is added and add if missing
-if ! helm repo list | grep argo &> /dev/null
-then
-    echo "ArgoCD helm repo not found. Adding ArgoCD helm repo..."
-    helm repo add argo https://argoproj.github.io/argo-helm
-fi
+# Add helm repos
+echo "=== Adding Helm repos ==="
+helm repo add argo https://argoproj.github.io/argo-helm 2>/dev/null || true
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts 2>/dev/null || true
+helm repo update
 
-# Stupid workaround to get CRD up and running for the first time
-helm upgrade --install argo-cd argo/argocd -n argocd --create-namespace --set crds.install=true
-helm uninstall argocd -n argocd
-sleep 10 
-# Install ArgoCD using helm
+# Create required namespaces
+echo "=== Creating namespaces ==="
+kubectl create namespace argocd 2>/dev/null || true
+kubectl create namespace monitoring 2>/dev/null || true
+
+# Install Prometheus CRDs (needed for ServiceMonitor/PrometheusRule)
+echo "=== Installing Prometheus CRDs ==="
+kubectl apply --server-side -f https://github.com/prometheus-operator/prometheus-operator/releases/latest/download/bundle.yaml
+sleep 5
+
+# Install ArgoCD CRDs first with correct Helm labels
+echo "=== Installing ArgoCD CRDs ==="
+kubectl apply --server-side -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/crds/application-crd.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/crds/appproject-crd.yaml
+kubectl apply --server-side -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/crds/applicationset-crd.yaml
+sleep 5
+
+# Label CRDs for Helm adoption
+echo "=== Labeling CRDs for Helm ==="
+for crd in applications.argoproj.io appprojects.argoproj.io applicationsets.argoproj.io; do
+    kubectl label crd $crd app.kubernetes.io/managed-by=Helm --overwrite 2>/dev/null || true
+    kubectl annotate crd $crd meta.helm.sh/release-name=argocd --overwrite 2>/dev/null || true
+    kubectl annotate crd $crd meta.helm.sh/release-namespace=argocd --overwrite 2>/dev/null || true
+done
+
+# Update helm dependencies
+echo "=== Updating Helm dependencies ==="
 helm dependency update argocd
-#kubectl apply -k https://github.com/argoproj/argo-cd/manifests/crds\?ref\=stable
-#helm upgrade --install argocd argocd -n argocd --create-namespace --wait --timeout 120s --values globalValues.yaml
-#helm upgrade --install argo-cd argo-cd -n argocd --create-namespace --wait --timeout 120s --values argocd/values-tls.yaml
-helm upgrade --install argocd ./argocd -n argocd --create-namespace --wait --timeout 120s --values argocd/values.yaml
-# Set the ArgoCD admin password
-#kubectl patch secret -n argocd argocd-secret -p '{"stringData": { "admin.password": "'$(htpasswd -bnBC 10 "" ${adminpassword} | tr -d ':\n')'"}}'
 
-# Print the generated password to the console
-#echo "ArgoCD admin password has been set to: ${adminpassword}"
+# Install ArgoCD
+echo "=== Installing ArgoCD ==="
+helm upgrade --install argocd ./argocd \
+    -n argocd \
+    --create-namespace \
+    --wait \
+    --timeout 300s \
+    --values argocd/values.yaml \
+    --set argo-cd.controller.metrics.enabled=false \
+    --set argo-cd.controller.metrics.serviceMonitor.enabled=false \
+    --set argo-cd.controller.rules.enabled=false \
+    --set argo-cd.server.metrics.enabled=false \
+    --set argo-cd.repoServer.metrics.enabled=false \
+    --set argo-cd.applicationSet.metrics.enabled=false
 
-# Uncomment these lines if you want to port-forward the ArgoCD server to localhost:8080 and/or use kubeseal for secrets management
+echo "=== ArgoCD installed successfully ==="
+echo "=== Waiting for pods to be ready ==="
+kubectl wait --for=condition=ready pod -l app.kubernetes.io/name=argocd-server -n argocd --timeout=120s
+
+echo "=== Port-forwarding ArgoCD to localhost:8080 ==="
 kubectl port-forward -n argocd svc/argocd-server 8080:80 &
-# kubeseal --controller-name sealed-secrets --controller-namespace argo-common -o yaml < infile > outfile
 
-#helm upgrade --install argocd argo/argo-cd -n argocd --create-namespace --set crds.install=true --values argocd/values-tls.yaml
+echo ""
+echo "=== Done! ==="
+echo "ArgoCD is available at http://localhost:8080"
+echo "Username: admin"
+echo "Password is set in your values.yaml"
