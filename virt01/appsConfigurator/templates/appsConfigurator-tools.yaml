@@ -30,4 +30,9 @@ spec:
         automated:
           prune: true
           selfHeal: true
-
+        retry:
+          limit: 5 # Maximum number of retry attempts
+          backoff:
+            duration: 30s # Start by waiting 30 seconds
+            factor: 2     # Double the wait time on each failure (30s, 60s, 120s...)
+            maxDuration: 5m # Never wait longer than 5 minutes

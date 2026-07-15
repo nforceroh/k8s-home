@@ -105,17 +105,17 @@ network:
       dhcp6: no
       accept-ra: false
     br1000:
-      interfaces: [br4.1000]
+      interfaces: [br0.1000]
       dhcp4: no
       dhcp6: no
       accept-ra: false
     br1400:
-      interfaces: [br4.1400]
+      interfaces: [br0.1400]
       dhcp4: no
       dhcp6: no
       accept-ra: false
     br1990:
-      interfaces: [br4.1990]
+      interfaces: [br0.1990]
       dhcp4: no
       dhcp6: no
       accept-ra: false
@@ -125,14 +125,14 @@ network:
       id: 1000
       dhcp4: yes
       dhcp6: yes
-    br4.1000:
-      link: br4
+    br0.1000:
+      link: br0
       id: 1000
-    br4.1400:
-      link: br4
+    br0.1400:
+      link: br0
       id: 1400
-    br4.1990:
-      link: br4
+    br0.1990:
+      link: br0 
       id: 1990
 EOF
 
