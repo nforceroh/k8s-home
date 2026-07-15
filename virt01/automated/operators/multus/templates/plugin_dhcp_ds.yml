@@ -17,6 +17,13 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       tolerations:
         - operator: "Exists"
+      initContainers:
+        - name: clean-stale-socket
+          image: busybox:latest
+          command: ["rm", "-f", "/run/cni/dhcp.sock"]
+          volumeMounts:
+            - name: run-cni
+              mountPath: /run/cni
       containers:
         - name: dhcp-daemon
           image: antrea/cni-dhcp-daemon:latest
