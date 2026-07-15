@@ -8,6 +8,7 @@ labels:
 namespace: home-assistant
 
 resources:
+  - namespace.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml

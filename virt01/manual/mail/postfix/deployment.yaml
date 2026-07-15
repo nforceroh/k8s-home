@@ -77,8 +77,8 @@ spec:
           persistentVolumeClaim:
             claimName: postfix-spool-pvc
         - name: dhparam
-          secret:
-            secretName: postfix-dhparam
+          configMap:
+            name: postfix-dhparam
         - name: certs
           secret:
             secretName: postfix-cert-tls

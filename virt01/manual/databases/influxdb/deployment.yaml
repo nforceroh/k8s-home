@@ -21,7 +21,7 @@ spec:
       serviceAccountName: influxdb-sa
       containers:
         - name: influxdb
-          image: influxdb:2.7-alpine
+          image: influxdb:2.7.11
           imagePullPolicy: IfNotPresent
           env:
             - name: TZ

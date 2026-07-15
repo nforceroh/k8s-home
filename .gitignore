@@ -1,8 +1,5 @@
-# Helm chart lock file
+charts/
 Chart.lock
-
-# Helm chart dependencies (the downloaded charts)
-charts/*.tgz
-charts/*/charts/
-
-
+ArgoCD-Talos/
+secretsRaw/
+k8s-home-secrets/
