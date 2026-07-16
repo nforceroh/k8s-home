@@ -91,25 +91,25 @@ spec:
             name: zwave-data
 
 
-        - name: music-assistant-server
-          image: ghcr.io/music-assistant/server:latest
-          imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-          ports:
-          - containerPort: 8095
-            name: webui
-          - containerPort: 8097
-            name: api
-          volumeMounts:
-          - name: ma-data-pv
-            mountPath: /data
-          - name: ma-library
-            mountPath: /media
-          securityContext:
-            privileged: true
-          resources: {}
+        # - name: music-assistant-server
+        #   image: ghcr.io/music-assistant/server:latest
+        #   imagePullPolicy: Always
+        #   env:
+        #     - name: TZ
+        #       value: "America/New_York"
+        #   ports:
+        #   - containerPort: 8095
+        #     name: webui
+        #   - containerPort: 8097
+        #     name: api
+        #   volumeMounts:
+        #   - name: ma-data-pv
+        #     mountPath: /data
+        #   - name: ma-library
+        #     mountPath: /media
+        #   securityContext:
+        #     privileged: true
+        #   resources: {}
 
         - name: code-server
           image: linuxserver/code-server
