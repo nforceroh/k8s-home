@@ -9,6 +9,13 @@ kube-prometheus-stack:
 
   alertmanager:
     alertmanagerSpec:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi  
       externalUrl: https://alertmanager.k3s.nf.lab
       forceEnableClusterMode: true
       alertmanagerConfigMatcherStrategy: 
@@ -105,6 +112,13 @@ kube-prometheus-stack:
             - prometheus.k3s.nf.lab
 
     prometheusSpec:
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+        limits:
+          cpu: 2000m
+          memory: 4Gi
       externalUrl: https://prometheus.k3s.nf.lab
       ruleSelector: {}
       ruleNamespaceSelector: {}
