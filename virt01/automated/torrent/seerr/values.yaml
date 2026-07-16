@@ -19,6 +19,13 @@ seerr:
       tcpSocket:
         port: http
 
+  service:
+    type: ClusterIP
+    port: 80
+    ipFamilyPolicy: SingleStack
+    ipFamilies:
+      - IPv4
+
   config:
     persistence:
       existingClaim: 'seerr-pvc'
