@@ -56,8 +56,15 @@ Initiate the restore process by utilizing the exact snapshot name targeted from 
 ```bash
 velero restore create --from-backup tools-lubelog-20260713091029 \
   --existing-resource-policy=update \
-  --restore-volumes=false \
-  --exclude-resources certificaterequests.cert-manager.io,orders.cert-manager.io,orders.acme.cert-manager.io
+  --restore-volumes=true \
+  --exclude-resources certificaterequests.cert-manager.io,orders.cert-manager.io,orders.acme.cert-manager.io,volumesnapshots.snapshot.storage.k8s.io,volumesnapshotcontents.snapshot.storage.k8s.io
+
+
+  velero restore create --from-backup tools-lubelog-20260713091029 \
+  --existing-resource-policy=update \
+  --exclude-resources certificaterequests.cert-manager.io,orders.cert-manager.io,orders.acme.cert-manager.io,volumesnapshots.snapshot.storage.k8s.io,volumesnapshotcontents.snapshot.storage.k8s.io
+
+
 
 ```
 

@@ -21,7 +21,7 @@ seerr:
 
   config:
     persistence:
-      existingClaim: 'jellyseerr-pvc'
+      existingClaim: 'seerr-pvc'
 
   ingress:
     enabled: false
