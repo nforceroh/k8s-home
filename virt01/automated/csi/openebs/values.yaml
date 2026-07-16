@@ -1,17 +1,21 @@
 openebs:
+  # 1. Turn it OFF here to silence the first hidden engine template copy
+  csi:
+    volumeSnapshots:
+      enabled: false
+
   zfs-localpv:
     crds:
       zfsLocalPv:
         enabled: true
+      # 2. Turn it OFF here too (Highly Recommended for GitOps/ArgoCD)
       csi:
         volumeSnapshots:
-          enabled: true
-    node:
-      env:
-        - name: ALLOWED_TOPOLOGY_KEYS
-          value: "kubernetes.io/hostname"
+          enabled: false
+
+  # Keep your remaining configuration intact below
   lvm-localpv:
-    enabled: false 
+    enabled: false
     crds:
       lvmLocalPv:
         enabled: false
@@ -33,9 +37,7 @@ openebs:
     replicated:
       mayastor:
         enabled: false
-
   loki:
     enabled: false        
-
   alloy:
     enabled: false
