@@ -2,19 +2,27 @@ installation:
   enabled: true
   kubernetesProvider: ""
   calicoNetwork:
-    bgp: Disabled
+    bgp: Disabled                     # Disables the broken BGP peering mesh
+    hostPorts: Enabled
+    linuxDataplane: Iptables
+    # Explicitly binds Calico to your actual master host interface
+    nodeAddressAutodetectionV4:
+      interface: eno1.1000
+    # Explicitly binds Calico to your master IPv6 interface layout
+    nodeAddressAutodetectionV6:
+      interface: eno1.1000
     ipPools:
+      # Restores your functional IPv4 workload spaces
       - cidr: 10.244.0.0/16
-        encapsulation: VXLAN
+        encapsulation: VXLANCrossSubnet
         natOutgoing: Enabled
         nodeSelector: all()
-      # Explicit private IPv6 pool configuration tracking your kubeadm pool layout
+      # Restores your functional private IPv6 workload spaces
       - cidr: fd00:244::/64
-        encapsulation: VXLAN
+        encapsulation: VXLANCrossSubnet
         natOutgoing: Enabled
         nodeSelector: all()
 
-# Inject the autodetection variables into the daemonsets to parse dual-stack structures
 calicoNode:
   env:
     IP6: "autodetect"
