@@ -26,18 +26,28 @@ spec:
           }
         },
         {
-          "type" : "route-override",
-          "flushroutes" : true,
+          "type": "route-override",
+          "flushroutes": true,
           "delroutes": [
-          {
-              "dst": "0.0.0.0/0",
-              "gw": "10.0.0.1"
-          }],
+            {
+                "dst": "0.0.0.0/0",
+                "gw": "10.0.0.1"
+            },
+            {
+                "dst": "::/0",
+                "gw": "fe80::2807:41ff:fe97:a02e"
+            }
+          ],
           "addroutes": [
-          {
-              "dst": "10.0.0.0/16",
-              "gw": "10.0.0.1"
-          }]
+            {
+                "dst": "10.0.0.0/16",
+                "gw": "10.0.0.1"
+            },
+            {
+                "dst": "2603:6013:7e01:2102::/64",
+                "gw": "fe80::2807:41ff:fe97:a02e"
+            }
+          ]
         }
       ]
     }'
@@ -199,12 +209,16 @@ spec:
           }
         },
         {
-          "type" : "route-override",
-          "flushroutes" : true,
+          "type": "route-override",
+          "flushroutes": true,
           "delroutes": [
             {
                 "dst": "0.0.0.0/0",
                 "gw": "10.40.0.1"
+            },
+            {
+                "dst": "::/0",
+                "gw": "fe80::601b:6fff:feaf:488"
             }
           ],
           "addroutes": [

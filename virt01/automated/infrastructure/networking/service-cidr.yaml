@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1
+kind: ServiceCIDR
+metadata:
+  name: dualstack-range
+  namespace: kube-system
+spec:
+  cidrs:
+    - 10.96.0.0/12
+    - fd00:96::/112
