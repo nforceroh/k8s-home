@@ -1,6 +1,9 @@
 # https://github.com/seerr-team/seerr/blob/develop/charts/seerr-chart/values.yaml
 
 seerr:
+  image:
+    tag: 'v3.2.0'
+
   probes:
     livenessProbe:
       initialDelaySeconds: 60
@@ -18,13 +21,6 @@ seerr:
     startupProbe:
       tcpSocket:
         port: http
-
-  service:
-    type: ClusterIP
-    port: 80
-    ipFamilyPolicy: SingleStack
-    ipFamilies:
-      - IPv4
 
   config:
     persistence:
