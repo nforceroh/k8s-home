@@ -23,13 +23,13 @@ kube-prometheus-stack:
       persistentVolumeClaimRetentionPolicy:
         whenDeleted: Retain
         whenScaled: Retain
-      storage:
-        volumeClaimTemplate:
-          spec:
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 10Gi
+      storage: {} 
+        # volumeClaimTemplate:
+        #   spec:
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 10Gi
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -138,12 +138,15 @@ kube-prometheus-stack:
         whenDeleted: Retain
         whenScaled: Retain
       storageSpec:
-        volumeClaimTemplate:
-          spec:
-            accessModes: ["ReadWriteOnce"]
-            resources:
-              requests:
-                storage: 50Gi
+        emptyDir:
+          medium: Memory
+
+        # volumeClaimTemplate:
+        #   spec:
+        #     accessModes: ["ReadWriteOnce"]
+        #     resources:
+        #       requests:
+        #         storage: 50Gi
 
   defaultRules:
     rules:
