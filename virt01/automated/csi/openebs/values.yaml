@@ -6,6 +6,12 @@ openebs:
       csi:
         volumeSnapshots:
           enabled: true
+    # --- ADD THIS BLOCK TO FIX KUBEVIRT OVERFLOW ---
+    node:
+      env:
+        - name: ALLOWED_TOPOLOGY_KEYS
+          value: "kubernetes.io/hostname"
+    # -----------------------------------------------
   lvm-localpv:
     crds:
       lvmLocalPv:
