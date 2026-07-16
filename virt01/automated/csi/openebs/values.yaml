@@ -1,19 +1,16 @@
 openebs:
-  # 1. Turn it OFF here to silence the first hidden engine template copy
   csi:
     volumeSnapshots:
-      enabled: false
+      enabled: true
 
   zfs-localpv:
     crds:
       zfsLocalPv:
         enabled: true
-      # 2. Turn it OFF here too (Highly Recommended for GitOps/ArgoCD)
       csi:
         volumeSnapshots:
-          enabled: false
+          enabled: true
 
-  # Keep your remaining configuration intact below
   lvm-localpv:
     enabled: false
     crds:
