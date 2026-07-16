@@ -1,0 +1,21 @@
+installation:
+  enabled: true
+  kubernetesProvider: ""
+  calicoNetwork:
+    bgp: Disabled
+    ipPools:
+      - cidr: 10.244.0.0/16
+        encapsulation: VXLAN
+        natOutgoing: Enabled
+        nodeSelector: all()
+      # Explicit private IPv6 pool configuration tracking your kubeadm pool layout
+      - cidr: fd00:244::/64
+        encapsulation: VXLAN
+        natOutgoing: Enabled
+        nodeSelector: all()
+
+# Inject the autodetection variables into the daemonsets to parse dual-stack structures
+calicoNode:
+  env:
+    IP6: "autodetect"
+    FELIX_IPV6SUPPORT: "true"

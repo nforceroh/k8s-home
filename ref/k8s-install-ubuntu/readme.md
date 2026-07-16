@@ -410,9 +410,10 @@ IP=10.0.0.100
 
 sudo kubeadm init \
     --control-plane-endpoint $IP \
-    --pod-network-cidr=10.244.0.0/16,2001:db8:42:0::/56 \
-    --service-cidr=10.96.0.0/16,2001:db8:42:1::/112 \
+    --pod-network-cidr=10.244.0.0/16,fd00:244::/64 \
+    --service-cidr=10.96.0.0/16,fd00:96::/112 \
     --ignore-preflight-errors=DirAvailable--var-lib-etcd
+
 ```
 
 ---

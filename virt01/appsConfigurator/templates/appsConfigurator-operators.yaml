@@ -277,3 +277,24 @@ spec:
   syncPolicy:
     automated: { prune: true, selfHeal: true }
     syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: calico-operator
+  namespace: argocd
+spec:
+  project: argocd-virt01
+  source:
+    chart: tigera-operator
+    repoURL: https://docs.tigera.io/calico/charts
+    targetRevision: v3.32.1
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tigera-operator
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
