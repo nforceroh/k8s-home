@@ -49,9 +49,8 @@ sudo chmod -x /etc/update-motd.d/*
 sudo systemctl stop apparmor
 sudo systemctl disable apparmor
 sudo apt remove -y apparmor
+sudo sed -i 's/^GRUB_CMDLINE_LINUX="\(.*\)"/GRUB_CMDLINE_LINUX="\1 apparmor=0"/' /etc/default/grub && sudo update-grub && sudo systemctl disable apparmor
 ```
-
----
 
 ## 5. ZFS — Install and Import Pools
 
@@ -164,10 +163,10 @@ sudo apt install -y \
     gnupg \
     conntrack \
     containerd \
-    psmisc
+    psmisc \
+    smartmontools \
+    zfsutils-linux
 ```
-
----
 
 ## 8. Configure containerd
 
@@ -244,16 +243,6 @@ EOF
 ## 12b. Increase Kubelet maxPods (single-node with many workloads)
 
 Default kubelet allows 110 pods per node. For heavily-loaded single-node clusters bump it to 200. This must be set BEFORE `kubeadm init`, or applied AFTER by editing kubelet config and restarting.
-
-### Option A: Pre-init (set in kubeadm config)
-
-Add to your kubeadm-config.yaml:
-
-```yaml
-apiVersion: kubelet.config.k8s.io/v1beta1
-kind: KubeletConfiguration
-maxPods: 200
-```
 
 ### Option B: Post-init (edit running config)
 
@@ -437,7 +426,7 @@ kubectl taint nodes --all node-role.kubernetes.io/master- 2>/dev/null || true
 
 ---
 
-## 19. Install CNI — Calico
+## 19. Install CNI — Calico (** Now installed via ArgoCD **)
 
 ```bash
 # Install tigera operator

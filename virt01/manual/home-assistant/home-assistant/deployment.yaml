@@ -23,7 +23,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2026.6.3
+          image: homeassistant/home-assistant:2026.6.4
           imagePullPolicy: Always
           ports:
           - containerPort: 8123
@@ -91,25 +91,25 @@ spec:
             name: zwave-data
 
 
-        # - name: music-assistant-server
-        #   image: ghcr.io/music-assistant/server:latest
-        #   imagePullPolicy: Always
-        #   env:
-        #     - name: TZ
-        #       value: "America/New_York"
-        #   ports:
-        #   - containerPort: 8095
-        #     name: webui
-        #   - containerPort: 8097
-        #     name: api
-        #   volumeMounts:
-        #   - name: ma-data-pv
-        #     mountPath: /data
-        #   - name: ma-library
-        #     mountPath: /media
-        #   securityContext:
-        #     privileged: true
-        #   resources: {}
+        - name: music-assistant-server
+          image: ghcr.io/music-assistant/server:2.8.8
+          imagePullPolicy: Always
+          env:
+            - name: TZ
+              value: "America/New_York"
+          ports:
+          - containerPort: 8095
+            name: webui
+          - containerPort: 8097
+            name: api
+          volumeMounts:
+          - name: ma-data-pv
+            mountPath: /data
+          - name: ma-library
+            mountPath: /media
+          securityContext:
+            privileged: true
+          resources: {}
 
         - name: code-server
           image: linuxserver/code-server
@@ -188,5 +188,6 @@ spec:
             path: /mnt/ssd01/Music
             type: Directory
         - name: zwave-data
-          hostPath:
-            path: /zwave/data
+          persistentVolumeClaim:
+            claimName: zwave-data-pvc
+
