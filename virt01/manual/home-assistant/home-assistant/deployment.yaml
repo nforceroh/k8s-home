@@ -23,7 +23,7 @@ spec:
       runtimeClassName: nvidia
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:latest
+          image: homeassistant/home-assistant:2026.7.0
           imagePullPolicy: Always
           ports:
           - containerPort: 8123
@@ -70,7 +70,7 @@ spec:
               - name: Accept
                 value: text/plain
               path: /health
-              port: http
+              port: js-ui-http
             initialDelaySeconds: 30
             periodSeconds: 10
             successThreshold: 1
