@@ -44,4 +44,10 @@ spec:
         kind: ServiceMonitor
         jqPathExpressions:
         - .metadata.annotations
-  
+      # --- ADD THIS BLOCK FOR PVC RETENTION ---
+      - group: ""
+        kind: PersistentVolumeClaim
+        jsonPointers:
+        - /metadata/labels
+        - /metadata/annotations
+        - /spec/resources/requests/storage  

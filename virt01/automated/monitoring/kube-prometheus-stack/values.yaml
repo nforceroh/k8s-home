@@ -8,6 +8,16 @@ kube-prometheus-stack:
       forceConflicts: true
 
   alertmanager:
+    # config:
+    #   receivers:
+    #     - name: 'null' # Define an empty receiver
+    #   route:
+    #     routes:
+    #       # Match specific alerts or namespaces to throw away
+    #       - matchers: 
+    #           - alertname =~ "CPUThrottlingHigh|KubePodNotReady"
+    #           - namespace = "development"
+    #         receiver: 'null'  
     alertmanagerSpec:
       resources:
         requests:
@@ -25,11 +35,18 @@ kube-prometheus-stack:
         whenScaled: Retain
       storage:
         volumeClaimTemplate:
+          metadata:
+            annotations:
+              # Tells Helm/ArgoCD to leave this PVC alone during a chart uninstall
+              helm.sh/resource-policy: keep
+              # Explicitly orders Argo CD to skip this PVC during pruning operations
+              argocd.argoproj.io/sync-options: Prune=false      
           spec:
             accessModes: ["ReadWriteOnce"]
             resources:
               requests:
                 storage: 10Gi
+
     ingress:
       enabled: true
       ingressClassName: traefik
@@ -139,6 +156,12 @@ kube-prometheus-stack:
         whenScaled: Retain
       storageSpec:
         volumeClaimTemplate:
+          metadata:
+            annotations:
+              # Tells Helm/ArgoCD to leave this PVC alone during a chart uninstall
+              helm.sh/resource-policy: keep
+              # Explicitly orders Argo CD to skip this PVC during pruning operations
+              argocd.argoproj.io/sync-options: Prune=false
           spec:
             accessModes: ["ReadWriteOnce"]
             resources:

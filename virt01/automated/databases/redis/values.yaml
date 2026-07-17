@@ -35,6 +35,13 @@ redis:
         external-dns.alpha.kubernetes.io/hostname: redis.k3s.nf.lab
   metrics:
     enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 500m     # Bumping this up from the default ~50m/100m preset
+        memory: 192Mi    
     serviceMonitor:
       enabled: true
     prometheusRule:
