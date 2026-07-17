@@ -1,23 +1,37 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-seerr-daily-local
+  namespace: velero
+spec:
+  # Runs every day at 6:30 AM (New York time)
+  schedule: CRON_TZ=America/New_York 30 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: seerr
+    ttl: 168h0m0s # 7 days retention (keeps local ZFS pool usage light)
+    snapshotVolumes: true
+    snapshotMoveData: false
 ---
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-seerr
+  name: torrent-seerr-weekly-offsite-CFR2
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 30 6 * * 3
+  # Runs every Wednesday at 4:30 AM (New York time)
+  schedule: CRON_TZ=America/New_York 30 4 * * 3
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - torrent
-    includedResources:
-      - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: seerr
-    metadata: {}
-    ttl: 336h0m0s
-  useOwnerReferencesInBackup: false
+    ttl: 720h0m0s # 30 days retention out in Cloudflare R2
+    snapshotVolumes: true
+    snapshotMoveData: true

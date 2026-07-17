@@ -39,9 +39,9 @@ velero:
     dataMoverPrepareTimeout: 3h
     defaultItemOperationTimeout: 6h
     logLevel: info
+    defaultVolumesToFsBackup: false
     backupStorageLocation:
     - name: default
-      defaultVolumesToFsBackup: false
       provider: aws
       bucket: velero
       config:
@@ -68,6 +68,9 @@ velero:
   
   deployNodeAgent: true
 
+  nodeAgent:
+    podVolumePath: /var/lib/kubelet/pods
+    
   kubectl:
     image:
       repository: harbor.nf.lab/proxy.docker.io/bitnamilegacy/kubectl
