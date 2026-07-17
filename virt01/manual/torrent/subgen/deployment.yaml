@@ -1,0 +1,98 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: subgen
+  labels:
+    app: subgen
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: subgen
+  template:
+    metadata:
+      labels:
+        app: subgen
+    spec:
+      runtimeClassName: nvidia
+      initContainers:
+        - name: fix-models-permissions
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - chown -R 3000:3000 /models
+          volumeMounts:
+            - name: subgen-models-pv
+              mountPath: /models
+      containers:
+        - name: subgen
+          image: mccloud/subgen:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 3000
+            runAsGroup: 3000
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: TRANSCRIBE_DEVICE
+              value: "cuda"
+            - name: WHISPER_MODEL
+              value: "medium"
+            - name: CONCURRENT_TRANSCRIPTIONS
+              value: "2"
+            - name: WEBHOOK_PORT
+              value: "9000"
+            - name: MODEL_PATH
+              value: "/models"
+            - name: DEBUG
+              value: "false"
+          ports:
+            - name: http
+              containerPort: 9000
+          volumeMounts:
+            - name: subgen-models-pv
+              mountPath: /models
+            - name: tv
+              mountPath: /tv
+            - name: movies
+              mountPath: /movies
+          readinessProbe:
+            httpGet:
+              path: /status
+              port: 9000
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 9000
+            initialDelaySeconds: 30
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 5
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2Gi
+            requests:
+              cpu: 10m
+              memory: 100Mi
+      volumes:
+        - name: subgen-models-pv
+          persistentVolumeClaim:
+            claimName: subgen-models-pvc
+        - name: tv
+          hostPath:
+            type: Directory
+            path: /mnt/hdd01/emby/TVShows
+        - name: movies
+          hostPath:
+            type: Directory
+            path: /mnt/hdd01/emby/Movies

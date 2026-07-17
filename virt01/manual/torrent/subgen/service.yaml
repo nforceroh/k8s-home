@@ -2,13 +2,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: whisper-asr-svc
+  name: subgen
   labels:
-    app: whisper-asr
+    app: subgen
 spec:
   ports:
-    - name: whisper-asr-svc-port
+    - name: http
       port: 9000
       targetPort: 9000
   selector:
-    app: whisper-asr
+    app: subgen
