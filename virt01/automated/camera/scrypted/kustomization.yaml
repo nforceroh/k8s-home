@@ -13,7 +13,6 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - backup-schedule.yaml
 #  - scrypted-config-sealed.yaml
 
 # configMapGenerator:
