@@ -1,24 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: databases-redis
+  name: databases-redis-daily-local
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 6 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - databases
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: redis
-    metadata: {}
-    ttl: 216h0m0s
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases-redis-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: redis
+    ttl: 720h0m0s
+    snapshotVolumes: true
     snapshotMoveData: true
-  useOwnerReferencesInBackup: false

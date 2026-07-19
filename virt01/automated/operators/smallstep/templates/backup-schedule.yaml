@@ -1,24 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: smallstep-smallstep
+  name: smallstep-smallstep-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 5 * * 0
+  schedule: CRON_TZ=America/New_York 0 5 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - smallstep
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: smallstep
-    metadata: {}
-    ttl: 336h0m0s
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: smallstep-smallstep-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 5 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - smallstep
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: smallstep
+    ttl: 720h0m0s
+    snapshotVolumes: true
     snapshotMoveData: true
-  useOwnerReferencesInBackup: false

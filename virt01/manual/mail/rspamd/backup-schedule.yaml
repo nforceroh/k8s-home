@@ -1,23 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: mail-rspamd
+  name: mail-rspamd-daily-local
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 30 3 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - mail
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: rspamd
-    metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: mail-rspamd-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 30 3 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - mail
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: rspamd
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

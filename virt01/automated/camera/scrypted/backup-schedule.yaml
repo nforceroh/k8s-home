@@ -2,9 +2,8 @@ apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   name: camera-scrypted-daily-local
-  namespace: camera
+  namespace: velero
 spec:
-  # Runs every day at 6:40 AM (New York time)
   schedule: CRON_TZ=America/New_York 40 6 * * *
   skipImmediately: false
   template:
@@ -12,7 +11,10 @@ spec:
       - camera
     includedResources:
       - '*'
-    ttl: 168h0m0s # 7 days retention (keeps local ZFS pool usage light)
+    labelSelector:
+      matchLabels:
+        app: scrypted
+    ttl: 168h0m0s
     snapshotVolumes: true
     snapshotMoveData: false
 ---
@@ -20,16 +22,18 @@ apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   name: camera-scrypted-weekly-offsite-cfr2
-  namespace: camera
+  namespace: velero
 spec:
-  # Runs every Wednesday at 4:40 AM (New York time)
-  schedule: CRON_TZ=America/New_York 40 4 * * 3
+  schedule: CRON_TZ=America/New_York 40 6 * * 3
   skipImmediately: false
   template:
     includedNamespaces:
       - camera
     includedResources:
       - '*'
-    ttl: 720h0m0s # 30 days retention out in Cloudflare R2
+    labelSelector:
+      matchLabels:
+        app: scrypted
+    ttl: 720h0m0s
     snapshotVolumes: true
     snapshotMoveData: true

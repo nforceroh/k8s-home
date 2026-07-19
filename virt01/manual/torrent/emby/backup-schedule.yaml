@@ -1,23 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-emby
+  name: torrent-emby-daily-local
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 15 6 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - torrent
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: emby
-    metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-emby-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 15 6 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: emby
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

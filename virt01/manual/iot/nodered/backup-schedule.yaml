@@ -1,23 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: iot-nodered
+  name: iot-nodered-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 20 2 * * 1
+  schedule: CRON_TZ=America/New_York 20 2 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - iot
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: nodered
-    metadata: {}
-    ttl: 336h0m0s
-  useOwnerReferencesInBackup: false
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: iot-nodered-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 20 2 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - iot
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: nodered
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

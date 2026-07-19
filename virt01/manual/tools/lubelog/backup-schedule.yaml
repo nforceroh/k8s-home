@@ -1,23 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: tools-lubelog
+  name: tools-lubelog-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 10 5 * * 1,4
+  schedule: CRON_TZ=America/New_York 10 5 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - tools
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: lubelog
-    metadata: {}
-    ttl: 336h0m0s
-  useOwnerReferencesInBackup: false
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: tools-lubelog-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 10 5 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - tools
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: lubelog
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

@@ -1,24 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: ai-open-webui
+  name: ai-open-webui-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 4 * * 0
+  schedule: CRON_TZ=America/New_York 0 4 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - ai
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app.kubernetes.io/instance: open-webui
-    metadata: {}
-    ttl: 336h0m0s
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: ai-open-webui-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 4 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - ai
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: open-webui
+    ttl: 720h0m0s
+    snapshotVolumes: true
     snapshotMoveData: true
-  useOwnerReferencesInBackup: false

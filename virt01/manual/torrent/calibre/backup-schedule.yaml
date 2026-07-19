@@ -1,24 +1,39 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-calibre-daily-local
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 5 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: calibre
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
 ---
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-calibre
+  name: torrent-calibre-weekly-offsite-cfr2
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 5 6 * * 3
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - torrent
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: calibre
-    metadata: {}
-    ttl: 336h0m0s
-  useOwnerReferencesInBackup: false
-
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

@@ -1,24 +1,39 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-deluge-daily-local
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 10 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: deluge
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
 ---
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-deluge
+  name: torrent-deluge-weekly-offsite-cfr2
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 10 6 * * 3
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - torrent
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: deluge
-    metadata: {}
-    ttl: 336h0m0s
-  useOwnerReferencesInBackup: false
-
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

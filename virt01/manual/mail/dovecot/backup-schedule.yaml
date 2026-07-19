@@ -1,24 +1,39 @@
----
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: mail-dovecot
+  name: mail-dovecot-daily-local
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 0 3 * * *
   skipImmediately: false
   template:
-    csiSnapshotTimeout: 0s
-    hooks: {}
     includedNamespaces:
       - mail
     includedResources:
       - '*'
-    itemOperationTimeout: 0s
     labelSelector:
       matchLabels:
         app: dovecot
-    metadata: {}
-    ttl: 216h0m0s
-  useOwnerReferencesInBackup: false
-
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: mail-dovecot-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 3 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - mail
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: dovecot
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true
