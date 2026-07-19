@@ -15,4 +15,3 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: openebs-zfspv-lz4
-  volumeMode: Filesystem
