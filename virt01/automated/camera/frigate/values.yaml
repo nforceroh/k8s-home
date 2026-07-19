@@ -69,9 +69,10 @@ frigate:
   service:
     type: LoadBalancer
     annotations:
-      metallb.io/address-pool: vlan1400
+#      metallb.io/address-pool: vlan1400
+#      external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
+      metallb.io/address-pool: vlan1000-apps
       external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
-
   persistence:
     config:
       enabled: true        

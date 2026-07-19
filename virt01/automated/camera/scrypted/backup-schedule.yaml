@@ -1,7 +1,7 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: camera-scrypted-pvc-daily-local
+  name: camera-scrypted-daily-local
   namespace: camera
 spec:
   # Runs every day at 6:40 AM (New York time)
@@ -11,10 +11,7 @@ spec:
     includedNamespaces:
       - camera
     includedResources:
-      - persistentvolumeclaims
-    labelSelector:
-      matchLabels:
-        backup.k8s-home.io/pvc: scrypted-pvc
+      - '*'
     ttl: 168h0m0s # 7 days retention (keeps local ZFS pool usage light)
     snapshotVolumes: true
     snapshotMoveData: false
@@ -22,7 +19,7 @@ spec:
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: camera-scrypted-pvc-weekly-offsite-cfr2
+  name: camera-scrypted-weekly-offsite-cfr2
   namespace: camera
 spec:
   # Runs every Wednesday at 4:40 AM (New York time)
@@ -32,10 +29,7 @@ spec:
     includedNamespaces:
       - camera
     includedResources:
-      - persistentvolumeclaims
-    labelSelector:
-      matchLabels:
-        backup.k8s-home.io/pvc: scrypted-pvc
+      - '*'
     ttl: 720h0m0s # 30 days retention out in Cloudflare R2
     snapshotVolumes: true
     snapshotMoveData: true
