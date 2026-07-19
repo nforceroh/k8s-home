@@ -1,0 +1,41 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-frigate-config-daily-local
+  namespace: velero
+spec:
+  # Runs every day at 6:35 AM (New York time)
+  schedule: CRON_TZ=America/New_York 35 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: frigate
+    ttl: 168h0m0s # 7 days retention (keeps local ZFS pool usage light)
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-frigate-config-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  # Runs every Wednesday at 4:35 AM (New York time)
+  schedule: CRON_TZ=America/New_York 35 4 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: frigate
+    ttl: 720h0m0s # 30 days retention out in Cloudflare R2
+    snapshotVolumes: true
+    snapshotMoveData: true
