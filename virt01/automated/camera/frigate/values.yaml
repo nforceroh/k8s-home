@@ -209,13 +209,13 @@ frigate:
       enabled: true
       alerts:
         retain:
-          days: 30
+          days: 10
           mode: motion
       detections:
         pre_capture: 5
         post_capture: 5
         retain:
-          days: 30
+          days: 10
           mode: motion
       continuous:
         days: 14
