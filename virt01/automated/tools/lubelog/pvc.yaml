@@ -13,7 +13,7 @@ spec:
   storageClassName: openebs-zfspv-lz4
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   volumeMode: Filesystem
 ---
 apiVersion: v1
@@ -30,7 +30,7 @@ spec:
   storageClassName: openebs-zfspv-lz4
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   volumeMode: Filesystem
 ---
 apiVersion: v1
@@ -47,7 +47,7 @@ spec:
   storageClassName: openebs-zfspv-lz4
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   volumeMode: Filesystem
 ---
 apiVersion: v1
@@ -64,5 +64,5 @@ spec:
   storageClassName: openebs-zfspv-lz4
   resources:
     requests:
-      storage: 1Gi
+      storage: 10Gi
   volumeMode: Filesystem
