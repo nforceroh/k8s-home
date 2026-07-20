@@ -19,6 +19,62 @@ argo-cd:
       kustomize.buildOptions: --enable-helm
   #    url: 'https://argo.k3s.nf.lab'
       admin.enabled: true
+      resource.customizations.health.k8s.mariadb.com_MariaDB: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = "Waiting for MariaDB to become ready"
+        if obj.status ~= nil and obj.status.conditions ~= nil then
+          local ready = nil
+          local updated = nil
+          for _, condition in ipairs(obj.status.conditions) do
+            if condition.type == "Ready" then
+              ready = condition
+            end
+            if condition.type == "Updated" then
+              updated = condition
+            end
+          end
+          if ready ~= nil and ready.status == "False" then
+            hs.status = "Degraded"
+            hs.message = ready.message or "MariaDB reported a failed Ready condition"
+            return hs
+          end
+          if ready ~= nil and ready.status == "True" and updated ~= nil and updated.status == "True" then
+            hs.status = "Healthy"
+            hs.message = ready.message or "MariaDB is ready"
+            return hs
+          end
+        end
+        return hs
+      resource.customizations.health.k8s.mariadb.com_Backup: |
+        hs = {}
+        hs.status = "Progressing"
+        hs.message = "Waiting for MariaDB backup schedule"
+        if obj.spec ~= nil and obj.spec.schedule ~= nil then
+          if obj.spec.schedule.suspend == true then
+            hs.status = "Suspended"
+            hs.message = "Backup schedule is suspended"
+            return hs
+          end
+          hs.status = "Healthy"
+          hs.message = "Backup schedule is active"
+          return hs
+        end
+        if obj.status ~= nil and obj.status.conditions ~= nil then
+          for _, condition in ipairs(obj.status.conditions) do
+            if condition.type == "Complete" and condition.status == "True" then
+              hs.status = "Healthy"
+              hs.message = condition.message or "Backup completed successfully"
+              return hs
+            end
+            if condition.type == "Complete" and condition.status == "False" and condition.reason == "Failed" then
+              hs.status = "Degraded"
+              hs.message = condition.message or "Backup failed"
+              return hs
+            end
+          end
+        end
+        return hs
     secret:
       argocdServerAdminPassword: "$2a$10$BU1MWZ7KKPmkc3aPpmtK/enV5xHq4uMhr6SoE1VEc.pMbkNwIYDB6"
       argocdServerAdminPasswordMtime: "2020-09-01T10:11:12Z"
