@@ -9,17 +9,10 @@ namespace: camera
 
 resources:
   - deployment.yaml
-  - pvc.yaml
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
   - backup-schedule.yaml
-#  - scrypted-config-sealed.yaml
-
-# configMapGenerator:
-# - name: scrypted-env
-#   envs:
-#   - resources/env.txt
 
 generatorOptions:
   disableNameSuffixHash: true

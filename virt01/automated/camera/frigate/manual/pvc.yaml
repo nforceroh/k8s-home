@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: frigate
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
-    "helm.sh/resource-policy": keep
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
   - ReadWriteOnce
