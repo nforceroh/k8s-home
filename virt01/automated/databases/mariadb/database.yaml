@@ -7,14 +7,17 @@ spec:
   rootPasswordSecretKeyRef:
     name: mariadb-auth
     key: mariadb-password
+  rootEmptyPassword: false
   
   storage:
     size: 10Gi
     storageClassName: openebs-zfspv-lz4
+    ephemeral: false
 
   replicas: 1
   metrics:
     enabled: true
+    username: mariadb-metrics
 
   myCnf: |
     [mariadb]

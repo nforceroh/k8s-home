@@ -2,7 +2,7 @@
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: Backup
 metadata:
-  name: mariadb-daily-r2
+  name: mariadb-daily-r2-v2
 spec:
   mariaDbRef:
     name: mariadb
@@ -28,7 +28,7 @@ spec:
 apiVersion: k8s.mariadb.com/v1alpha1
 kind: Backup
 metadata:
-  name: mariadb-monthly-r2
+  name: mariadb-monthly-r2-v2
 spec:
   mariaDbRef:
     name: mariadb

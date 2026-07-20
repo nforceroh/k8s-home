@@ -19,7 +19,7 @@ spec:
     # Alert 2: Fire if no successful backup has completed within the last 26 hours
     # (Catches missing daily crons or silent scheduler hangs)
     - alert: MariaDBDailyBackupMissing
-      expr: time() - mariadb_operator_backup_last_completion_timestamp{backup="mariadb-daily-r2"} > 93600
+      expr: time() - mariadb_operator_backup_last_completion_timestamp{backup="mariadb-daily-r2-v2"} > 93600
       for: 15m
       labels:
         severity: warning

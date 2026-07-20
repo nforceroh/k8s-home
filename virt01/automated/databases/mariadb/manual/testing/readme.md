@@ -6,7 +6,7 @@ This guide details the procedures for executing manual on-demand backup tests, p
 
 ## 🏗️ 1. Manual On-Demand Backup Test
 
-To trigger an immediate backup snapshot without waiting for the automated Cron schedules (`mariadb-daily-r2` / `mariadb-monthly-r2`), deploy a one-off `Backup` resource that omits the `spec.schedule` configuration block.
+To trigger an immediate backup snapshot without waiting for the automated Cron schedules (`mariadb-daily-r2-v2` / `mariadb-monthly-r2-v2`), deploy a one-off `Backup` resource that omits the `spec.schedule` configuration block.
 
 ### Step 1: Create the Test Manifest
 Run the following command to generate the `mariadb-test-now.yaml` file:
@@ -165,7 +165,7 @@ Run the following commands to check the operational loops of both automated sche
 kubectl get backups -A
 
 # Inspect extended history events or errors
-kubectl describe backup mariadb-daily-r2 -n databases
+kubectl describe backup mariadb-daily-r2-v2 -n databases
 ```
 
 ### Prometheus / Alertmanager Metrics Validation
