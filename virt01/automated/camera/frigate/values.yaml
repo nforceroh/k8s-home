@@ -130,9 +130,6 @@ frigate:
       # 1 is the highest quality, and 31 is the lowest. Lower quality feeds utilize less CPU resources.
       quality: 8
 
-    ui:
-      live_mode: mse
-
     birdseye:
       enabled: true
       mode: continuous
