@@ -51,13 +51,7 @@ helm upgrade --install argocd ./argocd \
     --create-namespace \
     --wait \
     --timeout 300s \
-    --values argocd/values.yaml \
-    --set argo-cd.controller.metrics.enabled=false \
-    --set argo-cd.controller.metrics.serviceMonitor.enabled=false \
-    --set argo-cd.controller.rules.enabled=false \
-    --set argo-cd.server.metrics.enabled=false \
-    --set argo-cd.repoServer.metrics.enabled=false \
-    --set argo-cd.applicationSet.metrics.enabled=false
+    --values argocd/values.yaml 
 
 echo "=== ArgoCD installed successfully ==="
 echo "=== Waiting for pods to be ready ==="
