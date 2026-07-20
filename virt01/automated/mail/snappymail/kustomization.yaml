@@ -8,7 +8,6 @@ labels:
       app: snappymail
 
 resources:
-  - pvc.yaml
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
