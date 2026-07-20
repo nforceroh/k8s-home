@@ -8,6 +8,8 @@ labels:
 namespace: databases
 
 resources:
+  - r2-backup-secret-sealed.yaml
+  - r2-backup-schedule.yaml
   - mariadb-auth-sealed.yaml
   - database.yaml
 

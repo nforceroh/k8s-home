@@ -1,0 +1,47 @@
+---
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: Backup
+metadata:
+  name: mariadb-daily-r2
+spec:
+  mariaDbRef:
+    name: your-mariadb-instance-name
+  schedule: "0 2 * * *"          # Runs daily at 2:00 AM
+  maxRetention: 336h             # 14 days expressed in hours (14 * 24)
+  maxQueueSize: 5
+  storage:
+    s3:
+      bucket: k8s-data  # Your R2 bucket name
+      prefix: mariadb-backups/daily/
+      endpoint: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+      region: auto
+      accessKeyIdSecretKeyRef:
+        name: r2-backup-secret
+        key: access-key-id
+      secretAccessKeySecretKeyRef:
+        name: r2-backup-secret
+        key: secret-access-key
+---
+apiVersion: mariadb.mmontes.io/v1alpha1
+kind: Backup
+metadata:
+  name: mariadb-monthly-r2
+spec:
+  mariaDbRef:
+    name: your-mariadb-instance-name
+  schedule: "0 3 1 * *"          # Runs at 3:00 AM on the 1st day of the month
+  maxRetention: 2160h            # 90 days expressed in hours (90 * 24)
+  maxQueueSize: 5
+  storage:
+    s3:
+      bucket: k8s-data  # Your R2 bucket name
+      prefix: mariadb-backups/monthly/           # Isolates monthly files in the bucket
+      endpoint: https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+      region: auto
+      accessKeyIdSecretKeyRef:
+        name: r2-backup-secret
+        key: access-key-id
+      secretAccessKeySecretKeyRef:
+        name: r2-backup-secret
+        key: secret-access-key
+
