@@ -1,0 +1,23 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: mariadb-manual-test-now
+  namespace: databases
+spec:
+  mariaDbRef:
+    name: mariadb
+  # Omitting the schedule block forces it to run immediately
+  storage:
+    s3:
+      bucket: k8s-data  
+      prefix: mariadb-backups/manual-test/
+      endpoint: c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+      region: auto
+      tls:
+        enabled: true
+      accessKeyIdSecretKeyRef:
+        name: r2-backup-secret
+        key: access-key-id
+      secretAccessKeySecretKeyRef:
+        name: r2-backup-secret
+        key: secret-access-key

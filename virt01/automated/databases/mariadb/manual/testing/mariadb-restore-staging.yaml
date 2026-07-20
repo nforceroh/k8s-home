@@ -1,0 +1,13 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Restore
+metadata:
+  name: mariadb-clone-restore
+  namespace: databases
+spec:
+  # Links directly to the new database instance you deployed in Step 1
+  mariaDbRef:
+    name: mariadb-staging 
+  
+  # References your successful manual backup object
+  backupRef:
+    name: mariadb-manual-test-now
