@@ -8,6 +8,8 @@ labels:
 namespace: databases
 
 resources:
+  - pg-db-app-sealed.yaml
+  - pg-db-superuser-sealed.yaml
   - cluster.yaml
   - backup-schedule.yaml
 

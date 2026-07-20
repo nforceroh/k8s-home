@@ -1,0 +1,20 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  creationTimestamp: null
+  name: pg-db-app
+  namespace: databases
+spec:
+  encryptedData:
+    password: AgC/pPGk5t14dtJbXOMe2j0bgtg8ebUv3EwDfFUbGSw7Psf/ITXKTDGNkTfLXfUOUbP+IS50XD4F/7nYJ/JGNYz4hvX48mOoY1PNXw8uiY/BtdF0bdtMq38RvcteC6s5TvNUjCw4bVTm6l2hXx8/3CjT/2gi4yLQ9DIdx9EqWKyFIWHam4/MtEIFsP8WbFMSxsBFwnb6EZJpb/44MdfGS36j+LsA+m/wUrZmAOheJ6W8XXRA8SCSj3UkCxt2w9cj+TXlnBA3f1tEL6rR1YZQD6wt4weSaLXA/PAD6S/ggL0AUvfPc7xtCth14vv8tZpksm4BwMQSs26DAvEAMbZudyw+ievqY1uvFUCpVckPVM7IHW6PEhlTvXYbR5i412X6WVSnsh5Q3IHVOoGMvB8qLZLeZOPJtS9j1Eb+SaF4x2CtJZmcbhyAeh+95Q+YcVnD7bI6oCFnYAeQwjtOo3ceYxsFAAktftg3wHdiZHorUpgXX6sZfd4XYV4T7gQDJNfRYzn4zRj79t1heTGvEdcQKCcco2XslT3t58fZ7NWN1+6VrnNHZBCJw9pd/O5kcwz2Vl5huCrQ5oP8oNfQE7oPZ+zbYrbivVhBA0VI3ufLrq7JeH158gRSWtquP3YftOxS/IeMeNsGpnx46SoGgRUSFFW618ooyIWxZiKx3LbKWc4Fmw85Nzc6JjMq7r1Q70eR1wO71DQU1rHodE1WKqo=
+    username: AgB2l4et65FpV4zXZcMGvDqL1kacwhhOFHtzCn4SR/6ubfcQSiF3lTcmBAg6MGCZ+0itWCjqnNcLpkNHbp9FFMdYqD1g1x8isKZv5IvfbH4WRQKKRASdb4vQAtD70fPFZqFydOj+FYMFMqa79OZdJlXcX/OuGg/Me6oaq0+yeqGzKGYNeD7gGVqNXjfCSHgnKdwqGCEIMWhdvl1OX5X8Bim3R8Y9XNI0N99vJKJOhwTwua4bwoVKedXktiQeuZVC4A6/gnQUjfmRkQ8oIVQlaasTnaOjUSxpkHAGg4bHm7ZZ/ZSXh63N0HdBqoK51YjO66++GTV+weU+gtRpYTY+te61dAHtI9DmqNpbqX6d9AeU8siHgyr3td2hbWXAoDvdt7eJsW/ER4M2qHm8RWDqz1gHcfz3faTr9nYbxnk6oLNsjaBnkywF8UUEmfv5FovPtttaplVGp5QeEBiuPx89d9VecH12LHz725EljaMvSVguCsT9GUBhkE/KDnsGULgWfpmlC5fYRpkT67tQUmmqA8bpPJYS+GhTcpDaaXwkDdQ/gN4IyelhF+Z7rNcGU2I0l6RwPIRZI9BDkE5QJPAGlkqN53Ja1zmQicPcaqtTd/q7hNBQfifp8NhzytE75Nl2Fb81Sayb8J3NoVKNRaWrfJtAKB59Sx2W2SPSNkSIj590H7TK0+57E7dLi82JR8BCIrtv2Is=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      creationTimestamp: null
+      name: pg-db-app
+      namespace: databases
