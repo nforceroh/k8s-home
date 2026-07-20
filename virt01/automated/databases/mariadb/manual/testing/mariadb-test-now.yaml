@@ -7,6 +7,7 @@ spec:
   mariaDbRef:
     name: mariadb
   # Omitting the schedule block forces it to run immediately
+  maxRetention: 24h
   storage:
     s3:
       bucket: k8s-data  
