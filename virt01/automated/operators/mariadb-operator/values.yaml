@@ -4,6 +4,12 @@ mariadb-operator:
   crds:
     enabled: true
 
+  metrics:
+    enabled: true
+    serviceMonitor:
+      # Automatically creates the ServiceMonitor CRD for Prometheus Operator
+      enabled: true
+
   # Optional: for a single node, you can reduce resource usage
   resources:
     limits:
@@ -12,6 +18,3 @@ mariadb-operator:
     requests:
       cpu: 100m
       memory: 256Mi
-
-metrics:
-  enabled: true

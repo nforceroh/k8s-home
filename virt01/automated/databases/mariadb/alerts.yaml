@@ -1,0 +1,28 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: mariadb-backup-alerts
+spec:
+  groups:
+  - name: mariadb-backup.rules
+    rules:
+    # Alert 1: Fire instantly if any Backup execution job reports a failure status
+    - alert: MariaDBBackupFailed
+      expr: mariadb_operator_backup_status{status="Failed"} > 0
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        summary: "MariaDB backup execution failed"
+        description: "The backup job for '{{ $labels.backup }}' in namespace '{{ $labels.namespace }}' has failed. Check the backup pod logs immediately."
+
+    # Alert 2: Fire if no successful backup has completed within the last 26 hours
+    # (Catches missing daily crons or silent scheduler hangs)
+    - alert: MariaDBDailyBackupMissing
+      expr: time() - mariadb_operator_backup_last_completion_timestamp{backup="mariadb-daily-r2"} > 93600
+      for: 15m
+      labels:
+        severity: warning
+      annotations:
+        summary: "MariaDB daily backup is missing or stale"
+        description: "The daily backup '{{ $labels.backup }}' has not completed successfully in over 26 hours."
