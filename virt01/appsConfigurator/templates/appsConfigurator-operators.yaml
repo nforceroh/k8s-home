@@ -229,37 +229,37 @@ spec:
     automated: { prune: true, selfHeal: true }
     syncOptions: [CreateNamespace=true, ServerSideApply=true]
 ---
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kubevirt-stack
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-spec:
-  project: argocd-virt01
-  source:
-    repoURL: 'https://github.com/nforceroh/k8s-home.git'
-    path: virt01/automated/operators/kubevirt
-    targetRevision: main
-  destination:
-    server: 'https://kubernetes.default.svc'
-  ignoreDifferences:
-    - group: apiextensions.k8s.io
-      kind: CustomResourceDefinition
-      name: cdis.cdi.kubevirt.io
-      jqPathExpressions:
-        - .spec.versions
-        - .spec.conversion.webhook.clientConfig.caBundle # <--- ADD THIS
-        - .spec.conversion.webhook.clientConfig.service.path # <--- ADD THIS
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: kubevirt-stack
+#   namespace: argocd
+#   annotations:
+#     argocd.argoproj.io/sync-wave: "2"
+# spec:
+#   project: argocd-virt01
+#   source:
+#     repoURL: 'https://github.com/nforceroh/k8s-home.git'
+#     path: virt01/automated/operators/kubevirt
+#     targetRevision: main
+#   destination:
+#     server: 'https://kubernetes.default.svc'
+#   ignoreDifferences:
+#     - group: apiextensions.k8s.io
+#       kind: CustomResourceDefinition
+#       name: cdis.cdi.kubevirt.io
+#       jqPathExpressions:
+#         - .spec.versions
+#         - .spec.conversion.webhook.clientConfig.caBundle # <--- ADD THIS
+#         - .spec.conversion.webhook.clientConfig.service.path # <--- ADD THIS
 
-  syncPolicy:
-    automated: { prune: true, selfHeal: true }
-    syncOptions:
-      - CreateNamespace=true
-      - ServerSideApply=true
-      # - Replace=true
----
+#   syncPolicy:
+#     automated: { prune: true, selfHeal: true }
+#     syncOptions:
+#       - CreateNamespace=true
+#       - ServerSideApply=true
+#       # - Replace=true
+# ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
