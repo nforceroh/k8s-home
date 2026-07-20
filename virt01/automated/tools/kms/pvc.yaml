@@ -9,6 +9,7 @@ metadata:
 spec:
   accessModes:
   - ReadWriteOnce
+  storageClassName: openebs-zfspv-lz4
   resources:
     requests:
       storage: 100Mi
