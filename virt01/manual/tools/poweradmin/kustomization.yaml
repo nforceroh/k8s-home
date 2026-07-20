@@ -8,15 +8,11 @@ labels:
       app: poweradmin
 
 resources:
+  - poweradmin-config-sealed.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
-
-secretGenerator:
-- name: poweradmin-env
-  envs:
-  - env/env.txt
 
 generatorOptions:
   disableNameSuffixHash: true

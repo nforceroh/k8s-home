@@ -8,14 +8,10 @@ labels:
       app: powerdns-ns2
 
 resources:
+  - powerdns-ns2-config-sealed.yaml
   - deployment.yaml
   - serviceaccount.yaml
   - services.yaml
   
-configMapGenerator:
-- name: ns2-pdns-conf-cm
-  files:
-  - pdns.conf=maps/pdns.conf
-
 generatorOptions:
   disableNameSuffixHash: true

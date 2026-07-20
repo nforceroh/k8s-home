@@ -19,12 +19,12 @@ spec:
       serviceAccountName: powerdns-sa
       containers:
       - name: powerdns-ns2
-#        image: harbor.nf.lab/homelab/powerdns:latest
         image: ghcr.io/nforceroh/k8s-pdns:latest
         imagePullPolicy: Always
         resources:
-          limits: {}
-          requests: {}
+          requests:
+            cpu: 10m
+            memory: 128Mi
         ports:
         - containerPort: 53
           name: dns-tcp
@@ -42,4 +42,4 @@ spec:
       volumes:
         - name: pdns-config
           configMap:
-            name: ns2-pdns-conf-cm
+            name: powerdns-ns2-config

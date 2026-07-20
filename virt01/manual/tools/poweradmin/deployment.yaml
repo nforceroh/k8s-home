@@ -28,8 +28,9 @@ spec:
               containerPort: 80
           envFrom:
           - secretRef:
-              name: poweradmin-env
+              name: poweradmin-config
           resources:
             requests:
               cpu: "10m"
               memory: "128Mi"
+
