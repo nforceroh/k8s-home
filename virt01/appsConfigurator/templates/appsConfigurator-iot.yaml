@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata: 
+  name: iot
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  generators:
+  - git:
+      repoURL: 'https://github.com/nforceroh/k8s-home.git'
+      revision: main
+      directories:
+        - path: virt01/automated/iot/*
+  template:
+    metadata:
+      name:  "{{`{{ path.basename }}`}}"
+    spec:
+      project: argocd-virt01
+      source:
+        repoURL: 'https://github.com/nforceroh/k8s-home.git'
+        targetRevision: main
+        path:  "{{`{{ path }}`}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+        namespace:  iot
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+        retry:
+          limit: 5 # Maximum number of retry attempts
+          backoff:
+            duration: 30s # Start by waiting 30 seconds
+            factor: 2     # Double the wait time on each failure (30s, 60s, 120s...)
+            maxDuration: 5m # Never wait longer than 5 minutes

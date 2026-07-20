@@ -4,6 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: lubelogger-img-pvc
   namespace: tools
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
   - ReadWriteOnce
@@ -17,6 +20,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: lubelogger-data-pvc
   namespace: tools
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
   - ReadWriteOnce
@@ -30,6 +36,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: lubelogger-docs-pvc
   namespace: tools
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
   - ReadWriteOnce
@@ -43,6 +52,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: lubelogger-config-pvc
   namespace: tools
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    helm.sh/resource-policy: keep
 spec:
   accessModes:
   - ReadWriteOnce

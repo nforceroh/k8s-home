@@ -6,7 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: frigate
     app.kubernetes.io/name: frigate
-    backup.k8s-home.io/pvc: frigate-config
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
     "helm.sh/resource-policy": keep

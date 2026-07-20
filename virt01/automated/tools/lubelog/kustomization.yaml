@@ -1,16 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: iot
+namespace: tools
 
 labels:
   - pairs:
-      app: mosquitto
+      app: lubelog
 
 resources:
+  - pvc.yaml
   - deployment.yaml
   - service.yaml
+  - ingress.yaml
   - serviceaccount.yaml
-  - configmap.yaml
+  - lubelog-sealed.yaml
   - backup-schedule.yaml
-  
+
+generatorOptions:
+  disableNameSuffixHash: true

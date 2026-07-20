@@ -29,7 +29,7 @@ spec:
               mountPath: /models
       containers:
         - name: subgen
-          image: mccloud/subgen:latest
+          image: ghcr.io/coaxk/subarr-subgen:latest
           imagePullPolicy: IfNotPresent
           securityContext:
             runAsUser: 3000
@@ -44,13 +44,13 @@ spec:
             - name: WHISPER_MODEL
               value: "medium"
             - name: CONCURRENT_TRANSCRIPTIONS
-              value: "2"
+              value: "1"
             - name: WEBHOOK_PORT
               value: "9000"
             - name: MODEL_PATH
               value: "/models"
             - name: DEBUG
-              value: "false"
+              value: "true  "
           ports:
             - name: http
               containerPort: 9000
@@ -58,9 +58,9 @@ spec:
             - name: subgen-models-pv
               mountPath: /models
             - name: tv
-              mountPath: /tv
+              mountPath: /media/tv
             - name: movies
-              mountPath: /movies
+              mountPath: /media/movies
           readinessProbe:
             httpGet:
               path: /status
@@ -69,18 +69,15 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 5
             failureThreshold: 5
-          livenessProbe:
-            httpGet:
-              path: /status
-              port: 9000
-            initialDelaySeconds: 30
-            periodSeconds: 30
-            timeoutSeconds: 5
-            failureThreshold: 5
+          # livenessProbe:
+          #   httpGet:
+          #     path: /status
+          #     port: 9000
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 5
           resources:
-            limits:
-              cpu: 1000m
-              memory: 2Gi
             requests:
               cpu: 10m
               memory: 100Mi

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: subarr-svc
+  labels:
+    app: subarr
+spec:
+  ports:
+    - port: 9922
+      protocol: TCP
+      name: subarr-svc-port
+  selector:
+    app: subarr
+  sessionAffinity: None

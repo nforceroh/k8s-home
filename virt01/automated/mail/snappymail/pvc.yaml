@@ -1,8 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: nodered-pvc
-  namespace: iot
+  name: snappymail-pvc
+  namespace: mail
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+    "helm.sh/resource-policy": keep
 spec:
   accessModes:
   - ReadWriteOnce

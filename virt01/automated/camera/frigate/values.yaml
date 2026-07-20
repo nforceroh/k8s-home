@@ -84,6 +84,9 @@ frigate:
       skipuninstall: true    
       existingClaim: frigate-media
 
+  podAnnotations:
+    backup.velero.io/backup-volumes-excludes: "frigate-media"
+
   config: |
     mqtt:
       host: mqtt.k3s.nf.lab
