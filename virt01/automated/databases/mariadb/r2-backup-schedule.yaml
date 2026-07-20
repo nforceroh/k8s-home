@@ -1,5 +1,5 @@
 ---
-apiVersion: mariadb.mmontes.io/v1alpha1
+apiVersion: k8s.mariadb.com/v1alpha1
 kind: Backup
 metadata:
   name: mariadb-daily-r2
@@ -22,7 +22,7 @@ spec:
         name: r2-backup-secret
         key: secret-access-key
 ---
-apiVersion: mariadb.mmontes.io/v1alpha1
+apiVersion: k8s.mariadb.com/v1alpha1
 kind: Backup
 metadata:
   name: mariadb-monthly-r2
