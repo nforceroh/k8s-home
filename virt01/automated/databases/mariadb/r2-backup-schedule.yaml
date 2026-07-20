@@ -10,7 +10,6 @@ spec:
     cron: "0 2 * * *"
     suspend: false
   maxRetention: 336h             # 14 days expressed in hours (14 * 24)
-  maxQueueSize: 5
   storage:
     s3:
       bucket: k8s-data  # Your R2 bucket name
@@ -35,7 +34,6 @@ spec:
     cron: "0 3 1 * *"
     suspend: false
   maxRetention: 2160h            # 90 days expressed in hours (90 * 24)
-  maxQueueSize: 5
   storage:
     s3:
       bucket: k8s-data  # Your R2 bucket name
