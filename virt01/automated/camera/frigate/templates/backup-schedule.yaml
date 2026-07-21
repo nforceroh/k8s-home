@@ -5,7 +5,7 @@ metadata:
   namespace: velero
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
-    argocd.argoproj.io/sync-options: Delete=false,Prune=false
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
 spec:
   schedule: CRON_TZ=America/New_York 35 6 * * *
   skipImmediately: false
@@ -28,7 +28,7 @@ metadata:
   namespace: velero
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
-    argocd.argoproj.io/sync-options: Delete=false,Prune=false
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
 spec:
   schedule: CRON_TZ=America/New_York 35 4 * * 3
   skipImmediately: false

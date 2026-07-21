@@ -3,6 +3,8 @@ kind: Schedule
 metadata:
   name: databases-postgresql-daily-local
   namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
 spec:
   schedule: CRON_TZ=America/New_York 20 1 * * *
   skipImmediately: false
@@ -23,6 +25,8 @@ kind: Schedule
 metadata:
   name: databases-postgresql-weekly-offsite-cfr2
   namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
 spec:
   schedule: CRON_TZ=America/New_York 20 1 * * 3
   skipImmediately: false
