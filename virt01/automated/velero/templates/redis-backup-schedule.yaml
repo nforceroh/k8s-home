@@ -1,0 +1,43 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases-redis-daily-local
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: redis
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases-redis-weekly-offsite-cfr2
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: redis
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

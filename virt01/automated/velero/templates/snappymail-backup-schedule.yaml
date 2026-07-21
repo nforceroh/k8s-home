@@ -1,0 +1,43 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: mail-snappymail-daily-local
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 40 3 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - mail
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: snappymail
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: mail-snappymail-weekly-offsite-cfr2
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 40 3 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - mail
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: snappymail
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

@@ -1,0 +1,39 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-sonarr-daily-local
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 7 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: sonarr
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: torrent-sonarr-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 7 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - torrent
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: sonarr
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

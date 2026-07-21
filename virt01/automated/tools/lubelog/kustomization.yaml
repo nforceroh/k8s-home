@@ -13,7 +13,7 @@ resources:
   - ingress.yaml
   - serviceaccount.yaml
   - lubelog-sealed.yaml
-  - backup-schedule.yaml
+#   - backup-schedule.yaml
 
 generatorOptions:
   disableNameSuffixHash: true

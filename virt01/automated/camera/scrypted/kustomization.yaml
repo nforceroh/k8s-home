@@ -5,13 +5,15 @@ labels:
   - pairs:
       app: scrypted
 
-#namespace: camera
+namespace: camera
 
 resources:
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - backup-schedule.yaml
+#   - backup-schedule.yaml
 
+generatorOptions:
+  disableNameSuffixHash: true
 

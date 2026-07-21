@@ -1,0 +1,45 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-frigate-config-daily-local
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 35 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: frigate
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-frigate-config-weekly-offsite-cfr2
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 35 4 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: frigate
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

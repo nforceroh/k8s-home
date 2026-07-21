@@ -13,5 +13,5 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - configmap.yaml
-  - backup-schedule.yaml
+#   - backup-schedule.yaml
   

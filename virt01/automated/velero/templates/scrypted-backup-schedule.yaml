@@ -1,0 +1,39 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-scrypted-daily-local
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 40 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: scrypted
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: camera-scrypted-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 40 6 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - camera
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: scrypted
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

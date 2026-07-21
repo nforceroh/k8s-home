@@ -1,0 +1,43 @@
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: iot-nodered-daily-local
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 20 2 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - iot
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: nodered
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: iot-nodered-weekly-offsite-cfr2
+  namespace: velero
+  annotations:
+    argocd.argoproj.io/sync-options: ForceNamespace=velero
+spec:
+  schedule: CRON_TZ=America/New_York 20 2 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - iot
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app: nodered
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true
