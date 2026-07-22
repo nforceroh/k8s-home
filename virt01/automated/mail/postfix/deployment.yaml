@@ -38,6 +38,9 @@ spec:
             - containerPort: 587
               name: submission-port
               protocol: TCP
+            - containerPort: 10025
+              name: mailgallows-port
+              protocol: TCP
           livenessProbe:
             failureThreshold: 2
             tcpSocket:

@@ -21,5 +21,8 @@ spec:
     - port: 587
       protocol: TCP
       name: submission-svc-port
+    - port: 10025
+      name: mailgallows-svc-port
+      protocol: TCP
   selector:
     app: postfix
