@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: mail
+
+labels:
+  - pairs:
+      app: mailgallows
+
+resources:
+  - mailgallows-secrets-sealed.yaml
+  - deployment.yaml
+  - service.yaml
+  - serviceaccount.yaml
+  - ingress.yaml
+
+
+generatorOptions:
+  disableNameSuffixHash: true

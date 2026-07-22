@@ -1,0 +1,44 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mailgallows
+  labels:
+    app: mailgallows
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mailgallows
+  template:
+    metadata:
+      labels:
+        app: mailgallows
+    spec:
+      serviceAccountName: mailgallows-sa
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: mailgallows
+          image: ghcr.io/nforceroh/k8s-mailgallows:latest
+          imagePullPolicy: Always
+          envFrom:
+          - secretRef:
+              name: mailgallows-secrets
+          ports:
+            - containerPort: 5000
+              name: web-port
+              protocol: TCP
+          livenessProbe:
+            failureThreshold: 2
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 60
+          readinessProbe:
+            failureThreshold: 2
+            tcpSocket:
+              port: 5000
+            periodSeconds: 60
+          resources: {}
+
