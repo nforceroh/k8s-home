@@ -8,7 +8,7 @@ ollama:
       type: 'nvidia'
     models:
       pull:
-        - "llama3.1:8b"           # Balanced daily driver
+        # - "llama3.1:8b"           # Balanced daily driver
         # - "qwen2.5-coder:7b"      # Massive upgrade over 1.5b for coding
         # - "mistral-nemo:12b"      # Fits perfectly in P40 VRAM (12.28B params)
         # - "deepseek-coder-v2:16b" # Great for complex logic
