@@ -5,5 +5,6 @@ dependencies:
 - name: pgadmin4-helm
   repository: oci://docker.io/dpage
   version: 9.16.0
+  alias: pgadmin4
 sources:
   - https://github.com/pgadmin-org/pgadmin4/blob/master/pkg/helm/README.md

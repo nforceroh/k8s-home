@@ -1,8 +1,14 @@
 # https://github.com/bitnami/charts/blob/main/bitnami/phpmyadmin/values.yaml
 
 pgadmin4:
+  image:
+    tag: "9"
+
   auth:
-    email: admin
+    email: "sylvain@nf.lab"
     existingSecret: pgadmin-auth
     passwordKey: password
 
+  persistence:
+    enabled: true
+    size: "1Gi"
