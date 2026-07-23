@@ -6,7 +6,6 @@ metadata:
     app: mailgallows
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Local
   ports:
     - port: 5000
       protocol: TCP

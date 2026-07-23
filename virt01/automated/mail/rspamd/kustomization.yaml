@@ -12,13 +12,5 @@ resources:
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
+  - unbound-config.yaml
 #   - backup-schedule.yaml
-
-
-configMapGenerator:
-- name: rspamd-env
-  envs:
-  - config/env.txt
-
-generatorOptions:
-  disableNameSuffixHash: true

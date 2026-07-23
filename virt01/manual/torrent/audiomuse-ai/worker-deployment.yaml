@@ -33,39 +33,9 @@ spec:
           env:
             - name: SERVICE_TYPE
               value: "worker"
-            - name: TZ
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: TZ
-            - name: POSTGRES_USER
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: POSTGRES_DB
-            - name: POSTGRES_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: POSTGRES_HOST
-            - name: POSTGRES_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: audiomuse-ai-config
-                  key: POSTGRES_PORT
           envFrom:
-            - configMapRef:
-                name: audiomuse-ai-config
+            - secretRef:
+                name: audiomuse-ai-config 
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -74,6 +44,7 @@ spec:
           volumeMounts:
             - name: app-temp-audio
               mountPath: /app/temp_audio
+          resources: {}
       volumes:
         - name: app-temp-audio
           emptyDir: {}
