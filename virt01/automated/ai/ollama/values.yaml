@@ -14,6 +14,7 @@ ollama:
         - "deepseek-coder-v2:16b" # Great for complex logic
         - "qwen2.5:7b"
         - "gemma3:4b"
+        - "qwen2.5vl:7b"
         
   runtimeClassName: "nvidia"
   extraEnv:
