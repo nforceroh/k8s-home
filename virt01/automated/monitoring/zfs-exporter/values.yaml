@@ -1,0 +1,22 @@
+# Default values for zfs-exporter.
+---
+zfs-exporter:
+
+  zfsExporter:
+    # debug, info, warn, error
+    logLevel: info
+    extraArgs:
+      - "--collector.dataset-filesystem"
+      - "--properties.dataset-filesystem=available,logicalused,quota,referenced,used,usedbydataset,written"
+      - "--collector.dataset-snapshot"
+      - "--properties.dataset-snapshot=logicalused,referenced,used,written"
+
+
+  serviceMonitor:
+    enabled: true
+    namespace: monitoring 
+    interval: 30s
+
+
+  serviceAccount:
+    create: true

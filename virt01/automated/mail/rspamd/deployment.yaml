@@ -64,9 +64,6 @@ spec:
               value: "false"
             # - name: PLUGIN_DKIM
             #   value: "true"
-          envFrom:
-          - configMapRef:
-              name: rspamd-env
           ports:
             - containerPort: 11332
               name: milter-port

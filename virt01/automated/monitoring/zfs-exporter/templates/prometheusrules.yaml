@@ -1,0 +1,64 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: zfs-exporter-rules
+  namespace: monitoring
+  labels:
+    release: prometheus-stack
+spec:
+  groups:
+    - name: zfs.rules
+      rules:
+        - alert: ZpoolUnhealthy
+          expr: zfs_pool_health > 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "ZFS pool on {{`{{ $labels.nodename }}`}} is not healthy ({{`{{ $labels.pool }}`}})"
+            description: "Zpool {{`{{ $labels.pool }}`}} on node {{`{{ $labels.nodename }}`}} is in an unhealthy state. Check `zpool status`."
+
+        - alert: ZpoolReadOnly
+          expr: zfs_pool_read_only > 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "ZFS pool on {{`{{ $labels.nodename }}`}} is read-only ({{`{{ $labels.pool }}`}})"
+            description: "Zpool {{`{{ $labels.pool }}`}} on node {{`{{ $labels.nodename }}`}} is suspended in read-only mode due to underlying storage errors."
+
+        - alert: ZpoolResilveringInProgress
+          expr: zfs_pool_scan_percent_complete > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "ZFS pool on {{`{{ $labels.nodename }}`}} is currently resilvering ({{`{{ $labels.pool }}`}})"
+            description: "Zpool {{`{{ $labels.pool }}`}} is actively rebuilding data blocks. Progress is currently at {{`{{ $value | printf \"%.2f\" }}`}}%."
+
+        - alert: ZpoolLeakedSpaceDetected
+          expr: zfs_pool_leaked > 0
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: "ZFS pool on {{`{{ $labels.nodename }}`}} has leaked metadata space ({{`{{ $labels.pool }}`}})"
+            description: "Zpool {{`{{ $labels.pool }}`}} is logging unreleased space leaked from destroyed structures. May require a scrub or pool remount."
+
+        - alert: ZpoolHighFragmentation
+          expr: zfs_pool_fragmentation > 80
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: "ZFS pool on {{`{{ $labels.nodename }}`}} is highly fragmented ({{`{{ $labels.pool }}`}})"
+            description: "Zpool {{`{{ $labels.pool }}`}} fragmentation level has reached {{`{{ $value }}`}}%. I/O write performance may degrade significantly."
+
+        - alert: ZfsDatasetNearingQuota
+          expr: (zfs_dataset_filesystem_used / zfs_dataset_filesystem_quota) * 100 > 90
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: "ZFS Dataset nearing quota on {{`{{ $labels.nodename }}`}}"
+            description: "Dataset {{`{{ $labels.dataset }}`}} in pool {{`{{ $labels.pool }}`}} has reached {{`{{ $value | printf \"%.2f\" }}`}}% of its allocated hard quota constraint."

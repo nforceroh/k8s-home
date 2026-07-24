@@ -1,0 +1,8 @@
+apiVersion: v2
+name: zfs-exporter 
+version: 1.0.0
+description: A Helm chart for ZFS Exporter
+dependencies:
+- name: zfs-exporter 
+  repository: https://charts.enix.io
+  version: 2.2.0
