@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: home-assistant-stable-test
+  namespace: home-assistant
+  labels:
+    app: ha-stable-test
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: ha-stable-test
+  template:
+    metadata:
+      labels:
+        app: ha-stable-test
+    spec:
+      containers:
+        - name: home-assistant
+          image: ghcr.io/home-assistant/home-assistant:stable
+          imagePullPolicy: Always
+          env:
+            - name: S6_VERBOSITY
+              value: "4"
+          ports:
+            - containerPort: 8123
+              name: http
+          volumeMounts:
+            - name: ha-config
+              mountPath: /config
+          livenessProbe:
+            tcpSocket:
+              port: 8123
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          readinessProbe:
+            tcpSocket:
+              port: 8123
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          startupProbe:
+            tcpSocket:
+              port: 8123
+            periodSeconds: 5
+            timeoutSeconds: 1
+            failureThreshold: 30
+          resources: {}
+      volumes:
+        - name: ha-config
+          emptyDir: {}

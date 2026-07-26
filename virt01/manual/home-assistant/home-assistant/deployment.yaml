@@ -20,18 +20,30 @@ spec:
 #      annotations:
 #        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-ha" }]'
     spec:
-      runtimeClassName: nvidia
+      # runtimeClassName: nvidia
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #         - matchExpressions:
+      #             - key: kubernetes.io/hostname
+      #               operator: In
+      #               values:
+      #                 - virt01
+      # tolerations:
+      #   - key: nvidia.com/gpu
+      #     operator: Exists
+      #     effect: NoSchedule
       containers:
         - name: home-assistant
-          image: homeassistant/home-assistant:2026.6.4
+          # image: homeassistant/home-assistant:2026.6.4
+          image: ghcr.io/home-assistant/home-assistant:2026.6.4
           imagePullPolicy: Always
           ports:
           - containerPort: 8123
           volumeMounts:
           - name: ha-config-pv
             mountPath: /config
-          securityContext:
-            privileged: true
           livenessProbe:
             failureThreshold: 3
             periodSeconds: 10
@@ -83,9 +95,6 @@ spec:
             name: js-ui-websocket
             protocol: TCP
           resources: {}
-          securityContext:
-            allowPrivilegeEscalation: true
-            privileged: true
           volumeMounts:
           - mountPath: /usr/src/app/store
             name: zwave-data
@@ -107,8 +116,6 @@ spec:
             mountPath: /data
           - name: ma-library
             mountPath: /media
-          securityContext:
-            privileged: true
           resources: {}
 
         - name: code-server
@@ -134,8 +141,6 @@ spec:
             mountPath: /ha/config
           - name: esphome-config-pv
             mountPath: /esphome-config
-          securityContext:
-            privileged: true
           resources: {}
 
         - name: esphome
