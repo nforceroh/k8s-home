@@ -165,7 +165,9 @@ sudo apt install -y \
     containerd \
     psmisc \
     smartmontools \
-    zfsutils-linux
+    zfsutils-linux \
+    nfs-common \
+    cri-tools
 ```
 
 ## 8. Configure containerd
@@ -351,6 +353,17 @@ sudo ubuntu-drivers list --gpgpu
 ### Install drivers and toolkit
 
 ```bash
+# 1. Download and dearmor the official NVIDIA repository GPG key
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor --yes -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+
+# 2. Inject the package source channel mapped explicitly to the stable ubuntu24.04 catalog
+curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+  sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+  sed 's/\${id}/ubuntu24.04/g' | \
+  sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+```
+
+```bash
 sudo ubuntu-drivers install nvidia:580-server
 sudo apt install -y \
     nvidia-utils-580-server \
@@ -424,7 +437,20 @@ kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 kubectl taint nodes --all node-role.kubernetes.io/master- 2>/dev/null || true
 ```
 
+## Remove sudo password prompt
+
+```bash
+sudo sed -i 's/^%sudo.*/%sudo ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
+```
 ---
+
+## Change grub timeout to 1 second (optional)
+
+```bash
+sudo sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=1/' /etc/default/grub
+sudo update-grub
+```
+
 
 ## 19. Install CNI — Calico (** Now installed via ArgoCD **)
 
