@@ -73,6 +73,18 @@ frigate:
 #      external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
       metallb.io/address-pool: vlan1000-apps
       external-dns.alpha.kubernetes.io/hostname: frigate-local.k3s.nf.lab
+    ports:
+      http:
+        port: 5000
+      webrtc-tcp:
+        port: 8555
+        targetPort: 8555
+        protocol: TCP
+      webrtc-udp:
+        port: 8555
+        targetPort: 8555
+        protocol: UDP     
+
   persistence:
     config:
       enabled: true        
@@ -298,10 +310,10 @@ frigate:
 
     go2rtc:
       webrtc:
-        listen: ":8555/tcp" # Forces TCP only; drops random UDP handshakes
+        listen: ":8555" # Re-enable both TCP and UDP for maximum compatibility
         candidates:
+          - frigate-local.k3s.nf.lab:8555 # Direct connection via MetalLB LoadBalancer
           - frigate.k3s.nf.lab:443
-          - frigate-local.k3s.nf.lab:443
           - frigate.nforcer.com:443
 
       streams:
