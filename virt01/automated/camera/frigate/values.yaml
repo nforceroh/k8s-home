@@ -313,8 +313,7 @@ frigate:
         listen: ":8555" # Re-enable both TCP and UDP for maximum compatibility
         candidates:
           - frigate-local.k3s.nf.lab:8555 # Direct connection via MetalLB LoadBalancer
-          - frigate.k3s.nf.lab:443
-          - frigate.nforcer.com:443
+          - frigate.nforcer.com:8555
 
       streams:
         # Thingino
