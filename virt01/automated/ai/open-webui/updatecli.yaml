@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://helm.openwebui.com/"
       name: "open-webui"
-      version: "14.*.*"
+      version: "15.*.*"
 conditions: {}
 targets:
   chart:
