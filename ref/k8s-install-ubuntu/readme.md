@@ -442,6 +442,71 @@ kubectl taint nodes --all node-role.kubernetes.io/master- 2>/dev/null || true
 ```bash
 sudo sed -i 's/^%sudo.*/%sudo ALL=(ALL:ALL) NOPASSWD: ALL/' /etc/sudoers
 ```
+
+---
+
+## 18b. Configure SMTP Relay (Postfix -> smtp.nf.lab)
+
+Use Postfix as a relay host (smart host) so system mail is forwarded through `smtp.nf.lab`.
+
+### Install Postfix and mail tools
+
+```bash
+sudo apt update
+sudo apt install -y postfix mailutils libsasl2-modules ca-certificates
+```
+
+If prompted by `postfix` install:
+
+- Select: `Internet Site`
+- Set mail name to server FQDN (example: `virt01.nf.lab`)
+
+### Option A: Relay without SMTP authentication (port 25)
+
+```bash
+sudo postconf -e 'relayhost = [smtp.nf.lab]:25'
+sudo postconf -e 'myhostname = '"$(hostname -f)"''
+sudo postconf -e 'myorigin = $myhostname'
+sudo postconf -e 'inet_interfaces = loopback-only'
+sudo postconf -e 'mynetworks = 127.0.0.0/8 [::1]/128'
+sudo postconf -e 'smtp_tls_security_level = may'
+sudo postconf -e 'smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt'
+sudo systemctl restart postfix
+sudo systemctl enable postfix
+```
+
+### Option B: Relay with SMTP authentication (port 587)
+
+Use this only if `smtp.nf.lab` requires credentials.
+
+```bash
+sudo postconf -e 'relayhost = [smtp.nf.lab]:587'
+sudo postconf -e 'smtp_sasl_auth_enable = yes'
+sudo postconf -e 'smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd'
+sudo postconf -e 'smtp_sasl_security_options = noanonymous'
+sudo postconf -e 'smtp_sasl_tls_security_options = noanonymous'
+sudo postconf -e 'smtp_tls_security_level = encrypt'
+sudo postconf -e 'smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt'
+
+sudo tee /etc/postfix/sasl_passwd > /dev/null << 'EOF'
+[smtp.nf.lab]:587 USERNAME:PASSWORD
+EOF
+
+sudo postmap /etc/postfix/sasl_passwd
+sudo chmod 600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+sudo chown root:root /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+sudo systemctl restart postfix
+```
+
+### Verify relay
+
+```bash
+echo "smtp relay test from $(hostname -f)" | mail -s "relay test" you@yourdomain.tld
+sudo tail -n 100 /var/log/mail.log
+```
+
+Look for `status=sent` and `relay=smtp.nf.lab` in mail logs.
+
 ---
 
 ## Change grub timeout to 1 second (optional)
