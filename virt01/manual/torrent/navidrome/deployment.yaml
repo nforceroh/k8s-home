@@ -68,4 +68,4 @@ spec:
         - name: music
           hostPath:
             type: Directory
-            path: /mnt/ssd01/Music/Library
+            path: /mnt/ssd01/Music
