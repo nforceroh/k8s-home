@@ -1,0 +1,40 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mines01-svc
+  labels:
+    app: mines01
+  annotations:
+    metallb.io/address-pool: vlan1000-apps
+    metallb.io/loadBalancerIPs: 10.0.1.119
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack  
+#  loadBalancerIP: 10.0.1.119
+  ports:
+    - name: mines01-port-svc
+      protocol: TCP
+      port: 25565
+      targetPort: 25565
+  selector:
+    app: mines01
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mines01-rcon-svc
+  labels:
+    app: mines01
+spec:
+  ports:
+    - name: mines01-rcon-svc
+      protocol: TCP
+      port: 25575
+      targetPort: 25575
+  selector:
+    app: mines01
+

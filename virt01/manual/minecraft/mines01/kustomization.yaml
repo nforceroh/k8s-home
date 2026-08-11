@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minecraft
+
+resources:
+  - dnsrecords.yaml
+  - deployment.yaml
+  - service.yaml
+  - serviceaccount.yaml
+
+commonLabels:
+  app: mines01
+
+configMapGenerator:
+- name: mines01-env
+  envs:
+  - config/env.txt
+
+generatorOptions:
+  disableNameSuffixHash: true
