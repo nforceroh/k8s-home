@@ -24,6 +24,7 @@ external-dns:
     name: cloudflare
   extraArgs:
     - --cloudflare-dns-records-per-page=5000
+    - --cloudflare-record-comment="provisioned by external-dns" 
 #    - --default-targets="b9d74614-bf1b-46e2-8b36-f47937a66525"
   env:
     - name: CF_API_TOKEN
