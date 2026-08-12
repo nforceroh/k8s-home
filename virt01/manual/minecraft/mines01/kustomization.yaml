@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: minecraft
 
 resources:
-  - dnsrecords.yaml
+#  - dnsrecords.yaml
   - deployment.yaml
   - service.yaml
   - serviceaccount.yaml

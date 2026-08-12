@@ -16,7 +16,7 @@ external-dns:
   registry: "txt"
   txtOwnerId: "k8s"
   txtPrefix: "txt-"
-  logLevel: info
+  logLevel: debug
   policy: sync
 
  ## use google as the dns provider

@@ -7,6 +7,7 @@ metadata:
   annotations:
     metallb.io/address-pool: vlan1000-apps
     metallb.io/loadBalancerIPs: 10.0.1.119
+    external-dns.alpha.kubernetes.io/hostname: mines01.k3s.nf.lab
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

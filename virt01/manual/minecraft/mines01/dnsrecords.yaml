@@ -20,8 +20,8 @@ metadata:
   namespace: minecraft
 spec:
   endpoints:
-  - dnsName: _minecraft._tcp.mines01
+  - dnsName: _minecraft._tcp.mines01.nforcer.com
     recordTTL: 180
     recordType: SRV
     targets:
-     - 0 5 25565 ipv4.nforcer.com
+     - 1 1 25565 ipv4.nforcer.com
