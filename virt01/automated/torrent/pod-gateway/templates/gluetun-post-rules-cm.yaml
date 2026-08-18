@@ -1,0 +1,12 @@
+# gluetun's firewall only supports allow-listing TCP/UDP via
+# FIREWALL_INPUT_PORTS - ICMP (used by client_init.sh's connectivity checks)
+# has no port and stays blocked, so it must be allowed via a custom
+# iptables post-rules file (per gluetun's firewall docs).
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gluetun-post-rules
+data:
+  post-rules.txt: |
+    iptables -A INPUT -i eth0 -s 10.244.0.0/16 -p icmp -j ACCEPT
+    iptables -A INPUT -i eth0 -s 10.96.0.0/12 -p icmp -j ACCEPT

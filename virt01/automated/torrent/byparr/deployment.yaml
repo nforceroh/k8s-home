@@ -15,6 +15,9 @@ spec:
     metadata:
       labels:
         app: byparr
+      annotations:
+        # Opts this pod into the pod-gateway webhook (VPN egress routing).
+        setGateway: "true"
     spec:
       serviceAccountName: byparr-sa
       containers:

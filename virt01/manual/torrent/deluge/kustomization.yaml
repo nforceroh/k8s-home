@@ -12,8 +12,9 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
+  - networkpolicy.yaml
 #   - backup-schedule.yaml
-  - maps/wg-config-sealed.yaml
+#   - maps/wg-config-sealed.yaml # superseded by pod-gateway webhook VPN routing
   
 configMapGenerator:
 - name: web-conf-cm

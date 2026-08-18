@@ -1,0 +1,144 @@
+# Helm values for the angelnu/pod-gateway dependency declared in Chart.yaml
+# (repo: https://github.com/angelnu/pod-gateway, chart source:
+# https://github.com/angelnu/helm-charts charts/apps/pod-gateway)
+#
+# helm dependency build && helm install pod-gateway . -n torrent
+#
+# Prereq secret: torguard-wireguard (DNS, WIREGUARD_ADDRESSES,
+# WIREGUARD_ENDPOINT_IP, WIREGUARD_ENDPOINT_PORT, WIREGUARD_PUBLIC_KEY,
+# WIREGUARD_PRIVATE_KEY) is delivered as a SealedSecret - see
+# templates/torguard-wireguard-sealed.yaml for the regeneration command.
+# NEVER commit the plaintext secret; rotate the WireGuard key pair in the
+# TorGuard dashboard if it was ever pasted into a chat, ticket, or any
+# non-secret-manager location.
+
+# Everything below is nested under the dependency's chart name (see Chart.yaml)
+# so Helm passes it through to the angelnu/pod-gateway subchart.
+pod-gateway:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            repository: ghcr.io/angelnu/pod-gateway
+            pullPolicy: IfNotPresent
+        # TorGuard has no native gluetun provider for WireGuard - use the
+        # "custom" provider and supply the WireGuard peer config directly.
+        gluetun:
+          enabled: true
+          dependsOn: main
+          image:
+            repository: ghcr.io/qdm12/gluetun
+            tag: latest
+          env:
+            VPN_SERVICE_PROVIDER: custom
+            VPN_TYPE: wireguard
+            # gluetun's firewall defaults to VPN-only traffic for the whole
+            # shared pod netns, which blocks the pod-gateway "main" container's
+            # own vxlan/ICMP traffic to/from client pods. Docs explicitly call
+            # this out as needed "for Kubernetes sidecars".
+            FIREWALL_INPUT_PORTS: "8472"
+            FIREWALL_OUTBOUND_SUBNETS: "10.244.0.0/16,10.96.0.0/12"
+          # All TorGuard connection details (including the non-secret
+          # endpoint/pubkey/DNS) live in the torguard-wireguard SealedSecret -
+          # see templates/torguard-wireguard-sealed.yaml.
+          envFrom:
+            - secretRef:
+                name: torguard-wireguard
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+
+  persistence:
+    # ICMP allow-rules for gluetun's firewall (see templates/gluetun-post-rules-cm.yaml)
+    gluetun-post-rules:
+      type: configMap
+      name: gluetun-post-rules
+      advancedMounts:
+        main:
+          gluetun:
+            - path: /iptables/post-rules.txt
+              subPath: post-rules.txt
+              readOnly: true
+
+  webhook:
+      containers:
+        main:
+          image:
+            repository: ghcr.io/angelnu/gateway-admision-controller
+            pullPolicy: IfNotPresent
+
+  networkpolicies:
+    main:
+      enabled: true
+      controller: main
+      policyTypes:
+        - Egress
+      rules:
+        egress:
+          # VPN traffic to Internet only
+          - to:
+              - ipBlock:
+                  cidr: 0.0.0.0/0
+            ports:
+              - port: 1443
+                protocol: UDP
+          # Traffic within the cluster (Calico pod/service CIDRs)
+          - to:
+              - ipBlock:
+                  cidr: 10.244.0.0/16
+          - to:
+              - ipBlock:
+                  cidr: 10.96.0.0/12
+
+  # -----------------------------------------------------------
+  # Settings specific to this chart (not part of the common chart)
+  # -----------------------------------------------------------
+
+  # DNS server handed out to routed PODs over the vxlan tunnel.
+  DNS: 172.16.0.1
+  DNSPolicy: None
+
+  clusterName: "cluster.local"
+
+  # Namespaces that contain routed PODs and therefore need a copy of the
+  # generated settings ConfigMap. All target apps already live in "torrent".
+  routed_namespaces: []
+
+  settings:
+    # Calico here installs only a single default route (no automatic
+    # per-CIDR breakout the way Flannel does), so these CIDRs must be
+    # excluded from the gateway route or cluster/DNS traffic breaks once
+    # client_init.sh replaces the pod's default route with the vxlan one.
+    # Real allocated ClusterIPs (e.g. 10.103.x.x) fall outside the /16 the
+    # apiserver flag suggested - use the broader /12 that actually covers them.
+    NOT_ROUTED_TO_GATEWAY_CIDRS: "10.244.0.0/16 10.96.0.0/12"
+
+    VXLAN_ID: 42
+    VXLAN_IP_NETWORK: "172.16.0"
+    VXLAN_GATEWAY_FIRST_DYNAMIC_IP: 20
+
+    VPN_INTERFACE: wg0
+    # Fail closed: block all non-VPN egress from the gateway pod itself.
+    VPN_BLOCK_OTHER_TRAFFIC: true
+    VPN_TRAFFIC_PORT: 1443
+
+    # Split-tunnel: traffic to these CIDRs bypasses the VPN and goes out the
+    # normal K8s/LAN gateway - keeps home LAN + cluster traffic off the tunnel.
+    VPN_LOCAL_CIDRS: "192.168.1.0/24 10.244.0.0/16 10.96.0.0/12"
+    # Cluster-internal Service DNS (*.svc.cluster.local) must resolve via K8s
+    # DNS, not get forwarded down the VPN tunnel, or pod-to-pod Service calls
+    # (e.g. Sonarr -> deluge-svc.torrent.svc.cluster.local) time out.
+    DNS_LOCAL_CIDRS: "local k3s.nf.lab cluster.local"
+
+  webhook:
+    # Only namespaces labelled routed-gateway=true are evaluated.
+    namespaceSelector:
+      type: label
+      label: "routed-gateway"
+      custom: {}
+
+    # torrent namespace hosts non-VPN apps too, so opt-in per-pod via annotation.
+    gatewayDefault: false
+    gatewayAnnotation: setGateway

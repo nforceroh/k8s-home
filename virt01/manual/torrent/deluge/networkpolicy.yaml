@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deluge-vpn-only-egress
+  namespace: torrent
+spec:
+  podSelector:
+    matchLabels:
+      app: deluge
+  policyTypes:
+    - Egress
+  egress:
+    # DNS - match the whole kube-system namespace rather than a specific
+    # CoreDNS pod label, which can vary across clusters/versions.
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - port: 53
+          protocol: UDP
+        - port: 53
+          protocol: TCP
+    # In-cluster traffic (webUI probes, Radarr/Sonarr/Prowlarr API calls)
+    - to:
+        - ipBlock:
+            cidr: 10.244.0.0/16
+    - to:
+        - ipBlock:
+            cidr: 10.96.0.0/12
+    # pod-gateway vxlan tunnel (VXLAN_IP_NETWORK in pod-gateway/values.yaml)
+    - to:
+        - ipBlock:
+            cidr: 172.16.0.0/24
+  # No rule allowing 0.0.0.0/0: Deluge has no direct internet egress path.
+  # All public traffic must transit the pod-gateway vxlan (in the CIDRs above)
+  # and then the gateway's own VPN_BLOCK_OTHER_TRAFFIC enforcement.

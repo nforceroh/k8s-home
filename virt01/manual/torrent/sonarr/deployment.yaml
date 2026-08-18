@@ -16,6 +16,8 @@ spec:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent,tvshows
         backup.velero.io/backup-volumes: sonarr-pv
+        # Opts this pod into the pod-gateway webhook (VPN egress routing).
+        setGateway: "true"
       labels:
         app: sonarr
     spec:
