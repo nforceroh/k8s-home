@@ -12,7 +12,7 @@ resources:
   - service.yaml
   - serviceaccount.yaml
   - ingress.yaml
-  - networkpolicy.yaml
+#   - networkpolicy.yaml # Blocks public peer IPs before vxlan encapsulation.
 #   - backup-schedule.yaml
 #   - maps/wg-config-sealed.yaml # superseded by pod-gateway webhook VPN routing
   
