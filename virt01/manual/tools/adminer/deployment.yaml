@@ -25,7 +25,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: ADMINER_PLUGINS
-              value: "tables-filter tinymce"
+              value: "tables-filter dark-switcher"
             - name: ADMINER_DESIGN
               value: "nette"
             - name: ADMINER_DEFAULT_SERVER
