@@ -98,6 +98,19 @@ spec:
               subPath: tls.key
               mountPath: /etc/dovecot/certs/tls.key
               readOnly: true
+            - name: relayer-sieve-config
+              mountPath: /etc/dovecot/conf.d/91-relayer-sieve.conf
+              subPath: 91-relayer-sieve.conf
+            - name: relayer-sieve-config
+              mountPath: /configfiles/sieve/global-before.sieve
+              subPath: global-before.sieve
+            - name: relayer-sieve-config
+              mountPath: /configfiles/sieve/relayer-forward.sh
+              subPath: relayer-forward.sh
+            - name: relayer-ingest-token
+              mountPath: /etc/dovecot/secrets/relayer-token
+              subPath: relayer-token
+              readOnly: true
       volumes:
         - name: dovecot-pv
           persistentVolumeClaim:
@@ -108,3 +121,24 @@ spec:
         - name: certs
           secret:
             secretName: dovecot-cert-tls
+        - name: relayer-sieve-config
+          configMap:
+            name: relayer-dovecot-sieve
+            defaultMode: 0644
+            items:
+              - key: 91-relayer-sieve.conf
+                path: 91-relayer-sieve.conf
+              - key: global-before.sieve
+                path: global-before.sieve
+              - key: relayer-forward.sh
+                path: relayer-forward.sh
+                # No need for mode: 0755 here -- the existing sieve-init
+                # script chmod's all *.sh files itself after copying from
+                # /configfiles/sieve into /data/sieve.
+        - name: relayer-ingest-token
+          secret:
+            secretName: relayer-secrets   # the same Secret Relayer itself uses
+            defaultMode: 0444
+            items:
+              - key: INGEST_TOKEN
+                path: relayer-token

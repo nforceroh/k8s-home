@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: relayer-ingress
+  namespace: mail
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: relayer.k3s.nf.lab
+    http:
+      paths:
+      - backend:
+          service:
+            name: relayer-svc
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - relayer.k3s.nf.lab
+    secretName: relayer-cert-tls

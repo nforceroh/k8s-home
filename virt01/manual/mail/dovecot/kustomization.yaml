@@ -21,6 +21,11 @@ configMapGenerator:
   - name: dovecot-env
     envs:
       - maps/env.txt
+  - name: relayer-dovecot-sieve
+    files:
+      - maps/91-relayer-sieve.conf
+      - maps/global-before.sieve
+      - maps/relayer-forward.sh
 
 generatorOptions:
   disableNameSuffixHash: true

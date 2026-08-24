@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: relayer
+  namespace: mail
+  labels:
+    app: relayer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: relayer
+  template:
+    metadata:
+      labels:
+        app: relayer
+    spec:
+      containers:
+        - name: relayer
+          image: ghcr.io/nforceroh/relayer:latest   # adjust to wherever you push it
+          ports:
+            - containerPort: 8080
+          # The image ships with generic placeholder defaults (see Dockerfile) --
+          # every value below is this deployment's real, site-specific
+          # configuration and belongs here, not baked into the image.
+          env:
+            - name: DB_HOST
+              value: "mariadb.databases.svc.cluster.local"
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_DATABASE
+              value: "mail"
+            - name: DB_USER
+              value: "relayer"
+            - name: POSTFIX_HOST
+              value: "smtp.nf.lab"
+            - name: POSTFIX_PORT
+              value: "25"
+            - name: ADMIN_USER
+              value: "admin"
+            - name: LOG_LEVEL
+              value: "debug"
+          envFrom:
+            - secretRef:
+                name: relayer-secrets   # DB_PASSWORD, ADMIN_PASS, INGEST_TOKEN, SECRET_KEY
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
