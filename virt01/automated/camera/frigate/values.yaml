@@ -344,7 +344,7 @@ frigate:
         Kitchen_main:
           - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0#video=copy#audio=opus"
         Kitchen_sub:
-          - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1#video=copy#audio=none"
+          - "rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1#media=video"
         # Kitchen_main:
         #   - rtsp://scrypted-rtsp-svc:33759/75e57ba83105f666
         #   - ffmpeg:Kitchen_main#audio=opus
