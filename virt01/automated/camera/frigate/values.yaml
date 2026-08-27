@@ -341,11 +341,13 @@ frigate:
           - ffmpeg:BunCam_sub#audio=opus
         
         # Passed thru scrypted
+        # Uses FFmpeg to pass the video through perfectly, but transcodes the ALAW audio to OPUS
         Kitchen_main:
-          - rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0
-          - "ffmpeg:Kitchen_main#audio=opus"
+          - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0#video=copy#audio=opus"
+
+        # Completely untouched raw stream for Frigate detect. No filters, no edits.
         Kitchen_sub:
-          - rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1#media=video
+          - rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1
         #Kitchen_sub:
         #  - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1#args=-c:v copy -an"
         # Kitchen_main:
