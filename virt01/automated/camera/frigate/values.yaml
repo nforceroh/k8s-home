@@ -342,7 +342,7 @@ frigate:
         
         # Passed thru scrypted
         Kitchen_main:
-          - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/live#video=copy#audio=opus"
+          - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0#video=copy#audio=opus"
         Kitchen_sub:
           - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1#video=copy#audio=none"
         # Kitchen_main:
