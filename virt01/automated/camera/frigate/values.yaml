@@ -342,10 +342,10 @@ frigate:
         
         # Passed thru scrypted
         Kitchen_main:
-          - rtsp://localrtsp:Localrtsp11!10.40.1.41/stream0
+          - rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0
           - ffmpeg:Kitchen_main#audio=opus
         Kitchen_sub:
-          - rtsp://localrtsp:Localrtsp11!10.40.1.41/stream1
+          - rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream1
           - ffmpeg:Kitchen_sub#audio=opus
         # Kitchen_main:
         #   - rtsp://scrypted-rtsp-svc:33759/75e57ba83105f666
