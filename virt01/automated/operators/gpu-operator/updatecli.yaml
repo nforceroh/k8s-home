@@ -5,7 +5,7 @@ sources:
     spec:
       url: "https://helm.ngc.nvidia.com/nvidia"
       name: "gpu-operator"
-      version: "v26.*.*"
+      version: "v26.3.*"
 conditions: {}
 targets:
   chart:
