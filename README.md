@@ -1,5 +1,9 @@
 # k8s-home
 
+## Freeze a Helm chart dependency
+
+Add the dependency name to `EXCLUDED_CHARTS` in `updatecli/chart_bumper.py`. The chart bumper skips excluded dependencies in both diff and apply mode, leaving the current `version` unchanged. Remove the name from the list to resume automatic bumps.
+
 ## Prep workstation
 
 ```bash

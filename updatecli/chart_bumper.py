@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(mess
 
 # Add charts here where it is known that higher versions are not
 # yet stable or that you would like to disable automatic upgrades for
-EXCLUDED_CHARTS = []
+EXCLUDED_CHARTS = ["gpu-operator"]
 
 # Inject a BUMP_MAJOR env variable if you would like the script to automatically
 # bump major chart versions too. Make sure you inspect the upgrade instructions before merging!
@@ -99,14 +99,14 @@ def update_chart(path_chart: Path, apply: bool = False) -> None:
     chart: dict[str, Any] = yaml.safe_load(text)
     if "dependencies" not in chart:
         return
+    updatecli_yaml_file = f"{path_to_chart}/updatecli.yaml"
     mode = "apply" if apply else "diff"
     for i, dependency in enumerate(chart["dependencies"]):
         if dependency["name"] in EXCLUDED_CHARTS:
-            print(f"Skipping {dependency['name']} because it is excluded..")
+            logging.info("Skipping %s because it is excluded", dependency["name"])
             continue
 
         manifest = generate_updatecli_manifest(dependency, i, path_to_chart)
-        updatecli_yaml_file = f"{path_to_chart}/updatecli.yaml"
         with open(updatecli_yaml_file, "w+", encoding="utf-8") as f:
             f.write(manifest)
             f.flush()
