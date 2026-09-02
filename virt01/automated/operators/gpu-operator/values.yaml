@@ -37,6 +37,6 @@ gpu-operator:
     enabled: true
     serviceMonitor:
       enabled: true
-      interval: 15s
-      scrapeTimeout: 10s
-      honorLabels: false
+      # interval: 15s
+      # scrapeTimeout: 10s
+      # honorLabels: false
