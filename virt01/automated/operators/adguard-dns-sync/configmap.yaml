@@ -1,0 +1,177 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adguard-dns-sync-script
+  namespace: external-dns
+data:
+  main.py: |
+    import os
+    import time
+    import logging
+    import threading
+    import requests
+    from kubernetes import client, config, watch
+
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
+
+    ADGUARD_URL = os.environ.get("ADGUARD_URL", "http://192.168.101.1:3000").rstrip("/")
+    ADGUARD_USER = os.environ.get("ADGUARD_USER", "")
+    ADGUARD_PASSWORD = os.environ.get("ADGUARD_PASSWORD", "")
+    TARGET_DOMAINS_RAW = os.environ.get("TARGET_DOMAINS", "nf.lab,k3s.nf.lab")
+    DEBOUNCE_SECONDS = float(os.environ.get("DEBOUNCE_SECONDS", "3.0"))
+
+    if TARGET_DOMAINS_RAW.strip() == "*":
+        TARGET_DOMAINS = ["*"]
+    else:
+        TARGET_DOMAINS = [d.strip().lower().lstrip(".") for d in TARGET_DOMAINS_RAW.split(",") if d.strip()]
+
+    logging.info("Starting AdGuard DNS Sync Controller")
+    logging.info(f"AdGuard URL: {ADGUARD_URL}")
+    logging.info(f"Target Domains: {TARGET_DOMAINS}")
+
+    timer_lock = threading.Lock()
+    flush_timer = None
+
+    def trigger_cache_clear():
+        global flush_timer
+        with timer_lock:
+            flush_timer = None
+
+        url = f"{ADGUARD_URL}/control/cache_clear"
+        logging.info(f"Triggering AdGuard cache clear at {url}...")
+        try:
+            auth = (ADGUARD_USER, ADGUARD_PASSWORD) if ADGUARD_USER else None
+            resp = requests.post(url, auth=auth, timeout=10)
+            logging.info(f"AdGuard cache_clear response: {resp.status_code} {resp.text.strip()}")
+        except Exception as e:
+            logging.error(f"Failed to clear AdGuard cache: {e}")
+
+    def schedule_flush(reason):
+        global flush_timer
+        with timer_lock:
+            if flush_timer is not None:
+                flush_timer.cancel()
+            logging.info(f"Scheduling AdGuard cache clear in {DEBOUNCE_SECONDS}s (reason: {reason})")
+            flush_timer = threading.Timer(DEBOUNCE_SECONDS, trigger_cache_clear)
+            flush_timer.daemon = True
+            flush_timer.start()
+
+    def match_domain(name):
+        if not name:
+            return False
+        name = name.strip().lower().rstrip(".")
+        if "*" in TARGET_DOMAINS:
+            return True
+        for target in TARGET_DOMAINS:
+            if name == target or name.endswith("." + target):
+                return True
+        return False
+
+    def check_annotations(annotations):
+        if not annotations:
+            return False
+        for k, v in annotations.items():
+            if k.startswith("external-dns.alpha.kubernetes.io/"):
+                for item in v.split(","):
+                    if match_domain(item):
+                        return True
+        return False
+
+    def check_ingress(ingress):
+        annotations = ingress.metadata.annotations or {}
+        if check_annotations(annotations):
+            return True
+        if ingress.spec and ingress.spec.rules:
+            for rule in ingress.spec.rules:
+                if rule.host and match_domain(rule.host):
+                    return True
+        return False
+
+    def check_service(service):
+        annotations = service.metadata.annotations or {}
+        return check_annotations(annotations)
+
+    def check_dnsendpoint(dnsendpoint):
+        annotations = (dnsendpoint.get("metadata", {}) or {}).get("annotations", {})
+        if check_annotations(annotations):
+            return True
+        spec = dnsendpoint.get("spec", {}) or {}
+        endpoints = spec.get("endpoints", []) or []
+        for ep in endpoints:
+            dns_name = ep.get("dnsName", "")
+            if match_domain(dns_name):
+                return True
+        return False
+
+    def watch_ingresses():
+        v1_net = client.NetworkingV1Api()
+        w = watch.Watch()
+        while True:
+            try:
+                logging.info("Starting Ingress watch stream...")
+                for event in w.stream(v1_net.list_ingress_for_all_namespaces):
+                    event_type = event.get("type")
+                    obj = event.get("object")
+                    if event_type in ("ADDED", "MODIFIED", "DELETED") and obj:
+                        if check_ingress(obj):
+                            name = f"{obj.metadata.namespace}/{obj.metadata.name}"
+                            schedule_flush(f"Ingress {event_type} {name}")
+            except Exception as e:
+                logging.warning(f"Ingress watch error: {e}. Reconnecting in 5s...")
+                time.sleep(5)
+
+    def watch_services():
+        v1_core = client.CoreV1Api()
+        w = watch.Watch()
+        while True:
+            try:
+                logging.info("Starting Service watch stream...")
+                for event in w.stream(v1_core.list_service_for_all_namespaces):
+                    event_type = event.get("type")
+                    obj = event.get("object")
+                    if event_type in ("ADDED", "MODIFIED", "DELETED") and obj:
+                        if check_service(obj):
+                            name = f"{obj.metadata.namespace}/{obj.metadata.name}"
+                            schedule_flush(f"Service {event_type} {name}")
+            except Exception as e:
+                logging.warning(f"Service watch error: {e}. Reconnecting in 5s...")
+                time.sleep(5)
+
+    def watch_dnsendpoints():
+        custom_api = client.CustomObjectsApi()
+        w = watch.Watch()
+        while True:
+            try:
+                logging.info("Starting DNSEndpoint watch stream...")
+                for event in w.stream(custom_api.list_cluster_custom_object, group="externaldns.k8s.io", version="v1alpha1", plural="dnsendpoints"):
+                    event_type = event.get("type")
+                    obj = event.get("object")
+                    if event_type in ("ADDED", "MODIFIED", "DELETED") and obj:
+                        if check_dnsendpoint(obj):
+                            meta = obj.get("metadata", {})
+                            name = f"{meta.get('namespace', 'cluster')}/{meta.get('name', 'unknown')}"
+                            schedule_flush(f"DNSEndpoint {event_type} {name}")
+            except Exception as e:
+                logging.warning(f"DNSEndpoint watch error: {e}. Reconnecting in 5s...")
+                time.sleep(5)
+
+    def main():
+        try:
+            config.load_incluster_config()
+        except Exception:
+            config.load_kube_config()
+
+        t1 = threading.Thread(target=watch_ingresses, daemon=True)
+        t2 = threading.Thread(target=watch_services, daemon=True)
+        t3 = threading.Thread(target=watch_dnsendpoints, daemon=True)
+
+        t1.start()
+        t2.start()
+        t3.start()
+
+        t1.join()
+        t2.join()
+        t3.join()
+
+    if __name__ == "__main__":
+        main()

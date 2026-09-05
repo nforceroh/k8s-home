@@ -166,6 +166,26 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+  name: adguard-dns-sync
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: argocd-virt01
+  source:
+    repoURL: 'https://github.com/nforceroh/k8s-home.git'
+    path: virt01/automated/operators/adguard-dns-sync
+    targetRevision: main
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: external-dns
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [CreateNamespace=true, ServerSideApply=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
   name: reloader
   namespace: argocd
   annotations:
