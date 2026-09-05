@@ -5,6 +5,10 @@ namespace: external-dns
 
 resources:
   - adguard-dns-sync-env-sealed.yaml
-  - configmap.yaml
   - deployment.yaml
   - rbac.yaml
+
+configMapGenerator:
+  - name: adguard-dns-sync-script
+    files:
+      - assets/main.py
