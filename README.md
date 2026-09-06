@@ -10,6 +10,24 @@ Add the dependency name to `EXCLUDED_CHARTS` in `updatecli/chart_bumper.py`. The
 git clone git@github.com:nforceroh/k8s-home.git
 ```
 
+## Request Lidarr albums through DroppedNeedle
+
+`scripts/lidarr_to_droppedneedle.py` reads artists and albums from Lidarr and
+previews the monitored albums that do not have files. It submits requests by
+MusicBrainz album ID only when `--submit` is supplied.
+
+```bash
+export LIDARR_API_KEY='your-lidarr-api-key'
+export DROPPEDNEEDLE_TOKEN='your-droppedneedle-bearer-token'
+python3 scripts/lidarr_to_droppedneedle.py
+python3 scripts/lidarr_to_droppedneedle.py --submit
+```
+
+Override the default internal URLs with `LIDARR_URL` and `DROPPEDNEEDLE_URL`,
+or use the corresponding command-line options. Use `--include-downloaded` to
+include albums Lidarr already has files for and `--unmonitored` to include
+unmonitored albums.
+
 ## Install ansible and tools to WSL instance
 
 ```bash

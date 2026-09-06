@@ -5,7 +5,7 @@ labels:
   - pairs:
       app: aurral
 
-namespace: torrent
+namespace: media
 
 resources:
   - deployment.yaml

@@ -2,7 +2,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: droppedneedle-ingress
-  namespace: torrent
   annotations:
     cert-manager.io/cluster-issuer: nf-lab
     cert-manager.io/private-key-rotation-policy: Always

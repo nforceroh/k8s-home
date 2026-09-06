@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: droppedneedle-pvc
-  namespace: torrent
+  namespace: media
 spec:
   accessModes:
     - ReadWriteOnce
