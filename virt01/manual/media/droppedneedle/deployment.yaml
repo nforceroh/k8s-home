@@ -40,18 +40,20 @@ spec:
             - name: http
               containerPort: 8688
           volumeMounts:
-            - name: droppedneedle-data
+            - name: droppedneedle-config
               mountPath: /app/config
-              subPath: config
-            - name: droppedneedle-data
+            - name: droppedneedle-cache
               mountPath: /app/cache
-              subPath: cache
             - name: music
               mountPath: /music
       volumes:
-        - name: droppedneedle-data
+        - name: droppedneedle-config
           persistentVolumeClaim:
-            claimName: droppedneedle-pvc
+            claimName: dn-config-pvc
+        - name: droppedneedle-cache
+          persistentVolumeClaim:
+            claimName: dn-cache-pvc
+
         - name: music
           hostPath:
             path: /mnt/ssd01/Music
