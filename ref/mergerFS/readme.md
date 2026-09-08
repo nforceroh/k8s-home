@@ -81,12 +81,14 @@ aws_secret_access_key = YOUR_CLOUDFLARE_R2_SECRET_ACCESS_KEY
 
 ## 3. Host Mount Configuration via /etc/fstab
 
-Rather than hand-writing systemd `.mount`/`.service` units, this configuration uses `/etc/fstab`. Systemd auto-generates mount units from fstab entries at boot (and on `daemon-reload`), naming each unit after the escaped mount path — so `/mnt/nfs_emby` automatically becomes `mnt-nfs_emby.mount`, with no manual unit files to keep in sync.
+All three storage mounts (NFS warm tier, R2 cold tier, and the unified MergerFS pool) are configured through `/etc/fstab`. Systemd's built-in fstab generator automatically creates the equivalent mount units at boot (and on `daemon-reload`), named after the escaped mount path — so `/mnt/nfs_emby` becomes `mnt-nfs_emby.mount` automatically.
+
+> **No systemd unit files to write, enable, or maintain.** The only systemd commands you'll ever run for this setup are `systemctl daemon-reload` (after editing `/etc/fstab`) and `mount -a` (to apply changes without rebooting). `systemctl status`/`journalctl -u` work against the auto-generated unit names if you need to inspect a mount's state.
 
 ### A. Local Mount Points Preparation
 
 ```bash
-sudo mkdir -p /mnt/zfs_hot /mnt/nfs_emby /mnt/r2_emby /mnt/emby_unified
+sudo mkdir -p /mnt/hdd01/emby /mnt/nfs_emby /mnt/r2_emby /mnt/emby_unified
 sudo chmod 777 /mnt/emby_unified
 ```
 
@@ -107,12 +109,12 @@ emby  /mnt/r2_emby  fuse.geesefs  _netdev,allow_other,--cache=/tmp/cache,--share
 
 > **Important:** `emby` in the GeeseFS line is the bucket name (first field), and `--endpoint` must be your **account-specific** R2 endpoint — not the bare `cloudflarestorage.com` domain. The bare domain returns an HTTP 522 (Cloudflare edge timeout, no valid origin) and the mount will never come up. Find your Account ID under **Cloudflare Dashboard → R2 → Overview**, e.g.:
 > ```
-> --endpoint=https://c8447e01e7c0018cf456923099f43457.r2.cloudflarestorage.com
+> --endpoint=https://<YOUR_ACCOUNT_ID>.r2.cloudflarestorage.com
 > ```
 
 > **`x-systemd.mount-timeout=180`** gives GeeseFS extra time to retry past transient Cloudflare edge hiccups (occasional `s3.WARNING http=522` lines even with a correct endpoint) before systemd kills the mount attempt as timed out. The default timeout (90s) can be too short if several 522 retries happen before the connection succeeds.
 
-> **`x-systemd.requires=`** and **`x-systemd.after=`** on the MergerFS line reproduce the dependency ordering that a hand-written unit would need (`mnt-emby_unified` must wait for both the NFS and R2 mounts) — but targeting the auto-generated unit names, so there's no risk of a unit-filename/path mismatch like you'd get writing `.mount` files by hand.
+> **`x-systemd.requires=`** and **`x-systemd.after=`** on the MergerFS line ensure `mnt-emby_unified` waits for both the NFS and R2 mounts to be up before it mounts itself.
 
 > **`nofail`** on all three lines means the boot won't hang or drop to emergency mode if one storage tier is slow or briefly unavailable at boot time.
 
@@ -125,165 +127,108 @@ systemctl status mnt-nfs_emby.mount mnt-r2_emby.mount mnt-emby_unified.mount
 df -h /mnt/nfs_emby /mnt/r2_emby /mnt/emby_unified
 ```
 
-> **Trade-off vs. a hand-written systemd `.service`:** a plain fstab entry doesn't automatically retry itself after a failed mount the way a unit with `Restart=on-failure` would — `x-systemd.mount-timeout=180` reduces how often a mount fails in the first place (by giving GeeseFS more time to survive transient 522s), but if it does fail you'll need to `sudo mount -a` again manually or via a retry cron/systemd timer.
+> **Note:** an fstab entry doesn't automatically retry itself after a failed mount — `x-systemd.mount-timeout=180` reduces how often a mount fails in the first place (by giving GeeseFS more time to survive transient 522s), but if it does fail you'll need to run `sudo mount -a` again manually or via a retry cron/systemd timer.
 
 ## 4. The Nightly Cascade Automation Engine
 
-Create the offloading scheduler file at `/opt/tiering/cascade_tier.sh`:
+The tiering logic lives in `cascade_tier.sh`, provided alongside this README. Copy it to `/opt/tiering/cascade_tier.sh` on the host and make it executable:
 
 ```bash
-#!/bin/bash
-#
-# Nightly cascade tiering for Emby media.
-# Usage:
-#   ./cascade_tier.sh            # actually move files
-#   ./cascade_tier.sh --dry-run  # report what WOULD move, no changes made
-
-set -uo pipefail
-
-DRY_RUN=false
-if [[ "${1:-}" == "--dry-run" ]]; then
-    DRY_RUN=true
-fi
-
-# Define absolute paths
-HOT="/mnt/hdd01/emby"
-WARM="/mnt/nfs_emby"
-COLD="/mnt/r2_emby"
-
-# Safety Check: Prevent data loops if mounts dropped
-if ! mountpoint -q "$WARM" || ! mountpoint -q "$COLD"; then
-    echo "Error: One of the remote storage tiers is unmounted. Aborting lifecycle." >&2
-    exit 1
-fi
-
-sum_bytes() {
-    local total=0 f sz
-    while IFS= read -r f; do
-        [[ -f "$f" ]] || continue
-        sz=$(stat -c '%s' "$f" 2>/dev/null || echo 0)
-        total=$((total + sz))
-    done
-    echo "$total"
-}
-
-human() {
-    numfmt --to=iec-i --suffix=B "$1" 2>/dev/null || echo "${1} bytes"
-}
-
-mapfile -t warm_to_cold < <(find "$WARM" -type f -mtime +60)
-mapfile -t hot_to_warm  < <(find "$HOT"  -type f -mtime +30)
-
-if $DRY_RUN; then
-    warm_bytes=$(printf '%s\n' "${warm_to_cold[@]}" | sum_bytes)
-    hot_bytes=$(printf '%s\n' "${hot_to_warm[@]}" | sum_bytes)
-    echo "WARM -> COLD: ${#warm_to_cold[@]} files, $(human "$warm_bytes")"
-    echo "HOT  -> WARM: ${#hot_to_warm[@]} files, $(human "$hot_bytes")"
-    echo "Dry run complete. No files were moved."
-    exit 0
-fi
-
-# Step A: Move files older than 60 days from WARM (NFS) to COLD (R2 Cloud)
-for file in "${warm_to_cold[@]}"; do
-    relative_path="${file#$WARM/}"
-    relative_dir=$(dirname "$relative_path")
-    mkdir -p "$COLD/$relative_dir"
-    mv "$file" "$COLD/$relative_path"
-done
-
-# Step B: Move files older than 30 days from HOT (Local ZFS) to WARM (NFS)
-for file in "${hot_to_warm[@]}"; do
-    relative_path="${file#$HOT/}"
-    relative_dir=$(dirname "$relative_path")
-    mkdir -p "$WARM/$relative_path"
-    mv "$file" "$WARM/$relative_path"
-done
-
-# Step C: Purge stale empty folders across systems
-find "$HOT" -type d -empty -delete 2>/dev/null
-find "$WARM" -type d -empty -delete 2>/dev/null
+sudo mkdir -p /opt/tiering
+sudo cp cascade_tier.sh /opt/tiering/cascade_tier.sh
+sudo chmod +x /opt/tiering/cascade_tier.sh
 ```
 
-> Note: this is a condensed version for readability. The full script (with a per-tier filename sample in dry-run output) is available as `cascade_tier.sh` alongside this README.
+**Available flags:**
 
-> **Note:** the original snippet had `COLD="/mnt/r2_by"`, which doesn't match the `/mnt/r2_emby` mount point used everywhere else — corrected above to `/mnt/r2_emby`.
+| Flag | Default | Purpose |
+|---|---|---|
+| `--dry-run` | off | Report what would move, no changes made |
+| `--path <subfolder>` | full tree | Scope the scan to a subfolder relative to the HOT/WARM roots — useful for isolated testing |
+| `--hot-days <N>` | `30` | Age (in days) after which files move HOT → WARM |
+| `--warm-days <N>` | `60` | Age (in days) after which files move WARM → COLD |
 
 > **Dry run:** before letting this touch real files, run it with `--dry-run` to see how many files and how much data would move at each tier, with no `mv`/`mkdir`/delete actually happening:
 > ```bash
 > sudo /opt/tiering/cascade_tier.sh --dry-run
 > ```
 > It reports file counts and total size for both the WARM→COLD and HOT→WARM transitions, plus a sample of filenames, so you can sanity-check the numbers before it runs for real (e.g. via cron).
+>
+> **Adjusting retention periods:** override the defaults per run with `--hot-days` and `--warm-days`, e.g. to keep files on HOT for 14 days and on WARM for 90 days:
+> ```bash
+> sudo /opt/tiering/cascade_tier.sh --hot-days 14 --warm-days 90
+> ```
+> If you want a permanent change rather than a one-off override, either bake the flags into the crontab line below, or edit the `HOT_DAYS=30` / `WARM_DAYS=60` defaults directly in the script.
 
-Make it executable and attach it to your root system crontab (`sudo crontab -e`) to execute automatically every night at 2:00 AM:
+Attach it to your root system crontab (`sudo crontab -e`) to execute automatically every night at 2:00 AM:
 
 ```
 0 2 * * * /opt/tiering/cascade_tier.sh > /var/log/media_tiering.log 2>&1
 ```
 
-## 5. Kubernetes Integration
+To run with non-default retention periods on a schedule, just add the flags to the cron line, e.g.:
 
-Map the unified host mount point safely straight into your Emby deployment manifest using standard persistent volume routing maps.
-
-`emby-storage.yaml`:
-
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: emby-unified-pv
-spec:
-  capacity:
-    storage: 30Ti
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteMany
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
-  local:
-    path: /mnt/emby_unified
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-        - matchExpressions:
-            - key: kubernetes.io/hostname
-              operator: In
-              values:
-                - virt01 # Replace with your exact k8s node hostname
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: emby-unified-pvc
-spec:
-  accessModes:
-    - ReadWriteMany
-  volumeName: emby-unified-pv
-  storageClassName: manual
-  resources:
-    requests:
-      storage: 30Ti
+```
+0 2 * * * /opt/tiering/cascade_tier.sh --hot-days 14 --warm-days 90 > /var/log/media_tiering.log 2>&1
 ```
 
-Simply update your Emby application deployment pod specification to point its media disk path to use the `emby-unified-pvc` declaration.
+## 5. Application Configuration (Emby, Radarr, Sonarr)
 
-## 6. Troubleshooting
+Emby, Radarr, and Sonarr each need their media volumes pointed at the unified MergerFS mount (`/mnt/emby_unified`) rather than a raw tier path, plus a mount-ordering safeguard and (for Radarr/Sonarr) some download-folder/hardlink considerations. See **`setup_stack.md`** for the full explanation and concrete before/after Kubernetes manifests for all three apps.
 
-**A previous migration used hand-written systemd `.mount`/`.service` units**
-If you're moving from that approach to the fstab-based setup in Section 3, make sure the old unit files are fully removed first — a leftover `/etc/systemd/system/mnt-nfs_emby.mount`, `geesefs-r2.service`, or `mnt-emby_unified.mount` will conflict with the units systemd auto-generates from fstab:
+## 6. Transfer Speed Testing
+
+Before relying on any tier for live playback, it's worth benchmarking write/read throughput and seek latency — especially for the COLD (R2) tier, since sequential throughput and random-seek performance (scrubbing, resuming playback) are different things and a tier can be fine at one and poor at the other.
+
+`xferspeed.sh` tests any combination of the three tiers using the same methodology: write a test file, clear caches, read it back sequentially, then measure seek-to-first-byte latency at several offsets. Reference bitrates it compares against:
+
+| Content | Typical bitrate | Required throughput |
+|---|---|---|
+| 1080p H.264 | 8–10 Mbps | ~1.0–1.3 MB/s |
+| 1080p remux/high-bitrate | 20–35 Mbps | ~2.5–4.4 MB/s |
+| 4K H.265 | 25–40 Mbps | ~3.1–5.0 MB/s |
+| 4K remux (UHD Blu-ray) | 60–100+ Mbps | ~7.5–12.5+ MB/s |
+
+**Available flags:**
+
+| Flag | Default | Purpose |
+|---|---|---|
+| `--tier <hot\|warm\|cold>` | `hot,warm,cold` | Comma-separated list of tiers to test |
+| `--size <MB>` | `2048` | Test file size per stream, in MB |
+| `--streams <N>` | `1` | Number of concurrent streams to simulate |
+| `--keep` | off | Keep test files afterward instead of deleting them |
+
+**Test each tier individually:**
+
 ```bash
-sudo systemctl stop mnt-emby_unified.mount geesefs-r2.service mnt-nfs_emby.mount
-sudo systemctl disable mnt-emby_unified.mount geesefs-r2.service mnt-nfs_emby.mount
-sudo rm /etc/systemd/system/mnt-emby_unified.mount \
-        /etc/systemd/system/geesefs-r2.service \
-        /etc/systemd/system/mnt-nfs_emby.mount
-sudo systemctl daemon-reload
+sudo bash xferspeed.sh --tier hot     # baseline: local ZFS array
+sudo bash xferspeed.sh --tier warm    # LAN NFS share
+sudo bash xferspeed.sh --tier cold    # R2 via GeeseFS — the one that matters most
 ```
 
-**"Unit `mnt-*.mount` has a bad unit file setting" (only relevant if still using hand-written units)**
-The unit filename must exactly match the systemd-escaped `Where=` path. If you rename a mount point (e.g. `/mnt/nfs_warm` → `/mnt/nfs_emby`), you must rename the `.mount` file itself — editing `Where=` alone is not enough. This class of error goes away entirely with the fstab approach, since systemd derives the unit name from the fstab mount point automatically. Confirm naming with:
+**Test all three together and compare side-by-side** (default behavior, prints a summary table at the end):
+
 ```bash
-systemd-escape -u --path mnt-nfs_emby.mount   # should print /mnt/nfs_emby
+sudo bash xferspeed.sh
 ```
+
+**Simulate 3 concurrent 4K streams hitting cold storage at once:**
+
+```bash
+sudo bash xferspeed.sh --tier cold --size 4096 --streams 3
+```
+
+This reports both aggregate throughput across all 3 simulated streams and the effective per-stream rate, so you can answer "can 3 people watch 4K remuxes off R2 simultaneously?" directly.
+
+**Interpreting results:**
+
+- Compare COLD's numbers against HOT/WARM's, not just against the bitrate table — cold storage will always be slower, the question is whether it's *still fast enough*.
+- Sequential throughput and seek latency are independent — a tier can have plenty of bandwidth but still feel laggy on scrubbing/resume if seek times are multiple seconds. Under ~1–2s per seek is generally fine for Emby; 3s+ will be noticeable.
+- Run more than once, especially for COLD — R2/network variance (like the transient 522s covered in Troubleshooting below) can make a single run misleading.
+- For a true worst-case COLD read, remount the R2 tier (`sudo umount /mnt/r2_emby && sudo mount /mnt/r2_emby`) before testing — GeeseFS keeps some in-memory state beyond its on-disk cache that this script clears.
+- Clean up test files afterward is the default; pass `--keep` if you want to re-run reads against the *same* file to isolate read-path variance from write variance.
+
+## 7. Troubleshooting
 
 **"Dependency job for mnt-emby_unified.mount failed"**
 This means one of the units it depends on (from `x-systemd.requires=` in the MergerFS fstab line) didn't start. Check each dependency individually:

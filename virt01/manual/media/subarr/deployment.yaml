@@ -55,7 +55,7 @@ spec:
           volumeMounts:
             - name: subarr-pv
               mountPath: /data
-            - name: tv
+            - name: tvshows
               mountPath: /media/library/tv
             - name: movies
               mountPath: /media/library/movies
@@ -63,11 +63,11 @@ spec:
         - name: subarr-pv
           persistentVolumeClaim:
             claimName: subarr-pvc
-        - name: tv
-          hostPath:
-            type: Directory
-            path: /mnt/hdd01/emby/TVShows
         - name: movies
           hostPath:
+            path: /mnt/emby_unified/Movies
             type: Directory
-            path: /mnt/hdd01/emby/Movies
+        - name: tvshows
+          hostPath:
+            path: /mnt/emby_unified/TVShows
+            type: Directory

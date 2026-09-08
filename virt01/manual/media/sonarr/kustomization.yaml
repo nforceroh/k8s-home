@@ -3,14 +3,15 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: subarr
-
-namespace: torrent
+      app: sonarr
+      
+namespace: media
 
 resources:
-  - subarr-config-sealed.yaml
   - deployment.yaml
-  - pvc.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
+#   - backup-schedule.yaml
+
+

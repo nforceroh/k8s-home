@@ -32,14 +32,12 @@ https://cloud.redhat.com/blog/how-to-backup-and-restore-stateful-applications-on
 
 
 oc -n torrent annotate deployment/deluge backup.velero.io/backup-volumes-excludes=data
-oc -n torrent annotate deployment/emby backup.velero.io/backup-volumes-excludes=tvshows,movies
-oc -n torrent annotate deployment/radarr backup.velero.io/backup-volumes-excludes=movies,downloads
-oc -n torrent annotate deployment/sickchill backup.velero.io/backup-volumes-excludes=tvshows,downloads
+oc -n media annotate deployment/emby backup.velero.io/backup-volumes-excludes=tvshows,movies
+oc -n media annotate deployment/radarr backup.velero.io/backup-volumes-excludes=movies,downloads
 
 oc -n torrent patch deployment/deluge -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"data"}}}} }'
-oc -n torrent patch deployment/emby -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"tvshows,movies,new"}}}} }'
-oc -n torrent patch deployment/radarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"movies,downloads"}}}} }'
-oc -n torrent patch deployment/sickchill -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"tvshows,downloads"}}}} }'
+oc -n media patch deployment/emby -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"tvshows,movies,new"}}}} }'
+oc -n media patch deployment/radarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"movies,downloads"}}}} }'
 
 # cron times are in UTC!!!! so add 4hr to current time
 ```
@@ -57,7 +55,7 @@ velero schedule create torrent-emby --schedule="0 5 * * *" --ttl 168h0m0s  --sel
 velero schedule create torrent-jellyseerr --schedule="15 7 * * *" --ttl 168h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup
 velero schedule create torrent-lidarr --schedule="20 7 * * *" --ttl 168h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup
 velero schedule create torrent-prowlarr --schedule="25 7 * * *" --ttl 168h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup
-velero schedule create torrent-radarr --schedule="30 7 * * *" --ttl 168h0m0s  --selector app=radarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup
+velero schedule create media-radarr --schedule="30 7 * * *" --ttl 168h0m0s  --selector app=radarr --include-namespaces media --include-resources '*'  --default-volumes-to-fs-backup
 velero schedule create torrent-sonarr --schedule="35 7 * * *" --ttl 168h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup
 velero schedule create smallstep-step-ca --schedule="40 7 * * *" --ttl 168h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup
 velero schedule create tools-kms --schedule="40 7 * * *" --ttl 168h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup
@@ -80,7 +78,7 @@ velero schedule create idrive-torrent-emby --schedule="0 9 * * 1" --ttl 216h0m0s
 velero schedule create idrive-torrent-jellyseerr --schedule="10 9 * * 1" --ttl 216h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'
 velero schedule create idrive-torrent-lidarr --schedule="20 9 * * 1" --ttl 216h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'
 velero schedule create idrive-torrent-prowlarr --schedule="25 9 * * 1" --ttl 216h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'
-velero schedule create idrive-torrent-radarr --schedule="30 9 * * 1" --ttl 216h0m0s  --selector app=radarr --include-namespaces torrent --include-resources '*'
+velero schedule create idrive-media-radarr --schedule="30 9 * * 1" --ttl 216h0m0s  --selector app=radarr --include-namespaces media --include-resources '*'
 velero schedule create idrive-torrent-sonarr --schedule="35 9 * * 1" --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'
 velero schedule create idrive-smallstep-step-ca --schedule="40 9 * * 1" --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'
 velero schedule create idrive-tools-kms --schedule="45 9 * * 1" --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'
@@ -103,7 +101,7 @@ velero create backup cf-torrent-emby --ttl 216h0m0s  --selector app=emby --inclu
 velero create backup idrive-torrent-jellyseerr --ttl 216h0m0s  --selector app=jellyseerr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-torrent-lidarr --ttl 216h0m0s  --selector app=lidarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-torrent-prowlarr --ttl 216h0m0s  --selector app=prowlarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
-velero create backup idrive-torrent-radarr --ttl 216h0m0s  --selector app=radarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
+velero create backup idrive-media-radarr --ttl 216h0m0s  --selector app=radarr --include-namespaces media --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-torrent-sonarr --ttl 216h0m0s  --selector app=sonarr --include-namespaces torrent --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-smallstep-step-ca --ttl 216h0m0s  --selector app=step-ca --include-namespaces smallstep --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
 velero create backup idrive-tools-kms --ttl 216h0m0s  --selector app=kms --include-namespaces tools --include-resources '*'  --default-volumes-to-fs-backup --storage-location idrive
@@ -114,7 +112,7 @@ velero create backup cf-mail-dovecot-$(date +%s) --ttl 216h0m0s  --selector app=
 ```
 kubectl -n torrent patch deployment/emby -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"tvshows,movies"}}}} }'
 kubectl -n torrent patch deployment/lidarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"music,torrent"}}}} }'
-kubectl -n torrent patch deployment/radarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"movies,torrent"}}}} }'
+kubectl -n media patch deployment/radarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"movies,torrent"}}}} }'
 kubectl -n torrent patch deployment/sonarr -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"tvshows,torrent"}}}} }'
 kubectl -n torrent patch deployment/deluge -p '{"spec": {"template":{"metadata":{"annotations":{"backup.velero.io/backup-volumes-excludes":"torrent"}}}} }'
 

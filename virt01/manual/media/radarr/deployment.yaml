@@ -1,28 +1,30 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: bazarr
+  name: radarr
   labels:
-    app: bazarr
+    app: radarr
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: bazarr
+      app: radarr
   template:
     metadata:
       annotations:
-        backup.velero.io/backup-volumes-excludes: tvshows,movies
-        backup.velero.io/backup-volumes: bazarr-pv
+        backup.velero.io/backup-volumes-excludes: torrent,movies
+        backup.velero.io/backup-volumes: radarr-pv
+        # Opts this pod into the pod-gateway webhook (VPN egress routing).
+        setGateway: "true"
       labels:
-        app: bazarr
+        app: radarr
     spec:
-      serviceAccountName: bazarr-sa
+      serviceAccountName: radarr-sa
       containers:
-        - name: bazarr
-          image: harbor.nf.lab/proxy.docker.io/linuxserver/bazarr:latest
+        - name: radarr
+          image: harbor.nf.lab/proxy.docker.io/linuxserver/radarr:latest
           imagePullPolicy: Always
           env:
             - name: PUID
@@ -34,37 +36,35 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: DOCKER_MODS
-              value: "ghcr.io/gilbn/theme.park:bazarr"
+              value: "ghcr.io/themepark-dev/theme.park:radarr"
             - name: TP_THEME
               value: dark
           ports:
-            - containerPort: 6767
-              name: bazarr-port
+            - containerPort: 7878
+              name: radarr-port
               protocol: TCP
           resources:
             requests:
               cpu: 20m
               memory: 100Mi
           volumeMounts:
-            - name: bazarr-pv
+            - name: radarr-pv
               mountPath: /config
             - name: movies
               mountPath: /movies
-            - name: tvshows
-              mountPath: /tv
+            - name: torrent
+              mountPath: /data
       volumes:
-        - name: bazarr-pv
+        - name: radarr-pv
           persistentVolumeClaim:
-            claimName: bazarr-pvc
-        - name: tvshows
-          hostPath:
-            type: Directory
-#          nfs:
-            path: /mnt/hdd01/emby/TVShows
-#            server: 10.0.0.100
+            claimName: radarr-pvc
         - name: movies
           hostPath:
+            path: /mnt/emby_unified/Movies
+            type: Directory
+        - name: torrent
+          hostPath:
             type: Directory
 #          nfs:
-            path: /mnt/hdd01/emby/Movies
+            path: /mnt/hdd01/torrent
 #            server: 10.0.0.100

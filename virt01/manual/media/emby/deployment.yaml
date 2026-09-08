@@ -55,13 +55,9 @@ spec:
             claimName: emby-pvc
         - name: movies
           hostPath:
+            path: /mnt/emby_unified/Movies
             type: Directory
-#          nfs:
-            path: /mnt/hdd01/emby/Movies
-#            server: 10.0.0.100
         - name: tvshows
           hostPath:
+            path: /mnt/emby_unified/TVShows
             type: Directory
-#          nfs:
-            path: /mnt/hdd01/emby/TVShows
-#            server: 10.0.0.100     

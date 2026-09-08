@@ -5,12 +5,12 @@ labels:
   - pairs:
       app: navidrome
 
-namespace: torrent
+namespace: media
 
 resources:
   - deployment.yaml
   - service.yaml
   - servicemonitor.yaml
   - serviceaccount.yaml
-  - pvc.yaml
+#  - pvc.yaml
   - ingress.yaml

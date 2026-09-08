@@ -26,7 +26,7 @@ schedules=(
   "torrent:jellyseerr:CRON_TZ=America/New_York 30 6 * * *:app"
   "torrent:lidarr:CRON_TZ=America/New_York 35 6 * * *:app"
   "torrent:prowlarr:CRON_TZ=America/New_York 40 6 * * *:app"
-  "torrent:radarr:CRON_TZ=America/New_York 50 6 * * *:app"
+  "media:radarr:CRON_TZ=America/New_York 50 6 * * *:app"
   "torrent:readarr:CRON_TZ=America/New_York 55 6 * * *:app"
   "torrent:sonarr:CRON_TZ=America/New_York 0 7 * * *:app"
 )

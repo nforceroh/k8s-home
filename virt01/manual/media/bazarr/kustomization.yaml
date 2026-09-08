@@ -3,9 +3,9 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: radarr
+      app: bazarr
 
-namespace: torrent
+namespace: media
 
 resources:
   - deployment.yaml

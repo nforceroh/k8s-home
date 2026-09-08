@@ -1,14 +1,14 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-radarr-daily-local
+  name: media-radarr-daily-local
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 50 6 * * *
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:
@@ -21,14 +21,14 @@ spec:
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-radarr-weekly-offsite-cfr2
+  name: media-radarr-weekly-offsite-cfr2
   namespace: velero
 spec:
   schedule: CRON_TZ=America/New_York 50 6 * * 3
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:

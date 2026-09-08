@@ -1,0 +1,80 @@
+root@virt01:~# bash xferspeed.sh 
+================================================================
+ Tiered Storage Transfer Speed Benchmark - 2026-09-08 15:34:05
+ Tiers: hot warm cold
+ Test file size: 2048 MB each, Streams: 1
+================================================================
+
+================================================================
+ Testing tier: HOT (local ZFS)
+ Path: /mnt/hdd01/emby
+================================================================
+
+-- Write test --
+  Wrote 2048MB x 1 in 9.909278859s -> 207MiB/s (1733.7 Mbps)
+
+-- Sequential read test --
+  Read 2048MB in 2.892141312s -> 709MiB/s (5940.1 Mbps)
+
+-- Seek latency test (simulates scrubbing/resume) --
+  Seek to 341MB -> first 8MB in .018329343s
+  Seek to 682MB -> first 8MB in .022999656s
+  Seek to 1024MB -> first 8MB in .018759930s
+  Seek to 1365MB -> first 8MB in .021110998s
+  Seek to 1706MB -> first 8MB in .019027603s
+  Average seek-to-first-byte: .020s
+
+================================================================
+ Testing tier: WARM (NFS)
+ Path: /mnt/nfs_emby
+================================================================
+
+-- Write test --
+  Wrote 2048MB x 1 in 17.987153232s -> 114MiB/s (955.1 Mbps)
+
+-- Sequential read test --
+  Read 2048MB in 5.496088068s -> 373MiB/s (3125.8 Mbps)
+
+-- Seek latency test (simulates scrubbing/resume) --
+  Seek to 341MB -> first 8MB in .018674878s
+  Seek to 682MB -> first 8MB in .019022897s
+  Seek to 1024MB -> first 8MB in .018411513s
+  Seek to 1365MB -> first 8MB in .017990828s
+  Seek to 1706MB -> first 8MB in .015442049s
+  Average seek-to-first-byte: .017s
+
+================================================================
+ Testing tier: COLD (R2 via GeeseFS)
+ Path: /mnt/r2_emby
+================================================================
+
+-- Write test --
+  Wrote 2048MB x 1 in 16.355529875s -> 126MiB/s (1050.4 Mbps)
+
+-- Clearing GeeseFS cache for a true cold-read test --
+  Cleared /tmp/cache
+  Note: for a fully cold test, restart/remount the R2 mount between runs
+  (GeeseFS retains some in-memory metadata state beyond the on-disk cache).
+
+-- Sequential read test --
+  Read 2048MB in 5.785910926s -> 354MiB/s (2969.2 Mbps)
+
+-- Seek latency test (simulates scrubbing/resume) --
+  Seek to 341MB -> first 8MB in .409040050s
+  Seek to 682MB -> first 8MB in .032344264s
+  Seek to 1024MB -> first 8MB in .033223039s
+  Seek to 1365MB -> first 8MB in .027837514s
+  Seek to 1706MB -> first 8MB in .032820322s
+  Average seek-to-first-byte: .107s
+
+================================================================
+ SUMMARY
+================================================================
+Tier                        Write Mbps    Read Mbps   Avg Seek (s)
+HOT (local ZFS)                 1733.7       5940.1           .020
+WARM (NFS)                       955.1       3125.8           .017
+COLD (R2 via GeeseFS)           1050.4       2969.2           .107
+
+Reference: 1080p ~8-10 Mbps | 1080p remux ~20-35 Mbps | 4K H.265 ~25-40 Mbps | 4K remux ~60-100+ Mbps
+================================================================
+Test files removed from all tested tiers.

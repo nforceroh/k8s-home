@@ -3,15 +3,14 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: sonarr
-      
-namespace: torrent
+      app: radarr
+
+namespace: media
 
 resources:
   - deployment.yaml
+#  - pvc.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
 #   - backup-schedule.yaml
-
-

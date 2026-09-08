@@ -5,7 +5,7 @@ labels:
   - pairs:
       app: emby
 
-namespace: torrent
+namespace: media
 
 resources:
   - deployment.yaml
