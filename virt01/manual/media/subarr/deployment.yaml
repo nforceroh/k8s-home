@@ -41,6 +41,12 @@ spec:
               value: /
             - name: SUBGEN_MEDIA_PREFIX
               value: /media
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: all
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
+            - name: OLLAMA_VISION_MODEL
+              value: Qwen2.5-VL-7B-Instruct-Q4_K_M
           envFrom:
           - secretRef:
               name: subarr-config
