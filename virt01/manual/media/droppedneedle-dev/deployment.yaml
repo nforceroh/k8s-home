@@ -1,0 +1,60 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: droppedneedle-dev
+  labels:
+    app: droppedneedle-dev
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: droppedneedle-dev
+  template:
+    metadata:
+      labels:
+        app: droppedneedle-dev
+    spec:
+      serviceAccountName: droppedneedle-sa
+      securityContext:
+        runAsUser: 3000
+        runAsGroup: 3000
+        fsGroup: 3000
+      containers:
+        - name: droppedneedle-dev
+          image: ghcr.io/droppedneedle/droppedneedle:latest
+          imagePullPolicy: Always
+          env:
+            - name: PUID
+              value: "3000"
+            - name: PGID
+              value: "3000"
+            - name: PORT
+              value: "8688"
+            - name: TZ
+              value: "America/New_York"
+            - name: SLSKD_DOWNLOADS_PATH
+              value: "/music/downloads/slskd"
+          ports:
+            - name: http
+              containerPort: 8688
+          volumeMounts:
+            - name: droppedneedle-dev-config
+              mountPath: /app/config
+            - name: droppedneedle-dev-cache
+              mountPath: /app/cache
+            - name: music
+              mountPath: /music
+      volumes:
+        - name: droppedneedle-dev-config
+          persistentVolumeClaim:
+            claimName: dn-dev-config-pvc
+        - name: droppedneedle-dev-cache
+          persistentVolumeClaim:
+            claimName: dn-dev-cache-pvc
+
+        - name: music
+          hostPath:
+            path: /mnt/ssd01/Music/Library
+            type: Directory

@@ -42,6 +42,8 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+from droppedneedle import AlbumsApi, ApiError as DroppedNeedleApiError, AuthResponse, DroppedNeedleAuth, DroppedNeedleClient, RequestsApi
+
 
 DEFAULT_LIDARR_URL = "https://lidarr.k3s.nf.lab"
 DEFAULT_DROPPEDNEEDLE_URL = "https://droppedneedle.k3s.nf.lab"
@@ -226,51 +228,33 @@ def get_album_status(base_url: str, token: str, album_mbid: str, timeout: int) -
     treat as "not requested yet, safe to submit".
     """
     try:
-        response = request_json(
-            "GET",
-            f"{base_url.rstrip('/')}/api/v1/albums/{album_mbid}",
-            headers={"Authorization": f"Bearer {token}", "accept": "application/json"},
-            timeout=timeout,
-            retries=0,
-        )
-    except ApiError as error:
+        response = AlbumsApi(DroppedNeedleClient(base_url, token=token, timeout=timeout)).get(album_mbid)
+    except DroppedNeedleApiError as error:
         if error.status_code == 404:
             return None
-        raise
+        raise ApiError(str(error), status_code=error.status_code) from error
     return response if isinstance(response, dict) else None
 
 
 def login(base_url: str, username: str, password: str, timeout: int) -> str:
     """Log in to DroppedNeedle and return the bearer token."""
-    payload = {"username": username, "password": password}
-    response = request_json(
-        "POST",
-        f"{base_url.rstrip('/')}{LOGIN_PATH}",
-        payload=payload,
-        timeout=timeout,
-        retries=0,
-    )
-    if not isinstance(response, dict) or "token" not in response:
-        raise ApiError(f"Login succeeded but response had no 'token' field: {response!r}")
-    return response["token"]
+    client = DroppedNeedleClient(base_url, timeout=timeout)
+    try:
+        return DroppedNeedleAuth(client).login(username, password).token
+    except DroppedNeedleApiError as error:
+        raise ApiError(str(error), status_code=error.status_code) from error
 
 
 def request_album(base_url: str, token: str, album: Album, timeout: int) -> Any:
-    payload = {
-        "musicbrainz_id": album.album_mbid,
-        "artist_mbid": album.artist_mbid,
-        "artist_name": album.artist_name,
-        "album_title": album.title,
-        "request_kind": "album",
-    }
-    return request_json(
-        "POST",
-        f"{base_url.rstrip('/')}/api/v1/requests/new",
-        headers={"Authorization": f"Bearer {token}"},
-        payload=payload,
-        timeout=timeout,
-        retries=0,
-    )
+    try:
+        return RequestsApi(DroppedNeedleClient(base_url, token=token, timeout=timeout)).create(
+            album.album_mbid,
+            artist_mbid=album.artist_mbid,
+            artist_name=album.artist_name,
+            album_title=album.title,
+        )
+    except DroppedNeedleApiError as error:
+        raise ApiError(str(error), status_code=error.status_code) from error
 
 
 def request_artist(base_url: str, token: str, artist_name: str, artist_mbid: str, timeout: int) -> Any:
@@ -280,20 +264,15 @@ def request_artist(base_url: str, token: str, artist_name: str, artist_mbid: str
     directly confirmed against DroppedNeedle's docs. Only call this after an
     album request has succeeded at least once for the same artist.
     """
-    payload = {
-        "musicbrainz_id": artist_mbid,
-        "artist_mbid": artist_mbid,
-        "artist_name": artist_name,
-        "request_kind": "artist",
-    }
-    return request_json(
-        "POST",
-        f"{base_url.rstrip('/')}/api/v1/requests/new",
-        headers={"Authorization": f"Bearer {token}"},
-        payload=payload,
-        timeout=timeout,
-        retries=0,
-    )
+    try:
+        return RequestsApi(DroppedNeedleClient(base_url, token=token, timeout=timeout)).create(
+            artist_mbid,
+            artist_mbid=artist_mbid,
+            artist_name=artist_name,
+            request_kind="artist",
+        )
+    except DroppedNeedleApiError as error:
+        raise ApiError(str(error), status_code=error.status_code) from error
 
 
 def parse_args() -> argparse.Namespace:

@@ -18,65 +18,17 @@ options:
 from __future__ import annotations
 
 import argparse
-import json
 import os
 import sys
 import time
 from dataclasses import dataclass
-from typing import Any
-from urllib.error import HTTPError, URLError
-from urllib.request import Request, urlopen
+
+from droppedneedle import ApiError, DownloadsApi, DroppedNeedleAuth, DroppedNeedleClient
 
 
 DEFAULT_DROPPEDNEEDLE_URL = "https://droppedneedle.k3s.nf.lab"
 DEFAULT_TIMEOUT = 30
-LOGIN_PATH = "/api/v1/auth/login"
 ACTION_DELAY_SECONDS = 0.3
-
-
-class ApiError(RuntimeError):
-    def __init__(self, message: str, status_code: int | None = None):
-        super().__init__(message)
-        self.status_code = status_code
-
-
-def request_json(
-    method: str,
-    url: str,
-    *,
-    headers: dict[str, str] | None = None,
-    payload: dict[str, Any] | None = None,
-    timeout: int = DEFAULT_TIMEOUT,
-) -> Any:
-    body = None if payload is None else json.dumps(payload).encode("utf-8")
-    request_headers = {"Accept": "application/json", **(headers or {})}
-    if body is not None:
-        request_headers["Content-Type"] = "application/json"
-
-    request = Request(url, data=body, headers=request_headers, method=method)
-    try:
-        with urlopen(request, timeout=timeout) as response:
-            raw = response.read()
-            return json.loads(raw) if raw else None
-    except HTTPError as error:
-        raw_body = error.read().decode("utf-8", errors="replace")
-        raise ApiError(f"{method} {url} returned HTTP {error.code}: {raw_body}", status_code=error.code) from error
-    except URLError as error:
-        raise ApiError(f"{method} {url} failed: {error}") from error
-    except json.JSONDecodeError as error:
-        raise ApiError(f"{method} {url} returned invalid JSON") from error
-
-
-def login(base_url: str, username: str, password: str, timeout: int) -> str:
-    response = request_json(
-        "POST",
-        f"{base_url.rstrip('/')}{LOGIN_PATH}",
-        payload={"username": username, "password": password},
-        timeout=timeout,
-    )
-    if not isinstance(response, dict) or "token" not in response:
-        raise ApiError(f"Login succeeded but response had no 'token' field: {response!r}")
-    return response["token"]
 
 
 @dataclass(frozen=True)
@@ -112,12 +64,7 @@ class HeldItem:
 
 
 def get_held_items(base_url: str, token: str, timeout: int) -> list[HeldItem]:
-    response = request_json(
-        "GET",
-        f"{base_url.rstrip('/')}/api/v1/downloads/held",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=timeout,
-    )
+    response = DownloadsApi(DroppedNeedleClient(base_url, token=token, timeout=timeout)).held()
     if not isinstance(response, dict) or "items" not in response:
         raise ApiError(f"Unexpected held-items response shape: {response!r}")
 
@@ -140,12 +87,7 @@ def get_held_items(base_url: str, token: str, timeout: int) -> list[HeldItem]:
 
 
 def discard_held(base_url: str, token: str, held_id: int, timeout: int) -> Any:
-    return request_json(
-        "POST",
-        f"{base_url.rstrip('/')}/api/v1/downloads/held/{held_id}/discard",
-        headers={"Authorization": f"Bearer {token}"},
-        timeout=timeout,
-    )
+    return DownloadsApi(DroppedNeedleClient(base_url, token=token, timeout=timeout)).discard_held(held_id)
 
 
 def parse_args() -> argparse.Namespace:
@@ -180,7 +122,8 @@ def main() -> int:
         return 2
 
     try:
-        token = login(args.droppedneedle_url, args.droppedneedle_username, args.droppedneedle_password, args.timeout)
+        client = DroppedNeedleClient(args.droppedneedle_url, timeout=args.timeout)
+        token = DroppedNeedleAuth(client).login(args.droppedneedle_username, args.droppedneedle_password).token
     except ApiError as error:
         print(f"login failed: {error}", file=sys.stderr)
         return 1

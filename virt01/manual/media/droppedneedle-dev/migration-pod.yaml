@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: droppedneedle-migration
+  namespace: media
+  labels:
+    app: droppedneedle-migration
+spec:
+  restartPolicy: Never
+  securityContext:
+    runAsUser: 3000
+    runAsGroup: 3000
+    fsGroup: 3000
+  containers:
+    - name: busybox
+      image: busybox:latest
+      command:
+        - /bin/sh
+        - -c
+        - sleep 3600
+      volumeMounts:
+        - name: source
+          mountPath: /source
+        - name: config
+          mountPath: /config
+        - name: cache
+          mountPath: /cache
+  volumes:
+    - name: source
+      persistentVolumeClaim:
+        claimName: droppedneedle-pvc
+    - name: config
+      persistentVolumeClaim:
+        claimName: dn-config-pvc
+    - name: cache
+      persistentVolumeClaim:
+        claimName: dn-cache-pvc
