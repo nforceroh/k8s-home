@@ -2,7 +2,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: seerr-pvc
-  namespace: torrent
+  namespace: media
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
     helm.sh/resource-policy: keep
