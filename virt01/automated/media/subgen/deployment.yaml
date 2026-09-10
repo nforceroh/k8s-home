@@ -45,6 +45,8 @@ spec:
               value: "medium"
             - name: CONCURRENT_TRANSCRIPTIONS
               value: "1"
+            - name: CLEAR_VRAM_ON_COMPLETE
+              value: "true"
             - name: WEBHOOK_PORT
               value: "9000"
             - name: MODEL_PATH
@@ -57,7 +59,7 @@ spec:
           volumeMounts:
             - name: subgen-models-pv
               mountPath: /models
-            - name: tv
+            - name: tvshows
               mountPath: /media/tv
             - name: movies
               mountPath: /media/movies
@@ -85,11 +87,11 @@ spec:
         - name: subgen-models-pv
           persistentVolumeClaim:
             claimName: subgen-models-pvc
-        - name: tv
-          hostPath:
-            type: Directory
-            path: /mnt/hdd01/emby/TVShows
         - name: movies
           hostPath:
+            path: /mnt/emby_unified/Movies
             type: Directory
-            path: /mnt/hdd01/emby/Movies
+        - name: tvshows
+          hostPath:
+            path: /mnt/emby_unified/TVShows
+            type: Directory

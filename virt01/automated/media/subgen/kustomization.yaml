@@ -5,7 +5,7 @@ labels:
   - pairs:
       app: subgen
 
-namespace: ai
+namespace: media
 
 resources:
 - deployment.yaml

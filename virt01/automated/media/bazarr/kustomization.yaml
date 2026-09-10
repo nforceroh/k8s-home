@@ -3,14 +3,14 @@ kind: Kustomization
 
 labels:
   - pairs:
-      app: subarr
+      app: bazarr
 
 namespace: media
 
 resources:
-  - subarr-config-sealed.yaml
   - deployment.yaml
-#  - pvc.yaml
+  - pvc.yaml
   - service.yaml
   - ingress.yaml
   - serviceaccount.yaml
+#   - backup-schedule.yaml

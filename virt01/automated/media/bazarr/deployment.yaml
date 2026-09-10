@@ -49,9 +49,9 @@ spec:
             - name: bazarr-pv
               mountPath: /config
             - name: movies
-              mountPath: /movies
+              mountPath: /media/movies
             - name: tvshows
-              mountPath: /tv
+              mountPath: /media/tv
       volumes:
         - name: bazarr-pv
           persistentVolumeClaim:
