@@ -98,14 +98,30 @@ Edit `/etc/fstab` and add these three lines:
 
 ```fstab
 # --- Tier 2: OPNsense Warm Storage (NFS) ---
-10.0.0.1:/k8s-pool/emby  /mnt/nfs_emby  nfs  defaults,soft,bg,timeo=50,retrans=2,_netdev,nofail  0  0
+10.0.0.1:/k8s-pool/emby  /mnt/nfs_emby  nfs  rw,proto=tcp,softerr,softreval,timeo=150,retrans=3,rsize=131072,wsize=131072,nconnect=4,_netdev,nofail,x-systemd.mount-timeout=30  0  0
 
 # --- Tier 3: Cloudflare R2 Cold Storage (GeeseFS) ---
 emby  /mnt/r2_emby  fuse.geesefs  _netdev,allow_other,--cache=/tmp/cache,--shared-config=/root/.r2/emby_credentials,--list-type=2,--region=auto,--endpoint=https://YOUR_ACCOUNT_ID.r2.cloudflarestorage.com,x-systemd.mount-timeout=180,nofail  0  0
 
 # --- Unified MergerFS Pool ---
-/mnt/hdd01/emby:/mnt/nfs_emby:/mnt/r2_emby  /mnt/emby_unified  fuse.mergerfs  defaults,allow_other,use_ino,category.create=epmfs,moveonenospc=true,func.getattr=newest,x-systemd.requires=mnt-nfs_emby.mount,x-systemd.requires=mnt-r2_emby.mount,x-systemd.after=mnt-nfs_emby.mount,x-systemd.after=mnt-r2_emby.mount,nofail  0  0
+/mnt/hdd01/emby:/mnt/nfs_emby:/mnt/r2_emby  /mnt/emby_unified  fuse.mergerfs  defaults,allow_other,use_ino,category.create=epmfs,moveonenospc=true,func.getattr=ff,func.readdir=cor,cache.readdir=true,cache.entry=3,cache.negative-entry=3,cache.attr=3,x-systemd.requires=mnt-nfs_emby.mount,x-systemd.requires=mnt-r2_emby.mount,x-systemd.after=mnt-nfs_emby.mount,x-systemd.after=mnt-r2_emby.mount,nofail  0  0
 ```
+
+The NFS options use TCP, explicit 128 KiB read/write requests, short failure
+handling, and four connections for concurrent media operations. `nconnect=4`
+is optional; remove it if the client or server does not support it or if
+benchmarking shows no benefit. The NFS server export remains responsible for
+the network access policy and root mapping.
+
+The mergerfs options make directory reads concurrent so a slow remote branch
+does not block the other branches serially. Short entry, negative-entry,
+attribute, and directory caches reduce repeated metadata requests, which is
+especially useful with the GeeseFS/R2 branch. These cache values assume that
+files are normally changed through the unified mount; the tiering script makes
+direct branch changes, so a listing can remain stale for up to a few seconds.
+`func.getattr=ff` avoids searching for the newest duplicate on every metadata
+lookup and is appropriate when a file exists on only one tier during normal
+operation.
 
 > **Important:** `emby` in the GeeseFS line is the bucket name (first field), and `--endpoint` must be your **account-specific** R2 endpoint — not the bare `cloudflarestorage.com` domain. The bare domain returns an HTTP 522 (Cloudflare edge timeout, no valid origin) and the mount will never come up. Find your Account ID under **Cloudflare Dashboard → R2 → Overview**, e.g.:
 > ```
