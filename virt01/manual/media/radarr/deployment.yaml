@@ -16,8 +16,6 @@ spec:
       annotations:
         backup.velero.io/backup-volumes-excludes: torrent,movies
         backup.velero.io/backup-volumes: radarr-pv
-        # Opts this pod into the pod-gateway webhook (VPN egress routing).
-        setGateway: "true"
       labels:
         app: radarr
     spec:
