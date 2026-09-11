@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: picard-web-test-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: nf-lab
+    cert-manager.io/private-key-rotation-policy: Always
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: picard-web-test.k3s.nf.lab
+      http:
+        paths:
+          - backend:
+              service:
+                name: picard-web-test-svc
+                port:
+                  number: 5000
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - picard-web-test.k3s.nf.lab
+      secretName: picard-web-test-cert-tls

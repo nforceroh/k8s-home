@@ -19,7 +19,7 @@ spec:
       serviceAccountName: picard-sa
       containers:
         - name: picard
-          image: jlesage/musicbrainz-picard:latest
+          image: mikenye/picard:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5800

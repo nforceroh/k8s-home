@@ -4,7 +4,7 @@ metadata:
   name: dn-dev-svc
 spec:
   selector:
-    app: droppedneedle-dev
+    app: dn-dev
   ports:
     - name: http
       protocol: TCP
