@@ -1,9 +1,7 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: picard
-  labels:
-    app: picard
 spec:
   replicas: 1
   strategy:
@@ -17,35 +15,55 @@ spec:
         app: picard
     spec:
       serviceAccountName: picard-sa
+      securityContext:
+        fsGroup: 3000
       containers:
-        - name: picard
-          image: mikenye/picard:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 5800
+        - name: picard-web
+          image: aandree5/picard-web:full-v1.6.1
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
           env:
-            - name: USER_ID
+            - name: PUID
               value: "3000"
-            - name: GROUP_ID
+            - name: PGID
               value: "3000"
-            - name: UMASK
-              value: "000"
-            - name: TZ
-              value: "America/New_York"
+          ports:
+            - name: http
+              containerPort: 5000
+            - name: browser-int
+              containerPort: 8000
+          readinessProbe:
+            exec:
+              command:
+                - /pw/healthcheck.sh
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 6
+          livenessProbe:
+            exec:
+              command:
+                - /pw/healthcheck.sh
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
           resources:
             requests:
-              cpu: 20m
-              memory: 100Mi
+              cpu: 100m
+              memory: 512Mi
           volumeMounts:
             - name: config
-              mountPath: /config
-            - name: storage
-              mountPath: /storage
+              mountPath: /picard-web
+            - name: music
+              mountPath: /music
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: picard-pvc
-        - name: storage
+        - name: music
           hostPath:
             type: Directory
             path: /mnt/ssd01/Music

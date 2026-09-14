@@ -35,26 +35,31 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: SLSKD_DOWNLOADS_PATH
-              value: "/music/downloads/slskd"
+              value: "/slskd/downloads"
           ports:
             - name: http
               containerPort: 8688
           volumeMounts:
-            - name: droppedneedle-config
+            - name: dn-config
               mountPath: /app/config
-            - name: droppedneedle-cache
+            - name: dn-cache
               mountPath: /app/cache
-            - name: music
+            - name: music-clean
               mountPath: /music
+            - name: slskd-downloads
+              mountPath: /slskd/downloads
       volumes:
-        - name: droppedneedle-config
+        - name: dn-config
           persistentVolumeClaim:
             claimName: dn-config-pvc
-        - name: droppedneedle-cache
+        - name: dn-cache
           persistentVolumeClaim:
             claimName: dn-cache-pvc
-
-        - name: music
+        - name: music-clean
           hostPath:
-            path: /mnt/ssd01/Music
+            path: /mnt/ssd01/Music/Cleaned
+            type: Directory
+        - name: slskd-downloads
+          hostPath:
+            path: /mnt/ssd01/Music/downloads/slskd
             type: Directory

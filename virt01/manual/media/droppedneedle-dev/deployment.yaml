@@ -35,7 +35,7 @@ spec:
             - name: TZ
               value: "America/New_York"
             - name: SLSKD_DOWNLOADS_PATH
-              value: "/music/downloads/slskd"
+              value: "/slskd/downloads"
           ports:
             - name: http
               containerPort: 8688
@@ -44,10 +44,12 @@ spec:
               mountPath: /app/config
             - name: dn-dev-cache
               mountPath: /app/cache
-            - name: cleaned-music
-              mountPath: /music/cleaned
+            - name: music-clean
+              mountPath: /Cleaned
+            - name: picard-post
+              mountPath: /PicardPost
             - name: slskd
-              mountPath: /music/downloads/slskd
+              mountPath: /slskd/downloads
       volumes:
         - name: dn-dev-config
           persistentVolumeClaim:
@@ -55,9 +57,13 @@ spec:
         - name: dn-dev-cache
           persistentVolumeClaim:
             claimName: dn-dev-cache-pvc
-        - name: cleaned-music
+        - name: music-clean
           hostPath:
-            path: /mnt/ssd01/Music/Library
+            path: /mnt/ssd01/Music/Cleaned
+            type: Directory
+        - name: picard-post
+          hostPath:
+            path: /mnt/ssd01/Music/PicardPost
             type: Directory
         - name: slskd
           hostPath:

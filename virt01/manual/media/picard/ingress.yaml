@@ -10,17 +10,17 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-  - host: picard.k3s.nf.lab
-    http:
-      paths:
-      - backend:
-          service:
-            name: picard-svc
-            port:
-              number: 5800
-        path: /
-        pathType: Prefix
+    - host: picard.k3s.nf.lab
+      http:
+        paths:
+          - backend:
+              service:
+                name: picard-svc
+                port:
+                  number: 5000
+            path: /
+            pathType: Prefix
   tls:
-  - hosts:
-    - picard.k3s.nf.lab
-    secretName: picard-cert-tls
+    - hosts:
+        - picard.k3s.nf.lab
+      secretName: picard-cert-tls

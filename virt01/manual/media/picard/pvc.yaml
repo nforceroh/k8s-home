@@ -4,7 +4,7 @@ metadata:
   name: picard-pvc
 spec:
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   resources:
     requests:
       storage: 10Gi
