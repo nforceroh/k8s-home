@@ -45,7 +45,7 @@ spec:
             - name: dn-dev-cache
               mountPath: /app/cache
             - name: music-clean
-              mountPath: /Cleaned
+              mountPath: /music
             - name: picard-post
               mountPath: /PicardPost
             - name: slskd
