@@ -14,3 +14,8 @@ resources:
   - serviceaccount.yaml
 #  - pvc.yaml
   - ingress.yaml
+
+configMapGenerator:
+  - name: navidrome-config
+    envs:
+      - ./maps/env.txt

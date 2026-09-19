@@ -21,33 +21,9 @@ spec:
         - name: navidrome
           image: deluan/navidrome:develop
           imagePullPolicy: Always
-          env:
-            - name: TZ
-              value: "America/New_York"
-            - name: ND_BASEURL
-              value: "https://music.nforcer.com"
-            - name: ND_SCANINTERVAL
-              value: "1h"
-            - name: ND_LOGLEVEL
-              value: "debug"
-            - name: ND_ENABLEINSIGHTSCOLLECTOR
-              value: "false"
-            - name: ND_PROMETHEUS_ENABLED
-              value: "true"
-            - name: ND_PLUGINS_ENABLED
-              value: "true"
-            - name: ND_PLUGINS_FOLDER
-              value: "/data/plugins"
-            - name: ND_PLUGINS_AUTORELOAD
-              value: "true"
-            - name: ND_PLUGINS_LOGLEVEL
-              value: "debug"
-            - name: ND_SCANNER_PURGEMISSING
-              value: "always"
-            - name: ND_ENABLESTARRATING
-              value: "true"
-            - name: ND_ENABLEFAVOURITES
-              value: "true"
+          envFrom:
+            - configMapRef:
+                name: navidrome-config
           ports:
             - containerPort: 4533
               name: navidrome-port
@@ -59,13 +35,19 @@ spec:
           volumeMounts:
             - name: navidrome-pv
               mountPath: /data
-            - name: music
+            - name: music-clean
               mountPath: /music
+            - name: aurral-downloads
+              mountPath: /music/playlists/aurral
       volumes:
         - name: navidrome-pv
           persistentVolumeClaim:
             claimName: navidrome-pvc
-        - name: music
+        - name: music-clean
           hostPath:
+            path: /mnt/ssd01/Music/Cleaned
             type: Directory
-            path: /mnt/ssd01/Music
+        - name: aurral-downloads
+          hostPath:
+            path: /mnt/ssd01/Music/downloads/aurral
+            type: Directory
