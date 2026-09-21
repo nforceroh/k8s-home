@@ -48,6 +48,8 @@ spec:
               mountPath: /music
             - name: slskd-downloads
               mountPath: /slskd/downloads
+            - name: picard-post
+              mountPath: /PicardPost
       volumes:
         - name: dn-config
           persistentVolumeClaim:
@@ -62,4 +64,8 @@ spec:
         - name: slskd-downloads
           hostPath:
             path: /mnt/ssd01/Music/downloads/slskd
+            type: Directory
+        - name: picard-post
+          hostPath:
+            path: /mnt/ssd01/Music/PicardPost
             type: Directory

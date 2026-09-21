@@ -20,20 +20,6 @@ spec:
 #      annotations:
 #        k8s.v1.cni.cncf.io/networks: '[ { "name": "br1400-ha" }]'
     spec:
-      # runtimeClassName: nvidia
-      # affinity:
-      #   nodeAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #       nodeSelectorTerms:
-      #         - matchExpressions:
-      #             - key: kubernetes.io/hostname
-      #               operator: In
-      #               values:
-      #                 - virt01
-      # tolerations:
-      #   - key: nvidia.com/gpu
-      #     operator: Exists
-      #     effect: NoSchedule
       containers:
         - name: home-assistant
           # image: homeassistant/home-assistant:2026.6.4
@@ -118,30 +104,30 @@ spec:
             mountPath: /media
           resources: {}
 
-        - name: code-server
-          image: linuxserver/code-server
-          imagePullPolicy: Always
-          env:
-            - name: PUID
-              value: "0"
-            - name: PGID
-              value: "0"
-            - name: TZ
-              value: "America/New_York"
-            - name: DEFAULT_WORKSPACE
-              value: "/ha"
-          ports:
-          - containerPort: 8443
-          volumeMounts:
-          - name: cs-config-pv
-            mountPath: /config
-          - name: cs-data-pv
-            mountPath: /data
-          - name: ha-config-pv
-            mountPath: /ha/config
-          - name: esphome-config-pv
-            mountPath: /esphome-config
-          resources: {}
+        # - name: code-server
+        #   image: linuxserver/code-server
+        #   imagePullPolicy: Always
+        #   env:
+        #     - name: PUID
+        #       value: "0"
+        #     - name: PGID
+        #       value: "0"
+        #     - name: TZ
+        #       value: "America/New_York"
+        #     - name: DEFAULT_WORKSPACE
+        #       value: "/ha"
+        #   ports:
+        #   - containerPort: 8443
+        #   volumeMounts:
+        #   - name: cs-config-pv
+        #     mountPath: /config
+        #   - name: cs-data-pv
+        #     mountPath: /data
+        #   - name: ha-config-pv
+        #     mountPath: /ha/config
+        #   - name: esphome-config-pv
+        #     mountPath: /esphome-config
+        #   resources: {}
 
         - name: esphome
           image: esphome/esphome
