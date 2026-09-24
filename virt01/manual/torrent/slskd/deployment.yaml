@@ -56,25 +56,28 @@ spec:
             limits:
               cpu: 1000m
               memory: 1024Mi
-          # slskd scans the shared/download dirs on startup (~10-15 min).
-          # The startup probe gates liveness/readiness so the pod isn't
-          # restarted mid-scan: 15s period x 80 failures = 20 min budget.
+          # httpGet probes from the kubelet time out because pod-gateway
+          # routes node->pod traffic into the VPN. Use exec probes against
+          # localhost instead, mirroring the image's own HEALTHCHECK:
+          #   HEALTHCHECK --interval=60s --timeout=3s --start-period=60m
+          #     --retries=3 CMD wget -q -O - http://localhost:5030/health
           startupProbe:
-            httpGet:
-              path: /
-              port: http
-            periodSeconds: 15
-            failureThreshold: 80
+            exec:
+              command: ["wget", "-q", "-O", "-", "http://localhost:5030/health"]
+            periodSeconds: 60
+            timeoutSeconds: 3
+            failureThreshold: 60
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            periodSeconds: 15
+            exec:
+              command: ["wget", "-q", "-O", "-", "http://localhost:5030/health"]
+            periodSeconds: 60
+            timeoutSeconds: 3
+            failureThreshold: 3
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            periodSeconds: 10
+            exec:
+              command: ["wget", "-q", "-O", "-", "http://localhost:5030/health"]
+            periodSeconds: 60
+            timeoutSeconds: 3
           volumeMounts:
             - name: slskd-pv
               mountPath: /app
