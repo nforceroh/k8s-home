@@ -5,7 +5,7 @@ sources:
     spec:
       url: "oci://registry-1.docker.io/bitnamicharts"
       name: "redis"
-      version: "27.*.*"
+      version: "28.*.*"
 conditions: {}
 targets:
   chart:
