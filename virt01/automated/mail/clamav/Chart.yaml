@@ -1,9 +1,9 @@
 apiVersion: v2
 name: clamav
-version: 1.0.3
+version: 1.0.4
 dependencies:
 - name: clamav
   repository: https://wiremind.github.io/wiremind-helm-charts
-  version: 3.7.2
+  version: 3.7.3
 sources:
 - https://github.com/wiremind/wiremind-helm-charts/tree/main/charts/clamav
