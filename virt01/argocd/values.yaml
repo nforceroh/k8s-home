@@ -86,7 +86,7 @@ argo-cd:
       annotations:
         cert-manager.io/cluster-issuer: nf-lab
         cert-manager.io/private-key-rotation-policy: Always
-        external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+        external-dns.kubernetes.io/target: traefik.k3s.nf.lab
         traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/service.serversscheme: http # Add this line
       tls: true

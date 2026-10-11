@@ -51,7 +51,7 @@ audiomuse-ai:
       cert-manager.io/cluster-issuer: nf-lab
       cert-manager.io/private-key-rotation-policy: Always
       traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+      external-dns.kubernetes.io/target: traefik.k3s.nf.lab
     hosts:
       - host: audiomuse-ai.k3s.nf.lab
         paths:

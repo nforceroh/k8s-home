@@ -7,7 +7,7 @@ metadata:
     cert-manager.io/cluster-issuer: nf-lab
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.kubernetes.io/target: traefik.k3s.nf.lab
 spec:
   ingressClassName: traefik
   rules:
@@ -34,7 +34,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
@@ -61,7 +61,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
@@ -88,7 +88,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
@@ -115,7 +115,7 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
 spec:
   ingressClassName: traefik
   rules:
