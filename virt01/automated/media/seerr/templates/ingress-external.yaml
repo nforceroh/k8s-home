@@ -5,7 +5,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   ingressClassName: traefik
@@ -32,7 +32,7 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
     cert-manager.io/private-key-rotation-policy: Always
-    external-dns.alpha.kubernetes.io/target: dual.nforcer.com
+    external-dns.kubernetes.io/target: dual.nforcer.com
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   tls:

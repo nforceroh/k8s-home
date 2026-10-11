@@ -16,8 +16,8 @@ traefik:
     enabled: true
     annotations:
       metallb.io/address-pool: vlan1000-infra
-      external-dns.alpha.kubernetes.io/hostname: traefik.k3s.nf.lab
-      external-dns.alpha.kubernetes.io/access: public
+      external-dns.kubernetes.io/hostname: traefik.k3s.nf.lab
+      external-dns.kubernetes.io/access: public
     type: LoadBalancer
     spec:
       externalTrafficPolicy: Local

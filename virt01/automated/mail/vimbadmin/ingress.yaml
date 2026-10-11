@@ -8,7 +8,7 @@ metadata:
     cert-manager.io/private-key-rotation-policy: Always
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     kubernetes.io/ingress.class: traefik
-    external-dns.alpha.kubernetes.io/target: traefik.k3s.nf.lab
+    external-dns.kubernetes.io/target: traefik.k3s.nf.lab
 spec:
   rules:
   - host: vimbadmin.k3s.nf.lab
