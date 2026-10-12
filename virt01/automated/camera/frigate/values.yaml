@@ -325,20 +325,20 @@ frigate:
         #Wyze
         LivingRoom_main:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 1920x1080, 20 fps, 40 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://10.40.1.42:8554/1080p?mp4
+          - rtsp://thingino:thingino@10.40.2.177/ch0
           - ffmpeg:LivingRoom_main#audio=opus
         LivingRoom_sub:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 640x360, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://10.40.1.42:8554/360p?mp4
-          - ffmpeg:LivingRoom_sub#audio=opus
+          - rtsp://thingino:thingino@10.40.2.177/ch1
+          #- ffmpeg:LivingRoom_sub#audio=opus
         BunCam_main:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 1920x1080, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://10.40.1.19:8554/1080p?mp4
-          - ffmpeg:BunCam_main#audio=opus
+          - rtsp://thingino:thingino@10.40.2.179/ch0
+          #- ffmpeg:BunCam_main#audio=opus
         BunCam_sub:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 640x360, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://10.40.1.19:8554/360p?mp4
-          - ffmpeg:BunCam_sub#audio=opus
+          - rtsp://thingino:thingino@10.40.2.179/ch1
+          #- ffmpeg:BunCam_sub#audio=opus
         
         # Passed thru scrypted
         # Uses FFmpeg to pass the video through perfectly, but transcodes the ALAW audio to OPUS
@@ -410,7 +410,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
-        webui_url: http://10.40.1.42
+        webui_url: http://10.40.2.177
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/LivingRoom_main
@@ -437,7 +437,7 @@ frigate:
         enabled: true
         detect:
           enabled: false
-        webui_url: http://10.40.1.19
+        webui_url: http://10.40.2.179
         ffmpeg:
           inputs:
             - path: rtsp://127.0.0.1:8554/BunCam_main
