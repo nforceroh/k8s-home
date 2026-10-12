@@ -333,11 +333,11 @@ frigate:
           #- ffmpeg:LivingRoom_sub#audio=opus
         BunCam_main:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 1920x1080, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://thingino:thingino@10.40.2.179/ch0
+          - http://10.40.2.179:8080/ch0.mp4?token=cc5fc33ee8f17787d7af5abe849af67cb3b7637c8823ee42601c96634b5f4146
           #- ffmpeg:BunCam_main#audio=opus
         BunCam_sub:
           # Video: h264 (Main), yuv420p(tv, bt709, progressive), 640x360, 20 fps, 15 tbr, 90k tbn Audio: aac (HE-AAC), 16000 Hz, stereo, fltp
-          - rtsp://thingino:thingino@10.40.2.179/ch1
+          - http://10.40.2.179:8080/ch1.mp4?token=cc5fc33ee8f17787d7af5abe849af67cb3b7637c8823ee42601c96634b5f4146
           #- ffmpeg:BunCam_sub#audio=opus
         
         # Passed thru scrypted
