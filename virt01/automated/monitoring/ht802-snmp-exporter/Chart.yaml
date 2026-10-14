@@ -1,0 +1,7 @@
+apiVersion: v2
+name: ht802-snmp-exporter
+version: 1.0.0
+dependencies:
+  - name: prometheus-snmp-exporter
+    repository: oci://ghcr.io/prometheus-community/charts
+    version: 9.18.1

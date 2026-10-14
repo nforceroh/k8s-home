@@ -19,6 +19,20 @@ stringData:
           target_label: instance
         - target_label: __address__
           replacement: idrac-exporter:9348      
+    - job_name: ht802
+      metrics_path: /snmp
+      params:
+        auth: [ht802_v2]
+        module: [ht802]
+      static_configs:
+        - targets: ['ht802.iot.nf.lab']
+      relabel_configs:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: ht802-snmp-exporter:9116
 kind: Secret
 metadata:
   name: additional-scrape-configs

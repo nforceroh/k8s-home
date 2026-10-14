@@ -1,0 +1,29 @@
+prometheus-snmp-exporter:
+  fullnameOverride: ht802-snmp-exporter
+  config: |-
+    auths:
+      ht802_v2:
+        version: 2
+        community: public
+    modules:
+      ht802:
+        walk:
+          - 1.3.6.1.2.1.1.3
+          - 1.3.6.1.4.1.42397.1.2.2.2
+        metrics:
+          - name: ht802_sys_uptime_ticks
+            oid: 1.3.6.1.2.1.1.3
+            type: gauge
+            help: HT802 SNMP agent uptime in hundredths of a second.
+          - name: ht802_fxs2_registered
+            oid: 1.3.6.1.4.1.42397.1.2.2.2.2.0
+            type: DisplayString
+            help: FXS 2 SIP registration state, 1 registered, 0 not registered, -1 unknown.
+            regex_extracts:
+              "":
+                - regex: '^Registered$'
+                  value: "1"
+                - regex: '^Not Registered$'
+                  value: "0"
+                - regex: '.*'
+                  value: "-1"

@@ -1,0 +1,35 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ht802-alerts
+  namespace: monitoring
+  labels:
+    release: prometheus-stack
+spec:
+  groups:
+    - name: ht802.rules
+      rules:
+        - alert: HT802FXS2NotRegistered
+          expr: ht802_fxs2_registered == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: HT802 FXS 2 is not registered
+            description: HT802 FXS 2 has been unregistered for more than 5 minutes.
+        - alert: HT802FXS2RegistrationStateUnknown
+          expr: ht802_fxs2_registered == -1
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: HT802 FXS 2 registration state is unknown
+            description: The HT802 returned an unrecognized FXS 2 registration state.
+        - alert: HT802SNMPScrapeFailed
+          expr: up{job="ht802"} == 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: HT802 SNMP scrape failed
+            description: Prometheus has been unable to collect SNMP metrics from the HT802 for more than 5 minutes.
