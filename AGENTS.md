@@ -22,3 +22,17 @@
 - For `virt01/manual/`, preserve the app's manual deployment workflow and update its documentation when the procedure changes.
 - Keep credentials and other secrets in the repository's established secret-management workflow; do not add plaintext credentials.
 - Validate with the tools appropriate to the changed files, such as `helm lint` and `helm template` for charts, `kustomize build` for Kustomize apps, or Ansible syntax checks for playbooks and roles. State any checks that could not be run.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked on GitHub. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default triage labels are used: needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context layout. See `docs/agents/domain.md`.
