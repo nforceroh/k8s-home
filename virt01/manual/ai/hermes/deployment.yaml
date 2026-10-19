@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hermes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hermes
+  template:
+    metadata:
+      labels:
+        app: hermes
+    spec:
+      containers:
+      - name: hermes
+        image: nousresearch/hermes-agent:latest
+        envFrom:
+        - configMapRef:
+            name: hermes-config
+        env:
+        - name: OPENROUTER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: hermes-secrets
+              key: openrouter-api-key
+        - name: HASS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: hermes-secrets
+              key: hass-token
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"

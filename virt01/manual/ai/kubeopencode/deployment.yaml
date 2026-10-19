@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubeopencode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeopencode
+  template:
+    metadata:
+      labels:
+        app: kubeopencode
+    spec:
+      serviceAccountName: kubeopencode
+      containers:
+      - name: kubeopencode
+        image: ghcr.io/kubecodec/kubecodec:latest
+        envFrom:
+        - configMapRef:
+            name: kubeopencode-config
+        env:
+        - name: OPENROUTER_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: kubeopencode-secrets
+              key: openrouter-api-key
+        - name: KUBECONFIG
+          value: "/root/.kube/config"
+        volumeMounts:
+        - name: kubeconfig
+          mountPath: /root/.kube
+          readOnly: true
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+      volumes:
+      - name: kubeconfig
+        secret:
+          secretName: kubeopencode-kubeconfig

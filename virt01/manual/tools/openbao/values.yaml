@@ -1,0 +1,280 @@
+# OpenBao Helm Chart Values - Manual Deployment
+# https://github.com/openbao/openbao-helm
+# Chart version: 0.30.4
+# https://github.com/openbao/openbao-helm/blob/main/charts/openbao/values.yaml
+
+openbao:
+  global:
+    enabled: true
+    namespace: tools
+    imagePullSecrets: []
+    tlsDisable: true
+    serverTelemetry:
+      prometheusOperator: true
+
+  # OpenBao Server Configuration
+  server:
+    enabled: true
+    replicas: 1  # This standalone test config is not ready to scale directly to HA.
+    updateStrategyType: "OnDelete"
+    podManagementPolicy: "Parallel"
+    
+    # Resources
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+    
+    # Persistent Raft storage
+    dataStorage:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      mountPath: /openbao/data
+
+    persistentVolumeClaimRetentionPolicy:
+      whenDeleted: Retain
+      whenScaled: Retain
+
+    standalone:
+      enabled: true
+      config: |
+        ui = true
+
+        listener "tcp" {
+          address = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+          tls_disable = 1
+        }
+
+        storage "raft" {
+          path = "/openbao/data"
+          node_id = "openbao-0"
+        }
+
+        seal "static" {
+          current_key_id = "homelab-static-key-1"
+          current_key = "file:///openbao/secrets/unseal.key"
+        }
+
+        disable_mlock = true
+    
+    # Expose OpenBao through Traefik; use kubectl port-forward for direct access.
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: nf-lab
+        cert-manager.io/private-key-rotation-policy: Always
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/service.serversscheme: http
+        external-dns.kubernetes.io/target: traefik.k3s.nf.lab
+      hosts:
+        - host: openbao.nf.lab
+          paths:
+            - /
+      pathType: Prefix
+      tls:
+        - secretName: openbao-tls
+          hosts:
+            - openbao.nf.lab
+    
+    service:
+      enabled: true
+      type: ClusterIP
+      port: 8200
+      targetPort: 8200
+      annotations: {}
+      extraLabels: {}
+    
+    # Service Account
+    serviceAccount:
+      create: true
+      name: "openbao-sa"
+      annotations: {}
+      automountServiceAccountToken: true
+    
+    # Security Context
+    securityContext:
+      pod:
+        fsGroup: 1000
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+      container:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: false
+    
+    # Probes
+    readinessProbe:
+      enabled: true
+      port: 8200
+      path: "/v1/sys/health?standbyok=true&sealedcode=200&uninitcode=200"
+      failureThreshold: 3
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      successThreshold: 1
+      timeoutSeconds: 3
+    
+    livenessProbe:
+      enabled: true
+      port: 8200
+      path: "/v1/sys/health?standbyok=true&sealedcode=200&uninitcode=200"
+      failureThreshold: 3
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 3
+    
+    # Extra environment variables
+    extraEnvironmentVars:
+      BAO_UI: "true"
+      TZ: "America/New_York"
+    
+    # Auto-unseal: Secret environment variables for credentials
+    # Uncomment and configure based on your chosen seal method:
+    
+    # For AWS KMS (requires IRSA or AWS credentials)
+    # extraSecretEnvironmentVars:
+    #   - envName: AWS_ACCESS_KEY_ID
+    #     secretName: openbao-aws-credentials
+    #     secretKey: AWS_ACCESS_KEY_ID
+    #   - envName: AWS_SECRET_ACCESS_KEY
+    #     secretName: openbao-aws-credentials
+    #     secretKey: AWS_SECRET_ACCESS_KEY
+    #   - envName: AWS_DEFAULT_REGION
+    #     secretName: openbao-aws-credentials
+    #     secretKey: AWS_DEFAULT_REGION
+    
+    # For Azure Key Vault
+    # extraSecretEnvironmentVars:
+    #   - envName: AZURE_CLIENT_ID
+    #     secretName: openbao-azure-credentials
+    #     secretKey: AZURE_CLIENT_ID
+    #   - envName: AZURE_CLIENT_SECRET
+    #     secretName: openbao-azure-credentials
+    #     secretKey: AZURE_CLIENT_SECRET
+    #   - envName: AZURE_TENANT_ID
+    #     secretName: openbao-azure-credentials
+    #     secretKey: AZURE_TENANT_ID
+    
+    # For GCP Cloud KMS (requires Workload Identity)
+    # extraSecretEnvironmentVars:
+    #   - envName: GOOGLE_APPLICATION_CREDENTIALS
+    #     secretName: openbao-gcp-credentials
+    #     secretKey: GOOGLE_APPLICATION_CREDENTIALS
+    
+    # For Transit auto-unseal
+    # extraSecretEnvironmentVars:
+    #   - envName: BAO_TOKEN
+    #     secretName: openbao-transit-token
+    #     secretKey: token
+    
+    # Pre-stop hook for graceful shutdown
+    preStopSleepSeconds: 10
+    terminationGracePeriodSeconds: 30
+    
+    # Read the static seal key from a Kubernetes Secret.
+    volumes:
+      - name: static-seal-key
+        secret:
+          secretName: openbao-static-seal
+          defaultMode: 288
+    volumeMounts:
+      - name: static-seal-key
+        mountPath: /openbao/secrets
+        readOnly: true
+
+  # UI Service
+  ui:
+    enabled: true
+    serviceType: ClusterIP
+    servicePort: 8200
+    externalPort: 8200
+    activeVaultPodOnly: true
+
+  # Injector (Agent Sidecar)
+  injector:
+    enabled: false
+    replicas: 1
+    
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "256Mi"
+    
+    # Webhook configuration
+    webhook:
+      failurePolicy: Ignore
+      matchPolicy: Exact
+      timeoutSeconds: 30
+    
+    # Auth path for Kubernetes auth
+    authPath: "auth/kubernetes"
+    
+    # Affinity
+    affinity: |
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/name
+                    operator: In
+                    values:
+                      - openbao-agent-injector
+              topologyKey: kubernetes.io/hostname
+
+  # CSI Provider (for Secrets Store CSI Driver)
+  csi:
+    enabled: true
+    
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "500m"
+        memory: "256Mi"
+
+  # Prometheus metrics
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      interval: 30s
+      scrapeTimeout: 10s
+      additionalLabels:
+        release: kube-prometheus-stack
+
+  # Network Policy
+  networkPolicy:
+    enabled: false
+
+  # Pod Disruption Budget
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+  # Priority Class
+  priorityClassName: ""
+
+  # Tolerations
+  tolerations: []
+
+  # Node Selector
+  nodeSelector: {}
+
+  # Topology Spread Constraints
+  topologySpreadConstraints: []

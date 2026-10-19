@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hermes-config
+data:
+  # OpenRouter free models
+  OPENROUTER_MODEL: "openai/gpt-4o-mini"
+  OPENROUTER_BASE_URL: "https://openrouter.ai/api/v1"
+  # Local Ollama for high-volume log ingestion
+  OLLAMA_URL: "http://ollama.ai.svc.cluster.local:11434"
+  OLLAMA_MODEL: "qwen3:8b"
+  # Home Assistant integration
+  HASS_URL: "http://ha-ui.home-assistant.svc.cluster.local:8123"
+  # Monitoring settings
+  MONITOR_INTERVAL: "30s"
+  # Hardware monitoring
+  ENABLE_IPMI: "true"
+  ENABLE_SNMP: "true"
+  # Network monitoring
+  ENABLE_OPNSENSE: "true"
+  OPNSENSE_URL: "https://opnsense.localdomain"
+  # Email notifications
+  SMTP_HOST: "postfix-svc.mail.svc.cluster.local"
+  SMTP_FROM: "alerts@nf.lab"

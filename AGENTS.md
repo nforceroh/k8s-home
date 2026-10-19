@@ -36,3 +36,62 @@ Default triage labels are used: needs-triage, needs-info, ready-for-agent, ready
 ### Domain docs
 
 Single-context layout. See `docs/agents/domain.md`.
+
+### AI Agents
+
+AI agents (KubeOpenCode, Hermes, OpenCode) are deployed in `virt01/manual/ai/`. These are manually managed outside Argo CD.
+
+#### Secret Management
+
+All agent secrets must use sealedsecrets. The workflow is:
+
+1. Create a regular secret in a temp namespace
+2. Use `kubeseal` to create a `SealedSecret`
+3. Commit the `SealedSecret` to `~/repositories/k8s-home-secrets`
+4. Apply with `kubectl apply -f sealedsecret.yaml`
+
+Example for new agents:
+```bash
+kubectl create secret generic newagent-secrets \
+  --namespace=newagent \
+  --from-literal=openrouter-api-key=YOUR_OPENROUTER_API_KEY \
+  --dry-run=client -o json | \
+  kubeseal --format=yaml > ~/repositories/k8s-home-secrets/newagent-sealed-secret.yaml
+```
+
+See `virt01/manual/ai/create-secrets.sh` for existing agent secret creation scripts.
+
+## Certificates and DNS
+
+### Certificate issuers
+
+Choose the `ClusterIssuer` based on the hostname:
+
+- Use `nf-lab` for internal `nf.lab` names. It requests certificates from the
+  internal ACME service at `https://ca.nf.lab/acme/acme/directory` and uses
+  RFC2136 DNS-01 updates against `10.0.0.2`.
+- Use `letsencrypt-production` for public `nforcer.com` names. It requests
+  production Let's Encrypt certificates and uses Cloudflare DNS-01.
+
+Set `cert-manager.io/cluster-issuer` on an Ingress, or use the same issuer name
+with `issuerRef.kind: ClusterIssuer` in a `Certificate`. Issuer definitions
+are in `virt01/automated/operators/cert-manager/templates/clusterIssuers.yaml`.
+
+### DNS records
+
+Two ExternalDNS releases watch `Ingress`, `Service`, and ExternalDNS
+`DNSEndpoint` resources. Domain filters keep their zone ownership separate:
+
+- `external-dns-pdns` manages `nf.lab`, `k3s.nf.lab`, and `test.nf.lab` through
+  PowerDNS at `10.0.0.2:8081`.
+- `external-dns-cf` manages `nforcer.com` through Cloudflare.
+
+Both use TXT records for ownership (`txtOwnerId: k8s`, `txtPrefix: txt-`) and
+`policy: sync`. Set `external-dns.kubernetes.io/target` on an Ingress when its
+record should point to a specific target; for example, internal ingress
+records point to `traefik.k3s.nf.lab`, while public ones can point to
+`dual.nforcer.com`.
+
+cert-manager uses `10.0.0.1` as its recursive DNS resolver for DNS-01 checks.
+The ExternalDNS provider and zone settings are in the corresponding
+`virt01/automated/operators/external-dns-*/values.yaml` files.
