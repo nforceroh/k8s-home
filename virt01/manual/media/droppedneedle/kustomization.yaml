@@ -13,3 +13,4 @@ resources:
   - serviceaccount.yaml
 #  - pvc.yaml
   - ingress.yaml
+  - backup-schedule.yaml

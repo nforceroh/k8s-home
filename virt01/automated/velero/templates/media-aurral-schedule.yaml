@@ -1,19 +1,19 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-emby-daily-local
+  name: media-aurral-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 15 6 * * *
+  schedule: CRON_TZ=America/New_York 35 6 * * *
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:
       matchLabels:
-        app: emby
+        app: aurral
     ttl: 168h0m0s
     snapshotVolumes: true
     snapshotMoveData: false
@@ -21,19 +21,19 @@ spec:
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-emby-weekly-offsite-cfr2
+  name: media-aurral-weekly-offsite-cfr2
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 15 6 * * 3
+  schedule: CRON_TZ=America/New_York 35 6 * * 3
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:
       matchLabels:
-        app: emby
+        app: aurral
     ttl: 720h0m0s
     snapshotVolumes: true
     snapshotMoveData: true

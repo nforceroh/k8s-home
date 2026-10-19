@@ -1,19 +1,19 @@
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-bazarr-daily-local
+  name: media-emby-daily-local
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 6 * * *
+  schedule: CRON_TZ=America/New_York 15 6 * * *
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:
       matchLabels:
-        app: bazarr
+        app: emby
     ttl: 168h0m0s
     snapshotVolumes: true
     snapshotMoveData: false
@@ -21,19 +21,19 @@ spec:
 apiVersion: velero.io/v1
 kind: Schedule
 metadata:
-  name: torrent-bazarr-weekly-offsite-cfr2
+  name: media-emby-weekly-offsite-cfr2
   namespace: velero
 spec:
-  schedule: CRON_TZ=America/New_York 0 6 * * 3
+  schedule: CRON_TZ=America/New_York 15 6 * * 3
   skipImmediately: false
   template:
     includedNamespaces:
-      - torrent
+      - media
     includedResources:
       - '*'
     labelSelector:
       matchLabels:
-        app: bazarr
+        app: emby
     ttl: 720h0m0s
     snapshotVolumes: true
     snapshotMoveData: true
