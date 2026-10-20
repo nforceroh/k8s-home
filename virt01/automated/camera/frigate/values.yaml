@@ -329,8 +329,6 @@ frigate:
           - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.181/ch0#timeout=30
         GarageInside_sub:
           - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.181/ch1#timeout=30
-        # Passed thru scrypted
-        # Uses FFmpeg to pass the video through perfectly, but transcodes the ALAW audio to OPUS
         Kitchen_main:
           - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0#video=copy#audio=opus"
         # Completely untouched raw stream for Frigate detect. No filters, no edits.
@@ -345,11 +343,9 @@ frigate:
         #   - rtsp://scrypted-rtsp-svc:33759/31e5716887d9312a
         #   - ffmpeg:Kitchen_sub#audio=opus
         SittingRoom_main:
-          - rtsp://scrypted-rtsp-svc:40123/0646b22eadf4d50a
-          - ffmpeg:SittingRoom_main#audio=opus
+          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.184/ch0#timeout=30
         SittingRoom_sub:
-          - rtsp://scrypted-rtsp-svc:40123/91389e5f43812d1a
-          - ffmpeg:SittingRoom_sub#audio=opus
+          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.184/ch1#timeout=30
 
         # reolink
         reo_dual_main_garage_raw:
