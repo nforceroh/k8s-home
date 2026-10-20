@@ -377,6 +377,10 @@ frigate:
     cameras:
       LivingRoom:
         enabled: true
+        live:
+          streams:
+            main: LivingRoom_main
+            sub: LivingRoom_sub
         detect:
           enabled: false
         webui_url: http://10.40.2.177
@@ -405,6 +409,10 @@ frigate:
           mask: 0.982,0.981,0.982,0.936,0.719,0.935,0.719,0.981
       BunCam:
         enabled: true
+        live:
+          streams:
+            main: BunCam_main
+            sub: BunCam_sub
         detect:
           enabled: false
         webui_url: http://10.40.2.179
@@ -423,6 +431,10 @@ frigate:
           mask: 0.981,0.981,0.981,0.938,0.713,0.936,0.713,0.982
       GarageInside:
         enabled: true
+        live:
+          streams:
+            main: GarageInside_main
+            sub: GarageInside_sub
         detect:
           enabled: false
         ffmpeg:
@@ -442,6 +454,10 @@ frigate:
           mask: 0.981,0.981,0.981,0.938,0.713,0.936,0.713,0.982
       Kitchen:
         enabled: true
+        live:
+          streams:
+            main: Kitchen_main
+            sub: Kitchen_sub
         detect:
           enabled: false
         ffmpeg:
@@ -461,6 +477,10 @@ frigate:
           mask: 0.719,0.937,0.718,0.979,0.981,0.98,0.978,0.939
       SittingRoom:
         enabled: true
+        live:
+          streams:
+            main: SittingRoom_main
+            sub: SittingRoom_sub
         detect:
           enabled: false
         ffmpeg:
@@ -468,11 +488,11 @@ frigate:
             record: preset-record-generic-audio-aac
           inputs:
             - path: rtsp://127.0.0.1:8554/SittingRoom_main
-              input_args: preset-rtsp-restream
+              input_args: preset-rtsp-restream-low-latency
               roles:
                 - record
             - path: rtsp://127.0.0.1:8554/SittingRoom_sub
-              input_args: preset-rtsp-restream
+              input_args: preset-rtsp-restream-low-latency
               roles:
                 - detect
                 - audio
