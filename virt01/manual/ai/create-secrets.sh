@@ -19,22 +19,22 @@
 
 # KubeOpenCode secrets
 kubectl create secret generic kubeopencode-secrets \
-  --namespace=kubeopencode \
+  --namespace=ai \
   --from-literal=openrouter-api-key=YOUR_OPENROUTER_API_KEY
 
 # Hermes secrets
 kubectl create secret generic hermes-secrets \
-  --namespace=hermes \
+  --namespace=ai \
   --from-literal=openrouter-api-key=YOUR_OPENROUTER_API_KEY \
   --from-literal=hass-token=YOUR_HASS_TOKEN
 
 # OpenCode secrets
 kubectl create secret generic opencode-secrets \
-  --namespace=opencode \
+  --namespace=ai \
   --from-literal=openrouter-api-key=YOUR_OPENROUTER_API_KEY \
   --from-literal=github-token=YOUR_GITHUB_TOKEN
 
 # KubeOpenCode kubeconfig (if running inside cluster)
 kubectl create secret generic kubeopencode-kubeconfig \
-  --namespace=kubeopencode \
+  --namespace=ai \
   --from-file=config=/home/sylvain/.kube/config

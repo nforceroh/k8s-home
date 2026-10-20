@@ -326,9 +326,11 @@ frigate:
         BunCam_sub:
           - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.179/ch1#timeout=30
         GarageInside_main:
-          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.181/ch0#timeout=30
+          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.185/ch0#timeout=30
         GarageInside_sub:
-          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.181/ch1#timeout=30
+          - rtsp://thingino:{FRIGATE_RTSP_PASSWORD}@10.40.2.185/ch1#timeout=30
+        # Passed thru scrypted
+        # Uses FFmpeg to pass the video through perfectly, but transcodes the ALAW audio to OPUS
         Kitchen_main:
           - "ffmpeg:rtsp://localrtsp:Localrtsp11!@10.40.1.41/stream0#video=copy#audio=opus"
         # Completely untouched raw stream for Frigate detect. No filters, no edits.
