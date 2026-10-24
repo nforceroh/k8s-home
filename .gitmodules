@@ -1,0 +1,3 @@
+[submodule "mcp/arr-mcp"]
+	path = mcp/arr-mcp
+	url = https://github.com/Knuckles-Team/arr-mcp.git
