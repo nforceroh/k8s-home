@@ -7,8 +7,13 @@ Add the dependency name to `EXCLUDED_CHARTS` in `updatecli/chart_bumper.py`. The
 ## Prep workstation
 
 ```bash
-git clone git@github.com:nforceroh/k8s-home.git
+git clone --recurse-submodules git@github.com:nforceroh/k8s-home.git
 ```
+
+## Local Arr MCP
+
+See [`mcp/README.md`](mcp/README.md) for the repo-local Arr MCP setup and
+instructions for adding future MCP servers.
 
 ## Install ansible and tools to WSL instance
 
