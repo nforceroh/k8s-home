@@ -21,7 +21,7 @@ ollama:
     type: LoadBalancer
     annotations:
       metallb.io/address-pool: vlan1400
-      external-dns.alpha.kubernetes.io/hostname: ollama-api.k3s.nf.lab
+      external-dns.kubernetes.io/hostname: ollama-api.k3s.nf.lab
   ingress:
     enabled: true
     annotations:
@@ -46,4 +46,3 @@ ollama:
   persistentVolume:
     enabled: true
     existingClaim: ollama
-

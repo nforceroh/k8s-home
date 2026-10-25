@@ -5,7 +5,7 @@ mc-router:
       port: 25565
       annotations:
         metallb.io/address-pool: vlan1000-apps
-        external-dns.alpha.kubernetes.io/hostname: mc-router.k3s.nf.lab
+        external-dns.kubernetes.io/hostname: mc-router.k3s.nf.lab
 
   minecraftRouter:
     # "Wake up" any stopped Minecraft servers.

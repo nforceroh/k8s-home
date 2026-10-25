@@ -21,7 +21,7 @@ metadata:
     app: kms
   annotations:
     metallb.io/ip-allocated-from-pool: vlan1000-apps
-    external-dns.alpha.kubernetes.io/hostname: kms.k3s.nf.lab
+    external-dns.kubernetes.io/hostname: kms.k3s.nf.lab
 spec:
   type: LoadBalancer
   ipFamilies:

@@ -32,7 +32,7 @@ redis:
       externalTrafficPolicy: Local
       annotations:
         metallb.io/address-pool: vlan1000-apps
-        external-dns.alpha.kubernetes.io/hostname: redis.k3s.nf.lab
+        external-dns.kubernetes.io/hostname: redis.k3s.nf.lab
   metrics:
     enabled: true
     resources:

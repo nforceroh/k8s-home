@@ -64,7 +64,7 @@ def check_annotations(annotations):
     if not annotations:
         return False
     for k, v in annotations.items():
-        if k.startswith("external-dns.alpha.kubernetes.io/"):
+        if k.startswith("external-dns.kubernetes.io/"):
             for item in v.split(","):
                 if match_domain(item):
                     return True
