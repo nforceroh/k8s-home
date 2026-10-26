@@ -41,5 +41,5 @@ spec:
             subPath: pdns.conf
       volumes:
         - name: pdns-config
-          configMap:
-            name: powerdns-ns2-config
+          secret:
+            secretName: powerdns-ns2-config
