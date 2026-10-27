@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webhooksite
+  labels:
+    app: webhooksite
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: webhooksite
+  template:
+    metadata:
+      labels:
+        app: webhooksite
+    spec:
+      serviceAccountName: webhooksite-sa
+      initContainers:
+        - name: initialize-database
+          image: harbor.nf.lab/proxy.docker.io/webhooksite/webhook.site:latest
+          imagePullPolicy: Always
+          command:
+            - /bin/sh
+            - -ec
+          args:
+            - |
+              if [ ! -s /persistent/database.sqlite ]; then
+                cp /var/www/html/database/database.sqlite /persistent/database.sqlite
+              fi
+              chown www-data:www-data /persistent/database.sqlite
+              chmod 660 /persistent/database.sqlite
+          volumeMounts:
+            - name: webhooksite-data
+              mountPath: /persistent
+        - name: migrate-database
+          image: harbor.nf.lab/proxy.docker.io/webhooksite/webhook.site:latest
+          imagePullPolicy: Always
+          command:
+            - php
+          args:
+            - artisan
+            - migrate
+            - --force
+          volumeMounts:
+            - name: webhooksite-data
+              mountPath: /var/www/html/database/database.sqlite
+              subPath: database.sqlite
+      containers:
+        - name: webhooksite
+          image: harbor.nf.lab/proxy.docker.io/webhooksite/webhook.site:latest
+          imagePullPolicy: Always
+          args:
+            - php
+            - artisan
+            - queue:work
+            - --daemon
+            - --tries=3
+            - --timeout=10
+          env:
+            - name: APP_ENV
+              value: production
+            - name: APP_DEBUG
+              value: "false"
+            - name: APP_URL
+              value: https://webhook.k3s.nf.lab
+            - name: APP_LOG
+              value: errorlog
+            - name: DB_CONNECTION
+              value: sqlite
+            - name: REDIS_HOST
+              value: webhooksite-redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: BROADCAST_DRIVER
+              value: redis
+            - name: CACHE_DRIVER
+              value: redis
+            - name: QUEUE_DRIVER
+              value: redis
+            - name: ECHO_HOST_MODE
+              value: path
+          envFrom:
+            - secretRef:
+                name: webhooksite-config
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 5
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          volumeMounts:
+            - name: webhooksite-data
+              mountPath: /var/www/html/database/database.sqlite
+              subPath: database.sqlite
+      volumes:
+        - name: webhooksite-data
+          persistentVolumeClaim:
+            claimName: webhooksite-data

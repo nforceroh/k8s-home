@@ -1,0 +1,17 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  annotations:
+    sealedsecrets.bitnami.com/cluster-wide: "true"
+  name: webhooksite-config
+  namespace: tools
+spec:
+  encryptedData:
+    APP_KEY: AgBSG1Xf+UPaA5ehmj4tBEJ58PiWWXrIEjYXqhENClcHC0rPmu/J0jRVR3Wtq0VYt9mKEnsQx8OVo3oGq1AOM+aWhmCHRu2iFuWd+u6BuZlcKH38jw3SPIpTO/HFC1/IiGTmKyU8k4cZ1tOOfRBQ5H/s0N6VcSkBLRUXZ2xoquMEgxRUC8SzkSfyqVoXwLb5MrJU6XkfQWbBo397/GvQoGxJiWMjBZvo7ILXBZqOobqvNrfcYApaHMNSsSsU3L5+wAn9Tw3dnLwXpjfVLLdnwc9af4Lih8/8Ge5qcyKQpHdKh/mAYrwYktqhIe4PL8I1LyD5p7PlZh0bp5+Fpc+qgznyDYPvbnrDZPFo0GiuIiqoJ5cX5HcML9OU6314/K+2+i1QEMjQ7Ez/7kDccewAFzdIOcDQ4xCZMnpnKDUcaESldAXr3jycPUxnkKQlO0VnfKTyk7gbcqpx4KoQo3UuyFP5Ai91hZcaBDXyOxrAtEK73299NZBEn/4r6fEgJTD1pTKxU49YH0IskbgNe4isVsfsMbYpD6MdOoH03G88O9T55YObxiUDfRvc6YcC7yifQpqPsdUz48++QonYJYTsYf76LJCLNMcwHdaKx8/N36tI6aja2EPNulZ1473G9glj9LxXK/d9XOwBQQMwBqZa4Ld/e8+j3RfhZyhpHOLfaAPkM9RTm37oFvK3IjvPwagJujS79PNNFz8oY3jZYV6xrowmBcTrZr3ByKPbl3G8EALRB17LDFI3pWSrqigqInkm6jIzvWM=
+  template:
+    metadata:
+      annotations:
+        sealedsecrets.bitnami.com/cluster-wide: "true"
+      name: webhooksite-config
+      namespace: tools
