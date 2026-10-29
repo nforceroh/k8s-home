@@ -9,7 +9,7 @@ import re
 import sys
 import time
 from collections import Counter, defaultdict
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Callable, Iterable, Iterator, Sequence
 from typing import Any
 
 from redis import Redis
@@ -18,6 +18,8 @@ from redis.exceptions import RedisError, ResponseError
 
 BATCH_SIZE = 128
 ITEMS_PER_COMMAND = 500
+PROGRESS_REPORT_INTERVAL_KEYS = 10_000
+PROGRESS_REPORT_INTERVAL_SECONDS = 5.0
 SUPPORTED_TYPES = {"string", "hash", "list", "set", "zset"}
 
 
@@ -29,6 +31,41 @@ def _text(value: object) -> str:
     if isinstance(value, bytes):
         return value.decode("ascii", errors="replace")
     return str(value)
+
+
+def _make_progress_reporter(
+    database: int, phase: str, total_keys: int
+) -> Callable[[int, bool], None]:
+    last_reported_keys = 0
+    last_reported_at = time.monotonic()
+    print(
+        f"DB {database} {phase} starting: approximately {total_keys:,} keys.",
+        flush=True,
+    )
+
+    def report_progress(scanned_keys: int, finished: bool) -> None:
+        nonlocal last_reported_at, last_reported_keys
+        now = time.monotonic()
+        if (
+            not finished
+            and scanned_keys - last_reported_keys < PROGRESS_REPORT_INTERVAL_KEYS
+            and now - last_reported_at < PROGRESS_REPORT_INTERVAL_SECONDS
+        ):
+            return
+        percentage = (
+            min(100.0, scanned_keys * 100 / total_keys) if total_keys else None
+        )
+        percent_text = f" ({percentage:.1f}%)" if percentage is not None else ""
+        status = "complete" if finished else "progress"
+        print(
+            f"DB {database} {phase} {status}: {scanned_keys:,}/"
+            f"~{total_keys:,} keys scanned{percent_text}.",
+            flush=True,
+        )
+        last_reported_keys = scanned_keys
+        last_reported_at = now
+
+    return report_progress
 
 
 def _batches(items: Iterable[Any], size: int) -> Iterator[list[Any]]:
@@ -81,9 +118,14 @@ def _inspect_hash_expirations(client: Redis, key: bytes, batch_size: int) -> int
     return expiring_fields
 
 
-def _inspect_database(client: Redis, batch_size: int) -> tuple[Counter[str], int]:
+def _inspect_database(
+    client: Redis,
+    batch_size: int,
+    progress_callback: Callable[[int, bool], None] | None = None,
+) -> tuple[Counter[str], int]:
     counts: Counter[str] = Counter()
     expiring_hash_fields = 0
+    scanned_keys = 0
     for key_batch in _batches(client.scan_iter(count=batch_size), batch_size):
         pipeline = client.pipeline(transaction=False)
         for key in key_batch:
@@ -98,21 +140,21 @@ def _inspect_database(client: Redis, batch_size: int) -> tuple[Counter[str], int
                 expiring_hash_fields += _inspect_hash_expirations(
                     client, key, batch_size
                 )
+        scanned_keys += len(key_batch)
+        if progress_callback is not None:
+            progress_callback(scanned_keys, False)
+    if progress_callback is not None:
+        progress_callback(scanned_keys, True)
     return counts, expiring_hash_fields
 
 
 def _assert_no_server_level_data(client: Redis) -> None:
     try:
-        modules = client.execute_command("MODULE", "LIST")
         functions = client.execute_command("FUNCTION", "LIST")
     except ResponseError as error:
         raise MigrationError(
-            "Cannot inspect Redis modules/functions; refusing to copy keys only."
+            "Cannot inspect Redis functions; refusing to copy keys only."
         ) from error
-    if modules:
-        raise MigrationError(
-            "Redis modules are loaded; module data is not supported by this copier."
-        )
     if functions:
         raise MigrationError(
             "Redis function libraries are loaded; they are not copied by this tool."
@@ -205,7 +247,14 @@ def _inspect_all(
                     f"Valkey database {database} is not empty. Refusing to "
                     "overwrite it; use --flush-target only if clearing it is intended."
                 )
-            counts, expiring_fields = _inspect_database(source, batch_size)
+            progress_callback = _make_progress_reporter(
+                database, "preflight", source.dbsize()
+            )
+            counts, expiring_fields = _inspect_database(
+                source,
+                batch_size,
+                progress_callback=progress_callback,
+            )
             counts_by_database[database] = counts
             expiring_fields_by_database[database] = expiring_fields
             unsupported.update(
@@ -277,9 +326,13 @@ def _queue_value(
 
 
 def _copy_database(
-    source: Redis, target: Redis, batch_size: int
+    source: Redis,
+    target: Redis,
+    batch_size: int,
+    progress_callback: Callable[[int, bool], None] | None = None,
 ) -> Counter[str]:
     copied: Counter[str] = Counter()
+    scanned_keys = 0
     for key_batch in _batches(source.scan_iter(count=batch_size), batch_size):
         type_pipeline = source.pipeline(transaction=False)
         for key in key_batch:
@@ -291,6 +344,9 @@ def _copy_database(
             if _text(raw_type) != "none"
         ]
         if not entries:
+            scanned_keys += len(key_batch)
+            if progress_callback is not None:
+                progress_callback(scanned_keys, False)
             continue
         if any(key_type not in SUPPORTED_TYPES for _, key_type in entries):
             raise MigrationError(
@@ -374,6 +430,11 @@ def _copy_database(
         if scheduled:
             write_pipeline.execute()
             copied.update(key_type for key_type, _ in scheduled)
+        scanned_keys += len(key_batch)
+        if progress_callback is not None:
+            progress_callback(scanned_keys, False)
+    if progress_callback is not None:
+        progress_callback(scanned_keys, True)
     return copied
 
 
@@ -464,9 +525,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             source_db = _new_client(source_url, database)
             target_db = _new_client(target_url, database)
             try:
+                total_keys = sum(counts_by_database[database].values())
+                progress_callback = _make_progress_reporter(
+                    database, "copy", total_keys
+                )
                 if args.flush_target:
                     target_db.flushdb()
-                copied = _copy_database(source_db, target_db, args.batch_size)
+                copied = _copy_database(
+                    source_db,
+                    target_db,
+                    args.batch_size,
+                    progress_callback=progress_callback,
+                )
                 print(f"DB {database} copied: {_format_counts(copied)}")
             finally:
                 source_db.close()

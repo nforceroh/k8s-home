@@ -1,10 +1,19 @@
 from __future__ import annotations
 
+import io
 import unittest
 from collections import Counter
+from contextlib import redirect_stdout
 from typing import Any
+from unittest.mock import patch
 
-from redis_to_valkey import _copy_database, _inspect_database
+from redis_to_valkey import (
+    MigrationError,
+    _assert_no_server_level_data,
+    _copy_database,
+    _inspect_database,
+    _inspect_all,
+)
 
 
 class FakePipeline:
@@ -33,10 +42,21 @@ class FakeRedis:
         self.data: dict[bytes, tuple[str, Any]] = {}
         self.ttls: dict[bytes, int] = {}
         self.field_expirations: dict[bytes, dict[bytes, int]] = {}
+        self.modules: list[dict[str, str]] = []
+        self.functions: list[dict[str, str]] = []
 
     def pipeline(self, transaction: bool = False) -> FakePipeline:
         del transaction
         return FakePipeline(self)
+
+    def ping(self) -> bool:
+        return True
+
+    def close(self) -> None:
+        pass
+
+    def dbsize(self) -> int:
+        return len(self.data)
 
     def scan_iter(self, count: int = 10) -> Any:
         del count
@@ -71,7 +91,11 @@ class FakeRedis:
         del start, end, withscores
         return self.data.get(key, ("zset", []))[1]
 
-    def execute_command(self, command: str, *args: Any) -> list[int] | int:
+    def execute_command(self, command: str, *args: Any) -> Any:
+        if command == "MODULE" and args == ("LIST",):
+            return self.modules
+        if command == "FUNCTION" and args == ("LIST",):
+            return self.functions
         if command == "HPEXPIRETIME":
             key, _, count, *fields = args
             return [
@@ -148,14 +172,73 @@ class RedisToValkeyTests(unittest.TestCase):
         )
         self.assertEqual(expiring_fields, 1)
 
+    def test_loaded_modules_do_not_block_server_level_preflight(self) -> None:
+        self.source.modules = [{"name": "search"}]
+
+        _assert_no_server_level_data(self.source)
+
+    def test_function_libraries_block_server_level_preflight(self) -> None:
+        self.source.functions = [{"library_name": "migration_functions"}]
+
+        with self.assertRaises(MigrationError):
+            _assert_no_server_level_data(self.source)
+
+    def test_module_key_types_in_selected_database_are_rejected(self) -> None:
+        self.source.data[b"module-key"] = ("ReJSON-RL", b"")
+
+        with patch(
+            "redis_to_valkey._new_client",
+            side_effect=[self.source, self.target],
+        ):
+            with self.assertRaisesRegex(
+                MigrationError, r"Unsupported Redis key types found \(ReJSON-RL=1\)"
+            ):
+                _inspect_all(
+                    "source",
+                    "target",
+                    databases=[7],
+                    batch_size=2,
+                    flush_target=False,
+                )
+
+    def test_preflight_reports_progress(self) -> None:
+        output = io.StringIO()
+        with patch(
+            "redis_to_valkey._new_client",
+            side_effect=[self.source, self.target],
+        ):
+            with redirect_stdout(output):
+                _inspect_all(
+                    "source",
+                    "target",
+                    databases=[7],
+                    batch_size=2,
+                    flush_target=False,
+                )
+
+        self.assertIn("DB 7 preflight starting", output.getvalue())
+        self.assertIn("DB 7 preflight complete", output.getvalue())
+
     def test_copy_preserves_values_and_expirations(self) -> None:
-        copied = _copy_database(self.source, self.target, batch_size=2)
+        progress_reports: list[tuple[int, bool]] = []
+        copied = _copy_database(
+            self.source,
+            self.target,
+            batch_size=2,
+            progress_callback=lambda scanned, finished: progress_reports.append(
+                (scanned, finished)
+            ),
+        )
 
         self.assertEqual(
             copied,
             Counter(
                 {"string": 1, "hash": 1, "list": 1, "set": 1, "zset": 1}
             ),
+        )
+        self.assertEqual(
+            progress_reports,
+            [(2, False), (4, False), (5, False), (5, True)],
         )
         self.assertEqual(self.target.data, self.source.data)
         self.assertGreater(self.target.ttls[b"string"], 0)

@@ -2,8 +2,10 @@
 
 `redis_to_valkey.py` copies key data with Redis commands instead of RDB files. It
 supports strings, hashes (including field expirations), lists, sets, and sorted
-sets. It stops before writing if it finds streams, module data, or Redis
-function libraries, since those require separate migration handling.
+sets. It stops before writing if a selected database contains streams or
+module-defined key types, or if Redis function libraries are loaded, since
+those require separate migration handling. Loaded modules are allowed when
+their key types are not present in the selected databases.
 
 The copy is not a live snapshot. Stop all application writes to Redis before
 running it with `--execute`, and keep them paused until applications are
@@ -49,6 +51,10 @@ After confirming the source is quiesced and the dry-run results are expected:
 ```bash
 python scripts/redis_to_valkey.py --execute --source-writes-paused
 ```
+
+During both preflight (including dry runs) and the copy, the script reports
+scanned keys per database every 10,000 keys or 5 seconds, whichever comes first,
+and prints a completion report. The displayed total is an estimate.
 
 By default, the script requires selected Valkey databases to be empty. Only use
 `--flush-target` if you explicitly intend to delete all existing keys in those
