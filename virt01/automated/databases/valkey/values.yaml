@@ -6,6 +6,7 @@ valkey:
   valkeyConfig: |-
     appendonly yes
     save ""
+    replicaof redis-master.databases.svc.cluster.local 6379
   dataStorage:
     enabled: true
     requestedSize: 8Gi
