@@ -1,4 +1,5 @@
 valkey:
+  deploymentStrategy: Recreate
   replica:
     enabled: false
   auth:
