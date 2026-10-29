@@ -27,7 +27,7 @@ spec:
               protocol: TCP
           env:
             - name: REDIS_SERVER
-              value: "redis-master.databases.svc.cluster.local"
+              value: "valkey.databases.svc.cluster.local"
             - name: REDIS_DB
               value: "5"
             - name: REDIS_PORT
