@@ -1,0 +1,11 @@
+apiVersion: v2
+name: valkey
+version: 0.1.0
+description: Valkey Helm chart for Kubernetes
+type: application
+home: https://valkey.io/valkey-helm/
+icon: https://dyltqmyl993wv.cloudfront.net/assets/stacks/valkey/img/valkey-stack-220x234.png
+dependencies:
+  - name: valkey
+    repository: https://valkey.io/valkey-helm/
+    version: 0.12.1

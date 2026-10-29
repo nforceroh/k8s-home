@@ -1,0 +1,40 @@
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases-valkey-daily-local
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * *
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: valkey
+    ttl: 168h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: false
+---
+apiVersion: velero.io/v1
+kind: Schedule
+metadata:
+  name: databases-valkey-weekly-offsite-cfr2
+  namespace: velero
+spec:
+  schedule: CRON_TZ=America/New_York 0 6 * * 3
+  skipImmediately: false
+  template:
+    includedNamespaces:
+      - databases
+    includedResources:
+      - '*'
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/instance: valkey
+    ttl: 720h0m0s
+    snapshotVolumes: true
+    snapshotMoveData: true

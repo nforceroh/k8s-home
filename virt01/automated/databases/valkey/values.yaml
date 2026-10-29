@@ -1,0 +1,71 @@
+valkey:
+  replica:
+    enabled: false
+  auth:
+    enabled: false
+  valkeyConfig: |-
+    appendonly yes
+    save ""
+  dataStorage:
+    enabled: true
+    requestedSize: 8Gi
+    keepPvc: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 512Mi
+    limits:
+      cpu: 2
+      memory: 4Gi
+  service:
+    type: LoadBalancer
+    port: 6379
+    annotations:
+      metallb.io/address-pool: vlan1000-apps
+      external-dns.kubernetes.io/hostname: valkey.k3s.nf.lab
+  metrics:
+    enabled: true
+    exporter:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          cpu: 500m
+          memory: 192Mi
+    serviceMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: true
+      rules:
+        - alert: ValkeyDown
+          expr: redis_up{service="{{ include "valkey.fullname" . }}-metrics"} == 0
+          for: 2m
+          labels:
+            severity: error
+          annotations:
+            summary: Valkey instance {{ "{{ $labels.instance }}" }} down
+            description: Valkey instance {{ "{{ $labels.instance }}" }} is down
+        - alert: ValkeyMemoryHigh
+          expr: >
+            redis_memory_used_bytes{service="{{ include "valkey.fullname" . }}-metrics"} * 100
+            /
+            redis_memory_max_bytes{service="{{ include "valkey.fullname" . }}-metrics"}
+            > 90
+          for: 2m
+          labels:
+            severity: error
+          annotations:
+            summary: Valkey instance {{ "{{ $labels.instance }}" }} is using too much memory
+            description: |
+              Valkey instance {{ "{{ $labels.instance }}" }} is using {{ "{{ $value }}" }}% of its available memory.
+        - alert: ValkeyKeyEviction
+          expr: |
+            increase(redis_evicted_keys_total{service="{{ include "valkey.fullname" . }}-metrics"}[5m]) > 0
+          for: 1s
+          labels:
+            severity: error
+          annotations:
+            summary: Valkey instance {{ "{{ $labels.instance }}" }} has evicted keys
+            description: |
+              Valkey instance {{ "{{ $labels.instance }}" }} has evicted {{ "{{ $value }}" }} keys in the last 5 minutes.
