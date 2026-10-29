@@ -49,7 +49,7 @@ spec:
               subPath: database.sqlite
       containers:
         - name: webhooksite
-          image: harbor.nf.lab/proxy.docker.io/webhooksite/webhook.site:latest
+          image: webhooksite/webhook.site:latest
           imagePullPolicy: Always
           args:
             - php
@@ -64,15 +64,17 @@ spec:
             - name: APP_DEBUG
               value: "false"
             - name: APP_URL
-              value: https://webhook.k3s.nf.lab
+              value: https://webhook.nforcer.com
             - name: APP_LOG
               value: errorlog
             - name: DB_CONNECTION
               value: sqlite
             - name: REDIS_HOST
-              value: webhooksite-redis
+              value: valkey.databases.svc.cluster.local
             - name: REDIS_PORT
               value: "6379"
+            - name: REDIS_DB
+              value: "1"
             - name: BROADCAST_DRIVER
               value: redis
             - name: CACHE_DRIVER

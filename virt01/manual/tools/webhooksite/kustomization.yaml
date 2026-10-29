@@ -11,8 +11,8 @@ resources:
   - deployment.yaml
   - echo-server.yaml
   - ingress.yaml
+  - ingress-external.yaml
   - pvc.yaml
-  - redis.yaml
   - service.yaml
   - serviceaccount.yaml
   - webhooksite-config-sealed.yaml

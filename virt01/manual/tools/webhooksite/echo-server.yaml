@@ -18,11 +18,6 @@ spec:
         - name: laravel-echo-server
           image: webhooksite/laravel-echo-server
           imagePullPolicy: Always
-          command:
-            - exec
-            - laravel-echo-server
-            - start
-            - --force
           env:
             - name: LARAVEL_ECHO_SERVER_AUTH_HOST
               value: http://webhooksite
@@ -33,7 +28,7 @@ spec:
             - name: ECHO_REDIS_PORT
               value: "6379"
             - name: ECHO_REDIS_HOSTNAME
-              value: webhooksite-redis
+              value: valkey.databases.svc.cluster.local
             - name: ECHO_PROTOCOL
               value: http
             - name: ECHO_ALLOW_CORS

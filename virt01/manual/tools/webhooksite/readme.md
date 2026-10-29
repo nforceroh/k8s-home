@@ -1,12 +1,14 @@
 # Webhook.site
 
 Webhook.site is deployed manually in the `tools` namespace and is available on
-the internal network at [https://webhook.k3s.nf.lab](https://webhook.k3s.nf.lab).
-The Ingress uses the `nf-lab` certificate issuer and is not exposed through the
-public `nforcer.com` zone.
+the internal network at [https://webhook.k3s.nf.lab](https://webhook.k3s.nf.lab)
+and publicly at
+[https://webhook.nforcer.com](https://webhook.nforcer.com). The internal
+Ingress uses the `nf-lab` certificate issuer; the public Ingress uses
+`letsencrypt-production` and points DNS to `dual.nforcer.com`.
 
 The app uses its bundled SQLite database for captured requests, persisted on
-the `webhooksite-data` PVC. Redis supports the queue, cache, and live updates;
+the `webhooksite-data` PVC. Valkey supports the queue, cache, and live updates;
 Laravel Echo serves live updates through the app's `/socket.io` proxy. Captures
 are retained until deleted in the UI or the PVC is removed. Do not send
 credentials or sensitive production data to this troubleshooting service.

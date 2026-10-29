@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webhooksite-external-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    cert-manager.io/private-key-rotation-policy: Always
+    external-dns.kubernetes.io/target: dual.nforcer.com
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: webhook.nforcer.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webhooksite
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - webhook.nforcer.com
+      secretName: webhooksite-external-tls
