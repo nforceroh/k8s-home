@@ -1,9 +1,9 @@
 apiVersion: v2
 name: minecraft
-version: 1.0.8
+version: 1.0.9
 dependencies:
 - name: minecraft
   repository: https://itzg.github.io/minecraft-server-charts
-  version: 5.2.0
+  version: 5.3.1
 sources:
 - https://github.com/itzg/minecraft-server-charts
