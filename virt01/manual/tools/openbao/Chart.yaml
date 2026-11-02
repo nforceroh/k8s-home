@@ -1,8 +1,8 @@
 apiVersion: v2
 name: openbao
-version: 1.0.0
+version: 1.0.1
 description: OpenBao Helm chart for Kubernetes
 dependencies:
 - name: openbao
   repository: https://openbao.github.io/openbao-helm
-  version: 0.30.4
+  version: 0.30.6

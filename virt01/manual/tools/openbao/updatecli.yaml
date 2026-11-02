@@ -1,0 +1,18 @@
+
+sources:
+  lastMinorRelease:
+    kind: helmchart
+    spec:
+      url: "https://openbao.github.io/openbao-helm"
+      name: "openbao"
+      version: "0.*.*"
+conditions: {}
+targets:
+  chart:
+    name: Bump Chart dependencies
+    kind: helmchart
+    spec:
+      Name: "/home/runner/work/k8s-home/k8s-home/virt01/manual/tools/openbao"
+      file: "Chart.yaml"
+      key: "$.dependencies[0].version"
+      versionIncrement: "patch"
