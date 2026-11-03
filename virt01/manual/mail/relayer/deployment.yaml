@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: relayer
-          image: ghcr.io/nforceroh/relayer:latest   # adjust to wherever you push it
+          image: ghcr.io/nforceroh/relayer:latest
           ports:
             - containerPort: 8080
           # The image ships with generic placeholder defaults (see Dockerfile) --
