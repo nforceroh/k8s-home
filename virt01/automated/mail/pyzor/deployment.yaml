@@ -19,7 +19,7 @@ spec:
       serviceAccountName: pyzor-sa
       containers:
         - name: pyzor
-          image: ghcr.io/nforceroh/k8s-pyzor:latest
+          image: ghcr.io/nforceroh/pyzor:latest
           imagePullPolicy: Always
           ports:
             - name: pyzor

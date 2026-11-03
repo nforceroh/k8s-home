@@ -19,7 +19,7 @@ spec:
       serviceAccountName: powerdns-sa
       containers:
       - name: powerdns-ns2
-        image: ghcr.io/nforceroh/k8s-pdns:latest
+        image: ghcr.io/nforceroh/pdns:latest
         imagePullPolicy: Always
         resources:
           requests:

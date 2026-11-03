@@ -20,7 +20,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: mailgallows
-          image: ghcr.io/nforceroh/k8s-mailgallows:latest
+          image: ghcr.io/nforceroh/mailgallows:latest
           imagePullPolicy: Always
           envFrom:
           - secretRef:

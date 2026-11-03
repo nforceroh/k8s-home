@@ -20,7 +20,7 @@ spec:
       containers:
         - name: snappymail
 #          image: harbor.nf.lab/homelab/snappymail:latest
-          image: ghcr.io/nforceroh/k8s-snappymail:latest
+          image: ghcr.io/nforceroh/snappymail:latest
           imagePullPolicy: Always
           env:
             - name: TZ

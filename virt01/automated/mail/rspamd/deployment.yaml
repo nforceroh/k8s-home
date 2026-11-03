@@ -25,7 +25,7 @@ spec:
             privileged: true
       containers:
         - name: rspamd
-          image: ghcr.io/nforceroh/k8s-rspamd:latest
+          image: ghcr.io/nforceroh/rspamd:latest
           imagePullPolicy: Always
           env:
             - name: ADMIN_PASS

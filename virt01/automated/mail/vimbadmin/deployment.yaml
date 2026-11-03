@@ -19,7 +19,7 @@ spec:
       serviceAccountName: vimbadmin-sa
       containers:
         - name: vimbadmin
-          image: ghcr.io/nforceroh/k8s-vimbadmin:latest
+          image: ghcr.io/nforceroh/vimbadmin:latest
           imagePullPolicy: Always
           env:
             - name: TZ

@@ -22,7 +22,7 @@ spec:
       containers:
         - name: dovecot
           #image: harbor.nf.lab/homelab/dovecot:latest
-          image: ghcr.io/nforceroh/k8s-dovecot:latest
+          image: ghcr.io/nforceroh/dovecot:latest
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
